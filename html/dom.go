@@ -39,4 +39,8 @@ func H1(text string) *Node { return Tag("h1", "", Text{text}) }
 func H2(text string) *Node { return Tag("h2", "", Text{text}) }
 func H3(text string) *Node { return Tag("h3", "", Text{text}) }
 
+func A(href string, children ...Renderer) *Node {
+	return Tag("a", "", children...).Attr("href", href)
+}
+
 func Form() *Node { return Tag("form", "") }

@@ -1,0 +1,54 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+* {
+	box-sizing: border-box;
+}
+
+.header {
+	border-bottom: 1px solid #aaa;
+	display: flex;
+	height: 3rem;
+	padding: 0 0.5rem;
+	align-items: flex-end;
+
+	background: #ececec;
+	background: linear-gradient(180deg, #fff, #ececec);
+}
+
+.title {
+	width: 10rem;
+	font-size: 1.8rem;
+	padding: 0.25rem 0.5rem;
+}
+
+.menu {
+	height: 100%;
+}
+
+.menu a {
+	height: 100%;
+	line-height: 3.5rem;
+	vertical-align: bottom;
+
+	display: inline-block;
+	font-variant: small-caps;
+	padding: 0.25rem 1rem;
+
+	transition: background 0.2s ease-in-out;
+}
+
+.menu a.active {
+	background: #e4d0ff;
+	x-background: linear-gradient(180deg, #fff, #e4d0ff);
+}
+
+.menu a:hover {
+	background: #feffd0;
+	x-background: linear-gradient(180deg, #fff, #feffd0);
+}
+
+.menu a:visited {
+	color: inherit;
+}
