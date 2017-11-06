@@ -33,8 +33,9 @@ html, body {
 	vertical-align: bottom;
 
 	display: inline-block;
-	font-variant: small-caps;
-	padding: 0.25rem 1rem;
+	text-transform: lowercase;
+	text-decoration: none;
+	padding: 0.25rem 1rem;	
 
 	transition: background 0.2s ease-in-out;
 }

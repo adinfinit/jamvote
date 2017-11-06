@@ -20,6 +20,7 @@ func main() {
 	router.HandleFunc("/", home)
 	router.HandleFunc("/profile", profile)
 	router.HandleFunc("/events", events)
+	router.HandleFunc("/logout", logout)
 
 	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	router.PathPrefix("/static/").Handler(staticFiles)
@@ -49,6 +50,10 @@ func events(rw http.ResponseWriter, r *http.Request) {
 	)
 }
 
+func logout(rw http.ResponseWriter, r *http.Request) {
+	http.Redirect(rw, r, "/", http.StatusFound)
+}
+
 func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html.Renderer) {
 	w := html.NewWriter()
 	defer func() {
@@ -76,6 +81,7 @@ func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html
 				{"/", "Dashboard"},
 				{"/profile", "Profile"},
 				{"/events", "Events"},
+				{"/logout", "Sign out"},
 			}),
 		),
 		html.Div("content", content...),
