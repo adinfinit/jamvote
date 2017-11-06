@@ -31,38 +31,30 @@ func main() {
 	}
 }
 
-func Render(w http.ResponseWriter, r func(w *html.Writer)) {
-	writer := html.NewWriter()
-	r(writer)
-
-	w.Write(writer.Bytes())
-}
-
 func home(rw http.ResponseWriter, r *http.Request) {
-	Render(rw, func(w *html.Writer) {
-		Page(r, w, "Dashboard",
-			html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
-		)
-	})
+	Page(rw, r, "Dashboard",
+		html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
+	)
 }
 
 func profile(rw http.ResponseWriter, r *http.Request) {
-	Render(rw, func(w *html.Writer) {
-		Page(r, w, "Profile",
-			html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
-		)
-	})
+	Page(rw, r, "Profile",
+		html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
+	)
 }
 
 func events(rw http.ResponseWriter, r *http.Request) {
-	Render(rw, func(w *html.Writer) {
-		Page(r, w, "Events",
-			html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
-		)
-	})
+	Page(rw, r, "Events",
+		html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis possimus quod repellendus hic consequatur aliquam unde velit harum, quae magnam dolorem alias odio, excepturi culpa est. Voluptates repellendus nihil quisquam!"),
+	)
 }
 
-func Page(r *http.Request, w *html.Writer, title string, content ...html.Renderer) {
+func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html.Renderer) {
+	w := html.NewWriter()
+	defer func() {
+		rw.Write(w.Bytes())
+	}()
+
 	w.UnsafeWrite("<!DOCTYPE html>")
 	w.Open("html")
 	defer w.Close("html")
