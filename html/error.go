@@ -1,4 +1,4 @@
-package h
+package html
 
 type Error struct{ Err error }
 

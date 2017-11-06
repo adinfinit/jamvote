@@ -1,4 +1,4 @@
-package h
+package html
 
 func Tag(tag string, className string, children ...Renderer) *Node {
 	node := &Node{}

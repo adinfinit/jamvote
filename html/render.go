@@ -1,4 +1,4 @@
-package h
+package html
 
 type Renderer interface {
 	Render(w *Writer)
