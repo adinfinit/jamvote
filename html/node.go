@@ -16,10 +16,24 @@ type Attr struct {
 }
 
 func (n *Node) Attr(name, value string) *Node {
+	if name == "class" {
+		for i := range n.Attrs {
+			attr := &n.Attrs[i]
+			if attr.Name == "class" {
+				if attr.Value != "" {
+					attr.Value += " " + value
+				}
+				return n
+			}
+		}
+	}
 	n.Attrs = append(n.Attrs, Attr{name, value})
 	return n
 }
-
+func (n *Node) ID(value string) *Node {
+	n.Attr("id", value)
+	return n
+}
 func (n *Node) Class(value string) *Node {
 	n.Attr("class", value)
 	return n

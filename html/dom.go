@@ -32,7 +32,15 @@ func Meta(attr, value string) *Node {
 	return Tag("meta", "").Attr(attr, value)
 }
 
-func Div(className string, children ...Renderer) *Node { return Tag("div", className, children...) }
+func Div(className string, children ...Renderer) *Node {
+	return Tag("div", className, children...)
+}
+func Span(className string, children ...Renderer) *Node {
+	return Tag("span", className, children...)
+}
+func Section(className string, children ...Renderer) *Node {
+	return Tag("section", className, children...)
+}
 
 func P(text string) *Node  { return Tag("p", "", Text{text}) }
 func H1(text string) *Node { return Tag("h1", "", Text{text}) }
@@ -43,4 +51,19 @@ func A(href string, children ...Renderer) *Node {
 	return Tag("a", "", children...).Attr("href", href)
 }
 
+func Br() *Node { return Tag("br", "") }
+
 func Form() *Node { return Tag("form", "") }
+
+func Label(inputName, text string) *Node {
+	return Tag("label", "", Text{text}).Attr("for", inputName)
+}
+func Input(inputName, typeName string) *Node {
+	return Tag("input", "").Attr("type", typeName).Attr("id", inputName)
+}
+func Submit(value string) *Node {
+	return Tag("input", "").Attr("type", "submit").Attr("value", value)
+}
+func Textarea(inputName string) *Node {
+	return Tag("textarea", "").Attr("id", inputName)
+}

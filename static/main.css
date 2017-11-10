@@ -1,55 +1,151 @@
+html {
+	font-family: monospace;
+	color: #222;
+}
 html, body {
 	margin: 0;
 	padding: 0;
 }
+
 * {
 	box-sizing: border-box;
 }
 
-.header {
-	border-bottom: 1px solid #aaa;
-	display: flex;
-	height: 3rem;
-	padding: 0 0.5rem;
-	align-items: flex-end;
+/* page layout */
 
-	background: #ececec;
-	background: linear-gradient(180deg, #fff, #ececec);
+.header-outer {
+	border-bottom: 2px dashed #888;
 }
 
-.title {
-	width: 10rem;
-	font-size: 1.8rem;
+.header, .content {
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+.header {
+	display: flex;
+	padding: 0.5rem;
+	align-items: flex-end;
+}
+
+.header > .title {
+	width: 15rem;
+	font-size: 1.5rem;
 	padding: 0.25rem 0.5rem;
 }
 
-.menu {
-	height: 100%;
+.content {
+	padding: 0.5rem 1rem;
+	padding-top: 2rem;
+}
+
+/* menu */
+
+.menu {}
+.menu a:visited {
+	color: inherit;
 }
 
 .menu a {
-	height: 100%;
-	line-height: 3.5rem;
 	vertical-align: bottom;
 
 	display: inline-block;
 	text-transform: lowercase;
 	text-decoration: none;
 	padding: 0.25rem 1rem;	
-
-	transition: background 0.2s ease-in-out;
 }
 
 .menu a.active {
-	background: #e4d0ff;
-	x-background: linear-gradient(180deg, #fff, #e4d0ff);
+	color: #fff;
+	background: #0001a8;
 }
-
 .menu a:hover {
-	background: #feffd0;
-	x-background: linear-gradient(180deg, #fff, #feffd0);
+	color: #000;
+	background: #e7e7ec;
 }
 
-.menu a:visited {
+/* forms */
+
+form {
+	max-width: 20rem;
+	margin: 0 auto;
+}
+
+input, textarea {
+	width: 100%;
+}
+textarea {
+	font-family: monospace;
+}
+
+.field {
+	margin-top: 0.5rem;
+}
+
+fieldset {
+	margin-bottom: 1rem;
+	border: 0;
+	border-top: 1px solid #888;
+}
+
+fieldset > legend {
+	font-size: 1.2rem;
+	font-weight: 800;
+}
+
+/* sign in / out */
+
+.logins {
+	width: 10rem;
+	margin: 0 auto;
+}
+.logins a {
+	display: block;
+	width: 10rem;
+	
+	padding: 0.5rem 0.5rem;
+	margin-bottom: 1rem;
+
+	text-decoration: none;
+
+	color: #fff;
+	background: #0001a8;
+}
+.logins a:hover {
+	color: #fff;
+	background: #ff0000;
+}
+
+/* event */
+
+.event-link {
+	display: flex;
+	
+	text-decoration: none;
 	color: inherit;
+	margin-bottom: 10px;
+	border-radius: 2px;
+	
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.event-link.ongoing {
+	font-size: 1.5rem;
+
+	color: #fff;
+	background: #69904c;
+}
+.event-link > .title {
+	flex: 1;
+	padding: 0.5rem 1rem;
+}
+.event-link > .countdown {
+	width: 12rem;
+	padding: 0.5rem 1rem;
+	text-align: center;
+
+	background: #f0f0f0;
+	color: #333;
+}
+
+.event-link:hover {
 }

@@ -71,7 +71,8 @@ func (w *Writer) Attr(name, value string) {
 	if name == "href" || name == "src" {
 		w.writeString(NormalizeURL(value))
 	} else {
-		w.writeString(EscapeAttribute(value))
+		//w.writeString(EscapeAttribute(value))
+		w.writeString(value)
 	}
 	w.writeByte('"')
 }
