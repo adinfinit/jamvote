@@ -26,12 +26,9 @@ func main() {
 	router.HandleFunc("/user", profile) // REDIRECT TO SELF
 	router.HandleFunc("/user/{userid}", profile)
 
-	router.HandleFunc("/event/create", createEvent)
-	router.HandleFunc("/event/{eventid}", createEvent)
-
-	router.HandleFunc("/event/{eventid}/entry/create", createEntry)
-	router.HandleFunc("/event/{eventid}/entry/{entryid}", createEntry)
-	router.HandleFunc("/event/{eventid}/vote/{entryid}", voteEntry)
+	router.HandleFunc("/team/create", createTeam)
+	router.HandleFunc("/team/{teamid}", createTeam)
+	router.HandleFunc("/vote/{teamid}", voteTeam)
 
 	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	router.PathPrefix("/static/").Handler(staticFiles)
@@ -78,7 +75,7 @@ func profile(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createEvent(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "New Event",
+	Page(rw, r, "Create Event",
 		html.Form().Child(
 			fieldset(
 				legend("General"),
@@ -98,7 +95,7 @@ func createEvent(rw http.ResponseWriter, r *http.Request) {
 	)
 }
 
-func voteEntry(rw http.ResponseWriter, r *http.Request) {
+func voteTeam(rw http.ResponseWriter, r *http.Request) {
 	Page(rw, r, "Vote for XYZ",
 		html.Form().Child(
 			fieldset(
@@ -133,7 +130,7 @@ func fieldset(rs ...html.Renderer) *html.Node {
 	return html.Tag("fieldset", "", rs...)
 }
 
-func createEntry(rw http.ResponseWriter, r *http.Request) {
+func createTeam(rw http.ResponseWriter, r *http.Request) {
 	Page(rw, r, "New Entry",
 		html.Form().Child(
 			field("Event"),
@@ -215,7 +212,7 @@ func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html
 	w.Render(
 		html.Div("header-outer",
 			html.Div("header",
-				html.Div("title", html.Text{title}),
+				html.Div("title", html.Text{"Jamerator"}),
 				Menu(r, [][2]string{
 					{"/", "Events"},
 					{"/user", "Profile"},
@@ -225,6 +222,8 @@ func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html
 			),
 		),
 		html.Div("content-outer",
+			//html.Div("content", html.Text{title}),
+			html.H1(title).Class("content"),
 			html.Div("content", content...),
 		),
 	)
@@ -250,27 +249,15 @@ type Service interface {
 
 	Team(id TeamID) (Team, error)
 	Teams() ([]Team, error)
-
-	Event(id EventID) (Event, error)
-	Events() ([]Event, error)
 }
 
 type UserID string
 type TeamID string
-type EventID string
-type EntryID string
 
 type User struct {
 	ID    UserID
 	Name  string
 	Teams []TeamID
-}
-
-type Team struct {
-	ID      TeamID
-	Event   EventID
-	Name    string
-	Members []Member
 }
 
 type Member struct {
@@ -279,7 +266,6 @@ type Member struct {
 }
 
 type Event struct {
-	ID   EventID
 	Name string
 
 	Create time.Time
@@ -290,19 +276,15 @@ type Event struct {
 	Organizers []UserID
 	Judges     []UserID
 	Teams      []TeamID
-
-	Entries []EntryID
 }
 
-type Entry struct {
-	ID    EntryID
-	Event EventID
-
-	Team    string
+type Team struct {
+	ID      TeamID
 	Name    string
 	Members []UserID
 
-	Field struct {
+	Entry struct {
+		Name         string
 		Instructions string
 
 		Link struct {
@@ -314,9 +296,8 @@ type Entry struct {
 }
 
 type Vote struct {
-	ID    UserID
-	Event EventID
-	Entry EntryID
+	ID   UserID
+	Team TeamID
 
 	Aspects  Aspects
 	Override bool
