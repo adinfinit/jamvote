@@ -29,8 +29,9 @@ func main() {
 	router.HandleFunc("/event/create", createEvent)
 	router.HandleFunc("/event/{eventid}", createEvent)
 
-	router.HandleFunc("/team/{eventid}/create", createTeam)
-	router.HandleFunc("/team/{eventid}/{teamid}", createTeam)
+	router.HandleFunc("/event/{eventid}/entry/create", createEntry)
+	router.HandleFunc("/event/{eventid}/entry/{entryid}", createEntry)
+	router.HandleFunc("/event/{eventid}/vote/{entryid}", voteEntry)
 
 	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	router.PathPrefix("/static/").Handler(staticFiles)
@@ -92,23 +93,48 @@ func createEvent(rw http.ResponseWriter, r *http.Request) {
 				datetime("Voting Closed"),
 			),
 
+			html.Submit("Create"),
+		),
+	)
+}
+
+func voteEntry(rw http.ResponseWriter, r *http.Request) {
+	Page(rw, r, "Vote for XYZ",
+		html.Form().Child(
 			fieldset(
-				legend("Setup"),
-				textarea("Aspects", "Aesthetics,1,5\nGraphics,1,5"),
-				textarea("Fields", ""),
+				legend("Entry"),
+
+				field("Name"),
+				field("Team"),
+
+				textarea("Guide", ""),
+
+				field("Windows"),
+				field("Linux"),
+				field("Mac"),
+				field("Web"),
+			),
+
+			fieldset(
+				legend("Aspects"),
+				aspect("Theme"),
+				aspect("Enjoyment"),
+				aspect("Aesthetics"),
+				aspect("Innovation"),
+				aspect("Bonus"),
+				aspect("Total"),
 			),
 
 			html.Submit("Create"),
 		),
 	)
 }
-
 func fieldset(rs ...html.Renderer) *html.Node {
 	return html.Tag("fieldset", "", rs...)
 }
 
-func createTeam(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "New Team",
+func createEntry(rw http.ResponseWriter, r *http.Request) {
+	Page(rw, r, "New Entry",
 		html.Form().Child(
 			field("Event"),
 			field("Name"),
@@ -126,6 +152,16 @@ func field(label string) *html.Node {
 	return html.Div("field",
 		html.Label(label, label),
 		html.Input(label, "text"),
+	)
+}
+
+func aspect(label string) *html.Node {
+	return html.Div("field",
+		html.Label(label, label),
+		html.Input(label, "range").
+			Attr("min", "1").
+			Attr("max", "5").
+			Attr("step", "0.01"),
 	)
 }
 
@@ -251,25 +287,11 @@ type Event struct {
 	Vote   time.Time
 	Closed time.Time
 
-	Fields  []Field
-	Aspects []Aspect
-
 	Organizers []UserID
 	Judges     []UserID
 	Teams      []TeamID
 
 	Entries []EntryID
-}
-
-type Field struct {
-	Name string
-	Kind string
-}
-
-type Aspect struct {
-	Name     string
-	Min, Max float64
-	Scale    float64
 }
 
 type Entry struct {
@@ -280,15 +302,56 @@ type Entry struct {
 	Name    string
 	Members []UserID
 
-	Fields map[string]string
+	Field struct {
+		Instructions string
+
+		Link struct {
+			Win string
+			Mac string
+			Web string
+		}
+	}
 }
 
 type Vote struct {
-	ID      UserID
-	Event   EventID
-	Entry   EntryID
-	Aspects map[string]float64
+	ID    UserID
+	Event EventID
+	Entry EntryID
 
+	Aspects  Aspects
 	Override bool
 	Total    float64
+}
+
+type Aspects struct {
+	Theme      float64
+	Enjoyment  float64
+	Aesthetics float64
+	Innovation float64
+	Bonus      float64
+}
+
+func (aspects *Aspects) EnsureRange() {
+	clamp(&aspects.Theme, 1, 5)
+	clamp(&aspects.Enjoyment, 1, 5)
+	clamp(&aspects.Aesthetics, 1, 5)
+	clamp(&aspects.Innovation, 1, 5)
+	clamp(&aspects.Bonus, 1, 3)
+}
+
+func (aspects *Aspects) Total() float64 {
+	return (aspects.Theme +
+		aspects.Enjoyment +
+		aspects.Aesthetics +
+		aspects.Innovation +
+		aspects.Bonus) / (5*4 + 3)
+}
+
+func clamp(v *float64, min, max float64) {
+	if *v < min {
+		*v = min
+	}
+	if *v > max {
+		*v = max
+	}
 }
