@@ -1,7 +1,20 @@
 html {
-	font-family: monospace;
 	color: #222;
+	
+	background-color: white;
+    
+    font-size: 16px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-rendering: optimizeLegibility;
+
+    text-size-adjust: 100%;
+
 }
+
 html, body {
 	margin: 0;
 	padding: 0;
@@ -14,11 +27,11 @@ html, body {
 /* page layout */
 
 .header-outer {
-	border-bottom: 2px dashed #888;
+	border-bottom: 2px solid #888;
 }
 
 .header, .content {
-	max-width: 700px;
+	max-width: 50rem;
 	margin: 0 auto;
 }
 
@@ -66,8 +79,20 @@ html, body {
 
 /* forms */
 
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+fieldset, input, select, textarea {
+	padding: .5rem .6rem;
+    margin-bottom: 1.5rem;
+    font: inherit;
+}
+
 form {
-	max-width: 20rem;
+	max-width: 50rem;
 	margin: 0 auto;
 }
 
@@ -76,10 +101,6 @@ input, textarea {
 }
 textarea {
 	font-family: monospace;
-}
-
-.field {
-	margin-top: 0.5rem;
 }
 
 fieldset {

@@ -125,7 +125,6 @@ func legend(text string) *html.Node {
 func field(label string) *html.Node {
 	return html.Div("field",
 		html.Label(label, label),
-		html.Br(),
 		html.Input(label, "text"),
 	)
 }
@@ -133,7 +132,6 @@ func field(label string) *html.Node {
 func datetime(label string) *html.Node {
 	return html.Div("field",
 		html.Label(label, label),
-		html.Br(),
 		html.Input(label, "datetime-local"),
 	)
 }
@@ -141,7 +139,6 @@ func datetime(label string) *html.Node {
 func textarea(label, defaultValue string) *html.Node {
 	return html.Div("field",
 		html.Label(label, label),
-		html.Br(),
 		html.Textarea(label).Text(defaultValue),
 	)
 }
