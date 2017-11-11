@@ -10,6 +10,8 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/adinfinit/rater/html"
+	"github.com/adinfinit/rater/site"
+	"github.com/adinfinit/rater/user"
 )
 
 var (
@@ -18,14 +20,13 @@ var (
 
 func main() {
 	router := mux.NewRouter()
+
+	renderer := site.NewRenderer("**/*.html")
+
+	users := &user.Server{renderer}
+	users.Register(router)
+
 	router.HandleFunc("/", events)
-
-	router.HandleFunc("/user/login", login)
-	router.HandleFunc("/user/logout", logout)
-
-	router.HandleFunc("/user", profile) // REDIRECT TO SELF
-	router.HandleFunc("/user/{userid}", profile)
-
 	router.HandleFunc("/team/create", createTeam)
 	router.HandleFunc("/team/{teamid}", createTeam)
 	router.HandleFunc("/vote/{teamid}", voteTeam)
@@ -176,19 +177,6 @@ func textarea(label, defaultValue string) *html.Node {
 	)
 }
 
-func login(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "Sign in",
-		html.Div("logins",
-			html.A("/user/login/google", html.Text{"Google"}),
-			html.A("/user/login/facebook", html.Text{"Facebook"}),
-		),
-	)
-}
-
-func logout(rw http.ResponseWriter, r *http.Request) {
-	http.Redirect(rw, r, "/", http.StatusFound)
-}
-
 func Page(rw http.ResponseWriter, r *http.Request, title string, content ...html.Renderer) {
 	w := html.NewWriter()
 	defer func() {
@@ -244,24 +232,17 @@ func Menu(r *http.Request, items [][2]string) *html.Node {
 }
 
 type Service interface {
-	User(id UserID) (User, error)
-	Users() ([]User, error)
+	User(id user.ID) (user.User, error)
+	Users() ([]user.User, error)
 
 	Team(id TeamID) (Team, error)
 	Teams() ([]Team, error)
 }
 
-type UserID string
 type TeamID string
 
-type User struct {
-	ID    UserID
-	Name  string
-	Teams []TeamID
-}
-
 type Member struct {
-	ID   UserID
+	ID   user.ID
 	Name string
 }
 
@@ -273,15 +254,15 @@ type Event struct {
 	Vote   time.Time
 	Closed time.Time
 
-	Organizers []UserID
-	Judges     []UserID
+	Organizers []user.ID
+	Judges     []user.ID
 	Teams      []TeamID
 }
 
 type Team struct {
 	ID      TeamID
 	Name    string
-	Members []UserID
+	Members []user.ID
 
 	Entry struct {
 		Name         string
@@ -296,7 +277,7 @@ type Team struct {
 }
 
 type Vote struct {
-	ID   UserID
+	ID   user.ID
 	Team TeamID
 
 	Aspects  Aspects
@@ -317,7 +298,7 @@ func (aspects *Aspects) EnsureRange() {
 	clamp(&aspects.Enjoyment, 1, 5)
 	clamp(&aspects.Aesthetics, 1, 5)
 	clamp(&aspects.Innovation, 1, 5)
-	clamp(&aspects.Bonus, 1, 3)
+	clamp(&aspects.Bonus, 1, 5)
 }
 
 func (aspects *Aspects) Total() float64 {
@@ -325,7 +306,7 @@ func (aspects *Aspects) Total() float64 {
 		aspects.Enjoyment +
 		aspects.Aesthetics +
 		aspects.Innovation +
-		aspects.Bonus) / (5*4 + 3)
+		aspects.Bonus*0.5) / (5*4 + 5*0.5)
 }
 
 func clamp(v *float64, min, max float64) {
@@ -336,3 +317,47 @@ func clamp(v *float64, min, max float64) {
 		*v = max
 	}
 }
+
+/*
+
+Theme
+How well does it interpret the theme
+1 Not even close
+2 Resembling
+3 Related
+4 Spot on
+5 Novel Interpretation
+
+Enjoyment
+How does the game generally feel
+1 Boring
+2 Not playing again
+3 Nice
+4 Didn't want to stop
+5 Will play later.
+
+Aesthetics
+How well is the story, art and audio executed
+1 None
+2 Needs tweaks
+3 Nice
+4 Really good
+5 Exceptional
+
+Innovation
+Something novel in the game
+1 Seen it a lot
+2 Interesting variation
+3 Interesting approach
+4 Never seen before
+5 Exceptional
+
+Bonus
+Anything exceptionally special about * 0,5
+1 Nothing special
+2 Really liked *
+3 Really loved *
+4 Loved everything
+5 <3
+
+*/
