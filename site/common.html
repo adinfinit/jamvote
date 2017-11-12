@@ -5,15 +5,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="google" value="notranslate">
-        <title>LD40 - {{ .Title }} </title>
+        <title>{{ or .ContextTitle "APT Jam" }}</title>
         <link rel="stylesheet" href="/static/main.css">
     </head>
     <body>
         <div class="header-outer">
             <div class="header">
-                <div class="title">LD40</div>
+                <div class="title">{{ or .ContextTitle "APT Jam" }}</div>
                 <div class="menu">
-                    <a href="/team">Teams</a>
                     <a href="/user">Profile</a>
                     <a href="/user/login">Sign in</a>
                     <a href="/user/logout">Sign out</a>

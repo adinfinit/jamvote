@@ -23,13 +23,16 @@ func main() {
 
 	renderer := site.NewRenderer("**/*.html")
 
+	mains := &site.Server{renderer}
+	mains.Register(router)
+
 	users := &user.Server{renderer}
 	users.Register(router)
 
-	router.HandleFunc("/", events)
-	router.HandleFunc("/team/create", createTeam)
-	router.HandleFunc("/team/{teamid}", createTeam)
-	router.HandleFunc("/vote/{teamid}", voteTeam)
+	router.HandleFunc("/ld40/", createTeam)
+	router.HandleFunc("/ld40/team/create", createTeam)
+	router.HandleFunc("/ld40/team/{teamid}", createTeam)
+	router.HandleFunc("/ld40/vote/{teamid}", voteTeam)
 
 	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	router.PathPrefix("/static/").Handler(staticFiles)
@@ -39,61 +42,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func events(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "Events",
-		html.Section("events",
-			html.H1("Ongoing"),
-			eventLink("Ludum Dare 39", "Lorem", true),
-		),
-		html.Section("events events-small",
-			html.H1("Completed"),
-			eventLink("Ludum Dare 38", "Ipsum", false),
-			eventLink("Ludum Dare 37", "Dolorem", false),
-			eventLink("Ludum Dare 36", "Sigma", false),
-			eventLink("Ludum Dare 35", "Delta", false),
-			eventLink("Ludum Dare 34", "Phi", false),
-		),
-	)
-}
-
-func eventLink(title, theme string, ongoing bool) *html.Node {
-	ongoingClass := ""
-	if ongoing {
-		ongoingClass = "ongoing"
-	}
-	return html.A("/event/123").Class("event-link").Class(ongoingClass).Child(
-		html.Div("title").Text(title+" | "+theme),
-		html.Div("countdown").Text("20:30:10"),
-	)
-}
-
-func profile(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "Profile",
-		html.P("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis ipsa quidem itaque natus similique nemo voluptatum beatae doloremque, tempore blanditiis quod maiores quas tempora ad nesciunt officia accusamus atque veritatis!"),
-	)
-}
-
-func createEvent(rw http.ResponseWriter, r *http.Request) {
-	Page(rw, r, "Create Event",
-		html.Form().Child(
-			fieldset(
-				legend("General"),
-				field("Title"),
-				field("Theme"),
-			),
-
-			fieldset(
-				legend("Schedule"),
-				datetime("Jam Start"),
-				datetime("Voting Start"),
-				datetime("Voting Closed"),
-			),
-
-			html.Submit("Create"),
-		),
-	)
 }
 
 func voteTeam(rw http.ResponseWriter, r *http.Request) {
