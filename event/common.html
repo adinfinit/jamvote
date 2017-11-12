@@ -1,0 +1,9 @@
+{{ define "event-menu" }}
+<div class="submenu">
+    <a href="/{{ .EventSlug }}" class="subtitle">{{ .EventTitle }}</a>
+    <a href="/{{ .EventSlug }}/progress">Progress</a>
+    <a href="/{{ .EventSlug }}/voting">Voting</a>
+    <a href="/{{ .EventSlug }}/closing">Closing</a>
+    <a href="/{{ .EventSlug }}/summary">Summary</a>
+</div>
+{{ end }}

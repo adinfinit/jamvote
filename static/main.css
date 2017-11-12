@@ -35,10 +35,14 @@ html, body {
 .header {
 	display: flex;
 	padding: 0.5rem;
-	align-items: flex-end;
+	align-items: center;
 }
 
 .header > .title {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+
 	width: 15rem;
 	font-size: 1.5rem;
 	padding: 0.25rem 0.5rem;
@@ -46,18 +50,17 @@ html, body {
 
 .content {
 	padding: 0.5rem 1rem;
-	padding-top: 2rem;
+	padding-top: 0.5rem;
 }
 
 /* menu */
 
 .menu {}
-.menu a:visited {
+.menu > a:visited {
 	color: inherit;
 }
-
-.menu a {
-	vertical-align: bottom;
+.menu > * {
+	vertical-align: center;
 
 	display: inline-block;
 	text-transform: lowercase;
@@ -65,11 +68,40 @@ html, body {
 	padding: 0.25rem 1rem;	
 }
 
-.menu a.active {
+.menu > a.active {
 	color: #fff;
 	background: #0001a8;
 }
-.menu a:hover {
+.menu > a:hover {
+	color: #000;
+	background: #e7e7ec;
+}
+
+.submenu {
+	display: flex;
+	align-items: center;
+}
+.submenu > .subtitle {
+	font-size: 1.5rem;
+	vertical-align: center;
+	color: #000;
+	display: inline-block;
+	width: 14.5rem;
+	padding: 0.25rem 0;
+}
+.submenu > a {
+	vertical-align: center;
+	color: #000;
+	display: inline-block;
+	text-decoration: none;
+	padding: 0.25rem 1rem;
+	font-size: 1rem;
+}
+.submenu a.active {
+	color: #fff;
+	background: #0001a8;
+}
+.submenu a:hover {
 	color: #000;
 	background: #e7e7ec;
 }

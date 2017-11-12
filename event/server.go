@@ -31,7 +31,8 @@ func (event *Server) Register(router *mux.Router) {
 
 func (event *Server) Teams(w http.ResponseWriter, r *http.Request) {
 	event.Renderer.Render(w, "event-teams", map[string]interface{}{
-		"ContextTitle": event.Slug,
+		"EventSlug":  event.Slug,
+		"EventTitle": event.Title,
 	})
 }
 
