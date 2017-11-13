@@ -1,25 +1,25 @@
 {{ template "head" . }}
 <section>
 	<h1>{{ or .User.Name "User" }}</h1>
-	<form action="">
+	<form method="post">
 		<div class="field">
 			<label for="id">ID</label>
-			<div class="input" id="id">{{ .User.ID }}</div>
+			<div class="input" name="id">{{ .User.ID }}</div>
 		</div>
 
 		<div class="field">
 			<label for="name">Name</label>
-			<input type="text" id="name" value="{{ .User.Name }}">
+			<input type="text" name="name" value="{{ .User.Name }}">
 		</div>
 		
 		<div class="field">
 			<label for="email">Email</label>
-			<input type="text" id="email" value="{{ .User.Email }}">
+			<input type="text" name="email" value="{{ .User.Email }}">
 		</div>
 
 		<div class="field">
 			<label for="facebook">Facebook</label>
-			<input type="text" id="facebook" value="{{ .User.Facebook }}">
+			<input type="text" name="facebook" value="{{ .User.Facebook }}">
 		</div>
 
 		<input type="submit" value="Save">

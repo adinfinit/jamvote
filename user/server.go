@@ -72,8 +72,30 @@ func (users *Server) EditProfile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Get user: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	siteuser.ID = auth.UserID
+
+	if r.Method == http.MethodPost {
+		if err := r.ParseForm(); err != nil {
+			http.Error(w, "Parse form: "+err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		name := r.FormValue("name")
+		email := r.FormValue("email")
+		facebook := r.FormValue("facebook")
+
+		if name != siteuser.Name || email != siteuser.Email || facebook != siteuser.Facebook {
+			siteuser.Name = name
+			siteuser.Email = email
+			siteuser.Facebook = facebook
+
+			if _, err := datastore.Put(c, userkey, siteuser); err != nil {
+				http.Error(w, "Put user: "+err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+	}
+
 	users.Renderer.Render(w, "user-edit", map[string]interface{}{
 		"User": siteuser,
 	})
