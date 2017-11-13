@@ -3,11 +3,9 @@
 <h1>Sign in</h1>
 
 <ul>
-	<li><a href="/user/login/admin">Admin</a></li>
-	<li><a href="/user/login/judge">Judge</a></li>
-	<li><a href="/user/login/user-1">User 1</a></li>
-	<li><a href="/user/login/user-2">User 2</a></li>
-	<li><a href="/user/login/user-3">User 3</a></li>
+	{{ range .Logins }}
+	<li><a href="{{.URL}}">{{.Title}}</a></li>
+	{{ end }}
 </ul>
 </section>
 

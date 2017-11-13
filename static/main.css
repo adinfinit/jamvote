@@ -114,10 +114,16 @@ label {
     font-weight: 600;
 }
 
-fieldset, input, select, textarea {
+.input, fieldset, input, select, textarea {
 	padding: .5rem .6rem;
     margin-bottom: 1.5rem;
     font: inherit;
+}
+
+.input {
+	background: #f0f0f0;
+	border: 1px solid #dfdfdf;
+	border-radius: 1px;
 }
 
 form {
