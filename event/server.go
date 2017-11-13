@@ -25,7 +25,7 @@ func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc(path.Join(prefix, "/progress"), event.Teams)
 	router.HandleFunc(path.Join(prefix, "/closing"), event.Teams)
 	router.HandleFunc(path.Join(prefix, "/summary"), event.Teams)
-	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Teams)
+	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Team)
 	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Teams)
 }
 
@@ -33,6 +33,17 @@ func (event *Server) Teams(w http.ResponseWriter, r *http.Request) {
 	event.Renderer.Render(w, "event-teams", map[string]interface{}{
 		"EventSlug":  event.Slug,
 		"EventTitle": event.Title,
+	})
+}
+
+func (event *Server) Team(w http.ResponseWriter, r *http.Request) {
+	teamid := mux.Vars(r)["teamid"]
+
+	event.Renderer.Render(w, "event-team", map[string]interface{}{
+		"EventSlug":  event.Slug,
+		"EventTitle": event.Title,
+
+		"TeamID": teamid,
 	})
 }
 

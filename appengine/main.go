@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"log"
 	"net/http"
+
+	"google.golang.org/appengine"
 
 	"github.com/gorilla/mux"
 
@@ -20,7 +20,7 @@ var (
 func main() {
 	router := mux.NewRouter()
 
-	renderer := site.NewRenderer("**/*.html")
+	renderer := site.NewRenderer("../**/*.html")
 
 	mains := &site.Server{renderer}
 	mains.Register(router)
@@ -31,13 +31,7 @@ func main() {
 	events := event.NewServer("LD40", "Ludum Dare 40", renderer)
 	events.Register(router)
 
-	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
-	router.PathPrefix("/static/").Handler(staticFiles)
+	http.Handle("/", router)
 
-	fmt.Printf("Listening on %q\n", *listen)
-
-	err := http.ListenAndServe(*listen, router)
-	if err != nil {
-		log.Fatal(err)
-	}
+	appengine.Main()
 }

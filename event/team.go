@@ -30,16 +30,17 @@ type Team struct {
 	ID      TeamID
 	Name    string
 	Members []user.ID
+	Entry   Entry
+}
 
-	Entry struct {
-		Name         string
-		Instructions string
+type Entry struct {
+	Name         string
+	Instructions string
 
-		Link struct {
-			Win string
-			Mac string
-			Web string
-		}
+	Link struct {
+		Win string
+		Mac string
+		Web string
 	}
 }
 

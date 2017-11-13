@@ -18,7 +18,7 @@ func NewRenderer(glob string) *Renderer {
 }
 
 func (r *Renderer) Render(w http.ResponseWriter, name string, data interface{}) {
-	t, err := template.ParseGlob("**/*.html")
+	t, err := template.ParseGlob(r.Glob)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Template error: %q", err), http.StatusInternalServerError)
 		return

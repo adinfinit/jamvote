@@ -149,7 +149,7 @@ fieldset > legend {
 
 input[type=submit]{
 	cursor: pointer;
-	background: hsla(90, 70%, 70%, 1);
+	background: hsla(90, 70%, 80%, 1);
 	font-size: 1.5rem;
 	margin-top: 3rem;
     margin-bottom: 1.5rem;

@@ -1,0 +1,17 @@
+{{ template "head" . }}
+{{ template "event-menu" . }}
+
+<section>
+	<h1>{{ .TeamID }}</h1>
+	
+	<a class="button" href="/LD40/edit-team"><div class="title">Edit Team</div></a>
+
+	<div class="members">
+		<a href="/user/1">Alpha Alpha</a>
+		<a href="/user/2">Beta Beta</a>
+		<a href="/user/3">Gamma Gamma</a>
+		<a href="/user/4">Delta Delta</a>
+	</div>
+</section>
+
+{{ template "foot" . }}
