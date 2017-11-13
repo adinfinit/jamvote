@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/user"
 )
 
@@ -22,23 +23,59 @@ func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/{userid}", users.Profile)
 }
 
+type GoogleAuth struct {
+	UserID ID
+}
+
 func (users *Server) EditProfile(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	u := user.Current(c)
+	googleuser := user.Current(c)
 
-	if u == nil {
+	if googleuser == nil {
 		http.Redirect(w, r, "/user/login", http.StatusTemporaryRedirect)
 		return
 	}
 
-	user := &User{
-		ID:    ID(u.ID),
-		Name:  u.Email,
-		Email: u.Email,
+	authkey := datastore.NewKey(c, "Auth", "google-"+string(googleuser.ID), 0, nil)
+
+	auth := &GoogleAuth{}
+	err := datastore.Get(c, authkey, auth)
+
+	if err == datastore.ErrNoSuchEntity {
+		// create new user
+		siteuser := &User{
+			ID:    ID(googleuser.ID),
+			Name:  googleuser.Email,
+			Email: googleuser.Email,
+		}
+
+		// create new user
+		userkey := datastore.NewKey(c, "User", string(siteuser.ID), 0, nil)
+		if _, err := datastore.Put(c, userkey, siteuser); err != nil {
+			http.Error(w, "Create new user: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		auth.UserID = siteuser.ID
+
+		// add authentication mapping
+		if _, err := datastore.Put(c, authkey, auth); err != nil {
+			http.Error(w, "Create new auth: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
+	siteuser := &User{}
+	userkey := datastore.NewKey(c, "User", string(auth.UserID), 0, nil)
+
+	if err := datastore.Get(c, userkey, siteuser); err != nil {
+		http.Error(w, "Get user: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	siteuser.ID = auth.UserID
 	users.Renderer.Render(w, "user-edit", map[string]interface{}{
-		"User": user,
+		"User": siteuser,
 	})
 }
 

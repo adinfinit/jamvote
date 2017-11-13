@@ -3,9 +3,9 @@ package user
 type ID string
 
 type User struct {
-	ID   ID
-	Name string
+	ID   ID     `datastore:"KeyName"`
+	Name string `datastore:",noindex"`
 
-	Email    string
-	Facebook string
+	Email    string `datastore:",noindex"`
+	Facebook string `datastore:",noindex"`
 }
