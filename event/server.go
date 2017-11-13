@@ -21,7 +21,7 @@ func NewServer(slug, title string, renderer *site.Renderer) *Server {
 func (event *Server) Register(router *mux.Router) {
 	prefix := path.Join("/", event.Slug)
 	router.HandleFunc(prefix, event.Teams)
-	router.HandleFunc(path.Join(prefix, "/create-team"), event.Teams)
+	router.HandleFunc(path.Join(prefix, "/create-team"), event.CreateTeam)
 	router.HandleFunc(path.Join(prefix, "/progress"), event.Teams)
 	router.HandleFunc(path.Join(prefix, "/closing"), event.Teams)
 	router.HandleFunc(path.Join(prefix, "/summary"), event.Teams)
@@ -31,6 +31,13 @@ func (event *Server) Register(router *mux.Router) {
 
 func (event *Server) Teams(w http.ResponseWriter, r *http.Request) {
 	event.Renderer.Render(w, "event-teams", map[string]interface{}{
+		"EventSlug":  event.Slug,
+		"EventTitle": event.Title,
+	})
+}
+
+func (event *Server) CreateTeam(w http.ResponseWriter, r *http.Request) {
+	event.Renderer.Render(w, "create-team", map[string]interface{}{
 		"EventSlug":  event.Slug,
 		"EventTitle": event.Title,
 	})

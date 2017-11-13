@@ -1,0 +1,37 @@
+{{ template "head" . }}
+{{ template "event-menu" . }}
+
+<section>
+	<h1>Create Team</h1>
+	<form action="">
+		<div class="field">
+			<label for="team-name">Team Name</label>
+			<input type="text" id="team-name">
+		</div>
+		<div class="field members">
+			<label>Members</label>
+
+			<datalist id="members">
+				<option value="Alpha Alpha" label="035192"></option>
+				<option value="Beta Beta" label="035192"></option>
+				<option value="Gamma Gamma" label="035192"></option>
+				<option value="Delta Delta" label="035192"></option>
+				<option value="Iota Iota" label="035192"></option>
+			</datalist>
+
+			<input id="member[0]" type="Text" list="members">
+			<input id="member[1]" type="Text" list="members">
+			<input id="member[2]" type="Text" list="members">
+			<input id="member[3]" type="Text" list="members">
+			<input id="member[4]" type="Text" list="members">
+
+			<input id="member[5]" type="Text" list="members" placeholder="Extra member">
+			<input id="member[6]" type="Text" list="members" placeholder="Extra member">
+			<input id="member[7]" type="Text" list="members" placeholder="Extra member">
+		</div>
+
+		<input type="submit" value="Create">
+	</form>
+</section>
+
+{{ template "foot" . }}
