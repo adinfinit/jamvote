@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/adinfinit/rater/site"
+	"github.com/adinfinit/jamvote/site"
 	"github.com/gorilla/mux"
 
 	"google.golang.org/appengine"

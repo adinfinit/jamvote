@@ -3,7 +3,7 @@ package event
 import (
 	"time"
 
-	"github.com/adinfinit/rater/user"
+	"github.com/adinfinit/jamvote/user"
 )
 
 type TeamID string

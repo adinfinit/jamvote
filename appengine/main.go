@@ -8,9 +8,9 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/adinfinit/rater/event"
-	"github.com/adinfinit/rater/site"
-	"github.com/adinfinit/rater/user"
+	"github.com/adinfinit/jamvote/event"
+	"github.com/adinfinit/jamvote/site"
+	"github.com/adinfinit/jamvote/user"
 )
 
 var (

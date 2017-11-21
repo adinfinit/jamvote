@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/adinfinit/rater/site"
+	"github.com/adinfinit/jamvote/site"
 	"github.com/gorilla/mux"
 )
 
