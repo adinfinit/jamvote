@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
@@ -21,6 +22,9 @@ func main() {
 	router := mux.NewRouter()
 
 	renderer := site.NewRenderer("**/*.html")
+
+	auths := auth.NewService()
+	auths.Register(router)
 
 	mains := &site.Server{renderer}
 	mains.Register(router)

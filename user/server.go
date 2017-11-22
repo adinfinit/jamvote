@@ -1,9 +1,9 @@
 package user
 
 import (
-	"log"
 	"net/http"
 
+	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/gorilla/mux"
 
@@ -13,6 +13,7 @@ import (
 )
 
 type Server struct {
+	Auth     *auth.Service
 	Renderer *site.Renderer
 }
 
@@ -110,29 +111,13 @@ func (users *Server) Profile(w http.ResponseWriter, r *http.Request) {
 
 func (users *Server) Login(w http.ResponseWriter, r *http.Request) {
 	type Login struct{ Title, URL string }
-	c := appengine.NewContext(r)
 
-	googlelogin, err := user.LoginURL(c, "/user")
-	if err != nil {
-		log.Println(err)
-	}
-
+	logins := users.Auth.Logins(r)
 	users.Renderer.Render(w, "user-login", map[string]interface{}{
-		"Logins": []Login{{"Google", googlelogin}},
+		"Logins": logins,
 	})
 }
 
 func (users *Server) Logout(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := user.Current(c)
-	if u == nil {
-		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-	}
-
-	googlelogout, err := user.LogoutURL(c, "/")
-	if err != nil {
-		log.Println(err)
-	}
-
-	http.Redirect(w, r, googlelogout, http.StatusTemporaryRedirect)
+	users.Auth.Logout(w, r)
 }
