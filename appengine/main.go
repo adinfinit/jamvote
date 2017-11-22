@@ -8,8 +8,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/adinfinit/jamvote/auth"
-	"github.com/adinfinit/jamvote/event"
-	"github.com/adinfinit/jamvote/site"
+	"github.com/adinfinit/jamvote/dashboard"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -21,16 +20,14 @@ func main() {
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	renderer := site.NewRenderer("templates/**/*.html")
-
-	mains := &site.Server{renderer}
-	mains.Register(router)
-
-	users := &user.Server{auths, renderer}
+	users := &user.Server{auths}
 	users.Register(router)
 
-	events := event.NewServer("LD40", "Ludum Dare 40", renderer)
-	events.Register(router)
+	dashboards := &dashboard.Server{users}
+	dashboards.Register(router)
+
+	// events := event.NewServer("LD40", "Ludum Dare 40")
+	// events.Register(router)
 
 	http.Handle("/", router)
 

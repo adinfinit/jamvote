@@ -17,6 +17,7 @@ type Credentials struct {
 	ID       string
 	Email    string
 	Name     string
+	Admin    bool
 }
 
 var (
@@ -78,6 +79,7 @@ func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
 			ID:       aeuser.ID,
 			Name:     name,
 			Email:    aeuser.Email,
+			Admin:    aeuser.Admin,
 		}
 	}
 

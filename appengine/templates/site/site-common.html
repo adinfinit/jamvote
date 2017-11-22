@@ -5,22 +5,22 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="google" value="notranslate">
-        <title>APT Jam</title>
+        <title>jamvote</title>
         <link rel="stylesheet" href="/static/main.css">
     </head>
     <body>
-        {{ template "current-user" . }}
-
-        <div class="header-outer">
-            <div class="header center">
-                <a href="/" class="title">APT Jam</a>
-                <div class="menu">
-                    <a href="/user">Profile</a>
-                    <a href="/user/login">Sign in</a>
-                    <a href="/user/logout">Sign out</a>
-                </div>
+        <div class="current-user-outer">
+            <div class="current-user center">
+                <a style="float:left" href="/">jamvote</a>
+                {{ if .CurrentUser }}
+                <a class="link" href="/user">{{or .CurrentUser.Name "Profile"}}</a>
+                <a class="link" href="/user/logout">Sign out</a>
+                {{ else }}
+                <a class="link" href="/user/login">Sign in</a>
+                {{ end }}
             </div>
         </div>
+
         <div class="content-outer">
             <div class="content center">        
 {{ end }}

@@ -13,4 +13,9 @@ type User struct {
 	Name     string `datastore:",noindex"`
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`
+	Admin    bool   `datastore:",noindex"`
+}
+
+func (user *User) Equals(b *User) bool {
+	return user.ID == b.ID
 }
