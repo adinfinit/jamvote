@@ -88,15 +88,24 @@ func (service *Service) Logins(r *http.Request) []LoginLink {
 	infos := []LoginLink{}
 
 	c := appengine.NewContext(r)
-	for _, provider := range []string{"Google", "Github", "Facebook"} {
-		identity := providers[provider]
-		loginurl, err := user.LoginURLFederated(c, "/auth/callback", identity)
-		if err != nil {
-			log.Println(err)
-			continue
+	/*
+		for _, provider := range []string{"Google", "Github", "Facebook"} {
+			identity := providers[provider]
+			loginurl, err := user.LoginURLFederated(c, "/auth/callback", identity)
+			if err != nil {
+				log
+				log.Println(err)
+				continue
+			}
+			infos = append(infos, LoginLink{provider, loginurl})
 		}
-		infos = append(infos, LoginLink{provider, loginurl})
+	*/
+	loginurl, err := user.LoginURL(c, "/auth/callback")
+	if err != nil {
+		log.Println(err)
+		return infos
 	}
+	infos = append(infos, LoginLink{"Google", loginurl})
 
 	return infos
 }
@@ -104,36 +113,25 @@ func (service *Service) Logins(r *http.Request) []LoginLink {
 func (service *Service) CurrentCredentials(w http.ResponseWriter, r *http.Request) *Credentials {
 	c := appengine.NewContext(r)
 
-	feduser, err := user.CurrentOAuth(c)
-	if feduser != nil && err == nil {
+	aeuser := user.Current(c)
+	if aeuser != nil {
 		return &Credentials{
 			Provider: "appengine",
-			ID:       feduser.ID,
-			Name:     feduser.Email,
-			Email:    feduser.Email,
+			ID:       aeuser.ID,
+			Name:     aeuser.Email,
+			Email:    aeuser.Email,
 		}
 	}
 
 	return nil
 }
 
-func (service *Service) L(w http.ResponseWriter, r *http.Request) {
+func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	aeuser := user.Current(c)
 	if aeuser != nil {
 		http.Redirect(w, r, service.LoginCompleted, http.StatusTemporaryRedirect)
 	} else {
-		http.Redirect(w, r, service.LoginFailed, http.StatusTemporaryRedirect)
-	}
-}
-
-func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	feduser, err := user.CurrentOAuth(c)
-	if feduser != nil && err == nil {
-		http.Redirect(w, r, service.LoginCompleted, http.StatusTemporaryRedirect)
-	} else {
-		log.Println(err)
 		http.Redirect(w, r, service.LoginFailed, http.StatusTemporaryRedirect)
 	}
 }
