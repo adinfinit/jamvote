@@ -9,6 +9,7 @@ import (
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/dashboard"
+	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -26,8 +27,8 @@ func main() {
 	dashboards := &dashboard.Server{users}
 	dashboards.Register(router)
 
-	// events := event.NewServer("LD40", "Ludum Dare 40")
-	// events.Register(router)
+	events := event.NewServer("LD40", "Ludum Dare 40", users)
+	events.Register(router)
 
 	http.Handle("/", router)
 

@@ -8,24 +8,10 @@ import (
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/gorilla/mux"
-
-	"google.golang.org/appengine/datastore"
 )
-
-type Renderer interface {
-	Render(scope *Scope)
-}
 
 type Server struct {
 	Auth *auth.Service
-}
-
-type Repo interface {
-	ByCredentials(cred *auth.Credentials) (*User, error)
-	ByID(id ID) (*User, error)
-
-	Create(cred *auth.Credentials, user *User) (ID, error)
-	Update(user *User) error
 }
 
 func (users *Server) Register(router *mux.Router) {
@@ -34,14 +20,6 @@ func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/login", users.Scoped(users.Login))
 	router.HandleFunc("/user/logout", users.Scoped(users.Logout))
 	router.HandleFunc("/user/{userid}", users.Scoped(users.Profile))
-}
-
-type CredentialsUser struct {
-	UserKey *datastore.Key
-
-	Provider string `datastore:",noindex"`
-	Email    string `datastore:",noindex"`
-	Name     string `datastore:",noindex"`
 }
 
 func getUserID(r *http.Request) (ID, bool) {

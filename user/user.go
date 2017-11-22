@@ -1,11 +1,17 @@
 package user
 
-import "strconv"
+import (
+	"strconv"
 
-type ID int64
+	"github.com/adinfinit/jamvote/auth"
+)
 
-func (id ID) String() string {
-	return strconv.Itoa(int(id))
+type Repo interface {
+	ByCredentials(cred *auth.Credentials) (*User, error)
+	ByID(id ID) (*User, error)
+
+	Create(cred *auth.Credentials, user *User) (ID, error)
+	Update(user *User) error
 }
 
 type User struct {
@@ -19,3 +25,7 @@ type User struct {
 func (user *User) Equals(b *User) bool {
 	return user.ID == b.ID
 }
+
+type ID int64
+
+func (id ID) String() string { return strconv.Itoa(int(id)) }

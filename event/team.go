@@ -14,7 +14,8 @@ type Member struct {
 }
 
 type Event struct {
-	Name string
+	Slug  string
+	Title string
 
 	Create time.Time
 	Start  time.Time

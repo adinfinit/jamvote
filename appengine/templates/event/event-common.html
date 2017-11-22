@@ -1,9 +1,9 @@
 {{ define "event-menu" }}
 <div class="submenu">
-    <a href="/{{ .EventSlug }}" class="subtitle">{{ .EventTitle }}</a>
-    <a href="/{{ .EventSlug }}/progress">Progress</a>
-    <a href="/{{ .EventSlug }}/voting">Voting</a>
-    <a href="/{{ .EventSlug }}/closing">Closing</a>
-    <a href="/{{ .EventSlug }}/summary">Summary</a>
+    <a href="/{{ .Event.Slug }}" class="subtitle">{{ .Event.Title }}</a>
+    <a href="/{{ .Event.Slug }}/progress">Progress</a>
+    <a href="/{{ .Event.Slug }}/voting">Voting</a>
+    <a href="/{{ .Event.Slug }}/closing">Closing</a>
+    <a href="/{{ .Event.Slug }}/summary">Summary</a>
 </div>
 {{ end }}

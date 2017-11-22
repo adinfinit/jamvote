@@ -7,7 +7,9 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 
+	"github.com/gorilla/mux"
 	"google.golang.org/appengine"
 )
 
@@ -40,6 +42,23 @@ func (scope *Scope) Render(name string) {
 	if err := t.ExecuteTemplate(scope.Response, name+".html", scope.Data); err != nil {
 		log.Println(err)
 	}
+}
+
+func (scope *Scope) StringParam(name string) (string, bool) {
+	s, ok := mux.Vars(scope.Request)[name]
+	return s, ok
+}
+
+func (scope *Scope) IntParam(name string) (int64, bool) {
+	s, ok := scope.StringParam(name)
+	if !ok {
+		return 0, false
+	}
+	v, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return v, false
+	}
+	return v, true
 }
 
 var ErrNotExists = errors.New("info does not exist")

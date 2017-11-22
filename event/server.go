@@ -4,54 +4,52 @@ import (
 	"net/http"
 	"path"
 
-	"github.com/adinfinit/jamvote/site"
+	"github.com/adinfinit/jamvote/user"
 	"github.com/gorilla/mux"
 )
 
 type Server struct {
-	Slug     string
-	Title    string
-	Renderer *site.Renderer
+	Slug  string
+	Title string
+	Users *user.Server
 }
 
-func NewServer(slug, title string, renderer *site.Renderer) *Server {
-	return &Server{slug, title, renderer}
+func NewServer(slug, title string, users *user.Server) *Server {
+	return &Server{slug, title, users}
 }
 
 func (event *Server) Register(router *mux.Router) {
 	prefix := path.Join("/", event.Slug)
-	router.HandleFunc(prefix, event.Teams)
-	router.HandleFunc(path.Join(prefix, "/create-team"), event.CreateTeam)
-	router.HandleFunc(path.Join(prefix, "/progress"), event.Teams)
-	router.HandleFunc(path.Join(prefix, "/closing"), event.Teams)
-	router.HandleFunc(path.Join(prefix, "/summary"), event.Teams)
-	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Team)
-	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Teams)
+
+	router.HandleFunc(prefix, event.Scoped(event.Teams))
+	router.HandleFunc(path.Join(prefix, "/create-team"), event.Scoped(event.CreateTeam))
+	router.HandleFunc(path.Join(prefix, "/progress"), event.Scoped(event.Teams))
+	router.HandleFunc(path.Join(prefix, "/closing"), event.Scoped(event.Teams))
+	router.HandleFunc(path.Join(prefix, "/summary"), event.Scoped(event.Teams))
+	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Scoped(event.Team))
+	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Scoped(event.Teams))
 }
 
-func (event *Server) Teams(w http.ResponseWriter, r *http.Request) {
-	event.Renderer.Render(w, "event-teams", map[string]interface{}{
-		"EventSlug":  event.Slug,
-		"EventTitle": event.Title,
-	})
+func (event *Server) Teams(scope *Scope) {
+	scope.Render("event-teams")
 }
 
-func (event *Server) Team(w http.ResponseWriter, r *http.Request) {
-	teamid := mux.Vars(r)["teamid"]
+func (event *Server) Team(scope *Scope) {
+	teamid, ok := scope.StringParam("teamid")
+	if !ok {
+		scope.Error("Team ID missing", http.StatusBadRequest)
+		return
+	}
 
-	event.Renderer.Render(w, "event-team", map[string]interface{}{
-		"EventSlug":  event.Slug,
-		"EventTitle": event.Title,
+	scope.Data["Team"] = Team{
+		ID: TeamID(teamid),
+	}
 
-		"TeamID": teamid,
-	})
+	scope.Render("event-team")
 }
 
-func (event *Server) CreateTeam(w http.ResponseWriter, r *http.Request) {
-	event.Renderer.Render(w, "event-create-team", map[string]interface{}{
-		"EventSlug":  event.Slug,
-		"EventTitle": event.Title,
-	})
+func (event *Server) CreateTeam(scope *Scope) {
+	scope.Render("event-create-team")
 }
 
 /*
