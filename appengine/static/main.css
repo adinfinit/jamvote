@@ -21,13 +21,18 @@ html, body {
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
 /* page layout */
 
 .header-outer {
 	border-bottom: 2px solid #888;
 }
 
-.header, .content {
+.center {
 	max-width: 50rem;
 	margin: 0 auto;
 }
@@ -51,6 +56,30 @@ html, body {
 .content {
 	padding: 0.5rem 1rem;
 	padding-top: 0.5rem;
+}
+
+/* current user */
+
+.current-user-outer {
+	background: #563d7c;
+	box-shadow: 
+		0 0.5rem 1rem rgba(0,0,0,.05), 
+		inset 0 -1px 0 rgba(0,0,0,.1);
+}
+.current-user {
+	padding: 0.25rem 1rem;
+	text-align: right;
+	color: #cdbfe3;
+	font-weight: bold;
+}
+.current-user .link {
+	min-width: 10rem;
+	text-transform: lowercase;
+	padding: 0 1.5rem;
+	border-left: 2px solid #cdbfe3;
+}
+.current-user .link:hover {
+	color: #fff;
 }
 
 /* menu */
