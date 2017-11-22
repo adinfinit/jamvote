@@ -78,28 +78,10 @@ type LoginLink struct {
 	URL   string
 }
 
-var providers = map[string]string{
-	"Google":   "",
-	"Github":   "github.com",
-	"Facebook": "facebook.com",
-}
-
 func (service *Service) Logins(r *http.Request) []LoginLink {
 	infos := []LoginLink{}
 
 	c := appengine.NewContext(r)
-	/*
-		for _, provider := range []string{"Google", "Github", "Facebook"} {
-			identity := providers[provider]
-			loginurl, err := user.LoginURLFederated(c, "/auth/callback", identity)
-			if err != nil {
-				log
-				log.Println(err)
-				continue
-			}
-			infos = append(infos, LoginLink{provider, loginurl})
-		}
-	*/
 	loginurl, err := user.LoginURL(c, "/auth/callback")
 	if err != nil {
 		log.Println(err)
