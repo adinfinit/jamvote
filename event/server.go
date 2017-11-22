@@ -48,7 +48,7 @@ func (event *Server) Team(w http.ResponseWriter, r *http.Request) {
 }
 
 func (event *Server) CreateTeam(w http.ResponseWriter, r *http.Request) {
-	event.Renderer.Render(w, "create-team", map[string]interface{}{
+	event.Renderer.Render(w, "event-create-team", map[string]interface{}{
 		"EventSlug":  event.Slug,
 		"EventTitle": event.Title,
 	})

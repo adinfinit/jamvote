@@ -8,4 +8,5 @@ type User struct {
 
 	Email    string `datastore:",noindex"`
 	Facebook string `datastore:",noindex"`
+	Github   string `datastore:",noindex"`
 }

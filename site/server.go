@@ -15,7 +15,7 @@ func (front *Server) Register(router *mux.Router) {
 }
 
 func (front *Server) Frontpage(w http.ResponseWriter, r *http.Request) {
-	front.Renderer.Render(w, "frontpage", map[string]interface{}{
+	front.Renderer.Render(w, "site-frontpage", map[string]interface{}{
 		"UserID": "",
 	})
 }

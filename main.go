@@ -21,7 +21,7 @@ var (
 func main() {
 	router := mux.NewRouter()
 
-	renderer := site.NewRenderer("**/*.html")
+	renderer := site.NewRenderer("appengine/templates/*.html")
 
 	auths := auth.NewService()
 	auths.Register(router)

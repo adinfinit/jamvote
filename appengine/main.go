@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"net/http"
 
 	"google.golang.org/appengine"
@@ -14,19 +13,15 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
-var (
-	listen = flag.String("listen", ":8080", "listen on address")
-)
-
 func main() {
 	router := mux.NewRouter()
 
-	auths := auth.NewService()
+	auths := auth.NewService("http://localhost:8080")
 	auths.LoginCompleted = "/user"
-	auths.LoginFailed = "/login"
+	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	renderer := site.NewRenderer("../**/*.html")
+	renderer := site.NewRenderer("templates/**/*.html")
 
 	mains := &site.Server{renderer}
 	mains.Register(router)

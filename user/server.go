@@ -9,7 +9,6 @@ import (
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
-	"google.golang.org/appengine/user"
 )
 
 type Server struct {
@@ -24,56 +23,56 @@ func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/{userid}", users.Profile)
 }
 
-type GoogleAuth struct {
+type CredentialsUser struct {
 	UserID ID
 }
 
 func (users *Server) EditProfile(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	googleuser := user.Current(c)
-
-	if googleuser == nil {
+	cred := users.Auth.CurrentCredentials(w, r)
+	if cred == nil {
 		http.Redirect(w, r, "/user/login", http.StatusTemporaryRedirect)
 		return
 	}
 
-	authkey := datastore.NewKey(c, "Auth", "google-"+string(googleuser.ID), 0, nil)
+	c := appengine.NewContext(r)
 
-	auth := &GoogleAuth{}
-	err := datastore.Get(c, authkey, auth)
+	authkey := datastore.NewKey(c, "Auth", cred.ID, 0, nil)
+
+	creduser := &CredentialsUser{}
+	err := datastore.Get(c, authkey, creduser)
 
 	if err == datastore.ErrNoSuchEntity {
 		// create new user
-		siteuser := &User{
-			ID:    ID(googleuser.ID),
-			Name:  googleuser.Email,
-			Email: googleuser.Email,
+		user := &User{
+			ID:    ID(cred.ID),
+			Name:  cred.Name,
+			Email: cred.Email,
 		}
 
 		// create new user
-		userkey := datastore.NewKey(c, "User", string(siteuser.ID), 0, nil)
-		if _, err := datastore.Put(c, userkey, siteuser); err != nil {
+		userkey := datastore.NewKey(c, "User", string(user.ID), 0, nil)
+		if _, err := datastore.Put(c, userkey, user); err != nil {
 			http.Error(w, "Create new user: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		auth.UserID = siteuser.ID
+		creduser.UserID = user.ID
 
 		// add authentication mapping
-		if _, err := datastore.Put(c, authkey, auth); err != nil {
+		if _, err := datastore.Put(c, authkey, creduser); err != nil {
 			http.Error(w, "Create new auth: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
 	}
 
-	siteuser := &User{}
-	userkey := datastore.NewKey(c, "User", string(auth.UserID), 0, nil)
+	user := &User{}
+	userkey := datastore.NewKey(c, "User", string(creduser.UserID), 0, nil)
 
-	if err := datastore.Get(c, userkey, siteuser); err != nil {
+	if err := datastore.Get(c, userkey, user); err != nil {
 		http.Error(w, "Get user: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	siteuser.ID = auth.UserID
+	user.ID = creduser.UserID
 
 	if r.Method == http.MethodPost {
 		if err := r.ParseForm(); err != nil {
@@ -85,12 +84,12 @@ func (users *Server) EditProfile(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		facebook := r.FormValue("facebook")
 
-		if name != siteuser.Name || email != siteuser.Email || facebook != siteuser.Facebook {
-			siteuser.Name = name
-			siteuser.Email = email
-			siteuser.Facebook = facebook
+		if name != user.Name || email != user.Email || facebook != user.Facebook {
+			user.Name = name
+			user.Email = email
+			user.Facebook = facebook
 
-			if _, err := datastore.Put(c, userkey, siteuser); err != nil {
+			if _, err := datastore.Put(c, userkey, user); err != nil {
 				http.Error(w, "Put user: "+err.Error(), http.StatusInternalServerError)
 				return
 			}
@@ -98,7 +97,7 @@ func (users *Server) EditProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	users.Renderer.Render(w, "user-edit", map[string]interface{}{
-		"User": siteuser,
+		"User": user,
 	})
 }
 
