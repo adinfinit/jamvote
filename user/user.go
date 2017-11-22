@@ -1,12 +1,16 @@
 package user
 
-type ID string
+import "strconv"
+
+type ID int64
+
+func (id ID) String() string {
+	return strconv.Itoa(int(id))
+}
 
 type User struct {
-	ID   ID     `datastore:"KeyName"`
-	Name string `datastore:",noindex"`
-
-	Email    string `datastore:",noindex"`
+	ID       ID     `datastore:"-"`
+	Name     string `datastore:",noindex"`
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`
 }

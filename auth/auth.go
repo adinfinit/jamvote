@@ -4,14 +4,9 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/gorilla/mux"
-
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/facebook"
-	"golang.org/x/oauth2/github"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"
@@ -32,8 +27,6 @@ type Service struct {
 	Domain         string
 	LoginFailed    string
 	LoginCompleted string
-
-	Configs []*oauth2.Config
 }
 
 func NewService(domain string) *Service {
@@ -43,8 +36,6 @@ func NewService(domain string) *Service {
 	service.LoginFailed = "/"
 	service.LoginCompleted = "/"
 
-	service.AddDefaultProviders()
-
 	return service
 }
 
@@ -53,33 +44,13 @@ func (service *Service) Register(router *mux.Router) {
 	router.HandleFunc("/auth/logout", service.Logout)
 }
 
-func (service *Service) add(name string, endpoint oauth2.Endpoint) {
-	uname := strings.ToUpper(name)
-	clientid := os.Getenv(uname + "_ID")
-	secret := os.Getenv(uname + "_SECRET")
-
-	if clientid != "" && secret != "" {
-		service.Configs = append(service.Configs, &oauth2.Config{
-			ClientID:     clientid,
-			ClientSecret: secret,
-			Scopes:       []string{"user"},
-			Endpoint:     endpoint,
-		})
-	}
-}
-
-func (service *Service) AddDefaultProviders() {
-	service.add("facebook", facebook.Endpoint)
-	service.add("github", github.Endpoint)
-}
-
-type LoginLink struct {
+type Link struct {
 	Title string
 	URL   string
 }
 
-func (service *Service) Logins(r *http.Request) []LoginLink {
-	infos := []LoginLink{}
+func (service *Service) Links(r *http.Request) []Link {
+	infos := []Link{}
 
 	c := appengine.NewContext(r)
 	loginurl, err := user.LoginURL(c, "/auth/callback")
@@ -87,20 +58,25 @@ func (service *Service) Logins(r *http.Request) []LoginLink {
 		log.Println(err)
 		return infos
 	}
-	infos = append(infos, LoginLink{"Google", loginurl})
+	infos = append(infos, Link{"Google", loginurl})
 
 	return infos
 }
 
-func (service *Service) CurrentCredentials(w http.ResponseWriter, r *http.Request) *Credentials {
+func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
 	c := appengine.NewContext(r)
 
 	aeuser := user.Current(c)
 	if aeuser != nil {
+		name := aeuser.Email
+		if p := strings.Index(name, "@"); p >= 0 {
+			name = name[:p]
+		}
+
 		return &Credentials{
 			Provider: "appengine",
 			ID:       aeuser.ID,
-			Name:     aeuser.Email,
+			Name:     name,
 			Email:    aeuser.Email,
 		}
 	}
