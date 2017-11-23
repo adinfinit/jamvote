@@ -12,6 +12,7 @@
         <div class="current-user-outer">
             <div class="current-user center">
                 <a style="float:left" href="/">jamvote</a>
+                <a class="link" href="/">Events</a>
                 {{ if .CurrentUser }}
                 <a class="link" href="/user">{{or .CurrentUser.Name "Profile"}}</a>
                 <a class="link" href="/user/logout">Sign out</a>
@@ -20,7 +21,7 @@
                 {{ end }}
             </div>
         </div>
-
+        {{ template "event-header" . }}
         <div class="content-outer">
             <div class="content center">        
 {{ end }}
