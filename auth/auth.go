@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"errors"
 	"log"
 	"net/http"
@@ -64,9 +65,7 @@ func (service *Service) Links(r *http.Request) []Link {
 	return infos
 }
 
-func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
-	c := appengine.NewContext(r)
-
+func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
 	aeuser := user.Current(c)
 	if aeuser != nil {
 		name := aeuser.Email

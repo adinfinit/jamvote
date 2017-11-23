@@ -10,9 +10,9 @@ type Server struct {
 }
 
 func (dashboard *Server) Register(router *mux.Router) {
-	router.HandleFunc("/", dashboard.Users.Scoped(dashboard.Index))
+	router.HandleFunc("/", dashboard.Users.Handler(dashboard.Index))
 }
 
-func (dashboard *Server) Index(scope *user.Scope) {
-	scope.Render("frontpage")
+func (dashboard *Server) Index(context *user.Context) {
+	context.Render("frontpage")
 }
