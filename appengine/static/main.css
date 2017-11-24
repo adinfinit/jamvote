@@ -25,7 +25,11 @@ a {
 	text-decoration: none;
 	color: inherit;
 
-	transition: background 0.2s ease-in-out;
+	transition: background 0.15s ease-out;
+}
+
+a.active, a:hover {
+	background: #eee;
 }
 
 /* page layout */
@@ -43,7 +47,6 @@ a {
 /* current user */
 
 .current-user-outer {
-	font-size: 0.8rem;
 	color: #666;
 	box-shadow: 
 		0 0.5rem 1rem rgba(0,0,0,.05), 
@@ -51,6 +54,9 @@ a {
 }
 .current-user {
 	display: flex;
+}
+.current-user.small {
+	font-size: 0.8rem;
 }
 .current-user :first-child {
 	flex: 1;
@@ -60,13 +66,12 @@ a {
 	display: block;
 
 	text-transform: lowercase;
-	padding: 0.25rem 1rem;
+	padding: 1rem 1rem;
 	border-left: 1px solid #888;
 }
-.current-user a:hover {
-	background: #eee;
+.current-user.small a {
+	padding: 0.25rem 1rem;
 }
-
 /* header */
 
 .header-outer {
@@ -90,9 +95,6 @@ a {
 	padding: 1rem 1rem;
 	font-size: 1rem;
 	flex: 0;
-}
-.header a.active, .header a:hover {
-	background: #eee;
 }
 
 /* forms */
@@ -162,10 +164,6 @@ input[type=submit]{
 	
 	padding: 0.5rem 0.5rem;
 	margin-bottom: 1rem;
-
-	text-decoration: none;
-}
-.logins a:hover {
 }
 
 /* event */
@@ -182,9 +180,6 @@ input[type=submit]{
 }
 .event-link.ongoing {
 	font-size: 1.5rem;
-
-	color: #fff;
-	background: #69904c;
 }
 .event-link > .title {
 	flex: 1;
@@ -194,9 +189,6 @@ input[type=submit]{
 	width: 12rem;
 	padding: 0.5rem 1rem;
 	text-align: center;
-
-	background: #f0f0f0;
-	color: #333;
 }
 
 .event-link:hover {

@@ -12,7 +12,7 @@
     </head>
     <body>
         <div class="current-user-outer">
-            <div class="current-user center">
+            <div class="current-user {{if .Event}}small{{end}} center">
                 <a href="/">jamvote</a>
                 <a class="link" href="/">Events</a>
                 {{ if .CurrentUser }}
@@ -23,7 +23,18 @@
                 {{ end }}
             </div>
         </div>
-        {{ template "event-header" . }}
+        {{ if .Event }}
+        <div class="header-outer">
+            <div class="header center">
+                <a href="/{{ .Event.Slug }}" class="title">{{ .Event.Title }}</a>
+                <a href="/{{ .Event.Slug }}/teams">Teams</a>
+                <a href="/{{ .Event.Slug }}/progress">Progress</a>
+                <a href="/{{ .Event.Slug }}/voting">Voting</a>
+                <a href="/{{ .Event.Slug }}/closing">Closing</a>
+                <a href="/{{ .Event.Slug }}/summary">Summary</a>
+            </div>
+        </div>
+        {{ end }}
         <div class="content-outer">
             <div class="content center">        
 {{ end }}

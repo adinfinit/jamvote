@@ -1,0 +1,25 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Info</h1>
+	
+	<div>Voting Starts: 2017-12-13 12:00</div>
+	<div>Voting Ends: 2017-12-13 12:00</div>
+
+	<div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio atque iste iure libero quisquam voluptates provident excepturi minima a odit quibusdam, dolore aperiam quae, itaque blanditiis odio, quasi harum nulla?</p>
+	</div>
+</section>
+
+<section>
+	<h1>Teams</h1>
+	
+	<a class="button" href="/{{.Event.Slug}}/create-team"><div class="title">Create Team</div></a>
+	
+	<br>
+	<a class="button" href="/{{.Event.Slug}}/alpha"><div class="title">Alpha</div></a>
+	<a class="button" href="/{{.Event.Slug}}/beta"><div class="title">Beta</div></a>
+
+</section>
+
+{{ template "foot" . }}
