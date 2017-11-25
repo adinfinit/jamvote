@@ -25,13 +25,13 @@ func datastoreError(err error) error {
 	return err
 }
 
-func (repo *Datastore) Create(cred *auth.Credentials, user *User) (ID, error) {
+func (repo *Datastore) Create(cred *auth.Credentials, user *User) (UserID, error) {
 	incompletekey := datastore.NewIncompleteKey(repo.Context, "User", nil)
 	userkey, err := datastore.Put(repo.Context, incompletekey, user)
 	if err != nil {
 		return 0, datastoreError(err)
 	}
-	user.ID = ID(userkey.IntID())
+	user.ID = UserID(userkey.IntID())
 
 	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
 
@@ -59,13 +59,13 @@ func (repo *Datastore) ByCredentials(cred *auth.Credentials) (*User, error) {
 	}
 
 	user := &User{}
-	user.ID = ID(mapping.UserKey.IntID())
+	user.ID = UserID(mapping.UserKey.IntID())
 	err = datastore.Get(repo.Context, mapping.UserKey, user)
 
 	return user, datastoreError(err)
 }
 
-func (repo *Datastore) ByID(id ID) (*User, error) {
+func (repo *Datastore) ByID(id UserID) (*User, error) {
 	user := &User{}
 	user.ID = id
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(id), nil)
@@ -79,7 +79,7 @@ func (repo *Datastore) List() ([]*User, error) {
 	q := datastore.NewQuery("User") //.Order("Name")
 	keys, err := q.GetAll(repo.Context, &users)
 	for i, user := range users {
-		user.ID = ID(keys[i].IntID())
+		user.ID = UserID(keys[i].IntID())
 	}
 	// TODO: use datastore.Order
 	sort.Slice(users, func(i, k int) bool {

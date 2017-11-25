@@ -8,17 +8,21 @@ import (
 
 type Repo interface {
 	ByCredentials(cred *auth.Credentials) (*User, error)
-	ByID(id ID) (*User, error)
+	ByID(id UserID) (*User, error)
 	List() ([]*User, error)
 
-	Create(cred *auth.Credentials, user *User) (ID, error)
+	Create(cred *auth.Credentials, user *User) (UserID, error)
 	Update(user *User) error
 }
 
+type UserID int64
+
+func (id UserID) String() string { return strconv.Itoa(int(id)) }
+
 type User struct {
-	ID    ID `datastore:"-"`
+	ID    UserID `datastore:"-"`
 	Name  string
-	Admin bool `datastore:",noindex"`
+	Admin bool
 
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`
@@ -33,7 +37,3 @@ func (user *User) IsAdmin() bool {
 func (user *User) Equals(b *User) bool {
 	return user.ID == b.ID
 }
-
-type ID int64
-
-func (id ID) String() string { return strconv.Itoa(int(id)) }

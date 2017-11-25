@@ -9,19 +9,19 @@ import (
 )
 
 type Server struct {
-	Slug  string
+	Slug  EventID
 	Title string
 	Users *user.Server
 }
 
-func NewServer(slug, title string, users *user.Server) *Server {
+func NewServer(slug EventID, title string, users *user.Server) *Server {
 	return &Server{slug, title, users}
 }
 
 func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc("/create-event", event.Users.Handler(event.CreateEvent))
 
-	prefix := path.Join("/", event.Slug)
+	prefix := path.Join("/", string(event.Slug))
 	router.HandleFunc(prefix, event.Handler(event.Dashboard))
 	router.HandleFunc(path.Join(prefix, "/create-team"), event.Handler(event.CreateTeam))
 	router.HandleFunc(path.Join(prefix, "/progress"), event.Handler(event.Dashboard))
@@ -45,7 +45,7 @@ func (event *Server) Dashboard(context *Context) {
 }
 
 func (event *Server) Team(context *Context) {
-	teamid, ok := context.StringParam("teamid")
+	teamid, ok := context.IntParam("teamid")
 	if !ok {
 		context.Error("Team ID missing", http.StatusBadRequest)
 		return
@@ -59,7 +59,7 @@ func (event *Server) Team(context *Context) {
 }
 
 func (event *Server) EditTeam(context *Context) {
-	teamid, ok := context.StringParam("teamid")
+	teamid, ok := context.IntParam("teamid")
 	if !ok {
 		context.Error("Team ID missing", http.StatusBadRequest)
 		return

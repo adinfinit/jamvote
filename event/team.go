@@ -1,55 +1,30 @@
 package event
 
 import (
-	"time"
-
 	"github.com/adinfinit/jamvote/user"
 )
 
-type TeamID string
-
-type Member struct {
-	ID   user.ID
-	Name string
-}
-
-type Event struct {
-	Slug  string
-	Title string
-
-	Create time.Time
-	Start  time.Time
-	Vote   time.Time
-	Closed time.Time
-
-	Organizers []user.ID
-	Judges     []user.ID
-	Teams      []TeamID
-}
+type TeamID int64
 
 type Team struct {
+	Event   EventID
 	ID      TeamID
 	Name    string
-	Members []user.ID
-	Entry   Entry
+	Members []user.UserID
+	Entry   Entry `datastore:",noindex"`
+}
+
+type Member struct {
+	ID   user.UserID // can be zero
+	Name string      `datastore:",noindex"`
 }
 
 type Entry struct {
-	Name         string
-	Instructions string
-
+	Name string
+	Info string `datastore:",noindex"`
 	Link struct {
-		Win string
-		Mac string
-		Web string
-	}
-}
-
-type Ballot struct {
-	ID   user.ID
-	Team TeamID
-
-	Aspects  Aspects
-	Override bool
-	Total    float64
+		Win string `datastore:",noindex"`
+		Mac string `datastore:",noindex"`
+		Web string `datastore:",noindex"`
+	} `datastore:",noindex"`
 }

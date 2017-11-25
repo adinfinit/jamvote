@@ -1,5 +1,16 @@
 package event
 
+import "github.com/adinfinit/jamvote/user"
+
+type Ballot struct {
+	Voter user.UserID
+	Team  TeamID
+
+	Aspects  Aspects
+	Override bool
+	Total    float64
+}
+
 type Aspects struct {
 	Theme      Aspect
 	Enjoyment  Aspect

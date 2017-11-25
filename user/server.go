@@ -24,7 +24,7 @@ func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/{userid}", users.Handler(users.Profile))
 }
 
-func getUserID(r *http.Request) (ID, bool) {
+func getUserID(r *http.Request) (UserID, bool) {
 	s := mux.Vars(r)["userid"]
 	if s == "" {
 		return 0, false
@@ -33,7 +33,7 @@ func getUserID(r *http.Request) (ID, bool) {
 	if err != nil {
 		return 0, false
 	}
-	return ID(id), true
+	return UserID(id), true
 }
 
 func (users *Server) RedirectToEdit(context *Context) {
