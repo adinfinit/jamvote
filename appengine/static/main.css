@@ -3,6 +3,7 @@ html {
 	background-color: white;
     
     font-size: 16px;
+    line-height: 18px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -24,7 +25,6 @@ html, body {
 a, input[type=submit] {
 	text-decoration: none;
 	color: inherit;
-	background: #fff;
 
 	transition: background 0.15s ease-out;
 	box-shadow:
@@ -45,7 +45,7 @@ a.button.margin-bottom {
 	margin-bottom: 0.5rem;
 }
 a.active, a:hover, input[type=submit]:hover {
-	background: #fff9f0;
+	background: #ffebcd;
 }
 
 .titlemenu {
@@ -58,6 +58,21 @@ a.active, a:hover, input[type=submit]:hover {
 	height: 0%;
 	color: #666;
 	margin-left: 0.5rem;
+}
+
+/* tables */
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+th { text-align: left; }
+th { padding: 0.5rem 0; }
+td { padding: 0 0; }
+tr > td > a { display: block; padding: 0.5rem 0.25rem;}
+
+thead > tr, tr:nth-child(even){
+	background: #f0f0f0;
 }
 
 /* page layout */

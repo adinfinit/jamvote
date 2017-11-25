@@ -1,6 +1,8 @@
 package user
 
 import (
+	"sort"
+
 	"github.com/adinfinit/jamvote/auth"
 	"google.golang.org/appengine/datastore"
 )
@@ -69,6 +71,21 @@ func (repo *Datastore) ByID(id ID) (*User, error) {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(id), nil)
 	err := datastore.Get(repo.Context, userkey, user)
 	return user, datastoreError(err)
+}
+
+func (repo *Datastore) List() ([]*User, error) {
+	users := []*User{}
+
+	q := datastore.NewQuery("User") //.Order("Name")
+	keys, err := q.GetAll(repo.Context, &users)
+	for i, user := range users {
+		user.ID = ID(keys[i].IntID())
+	}
+	// TODO: use datastore.Order
+	sort.Slice(users, func(i, k int) bool {
+		return users[i].Name < users[k].Name
+	})
+	return users, datastoreError(err)
 }
 
 func (repo *Datastore) Update(user *User) error {

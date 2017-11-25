@@ -1,0 +1,24 @@
+{{ template "head" . }}
+<section>
+	<h1>Users</h1>
+	{{ $admin := .CurrentUser.IsAdmin}}
+	<table>
+		<thead>
+			<tr>
+				{{ if $admin }}<th></th>{{end}}
+				<th style="width:100%;">Name</th>
+				<th>ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{ range .Users}}
+			<tr>
+				{{ if $admin }}<td><a href="/user/{{.ID}}/edit">🖉</a></td>{{end}}
+				<td><a href="/user/{{.ID}}">{{ .Name }}</a></td>
+				<td>{{ .ID }}</td>
+			</tr>
+			{{ end }}
+		</tbody>
+	</table>
+</section>
+{{ template "foot" . }}

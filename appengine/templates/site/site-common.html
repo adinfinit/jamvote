@@ -16,6 +16,7 @@
                 <a href="/">jamvote</a>
                 <a class="link" href="/">Events</a>
                 {{ if .CurrentUser }}
+                <a class="link" href="/users">Users</a>
                 <a class="link" href="/user">{{or .CurrentUser.Name "Profile"}}</a>
                 <a class="link" href="/user/logout">Sign out</a>
                 {{ else }}

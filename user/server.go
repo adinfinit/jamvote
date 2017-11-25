@@ -16,6 +16,7 @@ type Server struct {
 
 func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user", users.Handler(users.RedirectToEdit))
+	router.HandleFunc("/users", users.Handler(users.List))
 	router.HandleFunc("/user/logged-in", users.Handler(users.LoggedIn))
 	router.HandleFunc("/user/{userid}/edit", users.Handler(users.Edit))
 	router.HandleFunc("/user/login", users.Handler(users.Login))
