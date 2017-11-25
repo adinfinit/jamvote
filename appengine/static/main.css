@@ -47,6 +47,8 @@ a.active, a:hover {
 /* current user */
 
 .current-user-outer {
+	font-size: 0.9rem;
+
 	color: #666;
 	box-shadow: 
 		0 0.5rem 1rem rgba(0,0,0,.05), 
@@ -54,9 +56,6 @@ a.active, a:hover {
 }
 .current-user {
 	display: flex;
-}
-.current-user.small {
-	font-size: 0.8rem;
 }
 .current-user :first-child {
 	flex: 1;
@@ -68,9 +67,6 @@ a.active, a:hover {
 	text-transform: lowercase;
 	padding: 1rem 1rem;
 	border-left: 1px solid #888;
-}
-.current-user.small a {
-	padding: 0.25rem 1rem;
 }
 /* header */
 
