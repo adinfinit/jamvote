@@ -72,14 +72,23 @@ func (users *Server) Edit(context *Context) {
 		name := context.Request.FormValue("name")
 		facebook := context.Request.FormValue("facebook")
 		github := context.Request.FormValue("github")
+		admin := context.Request.FormValue("admin") == "true"
+
+		// only other admin can change admin status
+		if !context.CurrentUser.Admin {
+			// TODO: add flash
+			admin = user.Admin
+		}
 
 		if name != user.Name ||
 			facebook != user.Facebook ||
-			github != user.Github {
+			github != user.Github ||
+			admin != user.Admin {
 
 			user.Name = name
 			user.Facebook = facebook
 			user.Github = github
+			user.Admin = admin
 
 			err := context.Users.Update(user)
 			if err != nil {

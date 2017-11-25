@@ -1,7 +1,12 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Events</h1>
+	<div class="titlemenu">
+		<h1>Events</h1>	
+		{{ if .CurrentUser.Admin }}
+		<a class="button" href="/create-event">Create Event</a>
+		{{ end }}
+	</div>
 	
 	<a class="button" href="/ld40"><div class="title">Ludum Dare 40</div></a>
 </section>

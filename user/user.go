@@ -15,11 +15,12 @@ type Repo interface {
 }
 
 type User struct {
-	ID       ID     `datastore:"-"`
-	Name     string `datastore:",noindex"`
+	ID    ID     `datastore:"-"`
+	Name  string `datastore:",noindex"`
+	Admin bool   `datastore:",noindex"`
+
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`
-	Admin    bool   `datastore:",noindex"`
 }
 
 func (user *User) Equals(b *User) bool {

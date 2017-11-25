@@ -11,7 +11,14 @@
 			<label for="name">Name</label>
 			<input type="text" name="name" value="{{ .User.Name }}">
 		</div>
-	
+				
+		{{ if .CurrentUser.Admin }}
+		<div class="field">
+			<label for="admin">Admin</label>
+			<input type="checkbox" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
+		</div>
+		{{ end }}
+
 		<div class="field">
 			<label for="facebook">Facebook</label>
 			<input type="text" name="facebook" value="{{ .User.Facebook }}">
