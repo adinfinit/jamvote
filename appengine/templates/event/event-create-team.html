@@ -2,31 +2,25 @@
 
 <section>
 	<h1>Create Team</h1>
-	<form action="">
+	<form method="post">
 		<div class="field">
 			<label for="team-name">Team Name</label>
-			<input type="text" id="team-name">
+			<input type="text" name="team-name">
 		</div>
 		<div class="field members">
 			<label>Members</label>
 
-			<datalist id="members">
-				<option value="Alpha Alpha" label="035192"></option>
-				<option value="Beta Beta" label="035192"></option>
-				<option value="Gamma Gamma" label="035192"></option>
-				<option value="Delta Delta" label="035192"></option>
-				<option value="Iota Iota" label="035192"></option>
+			<datalist id="users">
+				{{ range .Users }}
+				<option value="{{.Name}}">{{.ID}}</option>
+				{{ end }}
 			</datalist>
 
-			<input id="member[0]" type="Text" list="members" placeholder="Member 1">
-			<input id="member[1]" type="Text" list="members" placeholder="Member 2">
-			<input id="member[2]" type="Text" list="members" placeholder="Member 3">
-			<input id="member[3]" type="Text" list="members" placeholder="Member 4">
-			<input id="member[4]" type="Text" list="members" placeholder="Member 5">
-
-			<input id="member[5]" type="Text" list="members" placeholder="Contributor">
-			<input id="member[6]" type="Text" list="members" placeholder="Contributor">
-			<input id="member[7]" type="Text" list="members" placeholder="Contributor">
+			<input type="text" class="tight" name="member[0]" list="users" placeholder="Member 1"></input>
+			<input type="text" class="tight" name="member[1]" list="users" placeholder="Member 2"></input>
+			<input type="text" class="tight" name="member[2]" list="users" placeholder="Member 3"></input>
+			<input type="text" class="tight" name="member[3]" list="users" placeholder="Member 4"></input>
+			<input type="text" class="tight" name="member[4]" list="users" placeholder="Member 5"></input>
 		</div>
 
 		<input type="submit" value="Create">

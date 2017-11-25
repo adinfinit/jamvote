@@ -1,27 +1,32 @@
 package event
 
 type Aspects struct {
-	Theme      float64
-	Enjoyment  float64
-	Aesthetics float64
-	Innovation float64
-	Bonus      float64
+	Theme      Aspect
+	Enjoyment  Aspect
+	Aesthetics Aspect
+	Innovation Aspect
+	Bonus      Aspect
+}
+
+type Aspect struct {
+	Score   float64
+	Comment string
 }
 
 func (aspects *Aspects) EnsureRange() {
-	clamp(&aspects.Theme, 1, 5)
-	clamp(&aspects.Enjoyment, 1, 5)
-	clamp(&aspects.Aesthetics, 1, 5)
-	clamp(&aspects.Innovation, 1, 5)
-	clamp(&aspects.Bonus, 1, 5)
+	clamp(&aspects.Theme.Score, 1, 5)
+	clamp(&aspects.Enjoyment.Score, 1, 5)
+	clamp(&aspects.Aesthetics.Score, 1, 5)
+	clamp(&aspects.Innovation.Score, 1, 5)
+	clamp(&aspects.Bonus.Score, 1, 5)
 }
 
 func (aspects *Aspects) Total() float64 {
-	return (aspects.Theme +
-		aspects.Enjoyment +
-		aspects.Aesthetics +
-		aspects.Innovation +
-		aspects.Bonus*0.5) / (5*4 + 5*0.5)
+	return (aspects.Theme.Score +
+		aspects.Enjoyment.Score +
+		aspects.Aesthetics.Score +
+		aspects.Innovation.Score +
+		aspects.Bonus.Score*0.5) / (5*4 + 5*0.5)
 }
 
 func clamp(v *float64, min, max float64) {

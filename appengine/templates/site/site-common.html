@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/static/main.css">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     </head>
-    <body>
+    <body class="dotted">
         <div class="current-user-outer">
             <div class="current-user center">
                 <a href="/">jamvote</a>
@@ -28,10 +28,8 @@
         <div class="header-outer">
             <div class="header center">
                 <a href="/{{ .Event.Slug }}" class="title">{{ .Event.Title }}</a>
-                <a href="/{{ .Event.Slug }}/progress">Progress</a>
                 <a href="/{{ .Event.Slug }}/voting">Voting</a>
-                <a href="/{{ .Event.Slug }}/closing">Closing</a>
-                <a href="/{{ .Event.Slug }}/summary">Summary</a>
+                <a href="/{{ .Event.Slug }}/results">Results</a>
             </div>
         </div>
         {{ end }}

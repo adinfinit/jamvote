@@ -1,6 +1,7 @@
 html {
 	color: #222;
 	background-color: white;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABg0lEQVR4Xu2aQY7DIAwAQ/L/HweoctsgrzKFHFbr6bE1IUV4GAPlPM9+HMf29Gmtbfu+38JqrdvYNoqLnh21pXEr7zK2Lb33/vTn//PvDoAzIHsKRBC8xqSUckt9+h0FY/S8iDVRXNRHFEdgKQNkQHYGpJ8BrbU+Ai+CUQSUFTBSuEX9rtjm2K8QTJ8CDkD2VYCaIIURjaMVJoUlNVDL4WHkXQWEYHYI1lr7uNdHAUXLV1qqUgNdKYc1QSF4HwFXAVcBuApQI1spm8ke3m+AnjVQU8AUgCmw4gZ/ua0pEKUAPbmlhxuzpeo3wKOzzHJYE9QEbyMgBCMIUuujsKRXX6Ln0T5mDdQZoAlqgslviUV7givgocCj+4n0XaiVuieoCWqCmuDPEQhFiB5k0H04epVm1uauPzR7bUYT1AQ1weQmGN0TpHB7O45aH4UlsU0hKASFYHII0j1BWua+bX0UePRk2YMRy2HLYcvhx3J45b4esa8rhpbcFKoU0mOcJqgJJjfBD1dnZ19T4rwCAAAAAElFTkSuQmCC);
     
     font-size: 16px;
     line-height: 18px;
@@ -135,6 +136,7 @@ thead > tr, tr:nth-child(even){
 /* header */
 
 .header-outer {
+	z-index: -100;
 	color: #666;
 	box-shadow: 
 		0 0.5rem 1rem rgba(0,0,0,.05), 
@@ -180,9 +182,6 @@ label {
 input[type=checkbox] {
 	width: auto;
 }
-input[type=checkbox]:disabled {
-	background: #000;
-}
 
 .input {
 	display: block;
@@ -196,6 +195,9 @@ form {
 
 select, input, textarea {
 	width: 100%;
+}
+select.tight {
+	margin-bottom: 0.25rem;
 }
 textarea {
 	font-family: monospace;

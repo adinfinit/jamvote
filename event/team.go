@@ -45,7 +45,7 @@ type Entry struct {
 	}
 }
 
-type Vote struct {
+type Ballot struct {
 	ID   user.ID
 	Team TeamID
 

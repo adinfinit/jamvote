@@ -79,6 +79,13 @@ func (event *Server) CreateTeam(context *Context) {
 		return
 	}
 
+	users, err := context.Users.List()
+	if err != nil {
+		context.Error(err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	context.Data["Users"] = users
 	context.Render("event-create-team")
 }
 
