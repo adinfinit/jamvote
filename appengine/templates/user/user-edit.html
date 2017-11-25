@@ -1,6 +1,6 @@
 {{ template "head" . }}
 <section>
-	<h1>{{ or .User.Name "User" }}</h1>
+	<h1>Edit Profile</h1>
 	<form method="post">
 		<div class="field">
 			<label for="id">ID</label>
@@ -11,12 +11,12 @@
 			<label for="name">Name</label>
 			<input type="text" name="name" value="{{ .User.Name }}">
 		</div>
-
+	
 		<div class="field">
 			<label for="facebook">Facebook</label>
 			<input type="text" name="facebook" value="{{ .User.Facebook }}">
 		</div>
-
+	
 		<div class="field">
 			<label for="github">Github</label>
 			<input type="text" name="github" value="{{ .User.Github }}">

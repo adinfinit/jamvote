@@ -4,23 +4,22 @@
 	<div>
 		<div class="field">
 			<label for="id">ID</label>
-			<div class="input" name="id">{{or .User.ID}}&nbsp;</div>
+			<div class="input" name="id">{{.User.ID}}</div>
 		</div>
-
-		<div class="field">
-			<label for="name">Name</label>
-			<div class="input" name="name">{{or .User.Name}}&nbsp;</div>
-		</div>
-
+	
+		{{ if .User.Facebook }}
 		<div class="field">
 			<label for="facebook">Facebook</label>
-			<div class="input" name="facebook">{{or .User.Facebook}}&nbsp;</div>
+			<a class="button" href="{{.User.Facebook}}" name="facebook">{{.User.Facebook}}</a>
 		</div>
+		{{ end }}
 
+		{{ if .User.Github }}
 		<div class="field">
 			<label for="github">Github</label>
-			<div class="input" name="github">{{or .User.Github}}&nbsp;</div>
+			<a class="button" href="{{.User.Github}}" name="github">{{.User.Github}}</a>
 		</div>
+		{{ end }}
 	</div>
 </section>
 {{ template "foot" . }}

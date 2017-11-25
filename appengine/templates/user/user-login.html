@@ -2,11 +2,11 @@
 <section>
 <h1>Sign in</h1>
 
-<ul>
-	{{ range .Logins }}
-	<li><a href="{{.URL}}">{{.Title}}</a></li>
-	{{ end }}
-</ul>
+{{ range .Logins }}
+<a class="button margin-bottom" href="{{.URL}}">{{.Title}}</a>
+{{ end }}
+<a class="button margin-bottom" href="#">Github</a>
+<a class="button margin-bottom" href="#">Facebook</a>
 </section>
 
 {{ template "foot" . }}
