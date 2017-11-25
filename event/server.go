@@ -37,7 +37,7 @@ func (event *Server) CreateEvent(context *user.Context) {
 		context.Redirect("/", http.StatusTemporaryRedirect)
 		return
 	}
-	context.Render("create-event")
+	context.Render("event-create")
 }
 
 func (event *Server) Dashboard(context *Context) {
