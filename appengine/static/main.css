@@ -196,7 +196,7 @@ form {
 select, input, textarea {
 	width: 100%;
 }
-select.tight {
+.tight {
 	margin-bottom: 0.25rem;
 }
 textarea {
