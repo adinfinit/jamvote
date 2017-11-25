@@ -21,6 +21,12 @@ type User struct {
 
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`
+
+	NewUser bool `datastore:"-"`
+}
+
+func (user *User) IsAdmin() bool {
+	return user != nil && user.Admin
 }
 
 func (user *User) Equals(b *User) bool {

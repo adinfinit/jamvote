@@ -30,6 +30,7 @@ func (users *Server) CurrentUser(context *Context) *User {
 		if err != nil {
 			return nil
 		}
+		user.NewUser = true
 		return user
 	}
 

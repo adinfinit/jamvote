@@ -1,0 +1,25 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Create Event</h1>
+	<form method="post">
+		<div class="field">
+			<label for="name">Name</label>
+			<input type="text" name="name">
+		</div>
+
+		<div class="field">
+			<label for="slug">Slug</label>
+			<input type="text" name="slug">
+		</div>
+
+		<div class="field">
+			<label for="description">Description</label>
+			<textarea type="text" name="description" rows=4></textarea>
+		</div>
+
+		<input type="submit" value="Create">
+	</form>
+</section>
+
+{{ template "foot" . }}

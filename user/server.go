@@ -15,7 +15,8 @@ type Server struct {
 }
 
 func (users *Server) Register(router *mux.Router) {
-	router.HandleFunc("/user", users.Handler(users.Redirect))
+	router.HandleFunc("/user", users.Handler(users.RedirectToEdit))
+	router.HandleFunc("/user/logged-in", users.Handler(users.LoggedIn))
 	router.HandleFunc("/user/{userid}/edit", users.Handler(users.Edit))
 	router.HandleFunc("/user/login", users.Handler(users.Login))
 	router.HandleFunc("/user/logout", users.Handler(users.Logout))
@@ -34,7 +35,7 @@ func getUserID(r *http.Request) (ID, bool) {
 	return ID(id), true
 }
 
-func (users *Server) Redirect(context *Context) {
+func (users *Server) RedirectToEdit(context *Context) {
 	if context.CurrentUser == nil {
 		context.Redirect("/user/login", http.StatusTemporaryRedirect)
 		return
@@ -42,6 +43,15 @@ func (users *Server) Redirect(context *Context) {
 
 	userurl := path.Join("/user", context.CurrentUser.ID.String(), "edit")
 	context.Redirect(userurl, http.StatusTemporaryRedirect)
+}
+
+func (users *Server) LoggedIn(context *Context) {
+	if context.CurrentUser == nil || context.CurrentUser.NewUser {
+		users.RedirectToEdit(context)
+		return
+	}
+
+	context.Redirect("/", http.StatusTemporaryRedirect)
 }
 
 func (users *Server) Edit(context *Context) {

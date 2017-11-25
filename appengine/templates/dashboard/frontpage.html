@@ -3,7 +3,7 @@
 <section>
 	<div class="titlemenu">
 		<h1>Events</h1>	
-		{{ if .CurrentUser.Admin }}
+		{{ if .CurrentUser.IsAdmin }}
 		<a class="button" href="/create-event">Create Event</a>
 		{{ end }}
 	</div>

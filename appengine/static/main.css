@@ -21,7 +21,7 @@ html, body {
 	box-sizing: border-box;
 }
 
-a {
+a, input[type=submit] {
 	text-decoration: none;
 	color: inherit;
 	background: #fff;
@@ -44,7 +44,7 @@ a.button {
 a.button.margin-bottom {
 	margin-bottom: 0.5rem;
 }
-a.active, a:hover {
+a.active, a:hover, input[type=submit]:hover {
 	background: #fff9f0;
 }
 

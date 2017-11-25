@@ -19,8 +19,9 @@ func NewServer(slug, title string, users *user.Server) *Server {
 }
 
 func (event *Server) Register(router *mux.Router) {
-	prefix := path.Join("/", event.Slug)
+	router.HandleFunc("/create-event", event.Users.Handler(event.CreateEvent))
 
+	prefix := path.Join("/", event.Slug)
 	router.HandleFunc(prefix, event.Handler(event.Dashboard))
 	router.HandleFunc(path.Join(prefix, "/create-team"), event.Handler(event.CreateTeam))
 	router.HandleFunc(path.Join(prefix, "/teams"), event.Handler(event.Teams))
@@ -29,6 +30,14 @@ func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc(path.Join(prefix, "/summary"), event.Handler(event.Teams))
 	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Handler(event.Team))
 	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Handler(event.Teams))
+}
+
+func (event *Server) CreateEvent(context *user.Context) {
+	if !context.CurrentUser.IsAdmin() {
+		context.Redirect("/", http.StatusTemporaryRedirect)
+		return
+	}
+	context.Render("create-event")
 }
 
 func (event *Server) Dashboard(context *Context) {
