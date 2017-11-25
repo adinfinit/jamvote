@@ -1,6 +1,12 @@
 {{ template "head" . }}
 <section>
-	<h1>{{ or .User.Name "User" }}</h1>
+	<div class="titlemenu">
+		<h1>{{ or .User.Name "User" }}</h1>	
+		{{ if (or .CurrentUser.IsAdmin (eq .CurrentUser.ID .User.ID))}}
+		<a class="button" href="/user/{{.User.ID}}/edit">Edit</a>
+		{{ end }}
+	</div>
+
 	<div>
 		<div class="field">
 			<label for="id">ID</label>

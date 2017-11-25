@@ -1,14 +1,52 @@
 {{ template "head" . }}
 
-<section>
-	<h1>Teams</h1>
-	
-	<a class="button" href="/{{.Event.Slug}}/create-team"><div class="title">Create Team</div></a>
-	
-	<br>
-	<a class="button" href="/{{.Event.Slug}}/alpha"><div class="title">Alpha</div></a>
-	<a class="button" href="/{{.Event.Slug}}/beta"><div class="title">Beta</div></a>
+{{ define "teams-table" }}
+<table>
+	<thead>
+		<tr>
+			<th style="width:100%;">Name</th>
+			<th>ID</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><a href="/ld40/team/123123">Alpha</a></td>
+			<td>123123</td>
+		</tr>
+		<tr>
+			<td><a href="/ld40/team/123123">Beta</a></td>
+			<td>51354</td>
+		</tr>
 
+		{{ range .}}
+		<tr>
+			<td><a href="/team/{{.ID}}">{{ .Name }}</a></td>
+			<td>{{ .ID }}</td>
+		</tr>
+		{{ end }}
+	</tbody>
+</table>
+{{ end }}
+
+{{ define "teams-list" }}
+<section>
+	<div class="titlemenu">
+		<h1>Your Team</h1>	
+		<a class="button {{if not .YourTeams}}highlight{{end}}" href="/{{.Event.Slug}}/create-team">Create Team</a>
+	</div>
+
+	{{ template "teams-table" .YourTeams }}
 </section>
+
+<section>
+	<div class="titlemenu">
+		<h1>All Teams</h1>
+	</div>
+
+	{{ template "teams-table" .Teams }}
+</section>
+{{ end }}
+
+{{ template "teams-list" . }}
 
 {{ template "foot" . }}

@@ -24,12 +24,12 @@ func (event *Server) Register(router *mux.Router) {
 	prefix := path.Join("/", event.Slug)
 	router.HandleFunc(prefix, event.Handler(event.Dashboard))
 	router.HandleFunc(path.Join(prefix, "/create-team"), event.Handler(event.CreateTeam))
-	router.HandleFunc(path.Join(prefix, "/teams"), event.Handler(event.Teams))
-	router.HandleFunc(path.Join(prefix, "/progress"), event.Handler(event.Teams))
-	router.HandleFunc(path.Join(prefix, "/closing"), event.Handler(event.Teams))
-	router.HandleFunc(path.Join(prefix, "/summary"), event.Handler(event.Teams))
-	router.HandleFunc(path.Join(prefix, "/{teamid}"), event.Handler(event.Team))
-	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Handler(event.Teams))
+	router.HandleFunc(path.Join(prefix, "/progress"), event.Handler(event.Dashboard))
+	router.HandleFunc(path.Join(prefix, "/closing"), event.Handler(event.Dashboard))
+	router.HandleFunc(path.Join(prefix, "/summary"), event.Handler(event.Dashboard))
+	router.HandleFunc(path.Join(prefix, "/team/{teamid}"), event.Handler(event.Team))
+	router.HandleFunc(path.Join(prefix, "/team/{teamid}/edit"), event.Handler(event.EditTeam))
+	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Handler(event.Dashboard))
 }
 
 func (event *Server) CreateEvent(context *user.Context) {
@@ -42,10 +42,6 @@ func (event *Server) CreateEvent(context *user.Context) {
 
 func (event *Server) Dashboard(context *Context) {
 	context.Render("event-dashboard")
-}
-
-func (event *Server) Teams(context *Context) {
-	context.Render("event-teams")
 }
 
 func (event *Server) Team(context *Context) {
@@ -62,7 +58,27 @@ func (event *Server) Team(context *Context) {
 	context.Render("event-team")
 }
 
+func (event *Server) EditTeam(context *Context) {
+	teamid, ok := context.StringParam("teamid")
+	if !ok {
+		context.Error("Team ID missing", http.StatusBadRequest)
+		return
+	}
+
+	context.Data["Team"] = Team{
+		ID: TeamID(teamid),
+	}
+
+	context.Render("event-team")
+}
+
 func (event *Server) CreateTeam(context *Context) {
+	if context.CurrentUser == nil {
+		// TODO: add eventual return address
+		context.Redirect("/user/login", http.StatusTemporaryRedirect)
+		return
+	}
+
 	context.Render("event-create-team")
 }
 

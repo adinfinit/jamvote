@@ -50,6 +50,7 @@ a.active, a:hover, input[type=submit]:hover {
 
 .titlemenu {
 	display: flex;
+	align-items: center;
 }
 .titlemenu :first-child {
 	flex: 1;
@@ -60,6 +61,19 @@ a.active, a:hover, input[type=submit]:hover {
 	margin-left: 0.5rem;
 }
 
+.highlight {
+	outline: rgba(0, 0, 255, 0.5) 3px solid;
+	animation: highlight-animation 1s infinite alternate;
+}
+@keyframes highlight-animation {
+    from {
+    	outline: rgba(0, 0, 255, 00) 3px solid;
+    }
+    to {
+    	outline: rgba(0, 0, 255, 0.5) 3px solid;
+    }
+}
+
 /* tables */
 
 table {
@@ -67,10 +81,16 @@ table {
 	border-collapse: collapse;
 }
 th { text-align: left; }
-th { padding: 0.5rem 0; }
-td { padding: 0 0; }
-tr > td > a { display: block; padding: 0.5rem 0.25rem;}
-
+th { padding: 0.5rem 0.5rem; }
+td {
+	padding: 0 0.5rem;
+	font-size: 0.8rem;
+	line-height: 0.8rem;
+}
+tr > td > a {
+	display: block; 
+	padding: 0.5rem 0.25rem;
+}
 thead > tr, tr:nth-child(even){
 	background: #f0f0f0;
 }
