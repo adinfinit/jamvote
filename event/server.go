@@ -2,42 +2,29 @@ package event
 
 import (
 	"net/http"
-	"path"
 
 	"github.com/adinfinit/jamvote/user"
 	"github.com/gorilla/mux"
 )
 
 type Server struct {
-	Slug  EventID
-	Title string
 	Users *user.Server
 }
 
-func NewServer(slug EventID, title string, users *user.Server) *Server {
-	return &Server{slug, title, users}
+func NewServer(users *user.Server) *Server {
+	return &Server{users}
 }
 
 func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc("/create-event", event.Users.Handler(event.CreateEvent))
-
-	prefix := path.Join("/", string(event.Slug))
-	router.HandleFunc(prefix, event.Handler(event.Dashboard))
-	router.HandleFunc(path.Join(prefix, "/create-team"), event.Handler(event.CreateTeam))
-	router.HandleFunc(path.Join(prefix, "/progress"), event.Handler(event.Dashboard))
-	router.HandleFunc(path.Join(prefix, "/closing"), event.Handler(event.Dashboard))
-	router.HandleFunc(path.Join(prefix, "/summary"), event.Handler(event.Dashboard))
-	router.HandleFunc(path.Join(prefix, "/team/{teamid}"), event.Handler(event.Team))
-	router.HandleFunc(path.Join(prefix, "/team/{teamid}/edit"), event.Handler(event.EditTeam))
-	router.HandleFunc(path.Join(prefix, "/vote/{teamid}"), event.Handler(event.Dashboard))
-}
-
-func (event *Server) CreateEvent(context *user.Context) {
-	if !context.CurrentUser.IsAdmin() {
-		context.Redirect("/", http.StatusTemporaryRedirect)
-		return
-	}
-	context.Render("event-create")
+	router.HandleFunc("/event/{eventid}", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/create-team", event.Handler(event.CreateTeam))
+	router.HandleFunc("/event/{eventid}/progress", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/closing", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/summary", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/team/{teamid}", event.Handler(event.Team))
+	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", event.Handler(event.EditTeam))
+	router.HandleFunc("/event/{eventid}/vote/{teamid}", event.Handler(event.Dashboard))
 }
 
 func (event *Server) Dashboard(context *Context) {

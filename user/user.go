@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/adinfinit/jamvote/auth"
@@ -14,6 +15,8 @@ type Repo interface {
 	Create(cred *auth.Credentials, user *User) (UserID, error)
 	Update(user *User) error
 }
+
+var ErrNotExists = errors.New("info does not exist")
 
 type UserID int64
 

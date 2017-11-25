@@ -4,30 +4,30 @@
 	<form method="post">
 		<div class="field">
 			<label for="id">ID</label>
-			<div class="input" name="id">{{ .User.ID }}</div>
+			<div class="input" id="id" name="id">{{ .User.ID }}</div>
 		</div>
 
 		<div class="field">
 			<label for="name">Name</label>
-			<input type="text" name="name" value="{{ .User.Name }}">
+			<input type="text" id="name" name="name" value="{{ .User.Name }}">
+		</div>
+
+		<div class="field">
+			<label for="facebook">Facebook</label>
+			<input type="text" id="facebook" name="facebook" value="{{ .User.Facebook }}">
+		</div>
+	
+		<div class="field">
+			<label for="github">Github</label>
+			<input type="text" id="github" name="github" value="{{ .User.Github }}">
 		</div>
 				
 		{{ if .CurrentUser.IsAdmin }}
 		<div class="field">
 			<label for="admin">Admin</label>
-			<input type="checkbox" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
+			<input type="checkbox" id="admin" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
 		</div>
 		{{ end }}
-
-		<div class="field">
-			<label for="facebook">Facebook</label>
-			<input type="text" name="facebook" value="{{ .User.Facebook }}">
-		</div>
-	
-		<div class="field">
-			<label for="github">Github</label>
-			<input type="text" name="github" value="{{ .User.Github }}">
-		</div>
 
 		<input type="submit" value="Save">
 	</form>

@@ -2,6 +2,12 @@ package event
 
 import "github.com/adinfinit/jamvote/user"
 
+type BallotRepo interface {
+	SubmitBallot(id EventID, ballot *Ballot) error
+	Ballots(id EventID) ([]*Ballot, error)
+	LeastBallots(id EventID, n int) ([]*Team, error)
+}
+
 type Ballot struct {
 	Voter user.UserID
 	Team  TeamID

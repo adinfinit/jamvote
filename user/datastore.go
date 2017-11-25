@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"sort"
 
 	"github.com/adinfinit/jamvote/auth"
@@ -8,7 +9,7 @@ import (
 )
 
 type Datastore struct {
-	Context *Context
+	Context context.Context
 }
 
 type credentialMapping struct {

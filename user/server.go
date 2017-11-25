@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"path"
-	"strconv"
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/gorilla/mux"
@@ -24,16 +23,9 @@ func (users *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/{userid}", users.Handler(users.Profile))
 }
 
-func getUserID(r *http.Request) (UserID, bool) {
-	s := mux.Vars(r)["userid"]
-	if s == "" {
-		return 0, false
-	}
-	id, err := strconv.ParseInt(s, 10, 64)
-	if err != nil {
-		return 0, false
-	}
-	return UserID(id), true
+func getUserID(context *Context) (UserID, bool) {
+	id, ok := context.IntParam("userid")
+	return UserID(id), ok
 }
 
 func (users *Server) RedirectToEdit(context *Context) {
@@ -56,7 +48,7 @@ func (users *Server) LoggedIn(context *Context) {
 }
 
 func (users *Server) Edit(context *Context) {
-	userid, ok := getUserID(context.Request)
+	userid, ok := getUserID(context)
 	if !ok {
 		context.Error("User ID not specified", http.StatusBadRequest)
 		return
@@ -115,7 +107,7 @@ func (users *Server) Edit(context *Context) {
 }
 
 func (users *Server) Profile(context *Context) {
-	userid, ok := getUserID(context.Request)
+	userid, ok := getUserID(context)
 	if !ok {
 		context.Error("User ID not specified", http.StatusBadRequest)
 		return

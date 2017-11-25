@@ -1,7 +1,6 @@
 package user
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/adinfinit/jamvote/site"
@@ -13,8 +12,6 @@ type Context struct {
 
 	*site.Context
 }
-
-var ErrNotExists = errors.New("info does not exist")
 
 func (users *Server) CurrentUser(context *Context) *User {
 	cred := users.Auth.CurrentCredentials(context, context.Request)

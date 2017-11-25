@@ -27,7 +27,7 @@ func main() {
 	dashboards := &dashboard.Server{users}
 	dashboards.Register(router)
 
-	events := event.NewServer("ld40", "Ludum Dare 40", users)
+	events := event.NewServer(users)
 	events.Register(router)
 
 	http.Handle("/", router)

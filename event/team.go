@@ -4,10 +4,15 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+type TeamRepo interface {
+	CreateTeam(id EventID, team *Team) (TeamID, error)
+	TeamByID(id EventID, teamid TeamID) (*Team, error)
+	Teams(id EventID) ([]*Team, error)
+}
+
 type TeamID int64
 
 type Team struct {
-	Event   EventID
 	ID      TeamID
 	Name    string
 	Members []user.UserID
