@@ -8,7 +8,9 @@
 		{{ end }}
 	</div>
 	
-	<a class="button" href="/ld40"><div class="title">Ludum Dare 40</div></a>
+	{{ range .Events }}
+	<a class="button" href="{{ .Path }}"><div class="title">{{.Name}}</div></a>
+	{{ end }}
 </section>
 
 {{ template "foot" . }}

@@ -1,7 +1,9 @@
 package event
 
 import (
+	"fmt"
 	"net/http"
+	"path"
 
 	"github.com/adinfinit/jamvote/user"
 	"github.com/gorilla/mux"
@@ -16,15 +18,44 @@ func NewServer(users *user.Server) *Server {
 }
 
 func (event *Server) Register(router *mux.Router) {
-	router.HandleFunc("/create-event", event.Users.Handler(event.CreateEvent))
+	router.HandleFunc("/", event.HandlerMaybe(event.List))
+	router.HandleFunc("/create-event", event.HandlerMaybe(event.CreateEvent))
+
 	router.HandleFunc("/event/{eventid}", event.Handler(event.Dashboard))
 	router.HandleFunc("/event/{eventid}/create-team", event.Handler(event.CreateTeam))
-	router.HandleFunc("/event/{eventid}/progress", event.Handler(event.Dashboard))
-	router.HandleFunc("/event/{eventid}/closing", event.Handler(event.Dashboard))
-	router.HandleFunc("/event/{eventid}/summary", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/voting", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/results", event.Handler(event.Dashboard))
+
 	router.HandleFunc("/event/{eventid}/team/{teamid}", event.Handler(event.Team))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", event.Handler(event.EditTeam))
 	router.HandleFunc("/event/{eventid}/vote/{teamid}", event.Handler(event.Dashboard))
+}
+
+func (event *Event) Path(subroutes ...interface{}) string {
+	route := []string{"/event", string(event.ID)}
+	for _, r := range subroutes {
+		switch x := r.(type) {
+		case int, int64, int32, uint, uint64, uint32, string:
+			route = append(route, fmt.Sprint(x))
+		case fmt.Stringer:
+			route = append(route, x.String())
+		default:
+			panic("unsupported type")
+		}
+	}
+	return path.Join(route...)
+}
+
+func (dashboard *Server) List(context *Context) {
+	events, err := context.Events.List()
+	if err != nil {
+		//TODO: flash
+		context.Error(err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	context.Data["Events"] = events
+	context.Render("event-list")
 }
 
 func (event *Server) Dashboard(context *Context) {
@@ -32,28 +63,17 @@ func (event *Server) Dashboard(context *Context) {
 }
 
 func (event *Server) Team(context *Context) {
-	teamid, ok := context.IntParam("teamid")
-	if !ok {
-		context.Error("Team ID missing", http.StatusBadRequest)
+	if context.Team == nil {
+		context.Error("Team missing", http.StatusBadRequest)
 		return
 	}
-
-	context.Data["Team"] = Team{
-		ID: TeamID(teamid),
-	}
-
 	context.Render("event-team")
 }
 
 func (event *Server) EditTeam(context *Context) {
-	teamid, ok := context.IntParam("teamid")
-	if !ok {
-		context.Error("Team ID missing", http.StatusBadRequest)
+	if context.Team == nil {
+		context.Error("Team missing", http.StatusBadRequest)
 		return
-	}
-
-	context.Data["Team"] = Team{
-		ID: TeamID(teamid),
 	}
 
 	context.Render("event-team")

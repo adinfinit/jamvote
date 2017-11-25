@@ -1,15 +1,19 @@
 {{ template "head" . }}
 
 <section>
-	<h1>{{ .TeamID }}</h1>
+	<div class="titlemenu">
+		<h1>{{ .Team.Name }}</h1>
+		{{ if .CanEditTeam }}
+		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>{{ end }}
+	</div>
 	
-	<a class="button" href="/{{.Event.Slug}}/edit-team"><div class="title">Edit Team</div></a>
+	<div>
+		<div class="field">
+			<label for="id">ID</label>
+			<div class="input" name="id">{{.Team.ID}}</div>
+		</div>
 
-	<div class="members">
-		<a href="/user/1">Alpha Alpha</a>
-		<a href="/user/2">Beta Beta</a>
-		<a href="/user/3">Gamma Gamma</a>
-		<a href="/user/4">Delta Delta</a>
+		{{ template "users-list" .Team.Members }}
 	</div>
 </section>
 

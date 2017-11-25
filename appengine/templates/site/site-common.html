@@ -27,9 +27,9 @@
         {{ if .Event }}
         <div class="header-outer">
             <div class="header center">
-                <a href="/{{ .Event.Slug }}" class="title">{{ .Event.Name }}</a>
-                <a href="/{{ .Event.Slug }}/voting">Voting</a>
-                <a href="/{{ .Event.Slug }}/results">Results</a>
+                <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}</a>
+                <a href="{{ .Event.Path "voting" }}">Voting</a>
+                <a href="{{ .Event.Path "results" }}">Results</a>
             </div>
         </div>
         {{ end }}

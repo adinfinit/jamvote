@@ -1,4 +1,6 @@
 {{ template "head" . }}
+
+{{ define "users-list"}}
 <section>
 	<h1>Users</h1>
 	<table>
@@ -9,13 +11,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{ range .Users}}
+			{{ range .}}
 			<tr>
+				{{ if .ID }}
 				<td><a href="/user/{{.ID}}">{{ .Name }}</a></td>
 				<td>{{ .ID }}</td>
+				{{ else }}
+				<td><a>{{ .Name }}</a></td>
+				{{ end }}
 			</tr>
 			{{ end }}
 		</tbody>
 	</table>
 </section>
+{{ end }}
+
+{{ template "users-list" .Users }}
+
 {{ template "foot" . }}

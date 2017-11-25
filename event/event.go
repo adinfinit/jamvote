@@ -50,7 +50,7 @@ func (id EventID) Valid() bool {
 }
 
 type Event struct {
-	Slug EventID `datastore:"-"`
+	ID   EventID `datastore:"-"`
 	Name string
 	Info string `datastore:",noindex"`
 

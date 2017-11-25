@@ -8,7 +8,6 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/adinfinit/jamvote/auth"
-	"github.com/adinfinit/jamvote/dashboard"
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/user"
 )
@@ -23,9 +22,6 @@ func main() {
 
 	users := &user.Server{auths}
 	users.Register(router)
-
-	dashboards := &dashboard.Server{users}
-	dashboards.Register(router)
 
 	events := event.NewServer(users)
 	events.Register(router)

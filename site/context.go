@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 	"google.golang.org/appengine"
@@ -44,7 +45,14 @@ func (context *Context) Error(text string, status int) {
 }
 
 func (context *Context) Render(name string) {
-	t, err := template.ParseGlob("templates/**/*.html")
+	t := template.New("")
+	t = t.Funcs(template.FuncMap{
+		"formatDateTime": func(t *time.Time) string {
+			return t.Format("2006-01-02 15:04:05 MST")
+		},
+	})
+
+	t, err := t.ParseGlob("templates/**/*.html")
 	if err != nil {
 		http.Error(context.Response, fmt.Sprintf("Template error: %q", err), http.StatusInternalServerError)
 		return

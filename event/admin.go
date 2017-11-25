@@ -2,14 +2,11 @@ package event
 
 import (
 	"net/http"
-	"path"
 	"strings"
 	"time"
-
-	"github.com/adinfinit/jamvote/user"
 )
 
-func (event *Server) CreateEvent(context *user.Context) {
+func (event *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		//TODO: flash access denied
 		context.Redirect("/", http.StatusTemporaryRedirect)
@@ -28,11 +25,11 @@ func (event *Server) CreateEvent(context *user.Context) {
 		info := context.Request.FormValue("info")
 
 		event := &Event{}
-		event.Slug = EventID(strings.ToLower(slug))
+		event.ID = EventID(strings.ToLower(slug))
 		event.Name = name
 		event.Info = info
 
-		if name == "" || !event.Slug.Valid() {
+		if name == "" || !event.ID.Valid() {
 			//TODO: flash error
 			context.Error("Invalid data", http.StatusBadRequest)
 			return
@@ -43,16 +40,14 @@ func (event *Server) CreateEvent(context *user.Context) {
 		event.Created = time.Now()
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
-		var events Repo
-		events = &Datastore{context}
-		err := events.Create(event)
+		err := context.Events.Create(event)
 		if err != nil {
 			//TODO: flash error
 			context.Error(err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		context.Redirect(path.Join("/", string(event.Slug)), http.StatusTemporaryRedirect)
+		context.Redirect(string(event.Path()), http.StatusTemporaryRedirect)
 		return
 	}
 
