@@ -4,35 +4,15 @@
 {{ $event := .Event }}
 <section>
 	<div class="titlemenu">
-		<h1>Your Team</h1>	
+		<h1>Your Team{{ if (gt (len .YourTeams) 1) }}s{{end}}</h1>	
 		<a class="button {{if not .YourTeams}}highlight{{end}} {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Team</th>
-				<th>Game</th>
-				<th style="width:9%;">1</th>
-				<th style="width:9%;">2</th>
-				<th style="width:9%;">3</th>
-				<th style="width:9%;">4</th>
-				<th style="width:9%;">5</th>
-				<th style="width:9%;">6</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ range .YourTeams }}
-			<tr>
-				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td>{{ if .Game.Name}}<a {{ if .Game.Link }}target="_blank" href="{{.Game.Link}}"{{ end }} title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
-				{{ range .MembersWithEmpty }}
-				{{ if .Name }}<td class="boxed" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed no-member"></td>{{ end }}
-				{{ end }}
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
+	<div>
+		{{ range .YourTeams }}
+		<a class="button" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
+		{{ end }}
+	</div>
 </section>
 
 <section>
@@ -41,8 +21,10 @@
 	</div>
 
 	<table>
+		{{ $isAdmin := .CurrentUser.Admin }}
 		<thead>
 			<tr>
+				{{ if $isAdmin }}<th style="width: 2%;"></th>{{ end }}
 				<th>Team</th>
 				<th>Game</th>
 				<th style="width:9%;">1</th>
@@ -56,6 +38,9 @@
 		<tbody>
 			{{ range .Teams }}
 			<tr>
+				{{ if $isAdmin }}
+				<td><a href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
+				{{ end }}
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td>{{ if .Game.Name}}<a {{ if .Game.Link }}target="_blank" href="{{.Game.Link}}"{{ end }} title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
 				{{ range .MembersWithEmpty }}

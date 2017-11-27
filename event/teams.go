@@ -141,21 +141,18 @@ func (event *Server) Teams(context *Context) {
 	sort.Slice(teams, func(i, k int) bool {
 		return teams[i].Name < teams[k].Name
 	})
+
 	context.Data["FullWidth"] = true
 	context.Data["Teams"] = teams
 
 	if context.CurrentUser != nil {
 		yourteams := []*Team{}
-		otherteams := []*Team{}
 		for _, team := range teams {
 			if team.HasMember(context.CurrentUser) {
 				yourteams = append(yourteams, team)
-			} else {
-				otherteams = append(otherteams, team)
 			}
 		}
 		context.Data["YourTeams"] = yourteams
-		context.Data["Teams"] = otherteams
 	}
 
 	context.Render("event-teams")
