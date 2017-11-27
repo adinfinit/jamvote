@@ -11,13 +11,18 @@
 	<table>
 		<thead>
 			<tr>
-				<th style="width:100%;">Name</th>
+				<th>Name</th>
+				<th>Member 1</th>
+				<th>Member 2</th>
+				<th>Member 3</th>
+				<th>Member 4</th>
+				<th>Member 5</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{ range .YourTeams }}
 			<tr>
-				<td><a href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
+				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
 				{{ range .Members }}
 				<td><a {{ if .ID }}href="/user/{{.ID}}"{{ end }} >{{ .Name }}</a></td>
 				{{ end }}
@@ -35,13 +40,18 @@
 	<table>
 		<thead>
 			<tr>
-				<th style="width:100%;">Name</th>
+				<th>Name</th>
+				<th>Member 1</th>
+				<th>Member 2</th>
+				<th>Member 3</th>
+				<th>Member 4</th>
+				<th>Member 5</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{ range .Teams }}
 			<tr>
-				<td><a href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
+				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
 				{{ range .Members }}
 				<td><a {{ if .ID }}href="/user/{{.ID}}"{{ end }} >{{ .Name }}</a></td>
 				{{ end }}
