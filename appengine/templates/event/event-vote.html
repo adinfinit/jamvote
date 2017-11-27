@@ -1,0 +1,45 @@
+{{ template "head" . }}
+
+{{ $event := .Event }}
+<section>
+	<div class="titlemenu">
+		<h1>{{.Team.Game.Name}}</h1>
+		<span>By: {{.Team.Name}}</span>
+	</div>
+	
+	<a class="input button" {{if .Team.Game.Link}}target="_blank" href="{{.Team.Game.Link}}"{{end}}>{{.Team.Game.Link}}</a>
+	{{if .Team.Game.Info}}<div class="input" id="info">{{.Team.Game.Info}}</div>{{end}}
+	
+	<form method="POST">
+		{{ range $aspect := .Aspects }}
+		<div class="aspect field">
+			<div>
+				<label for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="tiny">{{$aspect.Description}}</span></label>
+				<input id="{{$aspect.Name}}.Score" name="{{$aspect.Name}}" type="range" min="1" max="5" step="0.01">
+				<div id="{{$aspect.Name}}.Score.Text" class="aspect-text todo">Change the score.</div>
+			</div>
+			<textarea id="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments"></textarea>
+			<script>
+				(function(){
+					var range = document.getElementById("{{$aspect.Name}}.Score");
+					var text = document.getElementById("{{$aspect.Name}}.Score.Text");
+					var options = {{$aspect.Options}};
+
+					range.addEventListener("input", function(){
+						var value = parseFloat(range.value);
+						var index = Math.round(value);
+						if(index < 1){ index = 1; }
+						if(index > 5){ index = 5; }
+						text.innerText = value.toFixed(2) + ": " + options[index-1];
+						text.className = "aspect-text";
+					});
+				})()
+			</script>
+		</div>
+		{{ end }}
+
+		<input type="submit" value="Vote">
+	</form>
+</section>
+
+{{ template "foot" . }}

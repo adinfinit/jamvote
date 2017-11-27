@@ -3,6 +3,7 @@ package event
 import (
 	"context"
 
+	"github.com/adinfinit/jamvote/user"
 	netcontext "golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 )
@@ -101,11 +102,11 @@ func (repo *Datastore) Teams(eventid EventID) ([]*Team, error) {
 	return teams, datastoreError(err)
 }
 
-// TODO
 func (repo *Datastore) SubmitBallot(eventid EventID, ballot *Ballot) error { return nil }
-
-// TODO
-func (repo *Datastore) Ballots(eventid EventID) ([]*Ballot, error) { return nil, nil }
-
-// TODO
-func (repo *Datastore) LeastBallots(eventid EventID, n int) ([]*Team, error) { return nil, nil }
+func (repo *Datastore) UserBallots(userid user.UserID, eventid EventID) ([]*Ballot, error) {
+	return nil, nil
+}
+func (repo *Datastore) UserBallot(userid user.UserID, eventid EventID, teamid TeamID) (*Ballot, error) {
+	return nil, nil
+}
+func (repo *Datastore) AllBallots(eventid EventID) ([]*Ballot, error) { return nil, nil }

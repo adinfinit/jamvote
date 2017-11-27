@@ -23,6 +23,10 @@ html, body {
 	box-sizing: border-box;
 }
 
+h1 {
+	line-height: 1em;
+}
+
 a, input[type=submit] {
 	text-decoration: none;
 	color: inherit;
@@ -302,6 +306,31 @@ input[type=submit]{
 	font-size: 1.5rem;
 	margin-top: 3rem;
     margin-bottom: 1.5rem;
+}
+
+.aspect {
+	display: flex;
+}
+.aspect input {
+	margin-bottom: 0rem;
+	padding: 0;
+	box-shadow: none;
+	border: 0;
+}
+.aspect label .tiny {
+	font-size: 0.7rem;
+	font-weight: 100;
+}
+.aspect > * {
+	flex: 1;
+	margin: 0.5rem;
+}
+.aspect-text {
+	font-size: 0.8rem;
+}
+.aspect-text.todo {
+	font-weight: bold;
+	background: #fcc;
 }
 
 /* sign in / out */

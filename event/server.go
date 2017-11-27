@@ -31,7 +31,7 @@ func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}/team/{teamid}", event.Handler(event.Team))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", event.Handler(event.EditTeam))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit-game", event.Handler(event.EditTeamGame))
-	router.HandleFunc("/event/{eventid}/vote/{teamid}", event.Handler(event.Dashboard))
+	router.HandleFunc("/event/{eventid}/vote/{teamid}", event.Handler(event.Vote))
 }
 
 func (event *Event) Path(subroutes ...interface{}) string {

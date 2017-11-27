@@ -7,9 +7,10 @@ import (
 )
 
 type BallotRepo interface {
-	SubmitBallot(id EventID, ballot *Ballot) error
-	Ballots(id EventID) ([]*Ballot, error)
-	LeastBallots(id EventID, n int) ([]*Team, error)
+	SubmitBallot(eventid EventID, ballot *Ballot) error
+	UserBallots(userid user.UserID, eventid EventID) ([]*Ballot, error)
+	UserBallot(userid user.UserID, eventid EventID, teamid TeamID) (*Ballot, error)
+	AllBallots(eventid EventID) ([]*Ballot, error)
 }
 
 type Ballot struct {
