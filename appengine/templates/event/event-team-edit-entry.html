@@ -1,10 +1,19 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Edit Entry For: {{.Team.Name}}</h1>
+	<h1>Edit Game For: {{.Team.Name}}</h1>
 	<form method="POST">
 		<div class="field">
-			<label for="name">Entry Name</label>
+			<label id="name-randomize" class="randomizer" for="name">Entry Name</label>
+			<script>
+				document.getElementById("name-randomize").addEventListener("click", function(event){
+					event.preventDefault();
+					event.stopPropagation();
+
+					var el = document.getElementById("name");
+					el.value = GenerateGameName();
+				});
+			</script>
 			<input type="text" id="name" name="name" value="{{.Team.Entry.Name}}">
 		</div>
 

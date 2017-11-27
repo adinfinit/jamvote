@@ -4,7 +4,16 @@
 	<h1>Create Team</h1>
 	<form method="post">
 		<div class="field">
-			<label for="name">Team Name</label>
+			<label class="randomizer" id="name-randomize" for="name">Team Name</label>
+			<script>
+				document.getElementById("name-randomize").addEventListener("click", function(event){
+					event.preventDefault();
+					event.stopPropagation();
+
+					var el = document.getElementById("name");
+					el.value = GenerateTeamName();
+				});
+			</script>
 			<input type="text" id="name" name="name">
 		</div>
 		<div class="field">
