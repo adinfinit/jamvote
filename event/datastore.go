@@ -67,11 +67,14 @@ func (repo *Datastore) CreateTeam(eventid EventID, team *Team) (TeamID, error) {
 	teamkey, err := datastore.Put(repo.Context, incompletekey, team)
 	team.ID = TeamID(teamkey.IntID())
 	return team.ID, datastoreError(err)
-
 }
 
-// TODO
-func (repo *Datastore) UpdateTeam(team *Team) error { return nil }
+func (repo *Datastore) UpdateTeam(eventid EventID, team *Team) error {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(team.ID), eventkey)
+	_, err := datastore.Put(repo.Context, teamkey, team)
+	return datastoreError(err)
+}
 
 func (repo *Datastore) TeamByID(eventid EventID, teamid TeamID) (*Team, error) {
 	team := &Team{}

@@ -8,6 +8,7 @@ import (
 
 type TeamRepo interface {
 	CreateTeam(id EventID, team *Team) (TeamID, error)
+	UpdateTeam(id EventID, team *Team) error
 	TeamByID(id EventID, teamid TeamID) (*Team, error)
 	Teams(id EventID) ([]*Team, error)
 }
@@ -23,6 +24,20 @@ type Team struct {
 	Name    string
 	Members []Member
 	Entry   Entry `datastore:",noindex"`
+}
+type Member struct {
+	ID   user.UserID // can be zero
+	Name string
+}
+
+type Entry struct {
+	Name string
+	Info string `datastore:",noindex"`
+	Link struct {
+		Win string `datastore:",noindex"`
+		Mac string `datastore:",noindex"`
+		Web string `datastore:",noindex"`
+	} `datastore:",noindex"`
 }
 
 func (team *Team) HasEditor(user *user.User) bool {
@@ -47,17 +62,10 @@ func (team *Team) HasMember(user *user.User) bool {
 	return false
 }
 
-type Member struct {
-	ID   user.UserID // can be zero
-	Name string
-}
-
-type Entry struct {
-	Name string
-	Info string `datastore:",noindex"`
-	Link struct {
-		Win string `datastore:",noindex"`
-		Mac string `datastore:",noindex"`
-		Web string `datastore:",noindex"`
-	} `datastore:",noindex"`
+func (team *Team) MembersWithEmpty() []Member {
+	members := append([]Member{}, team.Members...)
+	for len(members) < 5 {
+		members = append(members, Member{})
+	}
+	return members
 }

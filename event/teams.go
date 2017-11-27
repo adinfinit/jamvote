@@ -16,6 +16,57 @@ func findUserByName(users []*user.User, name string) (*user.User, bool) {
 	}
 	return nil, false
 }
+func findUserByID(users []*user.User, id user.UserID) (*user.User, bool) {
+	for _, user := range users {
+		if user.ID == id {
+			return user, true
+		}
+	}
+	return nil, false
+}
+
+func (server *Server) readTeamInfo(context *Context, users []*user.User) (*Team, bool) {
+	if err := context.Request.ParseForm(); err != nil {
+		context.FlashNow("Parse form: " + err.Error())
+		return nil, false
+	}
+
+	teamname := strings.TrimSpace(context.Request.FormValue("name"))
+	if teamname == "" {
+		context.FlashNow("Team name cannot be empty.")
+		return nil, false
+	}
+
+	memberNames := []string{}
+	for i := 0; i < 5; i++ {
+		memberName := context.Request.FormValue(fmt.Sprintf("member[%v]", i))
+		memberName = strings.TrimSpace(memberName)
+		if memberName != "" {
+			memberNames = append(memberNames, memberName)
+		}
+	}
+
+	team := &Team{}
+	team.Name = teamname
+	for _, memberName := range memberNames {
+		user, ok := findUserByName(users, memberName)
+		if !ok {
+			team.Members = append(team.Members, Member{
+				ID:   0,
+				Name: memberName,
+			})
+		} else {
+			if !team.HasMember(user) {
+				team.Members = append(team.Members, Member{
+					ID:   user.ID,
+					Name: user.Name,
+				})
+			}
+		}
+	}
+
+	return team, true
+}
 
 func (event *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
@@ -32,50 +83,18 @@ func (event *Server) CreateTeam(context *Context) {
 	context.Data["Users"] = users
 
 	if context.Request.Method == http.MethodPost {
-		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Parse form: " + err.Error())
+		team, ok := event.readTeamInfo(context, users)
+		if !ok {
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-team-create")
 			return
 		}
 
-		teamname := strings.TrimSpace(context.Request.FormValue("name"))
-		if teamname == "" {
-			context.FlashNow("Team name cannot be empty.")
-			context.Response.WriteHeader(http.StatusBadRequest)
-			context.Render("event-team-create")
-			return
-		}
-
-		memberNames := []string{}
-		for i := 1; i < 5; i++ {
-			memberName := context.Request.FormValue(fmt.Sprintf("member[%v]", i))
-			memberName = strings.TrimSpace(memberName)
-			if memberName != "" {
-				memberNames = append(memberNames, memberName)
-			}
-		}
-
-		team := &Team{}
-		team.Name = teamname
-		team.Members = append(team.Members, Member{
-			ID:   context.CurrentUser.ID,
-			Name: context.CurrentUser.Name,
-		})
-
-		for _, memberName := range memberNames {
-			user, ok := findUserByName(users, memberName)
-			if !ok {
-				team.Members = append(team.Members, Member{
-					ID:   0,
-					Name: memberName,
-				})
-			} else {
-				team.Members = append(team.Members, Member{
-					ID:   user.ID,
-					Name: user.Name,
-				})
-			}
+		if !team.HasMember(context.CurrentUser) {
+			team.Members = append([]Member{{
+				ID:   context.CurrentUser.ID,
+				Name: context.CurrentUser.Name,
+			}}, team.Members...)
 		}
 
 		teamid, err := context.Events.CreateTeam(context.Event.ID, team)
@@ -107,8 +126,14 @@ func (event *Server) Team(context *Context) {
 func (event *Server) EditTeam(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
-		context.Flash(fmt.Sprintf("Team %v does not exist", teamid))
+		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))
 		context.Redirect(context.Event.Path(), http.StatusTemporaryRedirect)
+		return
+	}
+
+	if !context.Team.HasEditor(context.CurrentUser) {
+		context.Flash(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
+		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -116,6 +141,40 @@ func (event *Server) EditTeam(context *Context) {
 	if err != nil {
 		context.FlashNow(fmt.Sprintf("Unable to get list of users: %v", err))
 	}
+
+	if context.Request.Method == http.MethodPost {
+		team, ok := event.readTeamInfo(context, users)
+		if !ok {
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-team-edit")
+			return
+		}
+
+		team.EventID = context.Team.EventID
+		team.ID = context.Team.ID
+		team.Entry = context.Team.Entry
+
+		err := context.Events.UpdateTeam(context.Event.ID, team)
+		if err != nil {
+			context.FlashNow(fmt.Sprintf("Unable to update team: %v", err))
+			context.Response.WriteHeader(http.StatusInternalServerError)
+			context.Render("event-team-edit")
+			return
+		}
+
+		context.Redirect(context.Event.Path("team", team.ID.String()), http.StatusTemporaryRedirect)
+		return
+	}
+
+	// Update names, if necessary
+	for i, member := range context.Team.Members {
+		if member.ID != 0 {
+			if user, ok := findUserByID(users, member.ID); ok {
+				context.Team.Members[i].Name = user.Name
+			}
+		}
+	}
+
 	context.Data["Users"] = users
 
 	context.Render("event-team-edit")
