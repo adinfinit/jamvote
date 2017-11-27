@@ -1,8 +1,9 @@
 package event
 
 import (
+	"fmt"
+	"log"
 	"net/http"
-	"time"
 
 	"github.com/adinfinit/jamvote/user"
 )
@@ -13,16 +14,6 @@ type Context struct {
 	Events Repo
 
 	*user.Context
-}
-
-var EventStub = Event{
-	Name: "Ludum Dare 40",
-	Info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore nisi, iusto amet dignissimos expedita alias libero temporibus earum? Mollitia dolor illum atque commodi voluptas dicta nulla maiores dolores aspernatur. Quasi!",
-
-	Stage:   Voting,
-	Created: time.Now(),
-	Started: time.Now(),
-	Closed:  time.Now(),
 }
 
 var TeamStub = Team{
@@ -46,10 +37,7 @@ func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 			context.Event = event
 			context.Data["Event"] = context.Event
 		} else {
-			stub := EventStub
-			stub.ID = EventID(eventid)
-			context.Event = &stub
-			context.Data["Event"] = context.Event
+			log.Printf("Error getting event %q: %v", eventid, err)
 		}
 	}
 
@@ -82,7 +70,8 @@ func (event *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		context := event.Context(w, r)
 		if context.Event == nil {
-			// TODO: flash invalid event
+			eventid, _ := context.StringParam("eventid")
+			context.Flash(fmt.Sprintf("Event %q does not exist.", eventid))
 			context.Redirect("/", http.StatusTemporaryRedirect)
 			return
 		}

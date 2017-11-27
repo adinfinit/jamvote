@@ -11,6 +11,7 @@ var SessionStore sessions.Store
 func init() {
 	cookieStore := sessions.NewCookieStore([]byte("TODO TODO TODO TODO TODO"))
 	cookieStore.Options = &sessions.Options{
+		Path:     "/",
 		HttpOnly: true,
 	}
 	SessionStore = cookieStore
