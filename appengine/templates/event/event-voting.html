@@ -1,0 +1,62 @@
+{{ template "head" . }}
+
+{{ $event := .Event }}
+<section>
+	<div class="titlemenu">
+		<h1>Voting</h1>
+	</div>
+	
+	{{ if (and (not .Event.Closed) .Event.Voting) }}
+	<section>
+		<h1>Queue</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Game</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range .VoteQueue }}
+				<tr>
+					<td><a href="{{ $event.Path "vote" .ID }}">{{.Game.Name}}</a></td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+	</section>
+	{{ end }}
+
+	<section>
+		<h1>Voted</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Team</th>
+					<th>Game</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
+					<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range .Voted }}
+				<tr>
+					<td><a href="{{ $event.Path "team" .ID }}">{{.Name}}</a></td>
+					<td><a href="{{ $event.Path "vote" .ID }}">{{.Game.Name}}</a></td>
+					<td title="{{.Ballot.Theme.Comment}}">{{.Ballot.Theme}}</td>
+					<td title="{{.Ballot.Enjoyment.Comment}}">{{.Ballot.Enjoyment}}</td>
+					<td title="{{.Ballot.Aesthetics.Comment}}">{{.Ballot.Aesthetics}}</td>
+					<td title="{{.Ballot.Innovation.Comment}}">{{.Ballot.Innovation}}</td>
+					<td title="{{.Ballot.Bonus.Comment}}">{{.Ballot.Bonus}}</td>
+					<td title="{{.Ballot.Overall.Comment}}">{{.Ballot.Overall}}</td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+	</section>
+</section>
+
+{{ template "foot" . }}

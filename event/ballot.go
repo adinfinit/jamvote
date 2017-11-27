@@ -1,6 +1,10 @@
 package event
 
-import "github.com/adinfinit/jamvote/user"
+import (
+	"fmt"
+
+	"github.com/adinfinit/jamvote/user"
+)
 
 type BallotRepo interface {
 	SubmitBallot(id EventID, ballot *Ballot) error
@@ -11,10 +15,7 @@ type BallotRepo interface {
 type Ballot struct {
 	Voter user.UserID
 	Team  TeamID
-
-	Aspects  Aspects
-	Override bool
-	Total    float64
+	Aspects
 }
 
 type Aspects struct {
@@ -23,11 +24,16 @@ type Aspects struct {
 	Aesthetics Aspect
 	Innovation Aspect
 	Bonus      Aspect
+	Overall    Aspect
 }
 
 type Aspect struct {
 	Score   float64
 	Comment string
+}
+
+func (aspect *Aspect) String() string {
+	return fmt.Sprintf("%.2f", aspect.Score)
 }
 
 func (aspects *Aspects) EnsureRange() {

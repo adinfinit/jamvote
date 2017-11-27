@@ -13,9 +13,11 @@ func (event *Server) Voting(context *Context) {
 
 	if context.Event.Closed {
 		context.FlashNow("Voting has been closed.")
+	} else {
+
 	}
 
-	context.Render("todo")
+	context.Render("event-voting")
 }
 
 func (event *Server) Results(context *Context) {

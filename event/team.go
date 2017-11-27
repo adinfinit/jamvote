@@ -25,6 +25,7 @@ type Team struct {
 	Members []Member
 	Game    Game `datastore:",noindex"`
 }
+
 type Member struct {
 	ID   user.UserID // can be zero
 	Name string

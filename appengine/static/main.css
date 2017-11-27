@@ -115,6 +115,7 @@ table {
 	width: 100%;
 	table-layout: fixed;
 	border-collapse: collapse;
+	font-variant-numeric: tabular-nums;
 }
 th {
 	text-align: left;
