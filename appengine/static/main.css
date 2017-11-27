@@ -136,6 +136,7 @@ thead > tr, tr:nth-child(even){
 	background: #f0f0f0;
 }
 .boxed {
+	font-size: 0.7rem;
 	border: 1px solid #aaa;
 }
 
