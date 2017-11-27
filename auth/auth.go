@@ -89,9 +89,9 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	aeuser := user.Current(c)
 	if aeuser != nil {
-		http.Redirect(w, r, service.LoginCompleted, http.StatusTemporaryRedirect)
+		http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
 	} else {
-		http.Redirect(w, r, service.LoginFailed, http.StatusTemporaryRedirect)
+		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
 	}
 }
 
@@ -99,8 +99,8 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	logout, err := user.LogoutURL(c, "/")
 	if err == nil {
-		http.Redirect(w, r, logout, http.StatusTemporaryRedirect)
+		http.Redirect(w, r, logout, http.StatusSeeOther)
 		return
 	}
-	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

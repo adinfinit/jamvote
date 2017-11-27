@@ -10,7 +10,7 @@ import (
 func (event *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.Flash("Must be admin to create events.")
-		context.Redirect("/", http.StatusTemporaryRedirect)
+		context.Redirect("/", http.StatusSeeOther)
 		return
 	}
 
@@ -65,7 +65,7 @@ func (event *Server) CreateEvent(context *Context) {
 			return
 		}
 
-		context.Redirect(string(event.Path()), http.StatusTemporaryRedirect)
+		context.Redirect(string(event.Path()), http.StatusSeeOther)
 		return
 	}
 

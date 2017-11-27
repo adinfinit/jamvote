@@ -72,7 +72,7 @@ func (event *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to create a team.")
-		context.Redirect("/user/login", http.StatusTemporaryRedirect)
+		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
@@ -105,7 +105,7 @@ func (event *Server) CreateTeam(context *Context) {
 			return
 		}
 
-		context.Redirect(context.Event.Path("team", teamid.String()), http.StatusTemporaryRedirect)
+		context.Redirect(context.Event.Path("team", teamid.String()), http.StatusSeeOther)
 		return
 	}
 
@@ -116,7 +116,7 @@ func (event *Server) Team(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
 		context.Flash(fmt.Sprintf("Team %v does not exist", teamid))
-		context.Redirect(context.Event.Path(), http.StatusTemporaryRedirect)
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
@@ -127,13 +127,13 @@ func (event *Server) EditTeam(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
 		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))
-		context.Redirect(context.Event.Path(), http.StatusTemporaryRedirect)
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if !context.Team.HasEditor(context.CurrentUser) {
 		context.Flash(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
-		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusTemporaryRedirect)
+		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
 		return
 	}
 
@@ -162,7 +162,7 @@ func (event *Server) EditTeam(context *Context) {
 			return
 		}
 
-		context.Redirect(context.Event.Path("team", team.ID.String()), http.StatusTemporaryRedirect)
+		context.Redirect(context.Event.Path("team", team.ID.String()), http.StatusSeeOther)
 		return
 	}
 

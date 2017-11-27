@@ -30,12 +30,12 @@ func getUserID(context *Context) (UserID, bool) {
 
 func (users *Server) RedirectToEdit(context *Context) {
 	if context.CurrentUser == nil {
-		context.Redirect("/user/login", http.StatusTemporaryRedirect)
+		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
 	userurl := path.Join("/user", context.CurrentUser.ID.String(), "edit")
-	context.Redirect(userurl, http.StatusTemporaryRedirect)
+	context.Redirect(userurl, http.StatusSeeOther)
 }
 
 func (users *Server) LoggedIn(context *Context) {
@@ -44,7 +44,7 @@ func (users *Server) LoggedIn(context *Context) {
 		return
 	}
 
-	context.Redirect("/", http.StatusTemporaryRedirect)
+	context.Redirect("/", http.StatusSeeOther)
 }
 
 func (users *Server) Edit(context *Context) {
@@ -61,8 +61,8 @@ func (users *Server) Edit(context *Context) {
 	}
 
 	if !context.CurrentUser.Equals(user) && !context.CurrentUser.Admin {
-		// access denied
-		context.Redirect(path.Join("/user", user.ID.String()), http.StatusTemporaryRedirect)
+		context.Flash("Editing user not allowed.")
+		context.Redirect(path.Join("/user", user.ID.String()), http.StatusSeeOther)
 		return
 	}
 

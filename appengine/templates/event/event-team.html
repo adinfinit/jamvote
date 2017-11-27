@@ -4,8 +4,34 @@
 	<div class="titlemenu">
 		<h1>Team: {{ .Team.Name }}</h1>
 		{{ if .CanEditTeam }}
+		<a class="button" href="{{.Event.Path "team" .Team.ID "edit-entry"}}">Edit Entry</a>
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>{{ end }}
 	</div>
+
+	<section>
+		<h1>Entry</h1>
+		
+		{{ if .Entry.Name }}
+		<div class="field">
+			<label for="name">Name</label>
+			<div class="input" id="name" name="name">{{.Entry.Name}}</div>
+		</div>
+		<div class="field">
+			<label for="name">Info</label>
+			<div class="input" id="name" name="name">{{.Entry.Info}}</div>
+		</div>
+		
+		<div class="field">
+			<label for="name">Link</label>
+			<div class="input" id="name" name="name">{{.Entry.Link}}</div>
+		</div>
+
+		{{ else }}
+		<div class="flashes">
+			<div class="flash">Not yet submitted.</div>
+		</div>
+		{{ end }}
+	</section>
 	
 	<section>
 		<h1>Members</h1>

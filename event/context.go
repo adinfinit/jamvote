@@ -57,7 +57,7 @@ func (event *Server) Handler(fn func(*Context)) http.HandlerFunc {
 		if context.Event == nil {
 			eventid, _ := context.StringParam("eventid")
 			context.Flash(fmt.Sprintf("Event %q does not exist.", eventid))
-			context.Redirect("/", http.StatusTemporaryRedirect)
+			context.Redirect("/", http.StatusSeeOther)
 			return
 		}
 		fn(context)

@@ -33,11 +33,7 @@ type Member struct {
 type Entry struct {
 	Name string
 	Info string `datastore:",noindex"`
-	Link struct {
-		Win string `datastore:",noindex"`
-		Mac string `datastore:",noindex"`
-		Web string `datastore:",noindex"`
-	} `datastore:",noindex"`
+	Link string `datastore:",noindex"`
 }
 
 func (team *Team) HasEditor(user *user.User) bool {

@@ -4,15 +4,14 @@ import "net/http"
 
 func (users *Server) List(context *Context) {
 	if context.CurrentUser == nil {
-		// TODO: show flash message
-		context.Redirect("/", http.StatusTemporaryRedirect)
+		context.Flash("Must be logged in to see users.")
+		context.Redirect("/", http.StatusSeeOther)
 		return
 	}
 
 	userlist, err := context.Users.List()
 	if err != nil {
-		context.Error(err.Error(), http.StatusInternalServerError)
-		return
+		context.FlashNow(err.Error())
 	}
 
 	context.Data["Users"] = userlist

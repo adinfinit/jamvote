@@ -20,16 +20,19 @@ func (users *Server) CurrentUser(context *Context) *User {
 	}
 
 	user, err := context.Users.ByCredentials(cred)
-
 	if err == ErrNotExists {
 		user = &User{Name: cred.Name}
 		_, err := context.Users.Create(cred, user)
 		if err != nil {
 			return nil
 		}
+
 		user.NewUser = true
 		return user
 	}
+
+	// override user rights from credentials
+	user.Admin = user.Admin || cred.Admin
 
 	return user
 }
