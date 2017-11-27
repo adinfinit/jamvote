@@ -4,8 +4,8 @@
 	<div class="titlemenu">
 		<h1>Team: {{ .Team.Name }}</h1>
 		{{ if .CanEditTeam }}
-		<a class="button" href="{{.Event.Path "team" .Team.ID "edit-game"}}">Edit Game</a>
-		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit Team</a>{{ end }}
+		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
+		{{ end }}
 	</div>
 
 	<section>

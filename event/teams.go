@@ -3,6 +3,7 @@ package event
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"strings"
 
 	"github.com/adinfinit/jamvote/user"
@@ -129,6 +130,35 @@ func (event *Server) Team(context *Context) {
 	}
 
 	context.Render("event-team")
+}
+
+func (event *Server) Teams(context *Context) {
+	teams, err := context.Events.Teams(context.Event.ID)
+	if err != nil {
+		context.FlashNow(fmt.Sprintf("Unable to get teams: %v", err))
+	}
+
+	sort.Slice(teams, func(i, k int) bool {
+		return teams[i].Name < teams[k].Name
+	})
+	context.Data["FullWidth"] = true
+	context.Data["Teams"] = teams
+
+	if context.CurrentUser != nil {
+		yourteams := []*Team{}
+		otherteams := []*Team{}
+		for _, team := range teams {
+			if team.HasMember(context.CurrentUser) {
+				yourteams = append(yourteams, team)
+			} else {
+				otherteams = append(otherteams, team)
+			}
+		}
+		context.Data["YourTeams"] = yourteams
+		context.Data["Teams"] = otherteams
+	}
+
+	context.Render("event-teams")
 }
 
 func (event *Server) canEditTeam(context *Context) bool {

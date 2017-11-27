@@ -54,3 +54,7 @@ type Event struct {
 
 	Organizers []user.UserID `datastore:",noindex"`
 }
+
+func (event *Event) CanVote() bool {
+	return event.Voting && !event.Closed
+}

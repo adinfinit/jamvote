@@ -24,6 +24,7 @@ func (event *Server) Register(router *mux.Router) {
 
 	router.HandleFunc("/event/{eventid}", event.Handler(event.Dashboard))
 	router.HandleFunc("/event/{eventid}/edit", event.Handler(event.EditEvent))
+	router.HandleFunc("/event/{eventid}/teams", event.Handler(event.Teams))
 	router.HandleFunc("/event/{eventid}/voting", event.Handler(event.Voting))
 	router.HandleFunc("/event/{eventid}/results", event.Handler(event.Results))
 
@@ -80,29 +81,5 @@ func (dashboard *Server) List(context *Context) {
 }
 
 func (event *Server) Dashboard(context *Context) {
-	teams, err := context.Events.Teams(context.Event.ID)
-	if err != nil {
-		context.FlashNow(fmt.Sprintf("Unable to get teams: %v", err))
-	}
-
-	sort.Slice(teams, func(i, k int) bool {
-		return teams[i].Name < teams[k].Name
-	})
-	context.Data["Teams"] = teams
-
-	if context.CurrentUser != nil {
-		yourteams := []*Team{}
-		otherteams := []*Team{}
-		for _, team := range teams {
-			if team.HasMember(context.CurrentUser) {
-				yourteams = append(yourteams, team)
-			} else {
-				otherteams = append(otherteams, team)
-			}
-		}
-		context.Data["YourTeams"] = yourteams
-		context.Data["Teams"] = otherteams
-	}
-
 	context.Render("event-dashboard")
 }

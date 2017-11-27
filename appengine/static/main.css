@@ -46,6 +46,14 @@ a.button {
 
 	background: inherit;
 }
+a.big.button {
+	font-size: 2rem;
+	line-height: 2.5rem;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	text-align: center;
+	font-weight: bold;
+}
 a.button.margin-bottom {
 	margin-bottom: 0.5rem;
 }
@@ -155,6 +163,9 @@ thead > tr, tr:nth-child(even){
 .content {
 	padding: 0.5rem 1rem;
 	padding-top: 0.5rem;
+}
+.full-width {
+	padding: 0 1rem;
 }
 
 .flashes {

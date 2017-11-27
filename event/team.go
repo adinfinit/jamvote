@@ -61,7 +61,7 @@ func (team *Team) HasMember(user *user.User) bool {
 
 func (team *Team) MembersWithEmpty() []Member {
 	members := append([]Member{}, team.Members...)
-	for len(members) < 5 {
+	for len(members) < 6 {
 		members = append(members, Member{})
 	}
 	return members

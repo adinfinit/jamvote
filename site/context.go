@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -96,6 +97,10 @@ func (context *Context) Render(name string) {
 		"formatDateTime": func(t *time.Time) string {
 			// TODO: use event location
 			return t.In(aptLocation).Format("2006-01-02 15:04:05 MST")
+		},
+		"paragraphs": func(s string) []string {
+			s = strings.Replace(s, "\r", "", -1)
+			return strings.Split(s, "\n\n")
 		},
 	})
 

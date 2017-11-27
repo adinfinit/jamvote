@@ -4,9 +4,21 @@
 	<h1>Event: {{.Event.Name}}</h1>
 	
 	<div>
-		<p>{{.Event.Info}}</p>
+		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}
 	</div>
-	{{ template "teams-list" . }}
+
+	{{ if (not .Event.CanVote) }}
+	<div class="flashes">
+		{{if (not .Event.Voting)}}
+		<div class="flash">Voting has not yet started.</div>
+		{{ else }}
+		<div class="flash">Voting has closed.</div>
+		{{ end }}
+	</div>
+	<a class="button big disabled" href="#">Start Voting</a>
+	{{ else }}
+	<a class="button big" href="{{.Event.Path "voting"}}">Start Voting</a>
+	{{ end }}
 </section>
 
 {{ template "foot" . }}
