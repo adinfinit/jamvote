@@ -1,7 +1,7 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Info</h1>
+	<h1>{{.Event.Name}}</h1>
 	
 	<div>Created: {{formatDateTime .Event.Created}}</div>
 	{{ if not .Event.Started.IsZero}}<div>Started: {{formatDateTime .Event.Started}}</div>{{ end }}

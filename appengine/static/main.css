@@ -48,6 +48,9 @@ a.button.margin-bottom {
 a.active, a:hover, input[type=submit]:hover {
 	background: #ffebcd;
 }
+a:not([href]) {
+	background: inherit;
+}
 
 .titlemenu {
 	display: flex;

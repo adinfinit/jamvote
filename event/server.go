@@ -107,41 +107,6 @@ func (event *Server) Dashboard(context *Context) {
 	context.Render("event-dashboard")
 }
 
-func (event *Server) Team(context *Context) {
-	if context.Team == nil {
-		context.Error("Team missing", http.StatusBadRequest)
-		return
-	}
-	context.Render("event-team")
-}
-
-func (event *Server) EditTeam(context *Context) {
-	if context.Team == nil {
-		context.Error("Team missing", http.StatusBadRequest)
-		return
-	}
-
-	context.Render("event-team")
-}
-
-func (event *Server) CreateTeam(context *Context) {
-	if context.CurrentUser == nil {
-		// TODO: add return address to team-creation page
-		context.Flash("You must be logged in to create a team.")
-		context.Redirect("/user/login", http.StatusTemporaryRedirect)
-		return
-	}
-
-	users, err := context.Users.List()
-	if err != nil {
-		context.Error(err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	context.Data["Users"] = users
-	context.Render("event-create-team")
-}
-
 /*
 func voteTeam(rw http.ResponseWriter, r *http.Request) {
 	Page(rw, r, "Vote for XYZ",

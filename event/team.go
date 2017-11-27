@@ -17,8 +17,8 @@ type TeamID int64
 func (id TeamID) String() string { return strconv.Itoa(int(id)) }
 
 type Team struct {
-	EventID EventID `datastore:",noindex"`
-	ID      TeamID  `datastore:",noindex"`
+	EventID EventID `datastore:"-"`
+	ID      TeamID  `datastore:"-"`
 
 	Name    string
 	Members []Member

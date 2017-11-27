@@ -1,0 +1,30 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Create Team</h1>
+	<form method="post">
+		<div class="field">
+			<label for="name">Team Name</label>
+			<input type="text" id="name" name="name">
+		</div>
+		<div class="field members">
+			<label>Members</label>
+
+			<datalist id="users">
+				{{ range .Users }}
+				<option value="{{.Name}}">{{.ID}}</option>
+				{{ end }}
+			</datalist>
+
+			<div class="input tight" name="member[0]" list="users" placeholder="Member 1">{{.CurrentUser.Name}}</div>
+			<input type="text" class="tight" name="member[1]" list="users" placeholder="Member 2">
+			<input type="text" class="tight" name="member[2]" list="users" placeholder="Member 3">
+			<input type="text" class="tight" name="member[3]" list="users" placeholder="Member 4">
+			<input type="text" class="tight" name="member[4]" list="users" placeholder="Member 5">
+		</div>
+
+		<input type="submit" value="Create">
+	</form>
+</section>
+
+{{ template "foot" . }}

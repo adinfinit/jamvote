@@ -62,19 +62,25 @@ func (repo *Datastore) ByID(eventid EventID) (*Event, error) {
 // TODO
 func (repo *Datastore) Update(event *Event) error { return nil }
 
-// TODO
-func (repo *Datastore) CreateTeam(eventid EventID, team *Team) (TeamID, error) { return 0, nil }
+func (repo *Datastore) CreateTeam(eventid EventID, team *Team) (TeamID, error) {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	incompletekey := datastore.NewIncompleteKey(repo.Context, "Team", eventkey)
+	teamkey, err := datastore.Put(repo.Context, incompletekey, team)
+	team.ID = TeamID(teamkey.IntID())
+	return team.ID, datastoreError(err)
+
+}
 
 // TODO
 func (repo *Datastore) UpdateTeam(team *Team) error { return nil }
 
 func (repo *Datastore) TeamByID(eventid EventID, teamid TeamID) (*Team, error) {
 	team := &Team{}
-	team.EventID = eventid
-	team.ID = teamid
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(teamid), eventkey)
 	err := datastore.Get(repo.Context, teamkey, team)
+	team.EventID = eventid
+	team.ID = teamid
 	return team, datastoreError(err)
 }
 
