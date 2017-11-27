@@ -87,8 +87,26 @@ a[target=_blank]::before {
 	font-weight: bold;
 }
 
-.randomizer {
+.randomizer > span {
+	display: inline-block;
+	user-select: none;
 	cursor: help;
+	transform: rotate(0deg);
+}
+.randomizer > span:hover, .randomizer > span:active {
+	animation: randomizer-animation 1s ease-in-out infinite alternate;
+}
+
+@keyframes randomizer-animation {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(-30deg);
+	}
+	100% {
+		transform: rotate(30deg);
+	}
 }
 
 /* tables */
