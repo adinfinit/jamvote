@@ -31,7 +31,6 @@ func (repo *Datastore) List() ([]*Event, error) {
 }
 
 func (repo *Datastore) Create(event *Event) error {
-
 	err := datastore.RunInTransaction(repo.Context, func(ctx netcontext.Context) error {
 		eventkey := datastore.NewKey(ctx, "Event", string(event.ID), 0, nil)
 
