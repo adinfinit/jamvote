@@ -78,7 +78,7 @@ func (event *Server) EditEvent(context *Context) {
 		if err := context.Request.ParseForm(); err != nil {
 			context.FlashNow("Invalid form data: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
-			context.Render("event-create")
+			context.Render("event-edit")
 			return
 		}
 
@@ -102,7 +102,7 @@ func (event *Server) EditEvent(context *Context) {
 			}
 
 			context.Response.WriteHeader(http.StatusBadRequest)
-			context.Render("event-create")
+			context.Render("event-edit")
 			return
 		}
 
@@ -117,7 +117,7 @@ func (event *Server) EditEvent(context *Context) {
 				context.FlashNow(err.Error())
 				context.Response.WriteHeader(http.StatusInternalServerError)
 			}
-			context.Render("event-create")
+			context.Render("event-edit")
 			return
 		}
 
@@ -125,5 +125,5 @@ func (event *Server) EditEvent(context *Context) {
 		return
 	}
 
-	context.Render("event-create")
+	context.Render("event-edit")
 }

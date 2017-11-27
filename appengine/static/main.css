@@ -212,7 +212,11 @@ label {
 }
 
 input[type=checkbox] {
+	display: inline-block;
 	width: auto;
+}
+input[type=checkbox] ~ label {
+	display: inline-block;
 }
 
 .input {

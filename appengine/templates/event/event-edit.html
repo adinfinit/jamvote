@@ -1,0 +1,30 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Edit: {{.Event.Name}}</h1>
+	<form method="post">
+		<div class="field">
+			<input type="checkbox" id="voting" name="voting" value="true" {{ if .Event.Voting }}checked{{end}}>
+			<label for="voting">Voting Open</label>
+		</div>
+
+		<div class="field">
+			<input type="checkbox" id="closed" name="closed" value="true" {{ if .Event.Closed }}checked{{end}}>
+			<label for="closed">Voting Closed</label>
+		</div>
+
+		<div class="field">
+			<input type="checkbox" id="revealed" name="revealed" value="true" {{ if .Event.Revealed }}checked{{end}}>
+			<label for="revealed">Votes Revealed</label>
+		</div>
+	
+		<div class="field">
+			<label for="info">Info</label>
+			<textarea type="text" id="info" name="info" rows=4>{{.Event.Info}}</textarea>
+		</div>
+
+		<input type="submit" value="Save">
+	</form>
+</section>
+
+{{ template "foot" . }}

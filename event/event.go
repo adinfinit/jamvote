@@ -45,8 +45,11 @@ type Event struct {
 	Name string
 	Info string `datastore:",noindex"`
 
-	Voting   bool `datastore:",noindex"`
-	Closed   bool `datastore:",noindex"`
+	// Voting allow voting
+	Voting bool `datastore:",noindex"`
+	// Closed for new entries
+	Closed bool `datastore:",noindex"`
+	// Revealed, results are publicly viewable
 	Revealed bool `datastore:",noindex"`
 
 	Organizers []user.UserID `datastore:",noindex"`

@@ -1,6 +1,6 @@
 {{ template "head" . }}
 <section>
-	<h1>Edit User: {{ .User.Name }}</h1>
+	<h1>Edit: {{ .User.Name }}</h1>
 	<form method="post">
 		<div class="field">
 			<label for="name">Name</label>
@@ -19,8 +19,8 @@
 				
 		{{ if .CurrentUser.IsAdmin }}
 		<div class="field">
-			<label for="admin">Admin</label>
 			<input type="checkbox" id="admin" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
+			<label for="admin">Admin</label>
 		</div>
 		{{ end }}
 
