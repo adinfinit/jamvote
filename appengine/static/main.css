@@ -117,6 +117,9 @@ tr > td > * {
 thead > tr, tr:nth-child(even){
 	background: #f0f0f0;
 }
+.boxed {
+	border: 1px solid #aaa;
+}
 
 /* page layout */
 

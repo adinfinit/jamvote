@@ -26,7 +26,7 @@
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td>{{ if .Game.Name}}<a {{ if .Game.Link }}target="_blank" href="{{.Game.Link}}"{{ end }} title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
 				{{ range .MembersWithEmpty }}
-				{{ if .Name }}<td title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="no-member"></td>{{ end }}
+				{{ if .Name }}<td class="boxed" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed no-member"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}
@@ -57,7 +57,7 @@
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td>{{ if .Game.Name}}<a {{ if .Game.Link }}target="_blank" href="{{.Game.Link}}"{{ end }} title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
 				{{ range .MembersWithEmpty }}
-				{{ if .Name }}<td title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="no-member"></td>{{ end }}
+				{{ if .Name }}<td class="boxed" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed no-member"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}
