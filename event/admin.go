@@ -9,13 +9,14 @@ import (
 
 func (event *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
-		context.Render("event-create")
+		context.Flash("Must be admin to create events.")
+		context.Redirect("/", http.StatusTemporaryRedirect)
 		return
 	}
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.Data["Flashes"] = []string{"Invalid form data."}
+			context.FlashNow("Invalid form data: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-create")
 			return
@@ -33,14 +34,12 @@ func (event *Server) CreateEvent(context *Context) {
 		context.Data["NewEvent"] = event
 
 		if name == "" || !event.ID.Valid() {
-			flashes := []string{}
 			if name == "" {
-				flashes = append(flashes, "Name cannot be empty.")
+				context.FlashNow("Name cannot be empty")
 			}
 			if !event.ID.Valid() {
-				flashes = append(flashes, "Invalid slug, can only contain 'a'-'z', '0'-'9'.")
+				context.FlashNow("Invalid slug, can only contain 'a'-'z', '0'-'9'.")
 			}
-			context.FlashNow(flashes...)
 
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-create")
@@ -48,6 +47,8 @@ func (event *Server) CreateEvent(context *Context) {
 		}
 
 		event.Created = time.Now()
+		event.Started = time.Now()
+		// add additional draft stage
 		event.Stage = Started
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
