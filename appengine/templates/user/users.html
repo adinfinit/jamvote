@@ -1,31 +1,25 @@
 {{ template "head" . }}
 
 {{ define "users-list"}}
-<section>
-	<h1>Users</h1>
-	<table>
-		<thead>
-			<tr>
-				<th style="width:100%;">Name</th>
-				<th>ID</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ range .}}
-			<tr>
-				{{ if .ID }}
-				<td><a href="/user/{{.ID}}">{{ .Name }}</a></td>
-				<td>{{ .ID }}</td>
-				{{ else }}
-				<td><a>{{ .Name }}</a></td>
-				{{ end }}
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
-</section>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{ range .}}
+		<tr>
+			<td><a href="/user/{{.ID}}">{{ .Name }}</a></td>
+		</tr>
+		{{ end }}
+	</tbody>
+</table>
 {{ end }}
 
-{{ template "users-list" .Users }}
+<section>
+	<h1>Users</h1>
+	{{ template "users-list" .Users }}
+</section>
 
 {{ template "foot" . }}

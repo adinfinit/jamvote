@@ -3,11 +3,6 @@
 	<h1>Edit User: {{ .User.Name }}</h1>
 	<form method="post">
 		<div class="field">
-			<label for="id">ID</label>
-			<div class="input" id="id" name="id">{{ .User.ID }}</div>
-		</div>
-
-		<div class="field">
 			<label for="name">Name</label>
 			<input type="text" id="name" name="name" value="{{ .User.Name }}">
 		</div>

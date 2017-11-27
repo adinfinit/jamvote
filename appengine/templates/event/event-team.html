@@ -7,14 +7,10 @@
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>{{ end }}
 	</div>
 	
-	<div>
-		<div class="field">
-			<label for="id">ID</label>
-			<div class="input" name="id">{{.Team.ID}}</div>
-		</div>
-
+	<section>
+		<h1>Members</h1>
 		{{ template "users-list" .Team.Members }}
-	</div>
+	</section>
 </section>
 
 {{ template "foot" . }}
