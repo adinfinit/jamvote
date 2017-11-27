@@ -1,6 +1,7 @@
 package event
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -29,6 +30,8 @@ func (event *Server) CreateEvent(context *Context) {
 		event.Name = name
 		event.Info = info
 
+		context.Data["NewEvent"] = event
+
 		if name == "" || !event.ID.Valid() {
 			flashes := []string{}
 			if name == "" {
@@ -45,12 +48,19 @@ func (event *Server) CreateEvent(context *Context) {
 		}
 
 		event.Created = time.Now()
+		event.Stage = Started
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
 		err := context.Events.Create(event)
 		if err != nil {
-			//TODO: flash error
-			context.Error(err.Error(), http.StatusBadRequest)
+			if err == ErrExists {
+				context.FlashNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
+				context.Response.WriteHeader(http.StatusConflict)
+			} else {
+				context.FlashNow(err.Error())
+				context.Response.WriteHeader(http.StatusInternalServerError)
+			}
+			context.Render("event-create")
 			return
 		}
 

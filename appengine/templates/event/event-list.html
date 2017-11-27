@@ -1,5 +1,11 @@
 {{ template "head" . }}
 
+{{ define "event-links" }}
+{{ range . }}
+<a class="button" href="{{ .Path }}"><div class="title">{{.Name}}</div></a>
+{{ end }}
+{{ end }}
+
 <section>
 	<div class="titlemenu">
 		<h1>Events</h1>	
@@ -8,8 +14,25 @@
 		{{ end }}
 	</div>
 	
-	{{ range .Events }}
-	<a class="button" href="{{ .Path }}"><div class="title">{{.Name}}</div></a>
+	{{ with $events := .Events.Voting }}
+	<div>
+		<h2>Voting</h2>
+		{{ template "event-links" $events }}
+	</div>
+	{{ end }}
+
+	{{ with $events := .Events.Started }}
+	<div></div>
+		<h2>Started</h2>
+		{{ template "event-links" $events }}
+	</div>
+	{{ end }}
+
+	{{ with $events := .Events.Finished }}
+	<div>
+		<h2>Finished</h2>	
+		{{ template "event-links" $events }}
+	</div>
 	{{ end }}
 </section>
 

@@ -18,15 +18,16 @@ type Repo interface {
 	BallotRepo
 }
 
-var ErrNotExists = errors.New("info does not exist")
+var ErrNotExists = errors.New("does not exist")
+var ErrExists = errors.New("already exists")
 
 type Stage string
 
 const (
-	Draft   Stage = "draft"
-	Started       = "started"
-	Voting        = "voting"
-	Closed        = "closed"
+	Draft    Stage = "draft"
+	Started        = "started"
+	Voting         = "voting"
+	Finished       = "finished"
 )
 
 type EventID string

@@ -5,17 +5,17 @@
 	<form method="post">
 		<div class="field">
 			<label for="name">Name</label>
-			<input type="text" id="name" name="name">
+			<input type="text" id="name" name="name" value="{{with .NewEvent}}{{.Name}}{{end}}">
 		</div>
 
 		<div class="field">
 			<label for="slug">Slug</label>
-			<input type="text" id="slug" name="slug">
+			<input type="text" id="slug" name="slug" value="{{with .NewEvent}}{{.ID}}{{end}}">
 		</div>
 
 		<div class="field">
 			<label for="info">Info</label>
-			<textarea type="text" id="info" name="info" rows=4></textarea>
+			<textarea type="text" id="info" name="info" rows=4>{{with .NewEvent}}{{.Info}}{{end}}</textarea>
 		</div>
 
 		<input type="submit" value="Create">

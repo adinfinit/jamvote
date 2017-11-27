@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"path"
+	"sort"
 
 	"github.com/adinfinit/jamvote/user"
 	"github.com/gorilla/mux"
@@ -49,12 +50,36 @@ func (event *Event) Path(subroutes ...interface{}) string {
 func (dashboard *Server) List(context *Context) {
 	events, err := context.Events.List()
 	if err != nil {
-		//TODO: flash
-		context.Error(err.Error(), http.StatusInternalServerError)
-		return
+		context.FlashNow(err.Error())
+		context.Response.WriteHeader(http.StatusInternalServerError)
 	}
 
-	context.Data["Events"] = events
+	sort.Slice(events, func(i, k int) bool {
+		return events[i].Created.After(events[k].Created)
+	})
+
+	byStage := struct {
+		All      []*Event
+		Started  []*Event
+		Voting   []*Event
+		Finished []*Event
+	}{}
+	byStage.All = events
+
+	for _, event := range events {
+		switch event.Stage {
+		case Draft:
+			// byStage.Draft = append(byStage.Draft, event)
+		case Started:
+			byStage.Started = append(byStage.Started, event)
+		case Voting:
+			byStage.Voting = append(byStage.Voting, event)
+		case Finished:
+			byStage.Finished = append(byStage.Finished, event)
+		}
+	}
+
+	context.Data["Events"] = byStage
 	context.Render("event-list")
 }
 
