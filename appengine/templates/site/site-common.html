@@ -31,7 +31,8 @@
                 <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}</a>
                 {{ if .CurrentUser.IsAdmin }}<a href="{{ .Event.Path "edit" }}">Edit</a>{{ end }}
                 <a href="{{ .Event.Path "teams" }}">Teams</a>
-                <a {{if (not .Event.Revealed)}}class="disabled"{{end}}  href="{{ .Event.Path "results" }}">Results</a>
+                <a {{if (not .Event.CanVote)}}class="disabled"{{end}} href="{{ .Event.Path "progress" }}">Progress</a>
+                <a {{if (not .Event.Revealed)}}class="disabled"{{end}} href="{{ .Event.Path "results" }}">Results</a>
             </div>
         </div>
         {{ end }}
