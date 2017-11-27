@@ -84,6 +84,26 @@ func (dashboard *Server) List(context *Context) {
 }
 
 func (event *Server) Dashboard(context *Context) {
+	teams, err := context.Events.Teams(context.Event.ID)
+	if err != nil {
+		context.FlashNow(fmt.Sprintf("Unable to get teams: %v", err))
+	}
+
+	sort.Slice(teams, func(i, k int) bool {
+		return teams[i].Name < teams[k].Name
+	})
+
+	if context.CurrentUser != nil {
+		yourteams := []*Team{}
+		for _, team := range teams {
+			if team.HasMember(context.CurrentUser) {
+				yourteams = append(yourteams, team)
+			}
+		}
+		context.Data["YourTeams"] = yourteams
+	}
+
+	context.Data["Teams"] = teams
 	context.Render("event-dashboard")
 }
 
@@ -106,7 +126,8 @@ func (event *Server) EditTeam(context *Context) {
 
 func (event *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
-		// TODO: add eventual return address
+		// TODO: add return address to team-creation page
+		context.Flash("You must be logged in to create a team.")
 		context.Redirect("/user/login", http.StatusTemporaryRedirect)
 		return
 	}

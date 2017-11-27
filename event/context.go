@@ -16,15 +16,6 @@ type Context struct {
 	*user.Context
 }
 
-var TeamStub = Team{
-	ID:   123,
-	Name: "Shroomy",
-	Members: []Member{
-		{0, "Magic Mike"},
-		{5275456790069248, "Wolfram"},
-	},
-}
-
 func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
 	context.Context = event.Users.Context(w, r)
@@ -46,12 +37,6 @@ func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 		team, err := context.Events.TeamByID(context.Event.ID, TeamID(teamid))
 		if err == nil && team != nil {
 			context.Team = team
-			context.Data["Team"] = context.Team
-			context.Data["CanEditTeam"] = context.Team.HasEditor(context.CurrentUser)
-		} else {
-			stub := TeamStub
-			stub.ID = TeamID(teamid)
-			context.Team = &stub
 			context.Data["Team"] = context.Team
 			context.Data["CanEditTeam"] = context.Team.HasEditor(context.CurrentUser)
 		}

@@ -11,22 +11,15 @@
 		<thead>
 			<tr>
 				<th style="width:100%;">Name</th>
-				<th>ID</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><a href="{{.Event.Path "team" "123"}}">Alpha</a></td>
-				<td>123</td>
-			</tr>
-			<tr>
-				<td><a href="{{.Event.Path "team" "321"}}">Beta</a></td>
-				<td>321</td>
-			</tr>
 			{{ range .YourTeams }}
 			<tr>
 				<td><a href="{{.Event.Path "team" .ID}}">{{ .Name }}</a></td>
-				<td>{{ .ID }}</td>
+				{{ range .Members }}
+				<td><a {{ if .ID }}href="/user/{{.ID}}"{{ end }} >{{ .Name }}</a></td>
+				{{ end }}
 			</tr>
 			{{ end }}
 		</tbody>
@@ -42,22 +35,15 @@
 		<thead>
 			<tr>
 				<th style="width:100%;">Name</th>
-				<th>ID</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><a href="{{.Event.Path "team" "123"}}">Alpha</a></td>
-				<td>123</td>
-			</tr>
-			<tr>
-				<td><a href="{{.Event.Path "team" "321"}}">Beta</a></td>
-				<td>321</td>
-			</tr>
 			{{ range .Teams }}
 			<tr>
 				<td><a href="{{.Event.Path "team" .ID}}">{{ .Name }}</a></td>
-				<td>{{ .ID }}</td>
+				{{ range .Members }}
+				<td><a {{ if .ID }}href="/user/{{.ID}}"{{ end }} >{{ .Name }}</a></td>
+				{{ end }}
 			</tr>
 			{{ end }}
 		</tbody>

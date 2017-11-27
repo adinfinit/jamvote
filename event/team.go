@@ -17,7 +17,9 @@ type TeamID int64
 func (id TeamID) String() string { return strconv.Itoa(int(id)) }
 
 type Team struct {
-	ID      TeamID
+	EventID EventID `datastore:",noindex"`
+	ID      TeamID  `datastore:",noindex"`
+
 	Name    string
 	Members []Member
 	Entry   Entry `datastore:",noindex"`
@@ -27,6 +29,10 @@ func (team *Team) HasEditor(user *user.User) bool {
 	if user.Admin {
 		return true
 	}
+	return team.HasMember(user)
+}
+
+func (team *Team) HasMember(user *user.User) bool {
 	for _, m := range team.Members {
 		if m.ID == user.ID {
 			return true
