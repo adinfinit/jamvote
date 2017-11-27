@@ -19,13 +19,13 @@ func NewServer(users *user.Server) *Server {
 
 func (event *Server) Register(router *mux.Router) {
 	router.HandleFunc("/", event.HandlerMaybe(event.List))
-	router.HandleFunc("/create-event", event.HandlerMaybe(event.CreateEvent))
+	router.HandleFunc("/event/create", event.HandlerMaybe(event.CreateEvent))
 
 	router.HandleFunc("/event/{eventid}", event.Handler(event.Dashboard))
-	router.HandleFunc("/event/{eventid}/create-team", event.Handler(event.CreateTeam))
 	router.HandleFunc("/event/{eventid}/voting", event.Handler(event.Dashboard))
 	router.HandleFunc("/event/{eventid}/results", event.Handler(event.Dashboard))
 
+	router.HandleFunc("/event/{eventid}/team/create", event.Handler(event.CreateTeam))
 	router.HandleFunc("/event/{eventid}/team/{teamid}", event.Handler(event.Team))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", event.Handler(event.EditTeam))
 	router.HandleFunc("/event/{eventid}/vote/{teamid}", event.Handler(event.Dashboard))
