@@ -139,6 +139,25 @@ thead > tr, tr:nth-child(even){
 .flashes .flash {
 	margin-bottom: 0.5rem;
 }
+.disabled {
+	color: #888;
+	background-image: repeating-linear-gradient(
+	  45deg,
+	  transparent,
+	  transparent 5px,
+	  #ddd 5px,
+	  #ddd 10px
+	) !important;
+}
+.disabled-pretty {
+	background-image: repeating-linear-gradient(
+	  45deg,
+	  transparent,
+	  transparent 5px,
+	  #f9c393 5px,
+	  #f9c393 10px
+	) !important;
+}
 
 /* current user */
 

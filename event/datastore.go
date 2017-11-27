@@ -58,8 +58,11 @@ func (repo *Datastore) ByID(eventid EventID) (*Event, error) {
 	return event, datastoreError(err)
 }
 
-// TODO
-func (repo *Datastore) Update(event *Event) error { return nil }
+func (repo *Datastore) Update(event *Event) error {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(event.ID), 0, nil)
+	_, err := datastore.Put(repo.Context, eventkey, event)
+	return datastoreError(err)
+}
 
 func (repo *Datastore) CreateTeam(eventid EventID, team *Team) (TeamID, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)

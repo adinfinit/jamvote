@@ -30,8 +30,8 @@
             <div class="header center">
                 <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}</a>
                 {{ if .CurrentUser.IsAdmin }}<a href="{{ .Event.Path "edit" }}">Edit</a>{{ end }}
-                <a href="{{ .Event.Path "voting" }}">Voting</a>
-                <a href="{{ .Event.Path "results" }}">Results</a>
+                <a {{if (not .Event.Voting)}}class="disabled"{{end}} href="{{ .Event.Path "voting" }}">Voting</a>
+                <a {{if (not .Event.Revealed)}}class="disabled"{{end}}  href="{{ .Event.Path "results" }}">Results</a>
             </div>
         </div>
         {{ end }}

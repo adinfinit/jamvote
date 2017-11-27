@@ -2,6 +2,7 @@ package event
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -82,41 +83,22 @@ func (event *Server) EditEvent(context *Context) {
 			return
 		}
 
-		name := context.Request.FormValue("name")
-		slug := context.Request.FormValue("slug")
+		voting := context.Request.FormValue("voting") == "true"
+		closed := context.Request.FormValue("closed") == "true"
+		revealed := context.Request.FormValue("revealed") == "true"
 		info := context.Request.FormValue("info")
 
-		event := &Event{}
-		event.ID = EventID(strings.ToLower(slug))
-		event.Name = name
+		event := context.Event
+		event.Voting = voting
+		event.Closed = closed
+		event.Revealed = revealed
 		event.Info = info
+		log.Printf("%+v\n", event)
 
-		context.Data["NewEvent"] = event
-
-		if name == "" || !event.ID.Valid() {
-			if name == "" {
-				context.FlashNow("Name cannot be empty")
-			}
-			if !event.ID.Valid() {
-				context.FlashNow("Invalid slug, can only contain 'a'-'z', '0'-'9'.")
-			}
-
-			context.Response.WriteHeader(http.StatusBadRequest)
-			context.Render("event-edit")
-			return
-		}
-
-		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
-
-		err := context.Events.Create(event)
+		err := context.Events.Update(event)
 		if err != nil {
-			if err == ErrExists {
-				context.FlashNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
-				context.Response.WriteHeader(http.StatusConflict)
-			} else {
-				context.FlashNow(err.Error())
-				context.Response.WriteHeader(http.StatusInternalServerError)
-			}
+			context.FlashNow(err.Error())
+			context.Response.WriteHeader(http.StatusInternalServerError)
 			context.Render("event-edit")
 			return
 		}
