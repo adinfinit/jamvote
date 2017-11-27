@@ -15,6 +15,16 @@ import (
 	"google.golang.org/appengine"
 )
 
+var aptLocation *time.Location
+
+func init() {
+	var err error
+	aptLocation, err = time.LoadLocation("Europe/Tallinn")
+	if err != nil {
+		panic(err)
+	}
+}
+
 type Context struct {
 	Request  *http.Request
 	Response http.ResponseWriter
@@ -84,7 +94,8 @@ func (context *Context) Render(name string) {
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
 		"formatDateTime": func(t *time.Time) string {
-			return t.Format("2006-01-02 15:04:05 MST")
+			// TODO: use event location
+			return t.In(aptLocation).Format("2006-01-02 15:04:05 MST")
 		},
 	})
 
