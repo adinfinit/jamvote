@@ -148,6 +148,7 @@ func (event *Server) EditTeam(context *Context) {
 	if err != nil {
 		context.FlashNow(fmt.Sprintf("Unable to get list of users: %v", err))
 	}
+	context.Data["Users"] = users
 
 	if context.Request.Method == http.MethodPost {
 		team, ok := event.readTeamInfo(context, users)
@@ -159,7 +160,7 @@ func (event *Server) EditTeam(context *Context) {
 
 		team.EventID = context.Team.EventID
 		team.ID = context.Team.ID
-		team.Entry = context.Team.Entry
+		team.Game = context.Team.Game
 
 		err := context.Events.UpdateTeam(context.Event.ID, team)
 		if err != nil {
@@ -182,12 +183,10 @@ func (event *Server) EditTeam(context *Context) {
 		}
 	}
 
-	context.Data["Users"] = users
-
 	context.Render("event-team-edit")
 }
 
-func (event *Server) EditTeamEntry(context *Context) {
+func (event *Server) EditTeamGame(context *Context) {
 	if !event.canEditTeam(context) {
 		return
 	}
@@ -195,7 +194,7 @@ func (event *Server) EditTeamEntry(context *Context) {
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
 			context.FlashNow("Parse form: " + err.Error())
-			context.Render("event-team-edit-entry")
+			context.Render("event-team-edit-game")
 			return
 		}
 
@@ -204,15 +203,15 @@ func (event *Server) EditTeamEntry(context *Context) {
 		info := context.Request.FormValue("info")
 
 		team := context.Team
-		team.Entry.Name = name
-		team.Entry.Link = link
-		team.Entry.Info = info
+		team.Game.Name = name
+		team.Game.Link = link
+		team.Game.Info = info
 
 		err := context.Events.UpdateTeam(context.Event.ID, team)
 		if err != nil {
 			context.FlashNow(fmt.Sprintf("Unable to update team info: %v", err))
 			context.Response.WriteHeader(http.StatusInternalServerError)
-			context.Render("event-team-edit-entry")
+			context.Render("event-team-edit-game")
 			return
 		}
 
@@ -220,5 +219,5 @@ func (event *Server) EditTeamEntry(context *Context) {
 		return
 	}
 
-	context.Render("event-team-edit-entry")
+	context.Render("event-team-edit-game")
 }

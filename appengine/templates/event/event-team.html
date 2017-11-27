@@ -4,26 +4,26 @@
 	<div class="titlemenu">
 		<h1>Team: {{ .Team.Name }}</h1>
 		{{ if .CanEditTeam }}
-		<a class="button" href="{{.Event.Path "team" .Team.ID "edit-entry"}}">Edit Entry</a>
-		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>{{ end }}
+		<a class="button" href="{{.Event.Path "team" .Team.ID "edit-game"}}">Edit Game</a>
+		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit Team</a>{{ end }}
 	</div>
 
 	<section>
-		<h1>Entry</h1>
+		<h1>Game</h1>
 		
-		{{ if .Team.Entry.Name }}
+		{{ if .Team.Game.Name }}
 		<div class="field">
 			<label for="name">Name</label>
-			<div class="input" id="name" name="name">{{.Team.Entry.Name}}</div>
+			<div class="input" id="name" name="name">{{.Team.Game.Name}}</div>
 		</div>
 	
 		<div class="field">
 			<label for="link">Link</label>
-			<a class="input button" target="_blank" href="{{.Team.Entry.Link}}" name="link">{{.Team.Entry.Link}}</a>
+			<a class="input button" target="_blank" href="{{.Team.Game.Link}}" name="link">{{.Team.Game.Link}}</a>
 		</div>
 		<div class="field">
 			<label for="info">Info</label>
-			<div class="input" id="info" name="info">{{.Team.Entry.Info}}</div>
+			<div class="input" id="info" name="info">{{.Team.Game.Info}}</div>
 		</div>
 		{{ else }}
 		<div class="flashes">

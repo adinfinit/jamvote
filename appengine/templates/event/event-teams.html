@@ -12,21 +12,21 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Entry</th>
-				<th>Member 1</th>
-				<th>Member 2</th>
-				<th>Member 3</th>
-				<th>Member 4</th>
-				<th>Member 5</th>
+				<th>Game</th>
+				<th style="width:7%;">1</th>
+				<th style="width:7%;">2</th>
+				<th style="width:7%;">3</th>
+				<th style="width:7%;">4</th>
+				<th style="width:7%;">5</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{ range .YourTeams }}
 			<tr>
-				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
-				<td>{{ if .Entry.Name}}<a target="_blank" href="{{.Entry.Link}}">{{ .Entry.Name }}</a>{{end}}</td>
-				{{ range .Members }}
-				<td>{{ .Name }}</td>
+				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+				<td>{{ if .Game.Name}}<a target="_blank" href="{{.Game.Link}}" title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
+				{{ range .MembersWithEmpty }}
+				{{ if .Name }}<td title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="no-member"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}
@@ -43,21 +43,21 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Entry</th>
-				<th>Member 1</th>
-				<th>Member 2</th>
-				<th>Member 3</th>
-				<th>Member 4</th>
-				<th>Member 5</th>
+				<th>Game</th>
+				<th style="width:7%;">1</th>
+				<th style="width:7%;">2</th>
+				<th style="width:7%;">3</th>
+				<th style="width:7%;">4</th>
+				<th style="width:7%;">5</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{ range .Teams }}
 			<tr>
-				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
-				<td>{{ if .Entry.Name}}<a target="_blank" href="{{.Entry.Link}}">{{ .Entry.Name }}</a>{{end}}</td>
-				{{ range .Members }}
-				<td>{{ .Name }}</td>
+				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+				<td>{{ if .Game.Name}}<a target="_blank" href="{{.Game.Link}}" title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>
+				{{ range .MembersWithEmpty }}
+				{{ if .Name }}<td title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="no-member"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}

@@ -23,14 +23,14 @@ type Team struct {
 
 	Name    string
 	Members []Member
-	Entry   Entry `datastore:",noindex"`
+	Game    Game `datastore:",noindex"`
 }
 type Member struct {
 	ID   user.UserID // can be zero
 	Name string
 }
 
-type Entry struct {
+type Game struct {
 	Name string
 	Link string `datastore:",noindex"`
 	Info string `datastore:",noindex"`

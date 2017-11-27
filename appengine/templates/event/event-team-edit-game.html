@@ -1,10 +1,10 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Edit Game For: {{.Team.Name}}</h1>
+	<h1>Team: {{.Team.Name}}</h1>
 	<form method="POST">
 		<div class="field">
-			<label id="name-randomize" class="randomizer" for="name">Entry Name</label>
+			<label id="name-randomize" class="randomizer" for="name">Game</label>
 			<script>
 				document.getElementById("name-randomize").addEventListener("click", function(event){
 					event.preventDefault();
@@ -14,17 +14,17 @@
 					el.value = GenerateGameName();
 				});
 			</script>
-			<input type="text" id="name" name="name" value="{{.Team.Entry.Name}}">
+			<input type="text" id="name" name="name" value="{{.Team.Game.Name}}">
 		</div>
 
 		<div class="field">
 			<label for="link">Link</label>
-			<input type="text" id="link" name="link" value="{{ .Team.Entry.Link }}">
+			<input type="text" id="link" name="link" value="{{ .Team.Game.Link }}">
 		</div>
 	
 		<div class="field">
 			<label for="info">Info</label>
-			<textarea type="text" id="info" name="info" rows=4>{{.Team.Entry.Info}}</textarea>
+			<textarea type="text" id="info" name="info" rows=4>{{.Team.Game.Info}}</textarea>
 		</div>
 
 		<input type="submit" value="Save">
