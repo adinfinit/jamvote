@@ -2,7 +2,7 @@
 
 <section>
 	<div class="titlemenu">
-		<h1>{{ .Team.Name }}</h1>
+		<h1>Team: {{ .Team.Name }}</h1>
 		{{ if .CanEditTeam }}
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>{{ end }}
 	</div>
