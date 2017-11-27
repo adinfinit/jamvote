@@ -26,6 +26,9 @@ type Team struct {
 }
 
 func (team *Team) HasEditor(user *user.User) bool {
+	if user == nil {
+		return false
+	}
 	if user.Admin {
 		return true
 	}
@@ -33,6 +36,9 @@ func (team *Team) HasEditor(user *user.User) bool {
 }
 
 func (team *Team) HasMember(user *user.User) bool {
+	if user == nil {
+		return false
+	}
 	for _, m := range team.Members {
 		if m.ID == user.ID {
 			return true
