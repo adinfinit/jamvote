@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
+
 	"google.golang.org/appengine"
 )
 
@@ -17,15 +19,27 @@ type Context struct {
 	Request  *http.Request
 	Response http.ResponseWriter
 	Data     map[string]interface{}
+	Session  *sessions.Session
 
 	context.Context
 }
 
 func NewContext(w http.ResponseWriter, r *http.Request) *Context {
+	sess, err := SessionStore.New(r, DefaultSessionName)
+	if err != nil {
+		log.Println("Failed to get session: ", err)
+	}
+
+	data := map[string]interface{}{}
+	if flashes := sess.Flashes(); len(flashes) > 0 {
+		data["Flashes"] = flashes
+	}
+
 	return &Context{
 		Request:  r,
 		Response: w,
-		Data:     map[string]interface{}{},
+		Data:     data,
+		Session:  sess,
 		Context:  appengine.NewContext(r),
 	}
 }
@@ -36,15 +50,37 @@ func Handler(fn func(*Context)) http.HandlerFunc {
 	})
 }
 
+func (context *Context) Flash(message ...string) {
+	for _, m := range message {
+		context.Session.AddFlash(m)
+	}
+}
+
+func (context *Context) FlashNow(message ...string) {
+	if v, ok := context.Data["Flashes"]; ok {
+		if list, ok := v.([]string); ok {
+			list = append(list, message...)
+			context.Data["Flashes"] = list
+			return
+		}
+	}
+
+	context.Data["Flashes"] = message
+}
+
 func (context *Context) Redirect(url string, status int) {
+	context.Session.Save(context.Request, context.Response)
 	http.Redirect(context.Response, context.Request, url, status)
 }
 
 func (context *Context) Error(text string, status int) {
+	context.Session.Save(context.Request, context.Response)
 	http.Error(context.Response, text, status)
 }
 
 func (context *Context) Render(name string) {
+	context.Session.Save(context.Request, context.Response)
+
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
 		"formatDateTime": func(t *time.Time) string {

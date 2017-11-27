@@ -8,15 +8,15 @@ import (
 
 func (event *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
-		//TODO: flash access denied
-		context.Redirect("/", http.StatusTemporaryRedirect)
+		context.Render("event-create")
 		return
 	}
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			//TODO: flash error
-			context.Error("Parse form: "+err.Error(), http.StatusBadRequest)
+			context.Data["Flashes"] = []string{"Invalid form data."}
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-create")
 			return
 		}
 
@@ -30,12 +30,19 @@ func (event *Server) CreateEvent(context *Context) {
 		event.Info = info
 
 		if name == "" || !event.ID.Valid() {
-			//TODO: flash error
-			context.Error("Invalid data", http.StatusBadRequest)
+			flashes := []string{}
+			if name == "" {
+				flashes = append(flashes, "Name cannot be empty.")
+			}
+			if !event.ID.Valid() {
+				flashes = append(flashes, "Invalid slug, can only contain 'a'-'z', '0'-'9'.")
+			}
+			context.FlashNow(flashes...)
+
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-create")
 			return
 		}
-
-		// TODO: check valid slug
 
 		event.Created = time.Now()
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)

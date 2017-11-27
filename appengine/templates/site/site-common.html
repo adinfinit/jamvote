@@ -34,7 +34,14 @@
         </div>
         {{ end }}
         <div class="content-outer">
-            <div class="content center">        
+            <div class="content center">
+                {{ if .Flashes }}
+                <div class="flashes">
+                    {{ range .Flashes }}
+                    <div class="flash">{{ . }}</div>
+                    {{ end }}
+                </div>
+                {{ end }}
 {{ end }}
 
 {{ define "foot"}}
