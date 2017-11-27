@@ -29,6 +29,7 @@
         <div class="header-outer">
             <div class="header center">
                 <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}</a>
+                {{ if .CurrentUser.IsAdmin }}<a href="{{ .Event.Path "edit" }}">Edit</a>{{ end }}
                 <a href="{{ .Event.Path "voting" }}">Voting</a>
                 <a href="{{ .Event.Path "results" }}">Results</a>
             </div>
