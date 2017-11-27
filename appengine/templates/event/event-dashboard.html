@@ -3,10 +3,6 @@
 <section>
 	<h1>Event: {{.Event.Name}}</h1>
 	
-	<div>Created: {{formatDateTime .Event.Created}}</div>
-	{{ if not .Event.Started.IsZero}}<div>Started: {{formatDateTime .Event.Started}}</div>{{ end }}
-	{{ if not .Event.Closed.IsZero}}<div>Closed: {{formatDateTime .Event.Closed}}</div>{{ end }}
-
 	<div>
 		<p>{{.Event.Info}}</p>
 	</div>

@@ -13,13 +13,6 @@
 		<a class="button" href="/event/create">Create Event</a>
 		{{ end }}
 	</div>
-	
-	{{ with $events := .Events.Voting }}
-	<div>
-		<h2>Voting</h2>
-		{{ template "event-links" $events }}
-	</div>
-	{{ end }}
 
 	{{ with $events := .Events.Started }}
 	<div></div>

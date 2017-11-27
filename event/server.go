@@ -56,26 +56,20 @@ func (dashboard *Server) List(context *Context) {
 	}
 
 	sort.Slice(events, func(i, k int) bool {
-		return events[i].Created.After(events[k].Created)
+		return events[i].Name < events[k].Name
 	})
 
 	byStage := struct {
 		All      []*Event
 		Started  []*Event
-		Voting   []*Event
 		Finished []*Event
 	}{}
 	byStage.All = events
 
 	for _, event := range events {
-		switch event.Stage {
-		case Draft:
-			// byStage.Draft = append(byStage.Draft, event)
-		case Started:
+		if !event.Closed {
 			byStage.Started = append(byStage.Started, event)
-		case Voting:
-			byStage.Voting = append(byStage.Voting, event)
-		case Finished:
+		} else {
 			byStage.Finished = append(byStage.Finished, event)
 		}
 	}

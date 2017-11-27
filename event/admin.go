@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 )
 
 func (event *Server) CreateEvent(context *Context) {
@@ -46,10 +45,6 @@ func (event *Server) CreateEvent(context *Context) {
 			return
 		}
 
-		event.Created = time.Now()
-		event.Started = time.Now()
-		// add additional draft stage
-		event.Stage = Started
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
 		err := context.Events.Create(event)

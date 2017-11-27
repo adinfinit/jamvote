@@ -2,7 +2,6 @@ package event
 
 import (
 	"errors"
-	"time"
 
 	"github.com/adinfinit/jamvote/user"
 )
@@ -20,15 +19,6 @@ type Repo interface {
 
 var ErrNotExists = errors.New("does not exist")
 var ErrExists = errors.New("already exists")
-
-type Stage string
-
-const (
-	Draft    Stage = "draft"
-	Started        = "started"
-	Voting         = "voting"
-	Finished       = "finished"
-)
 
 type EventID string
 
@@ -55,10 +45,8 @@ type Event struct {
 	Name string
 	Info string `datastore:",noindex"`
 
-	Stage   Stage
-	Created time.Time
-	Started time.Time
-	Closed  time.Time
+	Voting bool `datastore:",noindex"`
+	Closed bool `datastore:",noindex"`
 
-	Organizers []user.UserID
+	Organizers []user.UserID `datastore:",noindex"`
 }
