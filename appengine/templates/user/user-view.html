@@ -16,14 +16,14 @@
 		{{ if .User.Facebook }}
 		<div class="field">
 			<label for="facebook">Facebook</label>
-			<a class="button" href="{{.User.Facebook}}" name="facebook">{{.User.Facebook}}</a>
+			<a class="button" target="_blank" href="{{.User.Facebook}}" name="facebook">{{.User.Facebook}}</a>
 		</div>
 		{{ end }}
 
 		{{ if .User.Github }}
 		<div class="field">
 			<label for="github">Github</label>
-			<a class="button" href="{{.User.Github}}" name="github">{{.User.Github}}</a>
+			<a class="button" target="_blank" href="{{.User.Github}}" name="github">{{.User.Github}}</a>
 		</div>
 		{{ end }}
 	</div>

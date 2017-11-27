@@ -11,21 +11,20 @@
 	<section>
 		<h1>Entry</h1>
 		
-		{{ if .Entry.Name }}
+		{{ if .Team.Entry.Name }}
 		<div class="field">
 			<label for="name">Name</label>
-			<div class="input" id="name" name="name">{{.Entry.Name}}</div>
+			<div class="input" id="name" name="name">{{.Team.Entry.Name}}</div>
+		</div>
+	
+		<div class="field">
+			<label for="link">Link</label>
+			<a class="input button" target="_blank" href="{{.Team.Entry.Link}}" name="link">{{.Team.Entry.Link}}</a>
 		</div>
 		<div class="field">
-			<label for="name">Info</label>
-			<div class="input" id="name" name="name">{{.Entry.Info}}</div>
+			<label for="info">Info</label>
+			<div class="input" id="info" name="info">{{.Team.Entry.Info}}</div>
 		</div>
-		
-		<div class="field">
-			<label for="name">Link</label>
-			<div class="input" id="name" name="name">{{.Entry.Link}}</div>
-		</div>
-
 		{{ else }}
 		<div class="flashes">
 			<div class="flash">Not yet submitted.</div>

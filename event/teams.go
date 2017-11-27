@@ -123,17 +123,24 @@ func (event *Server) Team(context *Context) {
 	context.Render("event-team")
 }
 
-func (event *Server) EditTeam(context *Context) {
+func (event *Server) canEditTeam(context *Context) bool {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
 		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
-		return
+		return false
 	}
 
 	if !context.Team.HasEditor(context.CurrentUser) {
 		context.Flash(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
 		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
+		return false
+	}
+	return true
+}
+
+func (event *Server) EditTeam(context *Context) {
+	if !event.canEditTeam(context) {
 		return
 	}
 
@@ -178,4 +185,40 @@ func (event *Server) EditTeam(context *Context) {
 	context.Data["Users"] = users
 
 	context.Render("event-team-edit")
+}
+
+func (event *Server) EditTeamEntry(context *Context) {
+	if !event.canEditTeam(context) {
+		return
+	}
+
+	if context.Request.Method == http.MethodPost {
+		if err := context.Request.ParseForm(); err != nil {
+			context.FlashNow("Parse form: " + err.Error())
+			context.Render("event-team-edit-entry")
+			return
+		}
+
+		name := context.Request.FormValue("name")
+		link := context.Request.FormValue("link")
+		info := context.Request.FormValue("info")
+
+		team := context.Team
+		team.Entry.Name = name
+		team.Entry.Link = link
+		team.Entry.Info = info
+
+		err := context.Events.UpdateTeam(context.Event.ID, team)
+		if err != nil {
+			context.FlashNow(fmt.Sprintf("Unable to update team info: %v", err))
+			context.Response.WriteHeader(http.StatusInternalServerError)
+			context.Render("event-team-edit-entry")
+			return
+		}
+
+		context.Redirect(context.Event.Path("team", team.ID.String()), http.StatusSeeOther)
+		return
+	}
+
+	context.Render("event-team-edit-entry")
 }

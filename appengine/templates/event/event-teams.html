@@ -12,6 +12,7 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Entry</th>
 				<th>Member 1</th>
 				<th>Member 2</th>
 				<th>Member 3</th>
@@ -23,6 +24,7 @@
 			{{ range .YourTeams }}
 			<tr>
 				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
+				<td>{{ if .Entry.Name}}<a target="_blank" href="{{.Entry.Link}}">{{ .Entry.Name }}</a>{{end}}</td>
 				{{ range .Members }}
 				<td>{{ .Name }}</td>
 				{{ end }}
@@ -41,6 +43,7 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Entry</th>
 				<th>Member 1</th>
 				<th>Member 2</th>
 				<th>Member 3</th>
@@ -52,6 +55,7 @@
 			{{ range .Teams }}
 			<tr>
 				<td><a class="important" href="{{$event.Path "team" .ID}}">{{ .Name }}</a></td>
+				<td>{{ if .Entry.Name}}<a target="_blank" href="{{.Entry.Link}}">{{ .Entry.Name }}</a>{{end}}</td>
 				{{ range .Members }}
 				<td>{{ .Name }}</td>
 				{{ end }}

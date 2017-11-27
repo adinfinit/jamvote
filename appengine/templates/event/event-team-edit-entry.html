@@ -1,0 +1,25 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Edit Entry For: {{.Team.Name}}</h1>
+	<form method="POST">
+		<div class="field">
+			<label for="name">Entry Name</label>
+			<input type="text" id="name" name="name" value="{{.Team.Entry.Name}}">
+		</div>
+
+		<div class="field">
+			<label for="link">Link</label>
+			<input type="text" id="link" name="link" value="{{ .Team.Entry.Link }}">
+		</div>
+	
+		<div class="field">
+			<label for="info">Info</label>
+			<textarea type="text" id="info" name="info" rows=4>{{.Team.Entry.Info}}</textarea>
+		</div>
+
+		<input type="submit" value="Save">
+	</form>
+</section>
+
+{{ template "foot" . }}
