@@ -76,10 +76,12 @@ func (event *Server) CreateTeam(context *Context) {
 		return
 	}
 
-	if context.Event.Closed {
-		context.Flash("Event is closed and cannot be entered anymore")
-		context.Redirect(context.Event.Path(), http.StatusSeeOther)
-		return
+	if !context.CurrentUser.IsAdmin() {
+		if context.Event.Closed {
+			context.Flash("Event is closed and cannot be entered anymore")
+			context.Redirect(context.Event.Path(), http.StatusSeeOther)
+			return
+		}
 	}
 
 	users, err := context.Users.List()
