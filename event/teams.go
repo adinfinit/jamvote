@@ -97,6 +97,7 @@ func (event *Server) CreateTeam(context *Context) {
 		}
 
 		team := event.parseTeamForm(context, users)
+		context.Data["Team"] = team
 		if err := team.Verify(); err != nil {
 			context.FlashNow(err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
@@ -104,7 +105,7 @@ func (event *Server) CreateTeam(context *Context) {
 			return
 		}
 
-		teamid, err := context.Events.CreateTeam(context.Event.ID, team)
+		_, err := context.Events.CreateTeam(context.Event.ID, team)
 		if err != nil {
 			context.FlashNow(fmt.Sprintf("Unable to create team: %v", err))
 			context.Response.WriteHeader(http.StatusInternalServerError)
@@ -112,7 +113,8 @@ func (event *Server) CreateTeam(context *Context) {
 			return
 		}
 
-		context.Redirect(context.Event.Path("team", teamid.String()), http.StatusSeeOther)
+		context.Flash(fmt.Sprintf("Team %v created.", team.Name))
+		context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
 		return
 	}
 
