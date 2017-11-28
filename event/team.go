@@ -1,6 +1,7 @@
 package event
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/adinfinit/jamvote/user"
@@ -12,6 +13,8 @@ type TeamRepo interface {
 	TeamByID(id EventID, teamid TeamID) (*Team, error)
 	Teams(id EventID) ([]*Team, error)
 }
+
+const MaxTeamMembers = 6
 
 type TeamID int64
 
@@ -33,8 +36,21 @@ type Member struct {
 
 type Game struct {
 	Name string
-	Link string `datastore:",noindex"`
 	Info string `datastore:",noindex"`
+	Link struct {
+		Facebook string `datastore:",noindex"`
+		Jam      string `datastore:",noindex"`
+	} `datastore:",noindex"`
+}
+
+func (team *Team) Verify() error {
+	if team.Name == "" {
+		return errors.New("Team name cannot be empty.")
+	}
+	if len(team.Members) == 0 {
+		return errors.New("Team must have at least one member.")
+	}
+	return nil
 }
 
 func (team *Team) HasEditor(user *user.User) bool {
@@ -57,6 +73,16 @@ func (team *Team) HasMember(user *user.User) bool {
 		}
 	}
 	return false
+}
+
+func (team *Team) HasSubmitted() bool {
+	if team.Game.Name == "" {
+		return false
+	}
+	if team.Game.Link.Facebook == "" && team.Game.Link.Jam == "" {
+		return false
+	}
+	return true
 }
 
 func (team *Team) MembersWithEmpty() []Member {

@@ -260,9 +260,12 @@ label {
     font-weight: 600;
 }
 
+.field {
+	margin-bottom: 1.5rem;
+}
+
 .input, fieldset, input, select, textarea {
 	padding: .5rem .6rem;
-    margin-bottom: 1.5rem;
     font: inherit;
 
     border: 1px solid #aaa;
@@ -310,10 +313,6 @@ fieldset > legend {
 	font-weight: 800;
 }
 
-.members input {
-	margin-bottom: 0.25rem;
-}
-
 input[type=submit]{
 	cursor: pointer;
 	background: hsla(90, 70%, 80%, 1);
@@ -345,6 +344,21 @@ input[type=submit]{
 .aspect-text.todo {
 	font-weight: bold;
 	background: #fcc;
+}
+
+/* team page */
+
+.side-by-side {
+	display: flex;
+}
+.side-by-side > div {
+	flex: 1;
+	margin: 0 1rem;
+}
+
+@media (max-width: 35rem) {
+	.side-by-side { display: block; }
+	.side-by-side > div { margin: 0; }
 }
 
 /* sign in / out */

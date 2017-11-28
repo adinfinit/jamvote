@@ -15,5 +15,9 @@
 5. approved jammers
 
 6. team links
-6.1. Facebook
-6.2. LDJam
+6.1. ~Facebook~
+6.2. ~LDJam~
+
+7. verify for mobile
+
+8. simulations

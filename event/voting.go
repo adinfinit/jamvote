@@ -37,7 +37,7 @@ func (event *Server) Voting(context *Context) {
 	queue := make([]*Team, 0, len(teams))
 	for _, index := range order {
 		team := teams[index]
-		if team.Game.Name != "" && team.Game.Link != "" {
+		if team.HasSubmitted() {
 			queue = append(queue, team)
 		}
 	}

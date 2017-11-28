@@ -1,36 +1,73 @@
 {{ template "head" . }}
 
-<section>
-	<h1>Team: {{.Team.Name}}</h1>
-	<form method="POST">		
+{{ define "team-fields" }}
+<div class="side-by-side">
+	<div>
 		<div class="field">
-			<label class="randomizer" id="name-randomize" for="name"><span>Team Name</span></label>
+			<label class="randomizer" id="Team.Name.Randomizer" for="Team.Name"><span>Team Name</span></label>
+			<input type="text" id="Team.Name" name="Team.Name" value="{{.Name}}">
 			<script>
-				document.getElementById("name-randomize").addEventListener("click", function(event){
+				document.getElementById("Team.Name.Randomizer").addEventListener("click", function(event){
 					event.preventDefault();
 					event.stopPropagation();
 
-					var el = document.getElementById("name");
+					var el = document.getElementById("Team.Name");
 					el.value = GenerateTeamName();
 				});
 			</script>
-			<input type="text" id="name" name="name" value="{{.Team.Name}}">
 		</div>
-		
+
 		<div class="field">
 			<label>Members</label>
 
-			<datalist id="users">
-				{{ range .Users }}
-				<option value="{{.Name}}">{{.ID}}</option>
-				{{ end }}
-			</datalist>
-		
-			{{ range $i, $member := .Team.MembersWithEmpty }}
-			<input type="text" class="tight" name="member[{{$i}}]" list="users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
+			{{ range $i, $member := .MembersWithEmpty }}
+			<input type="text" class="tight" name="Team.Member[{{$i}}]" list="Users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
 			{{ end }}
 		</div>
+	</div>
+	<div>
+		<div class="field">
+			<label class="randomizer" id="Team.Game.Name.Randomizer" for="Team.Game.Name"><span>Game Name</span></label>
+			<input type="text" id="Team.Game.Name" name="Team.Game.Name" value="{{.Game.Name}}">
+			<script>
+				document.getElementById("Team.Game.Name.Randomizer").addEventListener("click", function(event){
+					event.preventDefault();
+					event.stopPropagation();
 
+					var el = document.getElementById("Team.Game.Name");
+					el.value = GenerateGameName();
+				});
+			</script>
+		</div>
+
+		<div class="field">
+			<label for="Team.Game.Info">Info</label>
+			<textarea type="text" id="Team.Game.Info" name="Team.Game.Info" rows=4>{{.Game.Info}}</textarea>
+		</div>
+
+		<div class="field">
+			<label for="Team.Game.Link.Facebook">Facebook</label>
+			<input type="text" id="Team.Game.Link.Facebook" name="Team.Game.Link.Facebook" value="{{.Game.Link.Facebook}}">
+		</div>
+
+		<div class="field">
+			<label for="Team.Game.Link.Jam">Jam Page</label>
+			<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" value="{{.Game.Link.Jam}}">
+		</div>
+	</div>
+</div>
+{{ end }}
+
+<section>
+	<h1>Team: {{.Team.Name}}</h1>
+	<form method="POST">
+		<datalist id="Users">
+			{{ range .Users }}
+			<option value="{{.Name}}">{{.ID}}</option>
+			{{ end }}
+		</datalist>
+
+		{{ template "team-fields" .Team }}
 		<input type="submit" value="Save">
 	</form>
 </section>
