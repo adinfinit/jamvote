@@ -39,7 +39,7 @@
 			{{ range .Teams }}
 			<tr>
 				{{ if $isAdmin }}
-				<td><a href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
+				<td><a class="edit" href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
 				{{ end }}
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td>{{ if .Game.Name}}<a {{ if .Game.Link }}target="_blank" href="{{.Game.Link}}"{{ end }} title="{{.Game.Name}}">{{ .Game.Name }}</a>{{end}}</td>

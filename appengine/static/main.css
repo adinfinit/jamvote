@@ -60,6 +60,7 @@ a.button.margin-bottom {
 a.active, a:hover, input[type=submit]:hover {
 	background: #ffebcd;
 }
+a.edit:hover { background: #faa; text-align: right; }
 a:not([href]) {
 	background: inherit;
 	box-shadow: none;
@@ -152,7 +153,9 @@ thead > tr, tr:nth-child(even){
 	font-size: 0.7rem;
 	border: 1px solid #aaa;
 }
-
+tr:hover {
+	outline: 3px solid rgba(128, 128, 255, 0.5);
+}
 /* page layout */
 
 .center {
