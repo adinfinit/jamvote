@@ -8,34 +8,47 @@
 		{{ end }}
 	</div>
 
-	<section>
-		<h1>Game</h1>
-		
-		{{ if .Team.Game.Name }}
-		<div class="field">
-			<label for="name">Name</label>
-			<div class="input" id="name" name="name">{{.Team.Game.Name}}</div>
+	<div class="side-by-side">
+		<div>
+			<div class="field">
+				<label for="Team.Name"><span>Team Name</span></label>
+				<div class="input" id="Team.Name" name="Team.Name">{{.Team.Name}}</div>
+			</div>
+
+			<div class="field">
+				<label>Members</label>
+
+				{{ range .Team.Members }}
+				<div><a {{if .ID}}class="button" href="/user/{{.ID}}"{{else}}class="button disabled-minimal"{{end}}>{{ .Name }}</a></div>
+				{{ end }}
+			</div>
 		</div>
-	
-		<div class="field">
-			<label for="link">Link</label>
-			<a class="input button" {{if .Team.Game.Link}}target="_blank" href="{{.Team.Game.Link}}"{{end}} name="link">{{.Team.Game.Link}}</a>
+		<div>
+			<div class="field">
+				<label for="Team.Game.Name"><span>Game Name</span></label>
+				<div class="input" id="Team.Game.Name">{{.Team.Game.Name}}</div>
+			</div>
+
+			<div class="field">
+				<label for="Team.Game.Info">Info</label>
+				<div class="input" id="Team.Game.Info" rows=4>{{range paragraphs .Team.Game.Info}}<p>{{.}}</p>{{end}}</div>
+			</div>
+			
+			{{ if .Team.Game.Link.Facebook }}
+			<div class="field">
+				<label for="Team.Game.Link.Facebook">Facebook</label>
+				<a class="button" href="{{.Team.Game.Link.Facebook}}" id="Team.Game.Link.Facebook" >{{.Team.Game.Link.Facebook}}</a>
+			</div>
+			{{ end }}
+
+			{{ if .Team.Game.Link.Jam}}
+			<div class="field">
+				<label for="Team.Game.Link.Jam">Jam Page</label>
+				<a class="button" href="{{.Team.Game.Link.Jam}}" id="Team.Game.Link.Jam" >{{.Team.Game.Link.Jam}}</a>
+			</div>
+			{{ end }}
 		</div>
-		<div class="field">
-			<label for="info">Info</label>
-			<div class="input" id="info" name="info">{{.Team.Game.Info}}</div>
-		</div>
-		{{ else }}
-		<div class="flashes">
-			<div class="flash">Not yet submitted.</div>
-		</div>
-		{{ end }}
-	</section>
-	
-	<section>
-		<h1>Members</h1>
-		{{ template "users-list" .Team.Members }}
-	</section>
+	</div>
 </section>
 
 {{ template "foot" . }}
