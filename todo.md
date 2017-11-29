@@ -9,15 +9,15 @@
 
 [ ] 3. progress
 
-[ ] 4. create/edit team/game
-[ ] 4.1. unify
+[x] 4. create/edit team/game
+[x] 4.1. unify
 
 [ ] 5. approved jammers
 
-[ ] 6. team links
+[x] 6. team links
 [x] 6.1. Facebook
 [x] 6.2. LDJam
 
 [ ] 7. verify for mobile
 
-[ ] 8. simulations
+[x] 8. simulations

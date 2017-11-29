@@ -7,7 +7,8 @@
 		<span>By: {{.Team.Name}}</span>
 	</div>
 	
-	<a class="input button" {{if .Team.Game.Link}}target="_blank" href="{{.Team.Game.Link}}"{{end}}>{{.Team.Game.Link}}</a>
+	<a class="input button" {{if .Team.Game.Link.Facebook}}target="_blank" href="{{.Team.Game.Link.Facebook}}"{{end}}>{{.Team.Game.Link.Facebook}}</a>
+	<a class="input button" {{if .Team.Game.Link.Jam}}target="_blank" href="{{.Team.Game.Link.Jam}}"{{end}}>{{.Team.Game.Link.Jam}}</a>
 	{{if .Team.Game.Info}}<div class="input" id="info">{{.Team.Game.Info}}</div>{{end}}
 	
 	<form method="POST">

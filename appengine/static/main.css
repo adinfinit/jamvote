@@ -68,6 +68,10 @@ a[target=_blank]::before {
 	content: "🔗 ";
 }
 
+a.no-clip[target=_blank]::before {
+	content: "";
+}
+
 .titlemenu {
 	display: flex;
 	align-items: center;
