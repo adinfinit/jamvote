@@ -22,7 +22,7 @@
 				}
 			}
 		</script>
-		{{ range $aspect := Aspects }}
+		{{ range $aspect := Data.Aspects }}
 		<div class="aspect field">
 			<div>
 				<label for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="tiny">{{$aspect.Description}}</span></label>

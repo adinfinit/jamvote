@@ -26,15 +26,9 @@ func init() {
 	}
 }
 
-type Server struct {
-	Global template.FuncMap
-}
-
-func NewServer() *Server { return &Server{template.FuncMap{}} }
+type Server struct{}
 
 type Context struct {
-	site *Server
-
 	Request  *http.Request
 	Response http.ResponseWriter
 	Data     map[string]interface{}
@@ -55,8 +49,6 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	}
 
 	return &Context{
-		site: server,
-
 		Request:  r,
 		Response: w,
 		Data:     data,
@@ -102,8 +94,10 @@ func (context *Context) Error(text string, status int) {
 func (context *Context) Render(name string) {
 	context.Session.Save(context.Request, context.Response)
 
+	// TODO: cache template parsing
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
+		"Data": func() interface{} { return nil },
 		"formatDateTime": func(t *time.Time) string {
 			// TODO: use event location
 			return t.In(aptLocation).Format("2006-01-02 15:04:05 MST")
@@ -112,13 +106,15 @@ func (context *Context) Render(name string) {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
 		},
-	}).Funcs(context.site.Global)
+	})
 
 	t, err := t.ParseGlob("templates/**/*.html")
 	if err != nil {
 		http.Error(context.Response, fmt.Sprintf("Template error: %q", err), http.StatusInternalServerError)
 		return
 	}
+
+	t = t.Funcs(template.FuncMap{"Data": func() interface{} { return context.Data }})
 
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		log.Println(err)

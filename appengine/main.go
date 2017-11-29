@@ -21,8 +21,7 @@ func main() {
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	sites := site.NewServer()
-	sites.Global["Aspects"] = func() interface{} { return event.AspectsInfo }
+	sites := &site.Server{}
 
 	users := &user.Server{sites, auths}
 	users.Register(router)

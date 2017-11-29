@@ -106,6 +106,7 @@ func (event *Server) Vote(context *Context) {
 		ballot = &Ballot{}
 	}
 
+	context.Data["Aspects"] = AspectsInfo
 	context.Data["Ballot"] = ballot
 
 	context.Render("event-vote")
