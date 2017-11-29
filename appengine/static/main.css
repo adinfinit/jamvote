@@ -155,7 +155,7 @@ thead > tr, tr:nth-child(even){
 	font-size: 0.7rem;
 	border: 1px solid #aaa;
 }
-tr:hover {
+tbody tr:hover {
 	outline: 3px solid rgba(128, 128, 255, 0.5);
 }
 /* page layout */

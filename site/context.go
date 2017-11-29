@@ -26,7 +26,15 @@ func init() {
 	}
 }
 
+type Server struct {
+	Global template.FuncMap
+}
+
+func NewServer() *Server { return &Server{template.FuncMap{}} }
+
 type Context struct {
+	site *Server
+
 	Request  *http.Request
 	Response http.ResponseWriter
 	Data     map[string]interface{}
@@ -35,7 +43,7 @@ type Context struct {
 	context.Context
 }
 
-func NewContext(w http.ResponseWriter, r *http.Request) *Context {
+func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	sess, err := SessionStore.New(r, DefaultSessionName)
 	if err != nil {
 		log.Println("Failed to get session: ", err)
@@ -47,6 +55,8 @@ func NewContext(w http.ResponseWriter, r *http.Request) *Context {
 	}
 
 	return &Context{
+		site: server,
+
 		Request:  r,
 		Response: w,
 		Data:     data,
@@ -55,9 +65,9 @@ func NewContext(w http.ResponseWriter, r *http.Request) *Context {
 	}
 }
 
-func Handler(fn func(*Context)) http.HandlerFunc {
+func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fn(NewContext(w, r))
+		fn(server.Context(w, r))
 	})
 }
 
@@ -102,7 +112,7 @@ func (context *Context) Render(name string) {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
 		},
-	})
+	}).Funcs(context.site.Global)
 
 	t, err := t.ParseGlob("templates/**/*.html")
 	if err != nil {

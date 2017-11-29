@@ -39,7 +39,7 @@ func (users *Server) CurrentUser(context *Context) *User {
 
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
-	context.Context = site.NewContext(w, r)
+	context.Context = server.Site.Context(w, r)
 	context.Users = &Datastore{context}
 	context.CurrentUser = server.CurrentUser(context)
 	context.Data["CurrentUser"] = context.CurrentUser

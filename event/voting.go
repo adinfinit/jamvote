@@ -6,6 +6,34 @@ import (
 	"net/http"
 )
 
+var AspectsInfo = []struct {
+	Name        string
+	Description string
+	Options     []string
+}{
+	{
+		Name:        "Theme",
+		Description: "How well does it interpret the theme?",
+		Options:     []string{"Not even close", "Resembling", "Related", "Spot on", "Novel Interpretation"},
+	}, {
+		Name:        "Enjoyment",
+		Description: "How does the game generally feel?",
+		Options:     []string{"Boring", "Not playing again", "Nice", "Didn't want to stop", "Will play later"},
+	}, {
+		Name:        "Aesthetics",
+		Description: "How well is the story, art and audio executed?",
+		Options:     []string{"None", "Needs tweaks", "Nice", "Really good", "Exceptional"},
+	}, {
+		Name:        "Innovation",
+		Description: "Something novel in the game?",
+		Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen before", "Exceptional"},
+	}, {
+		Name:        "Bonus",
+		Description: "Anything exceptionally special about it?",
+		Options:     []string{"Nothing special", "Really liked *", "Really loved *", "Loved everything", "<3"},
+	},
+}
+
 func (event *Server) Voting(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -78,33 +106,6 @@ func (event *Server) Vote(context *Context) {
 		ballot = &Ballot{}
 	}
 
-	context.Data["Aspects"] = []struct {
-		Name        string
-		Description string
-		Options     []string
-	}{
-		{
-			Name:        "Theme",
-			Description: "How well does it interpret the theme?",
-			Options:     []string{"Not even close", "Resembling", "Related", "Spot on", "Novel Interpretation"},
-		}, {
-			Name:        "Enjoyment",
-			Description: "How does the game generally feel?",
-			Options:     []string{"Boring", "Not playing again", "Nice", "Didn't want to stop", "Will play later"},
-		}, {
-			Name:        "Aesthetics",
-			Description: "How well is the story, art and audio executed?",
-			Options:     []string{"None", "Needs tweaks", "Nice", "Really good", "Exceptional"},
-		}, {
-			Name:        "Innovation",
-			Description: "Something novel in the game?",
-			Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen before", "Exceptional"},
-		}, {
-			Name:        "Bonus",
-			Description: "Anything exceptionally special about it?",
-			Options:     []string{"Nothing special", "Really liked *", "Really loved *", "Loved everything", "<3"},
-		},
-	}
 	context.Data["Ballot"] = ballot
 
 	context.Render("event-vote")

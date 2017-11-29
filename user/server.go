@@ -6,10 +6,13 @@ import (
 	"path"
 
 	"github.com/adinfinit/jamvote/auth"
+	"github.com/adinfinit/jamvote/site"
+
 	"github.com/gorilla/mux"
 )
 
 type Server struct {
+	Site *site.Server
 	Auth *auth.Service
 }
 

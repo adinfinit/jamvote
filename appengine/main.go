@@ -9,6 +9,7 @@ import (
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/event"
+	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -20,10 +21,13 @@ func main() {
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	users := &user.Server{auths}
+	sites := site.NewServer()
+	sites.Global["Aspects"] = func() interface{} { return event.AspectsInfo }
+
+	users := &user.Server{sites, auths}
 	users.Register(router)
 
-	events := event.NewServer(users)
+	events := &event.Server{sites, users}
 	events.Register(router)
 
 	http.Handle("/", router)

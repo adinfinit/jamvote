@@ -6,16 +6,15 @@ import (
 	"path"
 	"sort"
 
+	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
+
 	"github.com/gorilla/mux"
 )
 
 type Server struct {
+	Site  *site.Server
 	Users *user.Server
-}
-
-func NewServer(users *user.Server) *Server {
-	return &Server{users}
 }
 
 func (event *Server) Register(router *mux.Router) {
