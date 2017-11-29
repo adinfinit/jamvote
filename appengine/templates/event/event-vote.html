@@ -1,15 +1,15 @@
 {{ template "head" . }}
 
-{{ $event := .Event }}
+{{ define "vote-fields" }}
 <section>
 	<div class="titlemenu">
-		<h1>{{.Team.Game.Name}}</h1>
-		<span>By: {{.Team.Name}}</span>
+		<h1>{{.Game.Name}}</h1>
+		<span>By: {{.Name}}</span>
 	</div>
 	
-	<a class="input button" {{if .Team.Game.Link.Facebook}}target="_blank" href="{{.Team.Game.Link.Facebook}}"{{end}}>{{.Team.Game.Link.Facebook}}</a>
-	<a class="input button" {{if .Team.Game.Link.Jam}}target="_blank" href="{{.Team.Game.Link.Jam}}"{{end}}>{{.Team.Game.Link.Jam}}</a>
-	{{if .Team.Game.Info}}<div class="input" id="info">{{.Team.Game.Info}}</div>{{end}}
+	<a class="input button" {{if .Game.Link.Facebook}}target="_blank" href="{{.Game.Link.Facebook}}"{{end}}>{{.Game.Link.Facebook}}</a>
+	<a class="input button" {{if .Game.Link.Jam}}target="_blank" href="{{.Game.Link.Jam}}"{{end}}>{{.Game.Link.Jam}}</a>
+	{{if .Game.Info}}<div class="input" id="info">{{.Game.Info}}</div>{{end}}
 	
 	<form method="POST">
 		<script>
@@ -53,5 +53,8 @@
 		<input id="submit" type="submit" class="disabled" disabled value="Vote">
 	</form>
 </section>
+{{ end }}
+
+{{ template "vote-fields" .Team }}
 
 {{ template "foot" . }}
