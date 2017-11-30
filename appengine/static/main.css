@@ -37,6 +37,10 @@ a, input[type=submit] {
 		inset 0 -4px 4px -2px rgba(0,0,120,.1);
 }
 
+a {
+	word-wrap: break-word;
+}
+
 a.button {
 	display: block;
 	padding: .5rem .6rem;
@@ -290,7 +294,7 @@ tbody tr:hover {
 
 /* forms */
 
-label {
+.field label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -390,6 +394,7 @@ input[type=submit]{
 }
 .side-by-side > div {
 	flex: 1;
+	width: 0;
 	margin: 0 1rem;
 }
 

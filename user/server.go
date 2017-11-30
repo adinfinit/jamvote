@@ -62,7 +62,7 @@ func (users *Server) Edit(context *Context) {
 		return
 	}
 
-	if !context.CurrentUser.Equals(user) && !context.CurrentUser.Admin {
+	if !context.CurrentUser.Equals(user) && !context.CurrentUser.IsAdmin() {
 		context.Flash("Editing user not allowed.")
 		context.Redirect(path.Join("/user", user.ID.String()), http.StatusSeeOther)
 		return
@@ -80,7 +80,7 @@ func (users *Server) Edit(context *Context) {
 		admin := context.Request.FormValue("admin") == "true"
 
 		// only other admin can change admin status
-		if !context.CurrentUser.Admin {
+		if !context.CurrentUser.IsAdmin() {
 			// TODO: add flash
 			admin = user.Admin
 		}

@@ -1,7 +1,7 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Event: {{.Event.Name}}</h1>
+	<h1>{{.Event.Name}}</h1>
 	
 	<div>
 		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}

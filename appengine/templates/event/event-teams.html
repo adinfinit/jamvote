@@ -21,7 +21,7 @@
 	</div>
 
 	<table>
-		{{ $isAdmin := .CurrentUser.Admin }}
+		{{ $isAdmin := .CurrentUser.IsAdmin }}
 		<thead>
 			<tr>
 				{{ if $isAdmin }}<th style="width: 2%;"></th>{{ end }}

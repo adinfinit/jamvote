@@ -67,8 +67,12 @@ func (team *Team) HasMember(user *user.User) bool {
 	if user == nil {
 		return false
 	}
+	return team.HasMemberID(user.ID)
+}
+
+func (team *Team) HasMemberID(userid user.UserID) bool {
 	for _, m := range team.Members {
-		if m.ID == user.ID {
+		if m.ID == userid {
 			return true
 		}
 	}

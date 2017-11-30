@@ -1,5 +1,6 @@
 # todo
 [ ] 1. voting
+[ ] 1.4. three side-by-side
 
 [ ] 5. approved jammers
 [ ] 7. verify for mobile
@@ -7,6 +8,13 @@
 [ ] 10. auto-refresh progress
 
 [ ] 11. hide session key
+
+[ ] 12. time-left
+
+[ ] 13. bolden Game not Team
+[ ] 14. reduce titles
+[ ] 15. only external links
+[ ] 16. hide or better message for moar games
 
 # completed
 

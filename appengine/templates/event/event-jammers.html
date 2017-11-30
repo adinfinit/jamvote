@@ -1,0 +1,34 @@
+{{ template "head" . }}
+
+<section>
+	<h1>Jammers</h1>
+	<form method="POST">
+		{{ $event := .Event }}
+		<table>
+			<thead>
+				<tr>
+					<th>User</th>
+					<th style="width:7rem;">Approved</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range $user := .Users }}
+				<tr>
+					<td>
+						<label class="basic" for="{{$user.ID}}">{{ $user.Name }}</label>
+					</td>
+					<td>
+						<input type="checkbox" id="{{$user.ID}}" name="{{$user.ID}}" value="approved" {{ if $event.HasJammer $user }}checked{{ end }} >
+					</td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+
+		<br>
+		
+		<input type="submit" value="Update">
+	</form>
+</section>
+
+{{ template "foot" . }}

@@ -109,11 +109,20 @@ func (event *Server) EditEvent(context *Context) {
 }
 
 func (event *Server) Jammers(context *Context) {
+	context.Render("todo")
+	return
+
 	if !context.CurrentUser.IsAdmin() {
-		context.Flash("Must be admin to edit approved jammers.")
-		context.Redirect("/", http.StatusSeeOther)
+		context.Flash("Must be admin to edit jammers.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
-	context.Render("todo")
+	users, err := context.Users.List()
+	if err != nil {
+		context.FlashNow(err.Error())
+	}
+	context.Data["Users"] = users
+
+	context.Render("event-jammers")
 }

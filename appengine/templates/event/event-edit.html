@@ -1,7 +1,7 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Edit: {{.Event.Name}}</h1>
+	<h1>Edit Event</h1>
 	<form method="post">
 		<div class="field">
 			<input type="checkbox" id="voting" name="voting" value="true" {{ if .Event.Voting }}checked{{end}}>

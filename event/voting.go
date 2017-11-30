@@ -176,7 +176,7 @@ func (event *Server) Vote(context *Context) {
 			context.Flash(err.Error())
 		}
 
-		context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
+		context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
 		return
 	}
 

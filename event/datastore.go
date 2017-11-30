@@ -276,6 +276,9 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 			if teamresult.HasReviewer(userid) {
 				continue
 			}
+			if teamresult.HasMemberID(userid) {
+				continue
+			}
 			if !teamresult.HasSubmitted() {
 				continue
 			}

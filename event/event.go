@@ -53,8 +53,23 @@ type Event struct {
 	Revealed bool `datastore:",noindex"`
 
 	Organizers []user.UserID `datastore:",noindex"`
+	Jammers    []user.UserID `datastore:",noindex"`
 }
 
 func (event *Event) CanVote() bool {
 	return event.Voting && !event.Closed
+}
+
+func (event *Event) HasJammer(u *user.User) bool {
+	if u == nil {
+		return false
+	}
+
+	for _, jammer := range event.Jammers {
+		if jammer == u.ID {
+			return true
+		}
+	}
+
+	return false
 }
