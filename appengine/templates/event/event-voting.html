@@ -8,6 +8,7 @@
 
 	<section>
 		<h1>Queue</h1>
+		
 		<table>
 			<thead>
 				<tr>
@@ -22,6 +23,8 @@
 				{{ end }}
 			</tbody>
 		</table>
+
+		<a class="button {{ if .QueueCompleted }}disabled{{end}}" href="{{.Event.Path "fill-queue"}}">Moar Games Please</a>
 	</section>
 	
 	<section>

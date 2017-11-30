@@ -214,6 +214,8 @@ func (repo *Datastore) Teams(eventid EventID) ([]*Team, error) {
 }
 
 func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.UserID) (complete, incomplete []*BallotInfo, err error) {
+	const FirstBatchCount = 3
+
 	//TODO: extract tranaction from here
 	err = datastore.RunInTransaction(repo.Context, func(ctx netcontext.Context) error {
 		eventkey := datastore.NewKey(ctx, "Event", string(eventid), 0, nil)
@@ -243,8 +245,9 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 			}
 		}
 
-		// user has not complete all previous
-		if len(incomplete) > 0 {
+		// user has not completed first batch?
+		hasFullBatch := len(complete)+len(incomplete) >= FirstBatchCount
+		if hasFullBatch && len(incomplete) > 0 {
 			return nil
 		}
 
@@ -258,10 +261,10 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 
 		// TODO: don't hardcode and move this logic to service level
 		var needIncomplete int
-		if len(complete) >= 3 {
+		if len(complete) >= FirstBatchCount {
 			needIncomplete = 1
 		} else {
-			needIncomplete = 3 - len(complete)
+			needIncomplete = FirstBatchCount
 		}
 
 		createKeys := []*datastore.Key{}

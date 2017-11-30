@@ -1,5 +1,14 @@
-
+# todo
 [ ] 1. voting
+[ ] 1.2. pick new
+
+[ ] 5. approved jammers
+[ ] 7. verify for mobile
+
+[ ] 10. auto-refresh progress
+
+# completed
+
 [x] 1.1. start -> pick 3
 
     list all teams
@@ -9,8 +18,6 @@
     pick 3 top
     create 3 empty ballots
     attach ballot index to each
-
-[ ] 1.2. pick new
 [-] 1.3. save local session 
 
 [x] 2. teams
@@ -25,13 +32,9 @@
 [x] 4. create/edit team/game
 [x] 4.1. unify
 
-[ ] 5. approved jammers
-
 [x] 6. team links
 [x] 6.1. Facebook
 [x] 6.2. LDJam
-
-[ ] 7. verify for mobile
 
 [x] 8. simulations
 

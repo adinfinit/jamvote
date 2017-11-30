@@ -9,7 +9,7 @@ import (
 
 type Range struct{ Min, Max, Step float64 }
 
-func (event *Server) StartVoting(context *Context) {
+func (event *Server) FillQueue(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
@@ -33,9 +33,12 @@ func (event *Server) StartVoting(context *Context) {
 		return
 	}
 
-	_, _, err := context.Events.CreateIncompleteBallots(context.Event.ID, context.CurrentUser.ID)
+	_, incomplete, err := context.Events.CreateIncompleteBallots(context.Event.ID, context.CurrentUser.ID)
 	if err != nil {
 		context.Flash(err.Error())
+	}
+	if len(incomplete) == 0 {
+		context.Flash("No more games available for now.")
 	}
 
 	context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
