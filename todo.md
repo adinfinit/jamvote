@@ -1,6 +1,5 @@
 # todo
 [ ] 1. voting
-[ ] 1.2. pick new
 
 [ ] 5. approved jammers
 [ ] 7. verify for mobile
@@ -18,6 +17,8 @@
     pick 3 top
     create 3 empty ballots
     attach ballot index to each
+
+[x] 1.2. pick new
 [-] 1.3. save local session 
 
 [x] 2. teams
