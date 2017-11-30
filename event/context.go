@@ -27,7 +27,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 			context.Event = event
 			context.Data["Event"] = context.Event
 		} else {
-			context.FlashNow(err.Error())
+			context.FlashErrorNow(err.Error())
 		}
 	}
 
@@ -55,7 +55,7 @@ func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 		context := server.Context(w, r)
 		if context.Event == nil {
 			eventid, _ := context.StringParam("eventid")
-			context.Flash(fmt.Sprintf("Event %q does not exist.", eventid))
+			context.FlashError(fmt.Sprintf("Event %q does not exist.", eventid))
 			context.Redirect("/", http.StatusSeeOther)
 			return
 		}

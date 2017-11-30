@@ -55,7 +55,7 @@ func (event *Event) Path(subroutes ...interface{}) string {
 func (server *Server) List(context *Context) {
 	events, err := context.Events.List()
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 		context.Response.WriteHeader(http.StatusInternalServerError)
 	}
 

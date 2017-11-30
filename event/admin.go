@@ -10,14 +10,14 @@ import (
 
 func (server *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
-		context.Flash("Must be admin to create events.")
+		context.FlashError("Must be admin to create events.")
 		context.Redirect("/", http.StatusSeeOther)
 		return
 	}
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Invalid form data: " + err.Error())
+			context.FlashErrorNow("Invalid form data: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-create")
 			return
@@ -36,10 +36,10 @@ func (server *Server) CreateEvent(context *Context) {
 
 		if name == "" || !event.ID.Valid() {
 			if name == "" {
-				context.FlashNow("Name cannot be empty")
+				context.FlashErrorNow("Name cannot be empty")
 			}
 			if !event.ID.Valid() {
-				context.FlashNow("Invalid slug, can only contain 'a'-'z', '0'-'9'.")
+				context.FlashErrorNow("Invalid slug, can only contain 'a'-'z', '0'-'9'.")
 			}
 
 			context.Response.WriteHeader(http.StatusBadRequest)
@@ -52,10 +52,10 @@ func (server *Server) CreateEvent(context *Context) {
 		err := context.Events.Create(event)
 		if err != nil {
 			if err == ErrExists {
-				context.FlashNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
+				context.FlashErrorNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
 				context.Response.WriteHeader(http.StatusConflict)
 			} else {
-				context.FlashNow(err.Error())
+				context.FlashErrorNow(err.Error())
 				context.Response.WriteHeader(http.StatusInternalServerError)
 			}
 			context.Render("event-create")
@@ -71,14 +71,14 @@ func (server *Server) CreateEvent(context *Context) {
 
 func (server *Server) EditEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
-		context.Flash("Must be admin to edit events.")
+		context.FlashError("Must be admin to edit events.")
 		context.Redirect("/", http.StatusSeeOther)
 		return
 	}
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Invalid form data: " + err.Error())
+			context.FlashErrorNow("Invalid form data: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-edit")
 			return
@@ -97,7 +97,7 @@ func (server *Server) EditEvent(context *Context) {
 
 		err := context.Events.Update(event)
 		if err != nil {
-			context.FlashNow(err.Error())
+			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusInternalServerError)
 			context.Render("event-edit")
 			return
@@ -112,20 +112,20 @@ func (server *Server) EditEvent(context *Context) {
 
 func (server *Server) Jammers(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
-		context.Flash("Must be admin to edit jammers.")
+		context.FlashError("Must be admin to edit jammers.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	users, err := context.Users.List()
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 	context.Data["Users"] = users
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Invalid form data: " + err.Error())
+			context.FlashErrorNow("Invalid form data: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-jammers")
 			return
@@ -152,7 +152,7 @@ func (server *Server) Jammers(context *Context) {
 
 		err := context.Events.Update(event)
 		if err != nil {
-			context.FlashNow(err.Error())
+			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusInternalServerError)
 			context.Render("event-jammers")
 			return
@@ -166,7 +166,7 @@ func (server *Server) Jammers(context *Context) {
 			s += fmt.Sprintf(" Added %v jammers.", len(added))
 		}
 		if s != "" {
-			context.Flash(s)
+			context.FlashError(s)
 		}
 
 		context.Redirect(string(event.Path()), http.StatusSeeOther)

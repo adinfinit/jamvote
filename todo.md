@@ -13,6 +13,8 @@
 
 [ ] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
 
+[ ] 20. show overall
+
 # completed
 
 [x] 1. voting

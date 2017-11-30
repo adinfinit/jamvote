@@ -12,25 +12,25 @@ type Range struct{ Min, Max, Step float64 }
 func (server *Server) FillQueue(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
-		context.Flash("You must be logged in to vote.")
+		context.FlashMessage("You must be logged in to vote.")
 		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.HasJammer(context.CurrentUser) {
-		context.Flash("You have not been approved for this event.")
+		context.FlashMessage("You have not been approved for this event.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.Voting {
-		context.Flash("Voting has not yet started.")
+		context.FlashMessage("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if context.Event.Closed {
-		context.Flash("Voting has been closed.")
+		context.FlashMessage("Voting has been closed.")
 		if context.Event.Revealed {
 			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
 		} else {
@@ -41,10 +41,10 @@ func (server *Server) FillQueue(context *Context) {
 
 	_, incomplete, err := context.Events.CreateIncompleteBallots(context.Event.ID, context.CurrentUser.ID)
 	if err != nil {
-		context.Flash(err.Error())
+		context.FlashError(err.Error())
 	}
 	if len(incomplete) == 0 {
-		context.Flash("No more games available for now.")
+		context.FlashMessage("No more games available for now.")
 	}
 
 	context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
@@ -53,25 +53,25 @@ func (server *Server) FillQueue(context *Context) {
 func (server *Server) Voting(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
-		context.Flash("You must be logged in to vote.")
+		context.FlashMessage("You must be logged in to vote.")
 		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.HasJammer(context.CurrentUser) {
-		context.Flash("You have not been approved for this event.")
+		context.FlashMessage("You have not been approved for this event.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.Voting {
-		context.Flash("Voting has not yet started.")
+		context.FlashMessage("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if context.Event.Closed {
-		context.Flash("Voting has been closed.")
+		context.FlashMessage("Voting has been closed.")
 		if context.Event.Revealed {
 			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
 		} else {
@@ -82,7 +82,7 @@ func (server *Server) Voting(context *Context) {
 
 	ballots, err := context.Events.UserBallots(context.Event.ID, context.CurrentUser.ID)
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 
 	queue := []*BallotInfo{}
@@ -105,32 +105,32 @@ func (server *Server) Voting(context *Context) {
 func (server *Server) Vote(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
-		context.Flash("You must be logged in to vote.")
+		context.FlashMessage("You must be logged in to vote.")
 		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.HasJammer(context.CurrentUser) {
-		context.Flash("You have not been approved for this event.")
+		context.FlashMessage("You have not been approved for this event.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
-		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))
+		context.FlashMessage(fmt.Sprintf("Team %v does not exist.", teamid))
 		context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.Voting {
-		context.Flash("Voting has not yet started.")
+		context.FlashMessage("Voting has not yet started.")
 		context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
 		return
 	}
 
 	if context.Event.Closed {
-		context.Flash("Voting has been closed.")
+		context.FlashMessage("Voting has been closed.")
 		if context.Event.Revealed {
 			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
 		} else {
@@ -141,7 +141,7 @@ func (server *Server) Vote(context *Context) {
 
 	ballot, err := context.Events.UserBallot(context.Event.ID, context.CurrentUser.ID, context.Team.ID)
 	if err != nil && err != ErrNotExists {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 	if ballot == nil {
 		ballot = &Ballot{}
@@ -157,7 +157,7 @@ func (server *Server) Vote(context *Context) {
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Parse form: " + err.Error())
+			context.FlashErrorNow("Parse form: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-vote")
 			return
@@ -172,7 +172,7 @@ func (server *Server) Vote(context *Context) {
 			if val, err := strconv.ParseFloat(scorestr, 64); err == nil {
 				target.Score = val
 			} else {
-				context.Flash(name + " value had error: " + err.Error())
+				context.FlashError(name + " value had error: " + err.Error())
 			}
 		}
 
@@ -188,7 +188,7 @@ func (server *Server) Vote(context *Context) {
 
 		err := context.Events.SubmitBallot(context.Event.ID, ballot)
 		if err != nil {
-			context.Flash(err.Error())
+			context.FlashError(err.Error())
 		}
 
 		context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
@@ -200,19 +200,19 @@ func (server *Server) Vote(context *Context) {
 
 func (server *Server) Reveal(context *Context) {
 	if !context.Event.Voting {
-		context.Flash("Voting has not yet started.")
+		context.FlashMessage("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 	if !context.CurrentUser.IsAdmin() {
-		context.Flash("Only admin can use reveal.")
+		context.FlashMessage("Only admin can use reveal.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	results, err := context.Events.Results(context.Event.ID)
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 
 	sort.Slice(results, func(i, k int) bool {
@@ -225,20 +225,20 @@ func (server *Server) Reveal(context *Context) {
 
 func (server *Server) Results(context *Context) {
 	if !context.Event.Voting {
-		context.Flash("Voting has not yet started.")
+		context.FlashMessage("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	if !context.Event.Revealed {
-		context.Flash("Voting results have not been yet revealed.")
+		context.FlashMessage("Voting results have not been yet revealed.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
 	results, err := context.Events.Results(context.Event.ID)
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 
 	sort.Slice(results, func(i, k int) bool {
@@ -252,7 +252,7 @@ func (server *Server) Results(context *Context) {
 func (server *Server) Progress(context *Context) {
 	results, err := context.Events.Results(context.Event.ID)
 	if err != nil {
-		context.FlashNow(err.Error())
+		context.FlashErrorNow(err.Error())
 	}
 
 	sort.Slice(results, func(i, k int) bool {

@@ -199,6 +199,9 @@ tbody tr:hover {
 	padding: 1rem;
 	margin-top: 0.5rem;
 }
+.flashes.errors {
+	background: #fbc0c0;
+}
 .flashes .flash {
 	margin-bottom: 0.5rem;
 }

@@ -32,7 +32,10 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	}
 
 	data := map[string]interface{}{}
-	if flashes := sess.Flashes(); len(flashes) > 0 {
+	if flashes := sess.Flashes("_error"); len(flashes) > 0 {
+		data["Errors"] = flashes
+	}
+	if flashes := sess.Flashes("_flash"); len(flashes) > 0 {
 		data["Flashes"] = flashes
 	}
 	data["Development"] = server.Development
@@ -56,22 +59,36 @@ func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	})
 }
 
-func (context *Context) Flash(message ...string) {
+func (context *Context) flash(tag string, message ...string) {
 	for _, m := range message {
-		context.Session.AddFlash(m)
+		context.Session.AddFlash(m, tag)
 	}
 }
 
-func (context *Context) FlashNow(message ...string) {
-	if v, ok := context.Data["Flashes"]; ok {
+func (context *Context) flashNow(tag string, message ...string) {
+	if v, ok := context.Data[tag]; ok {
 		if list, ok := v.([]string); ok {
 			list = append(list, message...)
-			context.Data["Flashes"] = list
+			context.Data[tag] = list
 			return
 		}
 	}
 
-	context.Data["Flashes"] = message
+	context.Data[tag] = message
+}
+
+func (context *Context) FlashError(message ...string) {
+	context.flash("_error", message...)
+}
+func (context *Context) FlashErrorNow(message ...string) {
+	context.flashNow("Errors", message...)
+}
+
+func (context *Context) FlashMessage(message ...string) {
+	context.flash("_flash", message...)
+}
+func (context *Context) FlashMessageNow(message ...string) {
+	context.flashNow("Flashes", message...)
 }
 
 func (context *Context) Redirect(url string, status int) {

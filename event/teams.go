@@ -68,14 +68,14 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 func (server *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
-		context.Flash("You must be logged in to create a team.")
+		context.FlashError("You must be logged in to create a team.")
 		context.Redirect("/user/login", http.StatusSeeOther)
 		return
 	}
 
 	if !context.CurrentUser.IsAdmin() {
 		if context.Event.Closed {
-			context.Flash("Event is closed and cannot be entered anymore")
+			context.FlashMessage("Event is closed and cannot be entered anymore")
 			context.Redirect(context.Event.Path(), http.StatusSeeOther)
 			return
 		}
@@ -83,14 +83,14 @@ func (server *Server) CreateTeam(context *Context) {
 
 	users, err := context.Users.List()
 	if err != nil {
-		context.FlashNow(fmt.Sprintf("Unable to get list of users: %v", err))
+		context.FlashErrorNow(fmt.Sprintf("Unable to get list of users: %v", err))
 	}
 	context.Data["Users"] = users
 	context.Data["Team"] = &Team{}
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Parse form: " + err.Error())
+			context.FlashErrorNow("Parse form: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-team-create")
 			return
@@ -99,7 +99,7 @@ func (server *Server) CreateTeam(context *Context) {
 		team := server.parseTeamForm(context, users)
 		context.Data["Team"] = team
 		if err := team.Verify(); err != nil {
-			context.FlashNow(err.Error())
+			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-team-create")
 			return
@@ -107,13 +107,13 @@ func (server *Server) CreateTeam(context *Context) {
 
 		_, err := context.Events.CreateTeam(context.Event.ID, team)
 		if err != nil {
-			context.FlashNow(fmt.Sprintf("Unable to create team: %v", err))
+			context.FlashErrorNow(fmt.Sprintf("Unable to create team: %v", err))
 			context.Response.WriteHeader(http.StatusInternalServerError)
 			context.Render("event-team-create")
 			return
 		}
 
-		context.Flash(fmt.Sprintf("Team %v created.", team.Name))
+		context.FlashError(fmt.Sprintf("Team %v created.", team.Name))
 		context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
 		return
 	}
@@ -128,13 +128,13 @@ func (server *Server) EditTeam(context *Context) {
 
 	users, err := context.Users.List()
 	if err != nil {
-		context.FlashNow(fmt.Sprintf("Unable to get list of users: %v", err))
+		context.FlashErrorNow(fmt.Sprintf("Unable to get list of users: %v", err))
 	}
 	context.Data["Users"] = users
 
 	if context.Request.Method == http.MethodPost {
 		if err := context.Request.ParseForm(); err != nil {
-			context.FlashNow("Parse form: " + err.Error())
+			context.FlashErrorNow("Parse form: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-team-edit")
 			return
@@ -146,7 +146,7 @@ func (server *Server) EditTeam(context *Context) {
 		context.Data["Team"] = team
 
 		if err := team.Verify(); err != nil {
-			context.FlashNow(err.Error())
+			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
 			context.Render("event-team-edit")
 			return
@@ -154,7 +154,7 @@ func (server *Server) EditTeam(context *Context) {
 
 		err := context.Events.UpdateTeam(context.Event.ID, team)
 		if err != nil {
-			context.FlashNow(fmt.Sprintf("Unable to update team: %v", err))
+			context.FlashErrorNow(fmt.Sprintf("Unable to update team: %v", err))
 			context.Response.WriteHeader(http.StatusInternalServerError)
 			context.Render("event-team-edit")
 			return
@@ -179,7 +179,7 @@ func (server *Server) EditTeam(context *Context) {
 func (server *Server) Team(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
-		context.Flash(fmt.Sprintf("Team %v does not exist", teamid))
+		context.FlashError(fmt.Sprintf("Team %v does not exist", teamid))
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
@@ -190,7 +190,7 @@ func (server *Server) Team(context *Context) {
 func (server *Server) Teams(context *Context) {
 	teams, err := context.Events.Teams(context.Event.ID)
 	if err != nil {
-		context.FlashNow(fmt.Sprintf("Unable to get teams: %v", err))
+		context.FlashErrorNow(fmt.Sprintf("Unable to get teams: %v", err))
 	}
 
 	sort.Slice(teams, func(i, k int) bool {
@@ -216,13 +216,13 @@ func (server *Server) Teams(context *Context) {
 func (server *Server) canEditTeam(context *Context) bool {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
-		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))
+		context.FlashError(fmt.Sprintf("Team %v does not exist.", teamid))
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return false
 	}
 
 	if !context.Team.HasEditor(context.CurrentUser) {
-		context.Flash(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
+		context.FlashError(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
 		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
 		return false
 	}

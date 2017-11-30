@@ -63,7 +63,7 @@ func (server *Server) Edit(context *Context) {
 	}
 
 	if !context.CurrentUser.Equals(user) && !context.CurrentUser.IsAdmin() {
-		context.Flash("Editing user not allowed.")
+		context.FlashError("Editing user not allowed.")
 		context.Redirect(path.Join("/user", user.ID.String()), http.StatusSeeOther)
 		return
 	}

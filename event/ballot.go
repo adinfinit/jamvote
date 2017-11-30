@@ -1,6 +1,7 @@
 package event
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/adinfinit/jamvote/user"
@@ -14,6 +15,8 @@ type BallotRepo interface {
 	UserBallots(eventid EventID, userid user.UserID) ([]*BallotInfo, error)
 	Results(eventid EventID) ([]*TeamResult, error)
 }
+
+var ErrUnfinished = errors.New("Incomplete ballots.")
 
 type Ballot struct {
 	ID        *datastore.Key `datastore:"-"`

@@ -47,6 +47,13 @@
         {{ end }}
         <div class="content-outer">
             <div class="content center">
+                {{ if .Errors }}
+                <div class="flashes errors">
+                    {{ range .Errors }}
+                    <div class="flash">{{ . }}</div>
+                    {{ end }}
+                </div>
+                {{ end }}
                 {{ if .Flashes }}
                 <div class="flashes">
                     {{ range .Flashes }}
