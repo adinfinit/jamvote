@@ -158,28 +158,28 @@ func userBallot(ctx context.Context, eventkey *datastore.Key, userid user.UserID
 	return ballot, err
 }
 
-func createTeamInfos(teams []*Team, ballots []*Ballot) []*TeamInfo {
-	infomap := map[TeamID]*TeamInfo{}
+func createTeamResults(teams []*Team, ballots []*Ballot) []*TeamResult {
+	cross := map[TeamID]*TeamResult{}
 	for _, team := range teams {
-		info := &TeamInfo{}
-		info.Team = team
-		infomap[team.ID] = info
+		res := &TeamResult{}
+		res.Team = team
+		cross[team.ID] = res
 	}
 
 	for _, ballot := range ballots {
-		info := infomap[ballot.Team]
-		info.Ballots = append(info.Ballots, ballot)
+		res := cross[ballot.Team]
+		res.Ballots = append(res.Ballots, ballot)
 		if ballot.Completed {
-			info.Complete++
+			res.Complete++
 		}
-		info.Pending++
+		res.Pending++
 	}
 
-	infos := make([]*TeamInfo, 0, len(infomap))
-	for _, info := range infomap {
-		infos = append(infos, info)
+	results := make([]*TeamResult, 0, len(cross))
+	for _, res := range cross {
+		results = append(results, res)
 	}
-	return infos
+	return results
 }
 
 func createBallotInfos(teams []*Team, ballots []*Ballot) []*BallotInfo {
@@ -248,12 +248,12 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 			return nil
 		}
 
-		teaminfos := createTeamInfos(teams, ballots)
-		sort.Slice(teaminfos, func(i, k int) bool {
-			if teaminfos[i].Pending == teaminfos[k].Pending {
-				return teaminfos[i].Complete < teaminfos[k].Complete
+		teamresults := createTeamResults(teams, ballots)
+		sort.Slice(teamresults, func(i, k int) bool {
+			if teamresults[i].Pending == teamresults[k].Pending {
+				return teamresults[i].Complete < teamresults[k].Complete
 			}
-			return teaminfos[i].Pending < teaminfos[k].Pending
+			return teamresults[i].Pending < teamresults[k].Pending
 		})
 
 		// TODO: don't hardcode and move this logic to service level
@@ -266,28 +266,28 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 
 		createKeys := []*datastore.Key{}
 		createBallots := []*Ballot{}
-		for _, teaminfo := range teaminfos {
+		for _, teamresult := range teamresults {
 			if len(incomplete) >= needIncomplete {
 				break
 			}
-			if teaminfo.HasReviewer(userid) {
+			if teamresult.HasReviewer(userid) {
 				continue
 			}
-			if !teaminfo.HasSubmitted() {
+			if !teamresult.HasSubmitted() {
 				continue
 			}
 
 			ballot := &Ballot{
-				ID:        newBallotKey(ctx, eventkey, userid, teaminfo.Team.ID),
+				ID:        newBallotKey(ctx, eventkey, userid, teamresult.Team.ID),
 				Voter:     userid,
-				Team:      teaminfo.Team.ID,
+				Team:      teamresult.Team.ID,
 				Index:     int64(len(complete) + len(incomplete)),
 				Completed: false,
 				Aspects:   DefaultAspects,
 			}
 
 			ballotinfo := &BallotInfo{
-				Team:   teaminfo.Team,
+				Team:   teamresult.Team,
 				Ballot: ballot,
 			}
 
@@ -339,6 +339,18 @@ func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*Ball
 	return createBallotInfos(teams, ballots), nil
 }
 
-func (repo *Datastore) AllTeamInfos(eventid EventID) ([]*TeamInfo, error) {
-	return nil, nil
+func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+
+	ballots, err := allBallots(repo.Context, eventkey)
+	if err != nil {
+		return nil, err
+	}
+
+	teams, err := allTeams(repo.Context, eventkey)
+	if err != nil {
+		return nil, err
+	}
+
+	return createTeamResults(teams, ballots), nil
 }

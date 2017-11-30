@@ -392,3 +392,32 @@ input[type=submit]{
 .no-member {
 	background: #d3e3f5;
 }
+
+/* progress */
+
+.progress {
+	position: relative;
+	background: rgba(0, 0, 0, 0.1);
+}
+div.progress {
+	height: 2rem;
+	margin-bottom: 1.5rem;
+}
+.progress > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.progress > .pending {
+	background: #888;
+}
+.progress > .complete {
+	background: #61e000;
+}
+.progress > .target {
+	background: #c50000;
+	width: 0.1rem;
+	min-width: 2px;
+}

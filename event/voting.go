@@ -3,6 +3,7 @@ package event
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"strconv"
 )
 
@@ -177,4 +178,37 @@ func (event *Server) Results(context *Context) {
 	}
 
 	context.Render("todo")
+}
+
+func (event *Server) Progress(context *Context) {
+	results, err := context.Events.Results(context.Event.ID)
+	if err != nil {
+		context.FlashNow(err.Error())
+	}
+
+	sort.Slice(results, func(i, k int) bool {
+		return results[i].Team.Name < results[k].Team.Name
+	})
+
+	target := 10
+	averagePending := 0.0
+	averageComplete := 0.0
+
+	max := target * 3 / 2
+	for _, result := range results {
+		if max < result.Pending {
+			max = result.Pending
+		}
+
+		averagePending += clamped(float64(result.Pending), 0, float64(target))
+		averageComplete += clamped(float64(result.Complete), 0, float64(target))
+	}
+
+	context.Data["AveragePending"] = averagePending / float64(len(results))
+	context.Data["AverageComplete"] = averageComplete / float64(len(results))
+
+	context.Data["VoteTarget"] = target
+	context.Data["VoteMax"] = max
+	context.Data["Progress"] = results
+	context.Render("event-progress")
 }

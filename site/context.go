@@ -91,6 +91,36 @@ func (context *Context) Error(text string, status int) {
 	http.Error(context.Response, text, status)
 }
 
+func toFloat(a interface{}) float64 {
+	switch v := a.(type) {
+	case int:
+		return float64(v)
+	case int8:
+		return float64(v)
+	case int16:
+		return float64(v)
+	case int32:
+		return float64(v)
+	case int64:
+		return float64(v)
+	case uint:
+		return float64(v)
+	case uint8:
+		return float64(v)
+	case uint16:
+		return float64(v)
+	case uint32:
+		return float64(v)
+	case uint64:
+		return float64(v)
+	case float32:
+		return float64(v)
+	case float64:
+		return v
+	}
+	return 0
+}
+
 func (context *Context) Render(name string) {
 	context.Session.Save(context.Request, context.Response)
 
@@ -105,6 +135,13 @@ func (context *Context) Render(name string) {
 		"paragraphs": func(s string) []string {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
+		},
+
+		"div": func(a, b interface{}) float64 {
+			return toFloat(a) / toFloat(b)
+		},
+		"mul": func(a, b interface{}) float64 {
+			return toFloat(a) * toFloat(b)
 		},
 	})
 

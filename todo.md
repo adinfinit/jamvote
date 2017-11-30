@@ -1,6 +1,6 @@
 
 [ ] 1. voting
-[ ] 1.1. start -> pick 3
+[x] 1.1. start -> pick 3
 
     list all teams
     list all ballots
@@ -16,7 +16,7 @@
 [ ] 2. teams
 [ ] 2.1. spreadsheetish
 
-[ ] 3. progress
+[x] 3. progress
 
     list all teams
     list all ballots
@@ -34,3 +34,5 @@
 [ ] 7. verify for mobile
 
 [x] 8. simulations
+
+[ ] 9. results

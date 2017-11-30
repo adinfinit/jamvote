@@ -12,7 +12,7 @@ type BallotRepo interface {
 	SubmitBallot(eventid EventID, ballot *Ballot) error
 	UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error)
 	UserBallots(eventid EventID, userid user.UserID) ([]*BallotInfo, error)
-	AllTeamInfos(eventid EventID) ([]*TeamInfo, error)
+	Results(eventid EventID) ([]*TeamResult, error)
 }
 
 type Ballot struct {
@@ -29,14 +29,14 @@ type BallotInfo struct {
 	*Ballot
 }
 
-type TeamInfo struct {
+type TeamResult struct {
 	*Team
 	Ballots  []*Ballot
 	Pending  int
 	Complete int
 }
 
-func (info *TeamInfo) HasReviewer(userid user.UserID) bool {
+func (info *TeamResult) HasReviewer(userid user.UserID) bool {
 	for _, ballot := range info.Ballots {
 		if ballot.Voter == userid {
 			return true

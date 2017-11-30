@@ -45,7 +45,7 @@
 				<td><a class="edit" href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
 				{{ end }}
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td>{{ if .Game.Name}}<span title="{{.Game.Name}}">{{ .Game.Name }}</span>{{end}}</td>
+				<td><span title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
 				
 				<td>{{ if .Game.Link.Facebook}}<a class="no-clip" target="_blank" href="{{.Game.Link.Facebook}}" title="Facebook">FB</a>{{end}}</td>
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" target="_blank" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
