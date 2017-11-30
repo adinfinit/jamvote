@@ -65,11 +65,29 @@ func (event *Event) HasJammer(u *user.User) bool {
 		return false
 	}
 
-	for _, jammer := range event.Jammers {
-		if jammer == u.ID {
+	return containsUser(event.Jammers, u.ID)
+}
+
+func containsUser(userids []user.UserID, userid user.UserID) bool {
+	for _, jammer := range userids {
+		if jammer == userid {
 			return true
 		}
 	}
-
 	return false
+}
+
+func (event *Event) AddRemoveJammers(added, removed []user.UserID) {
+	result := []user.UserID{}
+	for _, userid := range event.Jammers {
+		if !containsUser(removed, userid) {
+			result = append(result, userid)
+		}
+	}
+	for _, userid := range added {
+		if !containsUser(result, userid) {
+			result = append(result, userid)
+		}
+	}
+	event.Jammers = result
 }

@@ -35,6 +35,10 @@ h2 {
 	color: #888;
 }
 
+.hidden {
+	display: none !important;
+}
+
 a, input[type=submit] {
 	text-decoration: none;
 	color: inherit;

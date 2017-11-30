@@ -18,6 +18,7 @@
 						<label class="basic" for="{{$user.ID}}">{{ $user.Name }}</label>
 					</td>
 					<td>
+						<input type="checkbox" class="hidden" name="{{$user.ID}}.Start" value="approved" {{ if $event.HasJammer $user }}checked{{ end }}>
 						<input type="checkbox" id="{{$user.ID}}" name="{{$user.ID}}" value="approved" {{ if $event.HasJammer $user }}checked{{ end }} >
 					</td>
 				</tr>

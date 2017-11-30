@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/adinfinit/jamvote/user"
 )
 
 func (event *Server) CreateEvent(context *Context) {
@@ -109,9 +111,6 @@ func (event *Server) EditEvent(context *Context) {
 }
 
 func (event *Server) Jammers(context *Context) {
-	context.Render("todo")
-	return
-
 	if !context.CurrentUser.IsAdmin() {
 		context.Flash("Must be admin to edit jammers.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
@@ -123,6 +122,56 @@ func (event *Server) Jammers(context *Context) {
 		context.FlashNow(err.Error())
 	}
 	context.Data["Users"] = users
+
+	if context.Request.Method == http.MethodPost {
+		if err := context.Request.ParseForm(); err != nil {
+			context.FlashNow("Invalid form data: " + err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-jammers")
+			return
+		}
+
+		added := []user.UserID{}
+		removed := []user.UserID{}
+
+		for _, u := range users {
+			before := context.Request.FormValue(fmt.Sprintf("%v.Start", u.ID)) == "approved"
+			after := context.Request.FormValue(fmt.Sprintf("%v", u.ID)) == "approved"
+
+			if before != after {
+				if after {
+					added = append(added, u.ID)
+				} else {
+					removed = append(removed, u.ID)
+				}
+			}
+		}
+
+		event := context.Event
+		event.AddRemoveJammers(added, removed)
+
+		err := context.Events.Update(event)
+		if err != nil {
+			context.FlashNow(err.Error())
+			context.Response.WriteHeader(http.StatusInternalServerError)
+			context.Render("event-jammers")
+			return
+		}
+
+		s := ""
+		if len(removed) > 0 {
+			s += fmt.Sprintf(" Removed %v jammers.", len(removed))
+		}
+		if len(added) > 0 {
+			s += fmt.Sprintf(" Added %v jammers.", len(added))
+		}
+		if s != "" {
+			context.Flash(s)
+		}
+
+		context.Redirect(string(event.Path()), http.StatusSeeOther)
+		return
+	}
 
 	context.Render("event-jammers")
 }
