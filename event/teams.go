@@ -160,7 +160,7 @@ func (event *Server) EditTeam(context *Context) {
 			return
 		}
 
-		context.Redirect(context.Event.Path("team", team.ID.String()), http.StatusSeeOther)
+		context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
 		return
 	}
 

@@ -29,7 +29,8 @@
 		</thead>
 		<tbody>
 			{{ range .Progress }}
-			<tr {{ if not .HasSubmitted }}class="not-submitted"{{ end }}>
+			{{ if .HasSubmitted }}
+			<tr>
 				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
 				<td class="progress">
@@ -38,6 +39,13 @@
 					<div class="target" style="left: {{ mul 100 (div Data.VoteTarget Data.VoteMax) }}%"></div>
 				</td>
 			</tr>
+			{{ else }}
+			<tr class="not-submitted">
+				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
+				<td class="boxed">Not submitted</td>
+			</tr>
+			{{ end }}
 			{{ end }}
 		</tbody>
 	</table>
