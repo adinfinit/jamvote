@@ -184,6 +184,23 @@ func (server *Server) Team(context *Context) {
 		return
 	}
 
+	if context.Event.Revealed {
+		ballots, err := context.Events.TeamBallots(context.Event.ID, context.Team.ID)
+		if err != nil {
+			context.FlashError(err.Error())
+		}
+
+		var aspectsInfo AspectsInfo
+		for _, ballot := range ballots {
+			if !ballot.Completed {
+				continue
+			}
+			aspectsInfo.Add(&ballot.Aspects, context.Team.HasMemberID(ballot.Voter))
+		}
+		context.Data["Aspects"] = AspectDescriptionsWithOverall
+		context.Data["AspectsInfo"] = &aspectsInfo
+	}
+
 	context.Render("event-team")
 }
 

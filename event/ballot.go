@@ -14,6 +14,7 @@ type BallotRepo interface {
 	UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error)
 	UserBallots(eventid EventID, userid user.UserID) ([]*BallotInfo, error)
 	Results(eventid EventID) ([]*TeamResult, error)
+	TeamBallots(eventid EventID, teamid TeamID) ([]*Ballot, error)
 }
 
 var ErrUnfinished = errors.New("Incomplete ballots.")
@@ -102,6 +103,21 @@ type Aspect struct {
 	Comment string
 }
 
+type AspectsInfo struct {
+	Theme      AspectInfo
+	Enjoyment  AspectInfo
+	Aesthetics AspectInfo
+	Innovation AspectInfo
+	Bonus      AspectInfo
+	Overall    AspectInfo
+}
+
+type AspectInfo struct {
+	Scores       []float64
+	MemberScores []float64
+	Comments     []string
+}
+
 func (aspect Aspect) String() string {
 	return fmt.Sprintf("%.1f", aspect.Score)
 }
@@ -115,6 +131,24 @@ func (aspects *Aspects) ClearComments() {
 	aspects.Overall.Comment = ""
 }
 
+func (aspects *AspectsInfo) Item(name string) AspectInfo {
+	switch name {
+	case "Theme":
+		return aspects.Theme
+	case "Enjoyment":
+		return aspects.Enjoyment
+	case "Aesthetics":
+		return aspects.Aesthetics
+	case "Innovation":
+		return aspects.Innovation
+	case "Bonus":
+		return aspects.Bonus
+	case "Overall":
+		return aspects.Overall
+	}
+	return AspectInfo{}
+}
+
 func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Theme.Score += other.Theme.Score
 	aspects.Enjoyment.Score += other.Enjoyment.Score
@@ -122,6 +156,26 @@ func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Innovation.Score += other.Innovation.Score
 	aspects.Bonus.Score += other.Bonus.Score
 	aspects.Overall.Score += other.Overall.Score
+}
+
+func (aspects *AspectsInfo) Add(other *Aspects, isMember bool) {
+	aspects.Theme.Add(&other.Theme, isMember)
+	aspects.Enjoyment.Add(&other.Enjoyment, isMember)
+	aspects.Aesthetics.Add(&other.Aesthetics, isMember)
+	aspects.Innovation.Add(&other.Innovation, isMember)
+	aspects.Bonus.Add(&other.Bonus, isMember)
+	aspects.Overall.Add(&other.Overall, isMember)
+}
+
+func (aspect *AspectInfo) Add(other *Aspect, isMember bool) {
+	if isMember {
+		aspect.MemberScores = append(aspect.MemberScores, other.Score)
+	} else {
+		aspect.Scores = append(aspect.Scores, other.Score)
+	}
+	if other.Comment != "" {
+		aspect.Comments = append(aspect.Comments, other.Comment)
+	}
 }
 
 func (aspects *Aspects) EnsureRange() {
@@ -181,12 +235,23 @@ func (aspects *Aspects) Total() float64 {
 		aspects.Bonus.Score)/4.5, 1, 5)
 }
 
-var AspectsInfo = []struct {
+var AspectNames = []string{
+	"Theme",
+	"Enjoyment",
+	"Aesthetics",
+	"Innovation",
+	"Bonus",
+	"Overall",
+}
+
+type AspectDescription struct {
 	Name        string
 	Description string
 	Range
 	Options []string
-}{
+}
+
+var AspectDescriptions = []AspectDescription{
 	{
 		Name:        "Theme",
 		Description: "How well does it interpret the theme?",
@@ -214,6 +279,13 @@ var AspectsInfo = []struct {
 		Options:     []string{"Nothing special", "Really liked *", "Really loved **"},
 	},
 }
+
+var AspectDescriptionsWithOverall = append(AspectDescriptions,
+	AspectDescription{
+		Name:        "Overall",
+		Description: "Weighted average of topics.",
+		Range:       Range{Min: 1, Max: 5, Step: 0.1},
+	})
 
 func clamp(v *float64, min, max float64) {
 	if *v < min {

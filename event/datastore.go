@@ -141,6 +141,16 @@ func allBallots(ctx context.Context, eventkey *datastore.Key) ([]*Ballot, error)
 	return ballots, err
 }
 
+func teamBallots(ctx context.Context, eventkey *datastore.Key, teamid TeamID) ([]*Ballot, error) {
+	var ballots []*Ballot
+	q := datastore.NewQuery("Ballot").Ancestor(eventkey).Filter("Team =", teamid)
+	keys, err := q.GetAll(ctx, &ballots)
+	for i, ballot := range ballots {
+		ballot.ID = keys[i]
+	}
+	return ballots, err
+}
+
 func userBallots(ctx context.Context, eventkey *datastore.Key, userid user.UserID) ([]*Ballot, error) {
 	var ballots []*Ballot
 	q := datastore.NewQuery("Ballot").Ancestor(eventkey).Filter("Voter =", userid)
@@ -334,7 +344,7 @@ func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*Ball
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := userBallots(repo.Context, eventkey, userid)
 	if err != nil {
-		return nil, err
+		return nil, datastoreError(err)
 	}
 
 	teamids := []TeamID{}
@@ -344,7 +354,7 @@ func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*Ball
 
 	teams, err := someTeams(repo.Context, eventkey, teamids)
 	if err != nil {
-		return nil, err
+		return nil, datastoreError(err)
 	}
 
 	return createBallotInfos(teams, ballots), nil
@@ -355,12 +365,12 @@ func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
 
 	ballots, err := allBallots(repo.Context, eventkey)
 	if err != nil {
-		return nil, err
+		return nil, datastoreError(err)
 	}
 
 	teams, err := allTeams(repo.Context, eventkey)
 	if err != nil {
-		return nil, err
+		return nil, datastoreError(err)
 	}
 
 	results := createTeamResults(teams, ballots)
@@ -369,4 +379,10 @@ func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
 	}
 
 	return results, nil
+}
+
+func (repo *Datastore) TeamBallots(eventid EventID, teamid TeamID) ([]*Ballot, error) {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	ballots, err := teamBallots(repo.Context, eventkey, teamid)
+	return ballots, datastoreError(err)
 }

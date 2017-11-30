@@ -65,6 +65,9 @@ func (context *Context) Render(name string) {
 			return strings.Split(s, "\n\n")
 		},
 
+		"violinLeft":  violinLeft,
+		"violinRight": violinRight,
+
 		"add": func(a, b interface{}) float64 {
 			return toFloat(a) + toFloat(b)
 		},
@@ -90,4 +93,65 @@ func (context *Context) Render(name string) {
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		log.Println(err)
 	}
+}
+
+const violinStep = 0.1
+
+func violin(min, max float64, scores []float64) []float64 {
+	var values []float64
+	maxvalue := 1.0
+
+	for p := min; p <= max; p += violinStep {
+		value := 0.0
+		for _, score := range scores {
+			value += cubicPulse(score, 0.5, p)
+		}
+		if maxvalue < value {
+			maxvalue = value
+		}
+		values = append(values, value)
+	}
+
+	maxvalue *= 1.1
+	for i := range values {
+		values[i] /= maxvalue
+	}
+
+	return values
+}
+
+func violinLeft(min, max float64, scores []float64) string {
+	points := violin(min, max, scores)
+	s := "50,100 "
+	i := 0
+	for p := min; p <= max; p += violinStep {
+		s += fmt.Sprintf("%.0f,%.0f ", 50-points[i]*50, 100-100*(p-min)/(max-min))
+		i++
+	}
+	s += "50,0"
+	return s
+}
+
+func violinRight(min, max float64, scores []float64) string {
+	points := violin(min, max, scores)
+	s := "50,100 "
+	i := 0
+	for p := min; p <= max; p += violinStep {
+		s += fmt.Sprintf("%.0f,%.0f ", 50+points[i]*50, 100-100*(p-min)/(max-min))
+		i++
+	}
+	s += "50,0"
+	return s
+}
+
+func cubicPulse(center, radius, at float64) float64 {
+	at = at - center
+	if at < 0 {
+		at = -at
+	}
+	if at > radius {
+		return 0
+	}
+	at /= radius
+	return 1 - at*at*(3-2*at)
 }

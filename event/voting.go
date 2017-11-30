@@ -149,7 +149,7 @@ func (server *Server) Vote(context *Context) {
 		Ballot: ballot,
 	}
 
-	context.Data["Aspects"] = AspectsInfo
+	context.Data["Aspects"] = AspectDescriptions
 	context.Data["Ballot"] = ballotinfo
 
 	if context.Request.Method == http.MethodPost {
