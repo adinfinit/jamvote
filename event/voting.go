@@ -2,7 +2,6 @@ package event
 
 import (
 	"fmt"
-	"math/rand"
 	"net/http"
 )
 
@@ -34,6 +33,34 @@ var AspectsInfo = []struct {
 	},
 }
 
+func (event *Server) StartVoting(context *Context) {
+	if context.CurrentUser == nil {
+		// TODO: add return address to team-creation page
+		context.Flash("You must be logged in to vote.")
+		context.Redirect("/user/login", http.StatusSeeOther)
+		return
+	}
+
+	if !context.Event.Voting {
+		context.Flash("Voting has not yet started.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
+
+	if context.Event.Closed {
+		context.FlashNow("Voting has been closed.")
+		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		return
+	}
+
+	_, _, err := context.Events.CreateIncompleteBallots(context.Event.ID, context.CurrentUser.ID)
+	if err != nil {
+		context.Flash(err.Error())
+	}
+
+	context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
+}
+
 func (event *Server) Voting(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -42,35 +69,40 @@ func (event *Server) Voting(context *Context) {
 		return
 	}
 
-	if !context.CurrentUser.IsAdmin() {
-		if !context.Event.Voting {
-			context.Flash("Voting has not yet started.")
-			context.Redirect(context.Event.Path(), http.StatusSeeOther)
-			return
-		}
+	if !context.Event.Voting {
+		context.Flash("Voting has not yet started.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
 	}
 
 	if context.Event.Closed {
 		context.FlashNow("Voting has been closed.")
+		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		return
 	}
 
-	teams, err := context.Events.Teams(context.Event.ID)
+	ballots, err := context.Events.UserBallots(context.Event.ID, context.CurrentUser.ID)
 	if err != nil {
 		context.FlashNow(err.Error())
 	}
 
-	src := rand.NewSource(int64(context.CurrentUser.ID))
-	order := rand.New(src).Perm(len(teams))
+	queue := []*BallotInfo{}
+	completed := []*BallotInfo{}
 
-	queue := make([]*Team, 0, len(teams))
-	for _, index := range order {
-		team := teams[index]
-		if team.HasSubmitted() {
-			queue = append(queue, team)
+	for _, ballot := range ballots {
+		if ballot.Completed {
+			completed = append(completed, ballot)
+		} else {
+			queue = append(queue, ballot)
 		}
 	}
+	if len(ballots) <= 3 {
+		queue = ballots
+	}
 
-	context.Data["VoteQueue"] = queue
+	context.Data["Queue"] = queue
+	context.Data["Completed"] = completed
+
 	context.Render("event-voting")
 }
 
@@ -101,13 +133,18 @@ func (event *Server) Vote(context *Context) {
 		return
 	}
 
-	ballot, err := context.Events.UserBallot(context.CurrentUser.ID, context.Event.ID, context.Team.ID)
+	ballot, err := context.Events.UserBallot(context.Event.ID, context.CurrentUser.ID, context.Team.ID)
 	if err == ErrNotExists {
 		ballot = &Ballot{}
 	}
 
+	ballotinfo := &BallotInfo{
+		Team:   context.Team,
+		Ballot: ballot,
+	}
+
 	context.Data["Aspects"] = AspectsInfo
-	context.Data["Ballot"] = ballot
+	context.Data["Ballot"] = ballotinfo
 
 	context.Render("event-vote")
 }

@@ -5,8 +5,11 @@
 	<div class="titlemenu">
 		<h1>Voting</h1>
 	</div>
+
+	<section>
+		
+	</section>
 	
-	{{ if (and (not .Event.Closed) .Event.Voting) }}
 	<section>
 		<h1>Queue</h1>
 		<table>
@@ -16,18 +19,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{ range .VoteQueue }}
+				{{ range .Queue }}
 				<tr>
-					<td><a href="{{ $event.Path "vote" .ID }}">{{.Game.Name}}</a></td>
+					<td><a href="{{ $event.Path "vote" .Team.ID }}">{{.Team.Game.Name}}</a></td>
 				</tr>
 				{{ end }}
 			</tbody>
 		</table>
 	</section>
-	{{ end }}
-
+	
 	<section>
-		<h1>Voted</h1>
+		<h1>Completed</h1>
 		<table>
 			<thead>
 				<tr>
@@ -42,10 +44,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{ range .Voted }}
+				{{ range .Completed }}
 				<tr>
-					<td><a href="{{ $event.Path "team" .ID }}">{{.Name}}</a></td>
-					<td><a href="{{ $event.Path "vote" .ID }}">{{.Game.Name}}</a></td>
+					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+					<td><a href="{{ $event.Path "vote" .Team.ID }}">{{.Game.Name}}</a></td>
 					<td title="{{.Ballot.Theme.Comment}}">{{.Ballot.Theme}}</td>
 					<td title="{{.Ballot.Enjoyment.Comment}}">{{.Ballot.Enjoyment}}</td>
 					<td title="{{.Ballot.Aesthetics.Comment}}">{{.Ballot.Aesthetics}}</td>

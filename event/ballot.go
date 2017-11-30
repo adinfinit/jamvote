@@ -8,10 +8,11 @@ import (
 )
 
 type BallotRepo interface {
+	CreateIncompleteBallots(eventid EventID, userid user.UserID) (complete, incomplete []*BallotInfo, err error)
 	SubmitBallot(eventid EventID, ballot *Ballot) error
-	UserBallots(userid user.UserID, eventid EventID) ([]*Ballot, error)
-	UserBallot(userid user.UserID, eventid EventID, teamid TeamID) (*Ballot, error)
-	AllBallots(eventid EventID) ([]*Ballot, error)
+	UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error)
+	UserBallots(eventid EventID, userid user.UserID) ([]*BallotInfo, error)
+	AllTeamInfos(eventid EventID) ([]*TeamInfo, error)
 }
 
 type Ballot struct {
@@ -19,17 +20,17 @@ type Ballot struct {
 	Voter     user.UserID
 	Team      TeamID
 	Index     int64 `datastore:",noindex"`
-	Submitted bool  `datastore:",noindex"`
+	Completed bool  `datastore:",noindex"`
 	Aspects
 }
 
 type BallotInfo struct {
-	Team   *Team
-	Ballot *Ballot
+	*Team
+	*Ballot
 }
 
 type TeamInfo struct {
-	Team     *Team
+	*Team
 	Ballots  []*Ballot
 	Pending  int
 	Complete int
@@ -42,6 +43,15 @@ func (info *TeamInfo) HasReviewer(userid user.UserID) bool {
 		}
 	}
 	return false
+}
+
+var DefaultAspects = Aspects{
+	Theme:      Aspect{3, ""},
+	Enjoyment:  Aspect{3, ""},
+	Aesthetics: Aspect{3, ""},
+	Innovation: Aspect{3, ""},
+	Bonus:      Aspect{3, ""},
+	Overall:    Aspect{3, ""},
 }
 
 type Aspects struct {
