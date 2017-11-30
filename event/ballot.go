@@ -159,7 +159,7 @@ var AspectsInfo = []struct {
 		Name:        "Bonus",
 		Description: "Anything exceptionally special about it?",
 		Range:       Range{Min: 0, Max: 2.5, Step: 0.1},
-		Options:     []string{"Nothing special", "Really liked *", "Really loved *"},
+		Options:     []string{"Nothing special", "Really liked *", "Really loved **"},
 	},
 }
 
