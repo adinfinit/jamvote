@@ -6,6 +6,8 @@
 
 [ ] 10. auto-refresh progress
 
+[ ] 11. hide session key
+
 # completed
 
 [x] 1.1. start -> pick 3

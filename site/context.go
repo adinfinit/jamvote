@@ -26,7 +26,9 @@ func init() {
 	}
 }
 
-type Server struct{}
+type Server struct {
+	Development bool
+}
 
 type Context struct {
 	Request  *http.Request
@@ -47,6 +49,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	if flashes := sess.Flashes(); len(flashes) > 0 {
 		data["Flashes"] = flashes
 	}
+	data["Development"] = server.Development
 
 	return &Context{
 		Request:  r,

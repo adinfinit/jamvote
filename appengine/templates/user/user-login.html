@@ -4,6 +4,19 @@
 {{ range .Logins }}
 <a class="button margin-bottom" href="{{.URL}}">{{.Title}}</a>
 {{ end }}
+
+{{ if .Development }}
+<section>
+	<h2 style="margin-top: 2rem;">Development Login</h2>
+	<form action="/auth/development-login" method="POST">
+		<div class="field">
+			<label for="name"><span>User</span></label>
+			<input type="text" id="name" name="name" value="Admin">
+		</div>
+		<input type="submit" style="margin-top: 0" value="Login">
+	</form>
+<section>
+{{ end }}
 </section>
 
 {{ template "foot" . }}
