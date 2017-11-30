@@ -1,5 +1,4 @@
 # todo
-[ ] 1.4. three side-by-side
 
 [ ] 7. verify for mobile
 
@@ -9,11 +8,15 @@
 
 [ ] 12. time-left
 
-[ ] 16. hide or better message for moar games
+# later
 
-[ ] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
+[-] 1.4. three side-by-side
 
-[ ] 20. show overall
+[-] 1.3. save local session 
+
+[-] 16. hide or better message for moar games
+
+[-] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
 
 # completed
 
@@ -29,7 +32,6 @@
     attach ballot index to each
 
 [x] 1.2. pick new
-[-] 1.3. save local session 
 
 [x] 2. teams
 [x] 2.1. spreadsheetish
@@ -58,3 +60,5 @@
 [x] 15. only external links
 
 [x] 18. võimaldab uue mängu võtta, mida voteda soovi korral
+
+[x] 20. show overall
