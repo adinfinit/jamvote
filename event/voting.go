@@ -89,6 +89,10 @@ func (server *Server) Voting(context *Context) {
 		queue = nil
 	}
 
+	sort.Slice(completed, func(i, k int) bool {
+		return completed[i].Overall.Score > completed[k].Overall.Score
+	})
+
 	context.Data["Queue"] = queue
 	context.Data["Completed"] = completed
 
