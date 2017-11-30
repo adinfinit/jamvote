@@ -202,6 +202,9 @@ tbody tr:hover {
 .flashes .flash {
 	margin-bottom: 0.5rem;
 }
+.special {
+	background: #f9c393 !important;
+}
 .disabled {
 	color: #888;
 	background-image: repeating-linear-gradient(

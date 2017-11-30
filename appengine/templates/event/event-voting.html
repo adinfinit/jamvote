@@ -2,33 +2,19 @@
 
 {{ $event := .Event }}
 <section>
-	<div class="titlemenu">
-		<h1>Voting</h1>
-	</div>
-
 	<section>
 		<h1>Queue</h1>
 		
-		<table>
-			<thead>
-				<tr>
-					<th>Game</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{ range .Queue }}
-				<tr>
-					<td><a href="{{ $event.Path "vote" .Team.ID }}">{{.Team.Game.Name}}</a></td>
-				</tr>
-				{{ end }}
-			</tbody>
-		</table>
-	
-		<br>
-		<a class="button {{ if .QueueCompleted }}disabled{{end}}" href="{{.Event.Path "fill-queue"}}">Moar Games Please</a>
+		{{ range .Queue }}
+		<a class="button" href="{{ $event.Path "vote" .Team.ID }}">{{.Team.Game.Name}}</a>
+		{{ end }}
+
+		{{ if not .Queue }}
+		<a class="button special" href="{{.Event.Path "fill-queue"}}">Moar Games Please</a>
+		{{ end }}
 	</section>
 	
-	<section>
+	<section style="margin-top: 6rem;">
 		<h1>Completed</h1>
 		<table>
 			<thead>

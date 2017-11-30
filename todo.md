@@ -1,5 +1,4 @@
 # todo
-[ ] 1. voting
 [ ] 1.4. three side-by-side
 
 [ ] 7. verify for mobile
@@ -17,6 +16,7 @@
 
 # completed
 
+[x] 1. voting
 [x] 1.1. start -> pick 3
 
     list all teams
