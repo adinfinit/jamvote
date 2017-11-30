@@ -1,0 +1,42 @@
+{{ template "head" . }}
+
+{{ $event := .Event }}
+<section>
+	<div class="titlemenu">
+		<h1>Results</h1>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th style="width:2rem;" title="Place"></th>
+				<th>Team</th>
+				<th>Game</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
+				<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{ range $index, $result := .Results }}
+			<tr>
+				<td>#{{add 1 $index}}</td>
+				<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+				<td>{{.Game.Name}}</td>
+
+				<td>{{.Average.Theme}}</td>
+				<td>{{.Average.Enjoyment}}</td>
+				<td>{{.Average.Aesthetics}}</td>
+				<td>{{.Average.Innovation}}</td>
+				<td>{{.Average.Bonus}}</td>
+				<td>{{.Average.Overall}}</td>
+			</tr>
+			{{ end }}
+		</tbody>
+	</table>
+</section>
+
+{{ template "foot" . }}

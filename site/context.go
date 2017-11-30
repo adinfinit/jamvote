@@ -137,11 +137,17 @@ func (context *Context) Render(name string) {
 			return strings.Split(s, "\n\n")
 		},
 
-		"div": func(a, b interface{}) float64 {
-			return toFloat(a) / toFloat(b)
+		"add": func(a, b interface{}) float64 {
+			return toFloat(a) + toFloat(b)
+		},
+		"sub": func(a, b interface{}) float64 {
+			return toFloat(a) - toFloat(b)
 		},
 		"mul": func(a, b interface{}) float64 {
 			return toFloat(a) * toFloat(b)
+		},
+		"div": func(a, b interface{}) float64 {
+			return toFloat(a) / toFloat(b)
 		},
 	})
 

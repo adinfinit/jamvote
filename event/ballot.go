@@ -32,6 +32,7 @@ type BallotInfo struct {
 type TeamResult struct {
 	*Team
 	Ballots  []*Ballot
+	Average  Aspects
 	Pending  int
 	Complete int
 }
@@ -54,6 +55,34 @@ var DefaultAspects = Aspects{
 	Overall:    Aspect{0, ""},
 }
 
+func AverageScores(ballots []*Ballot) Aspects {
+	count := 0.0
+	average := Aspects{}
+	for _, ballot := range ballots {
+		if !ballot.Completed {
+			continue
+		}
+
+		if count == 0 {
+			average = ballot.Aspects
+		} else {
+			average.Add(&ballot.Aspects)
+		}
+		count += 1.0
+	}
+
+	if count > 0 {
+		average.Theme.Score /= count
+		average.Enjoyment.Score /= count
+		average.Aesthetics.Score /= count
+		average.Innovation.Score /= count
+		average.Bonus.Score /= count
+		average.Overall.Score /= count
+	}
+
+	return average
+}
+
 type Aspects struct {
 	Theme      Aspect
 	Enjoyment  Aspect
@@ -70,6 +99,24 @@ type Aspect struct {
 
 func (aspect Aspect) String() string {
 	return fmt.Sprintf("%.1f", aspect.Score)
+}
+
+func (aspects *Aspects) ClearComments() {
+	aspects.Theme.Comment = ""
+	aspects.Enjoyment.Comment = ""
+	aspects.Aesthetics.Comment = ""
+	aspects.Innovation.Comment = ""
+	aspects.Bonus.Comment = ""
+	aspects.Overall.Comment = ""
+}
+
+func (aspects *Aspects) Add(other *Aspects) {
+	aspects.Theme.Score += other.Theme.Score
+	aspects.Enjoyment.Score += other.Enjoyment.Score
+	aspects.Aesthetics.Score += other.Aesthetics.Score
+	aspects.Innovation.Score += other.Innovation.Score
+	aspects.Bonus.Score += other.Bonus.Score
+	aspects.Overall.Score += other.Overall.Score
 }
 
 func (aspects *Aspects) EnsureRange() {

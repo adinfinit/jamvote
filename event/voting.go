@@ -24,8 +24,12 @@ func (event *Server) StartVoting(context *Context) {
 	}
 
 	if context.Event.Closed {
-		context.FlashNow("Voting has been closed.")
-		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		context.Flash("Voting has been closed.")
+		if context.Event.Revealed {
+			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		} else {
+			context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		}
 		return
 	}
 
@@ -52,8 +56,12 @@ func (event *Server) Voting(context *Context) {
 	}
 
 	if context.Event.Closed {
-		context.FlashNow("Voting has been closed.")
-		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		context.Flash("Voting has been closed.")
+		if context.Event.Revealed {
+			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		} else {
+			context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		}
 		return
 	}
 
@@ -105,7 +113,11 @@ func (event *Server) Vote(context *Context) {
 
 	if context.Event.Closed {
 		context.Flash("Voting has been closed.")
-		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		if context.Event.Revealed {
+			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+		} else {
+			context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		}
 		return
 	}
 
@@ -169,15 +181,29 @@ func (event *Server) Vote(context *Context) {
 }
 
 func (event *Server) Results(context *Context) {
-	if !context.CurrentUser.IsAdmin() {
-		if !context.Event.Revealed {
-			context.Flash("Results have not yet been revealed.")
-			context.Redirect(context.Event.Path(), http.StatusSeeOther)
-			return
-		}
+	if !context.Event.Voting {
+		context.Flash("Voting has not yet started.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
 	}
 
-	context.Render("todo")
+	if !context.Event.Revealed {
+		context.Flash("Voting results have not been yet revealed.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
+
+	results, err := context.Events.Results(context.Event.ID)
+	if err != nil {
+		context.FlashNow(err.Error())
+	}
+
+	sort.Slice(results, func(i, k int) bool {
+		return results[i].Average.Overall.Score > results[k].Average.Overall.Score
+	})
+
+	context.Data["Results"] = results
+	context.Render("event-results")
 }
 
 func (event *Server) Progress(context *Context) {

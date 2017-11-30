@@ -352,5 +352,10 @@ func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
 		return nil, err
 	}
 
-	return createTeamResults(teams, ballots), nil
+	results := createTeamResults(teams, ballots)
+	for _, result := range results {
+		result.Average = AverageScores(result.Ballots)
+	}
+
+	return results, nil
 }

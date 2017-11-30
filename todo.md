@@ -11,10 +11,10 @@
     attach ballot index to each
 
 [ ] 1.2. pick new
-[ ] 1.3. save local session 
+[-] 1.3. save local session 
 
-[ ] 2. teams
-[ ] 2.1. spreadsheetish
+[x] 2. teams
+[x] 2.1. spreadsheetish
 
 [x] 3. progress
 
@@ -35,4 +35,4 @@
 
 [x] 8. simulations
 
-[ ] 9. results
+[x] 9. results
