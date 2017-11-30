@@ -1,16 +1,23 @@
 {{ template "head" . }}
 
 {{ define "users-list"}}
+{{ $isAdmin := Data.CurrentUser.IsAdmin }}
 <table>
 	<thead>
 		<tr>
+			<th style="width: 2.5rem;"></th>
 			<th>Name</th>
+			{{ if $isAdmin }}<th>Email</th> {{ end }}
 		</tr>
 	</thead>
 	<tbody>
 		{{ range .}}
 		<tr>
+			{{ if $isAdmin }}
+			<td><a class="edit" href="/user/{{.ID}}/edit">edit</a></td>
+			{{ end }}
 			<td><a href="/user/{{.ID}}">{{ .Name }}</a></td>
+			{{ if $isAdmin }}<td>{{ .Email }}</td>{{ end }}
 		</tr>
 		{{ end }}
 	</tbody>
