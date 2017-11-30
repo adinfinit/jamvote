@@ -30,8 +30,8 @@
 		<tbody>
 			{{ range .Progress }}
 			<tr {{ if not .HasSubmitted }}class="not-submitted"{{ end }}>
-				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td><span title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
+				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
 				<td class="progress">
 					<div class="pending" style="width: {{ mul 100 (div .Pending Data.VoteMax) }}%"></div>
 					<div class="complete" style="width: {{ mul 100 (div .Complete Data.VoteMax) }}%"></div>
