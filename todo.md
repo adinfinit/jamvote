@@ -16,6 +16,9 @@
 [ ] 15. only external links
 [ ] 16. hide or better message for moar games
 
+[ ] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
+[ ] 18. võimaldab uue mängu võtta, mida voteda soovi korral
+
 # completed
 
 [x] 1.1. start -> pick 3

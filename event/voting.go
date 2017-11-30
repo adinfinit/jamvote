@@ -83,9 +83,6 @@ func (event *Server) Voting(context *Context) {
 			queue = append(queue, ballot)
 		}
 	}
-	if len(ballots) <= 3 {
-		queue = ballots
-	}
 
 	context.Data["Queue"] = queue
 	context.Data["Completed"] = completed
