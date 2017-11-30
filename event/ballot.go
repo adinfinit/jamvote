@@ -35,6 +35,8 @@ type TeamResult struct {
 	Average  Aspects
 	Pending  int
 	Complete int
+
+	MemberBallots []*Ballot
 }
 
 func (info *TeamResult) HasReviewer(userid user.UserID) bool {

@@ -2,7 +2,7 @@
 [ ] 1. voting
 [ ] 1.4. three side-by-side
 
-[ ] 5. approved jammers
+[x] 5. approved jammers
 [ ] 7. verify for mobile
 
 [ ] 10. auto-refresh progress

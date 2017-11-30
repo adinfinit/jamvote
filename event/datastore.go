@@ -168,6 +168,11 @@ func createTeamResults(teams []*Team, ballots []*Ballot) []*TeamResult {
 
 	for _, ballot := range ballots {
 		res := cross[ballot.Team]
+		if res.Team.HasMemberID(ballot.Voter) {
+			res.MemberBallots = append(res.MemberBallots, ballot)
+			continue
+		}
+
 		res.Ballots = append(res.Ballots, ballot)
 		if ballot.Completed {
 			res.Complete++
