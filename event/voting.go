@@ -183,6 +183,31 @@ func (event *Server) Vote(context *Context) {
 	context.Render("event-vote")
 }
 
+func (event *Server) Reveal(context *Context) {
+	if !context.Event.Voting {
+		context.Flash("Voting has not yet started.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
+	if !context.CurrentUser.IsAdmin() {
+		context.Flash("Only admin can use reveal.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
+
+	results, err := context.Events.Results(context.Event.ID)
+	if err != nil {
+		context.FlashNow(err.Error())
+	}
+
+	sort.Slice(results, func(i, k int) bool {
+		return results[i].Average.Overall.Score > results[k].Average.Overall.Score
+	})
+
+	context.Data["Results"] = results
+	context.Render("todo")
+}
+
 func (event *Server) Results(context *Context) {
 	if !context.Event.Voting {
 		context.Flash("Voting has not yet started.")

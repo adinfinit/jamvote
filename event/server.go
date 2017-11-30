@@ -23,10 +23,12 @@ func (event *Server) Register(router *mux.Router) {
 
 	router.HandleFunc("/event/{eventid}", event.Handler(event.Dashboard))
 	router.HandleFunc("/event/{eventid}/edit", event.Handler(event.EditEvent))
+	router.HandleFunc("/event/{eventid}/jammers", event.Handler(event.Jammers))
 	router.HandleFunc("/event/{eventid}/teams", event.Handler(event.Teams))
 	router.HandleFunc("/event/{eventid}/voting", event.Handler(event.Voting))
 	router.HandleFunc("/event/{eventid}/fill-queue", event.Handler(event.FillQueue))
 	router.HandleFunc("/event/{eventid}/progress", event.Handler(event.Progress))
+	router.HandleFunc("/event/{eventid}/reveal", event.Handler(event.Reveal))
 	router.HandleFunc("/event/{eventid}/results", event.Handler(event.Results))
 
 	router.HandleFunc("/event/{eventid}/team/create", event.Handler(event.CreateTeam))

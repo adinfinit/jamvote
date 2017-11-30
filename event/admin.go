@@ -107,3 +107,13 @@ func (event *Server) EditEvent(context *Context) {
 
 	context.Render("event-edit")
 }
+
+func (event *Server) Jammers(context *Context) {
+	if !context.CurrentUser.IsAdmin() {
+		context.Flash("Must be admin to edit approved jammers.")
+		context.Redirect("/", http.StatusSeeOther)
+		return
+	}
+
+	context.Render("todo")
+}

@@ -29,7 +29,7 @@
 				<th>Game</th>
 				<th style="width:2rem;"></th>
 				<th style="width:2rem;"></th>
-				<th style="width:2%;"></th>
+				<th style="width:2%; "></th>
 				<th style="width:9%; max-width:8rem;">1</th>
 				<th style="width:9%; max-width:8rem;">2</th>
 				<th style="width:9%; max-width:8rem;">3</th>
@@ -42,7 +42,7 @@
 			{{ range .Teams }}
 			<tr>
 				{{ if $isAdmin }}
-				<td><a class="edit" href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
+				<td><a class="edit icon" href="{{$event.Path "team" .ID "edit"}}">✏</a></td>
 				{{ end }}
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td><span title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
@@ -50,7 +50,7 @@
 				<td>{{ if .Game.Link.Facebook}}<a class="no-clip" target="_blank" href="{{.Game.Link.Facebook}}" title="Facebook">FB</a>{{end}}</td>
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" target="_blank" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
-				<td><a href="{{$event.Path "vote" .ID}}">🗳</a></td>
+				<td><a class="icon" href="{{$event.Path "vote" .ID}}">🗳</a></td>
 
 				{{ range .MembersWithEmpty }}
 				{{ if .Name }}<td class="boxed" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed no-member"></td>{{ end }}

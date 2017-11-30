@@ -60,7 +60,9 @@ a.button.margin-bottom {
 a.active, a:hover, input[type=submit]:hover {
 	background: #ffebcd;
 }
-a.edit:hover { background: #faa; text-align: right; }
+.edit.icon:hover { background: #faa; text-align: right; }
+.icon { text-align: center; }
+
 a:not([href]):hover {
 	background: inherit;
 }
@@ -262,6 +264,28 @@ tbody tr:hover {
 	padding: 1rem 1rem;
 	font-size: 1rem;
 	flex: 0;
+}
+
+.admin-outer {
+	z-index: -100;
+	color: #666;
+}
+
+.admin {
+	display: flex;
+	justify-content: flex-end;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 0 0 10px 10px;
+}
+.admin > span {
+	display: block;
+	padding: 0.5rem 0.5rem;
+	font-size: 0.8rem;
+}
+.admin > a {
+	display: block;
+	padding: 0.5rem 0.5rem;
+	font-size: 0.8rem;
 }
 
 /* forms */
