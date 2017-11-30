@@ -15,14 +15,14 @@ type Server struct {
 	Auth *auth.Service
 }
 
-func (users *Server) Register(router *mux.Router) {
-	router.HandleFunc("/user", users.Handler(users.RedirectToEdit))
-	router.HandleFunc("/users", users.Handler(users.List))
-	router.HandleFunc("/user/logged-in", users.Handler(users.LoggedIn))
-	router.HandleFunc("/user/{userid}/edit", users.Handler(users.Edit))
-	router.HandleFunc("/user/login", users.Handler(users.Login))
-	router.HandleFunc("/user/logout", users.Handler(users.Logout))
-	router.HandleFunc("/user/{userid}", users.Handler(users.Profile))
+func (server *Server) Register(router *mux.Router) {
+	router.HandleFunc("/user", server.Handler(server.RedirectToEdit))
+	router.HandleFunc("/users", server.Handler(server.List))
+	router.HandleFunc("/user/logged-in", server.Handler(server.LoggedIn))
+	router.HandleFunc("/user/{userid}/edit", server.Handler(server.Edit))
+	router.HandleFunc("/user/login", server.Handler(server.Login))
+	router.HandleFunc("/user/logout", server.Handler(server.Logout))
+	router.HandleFunc("/user/{userid}", server.Handler(server.Profile))
 }
 
 func getUserID(context *Context) (UserID, bool) {
@@ -30,7 +30,7 @@ func getUserID(context *Context) (UserID, bool) {
 	return UserID(id), ok
 }
 
-func (users *Server) RedirectToEdit(context *Context) {
+func (server *Server) RedirectToEdit(context *Context) {
 	if context.CurrentUser == nil {
 		context.Redirect("/user/login", http.StatusSeeOther)
 		return
@@ -40,16 +40,16 @@ func (users *Server) RedirectToEdit(context *Context) {
 	context.Redirect(userurl, http.StatusSeeOther)
 }
 
-func (users *Server) LoggedIn(context *Context) {
+func (server *Server) LoggedIn(context *Context) {
 	if context.CurrentUser == nil || context.CurrentUser.NewUser {
-		users.RedirectToEdit(context)
+		server.RedirectToEdit(context)
 		return
 	}
 
 	context.Redirect("/", http.StatusSeeOther)
 }
 
-func (users *Server) Edit(context *Context) {
+func (server *Server) Edit(context *Context) {
 	userid, ok := getUserID(context)
 	if !ok {
 		context.Error("User ID not specified", http.StatusBadRequest)
@@ -107,7 +107,7 @@ func (users *Server) Edit(context *Context) {
 	context.Render("user-edit")
 }
 
-func (users *Server) Profile(context *Context) {
+func (server *Server) Profile(context *Context) {
 	userid, ok := getUserID(context)
 	if !ok {
 		context.Error("User ID not specified", http.StatusBadRequest)
@@ -124,11 +124,11 @@ func (users *Server) Profile(context *Context) {
 	context.Render("user-view")
 }
 
-func (users *Server) Login(context *Context) {
-	context.Data["Logins"] = users.Auth.Links(context.Request)
+func (server *Server) Login(context *Context) {
+	context.Data["Logins"] = server.Auth.Links(context.Request)
 	context.Render("user-login")
 }
 
-func (users *Server) Logout(context *Context) {
-	users.Auth.Logout(context.Response, context.Request)
+func (server *Server) Logout(context *Context) {
+	server.Auth.Logout(context.Response, context.Request)
 }

@@ -15,9 +15,9 @@ type Context struct {
 	*user.Context
 }
 
-func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
+func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
-	context.Context = event.Users.Context(w, r)
+	context.Context = server.Users.Context(w, r)
 	context.Events = &Datastore{context}
 
 	eventid, ok := context.StringParam("eventid")
@@ -44,15 +44,15 @@ func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	return context
 }
 
-func (event *Server) HandlerMaybe(fn func(*Context)) http.HandlerFunc {
+func (server *Server) HandlerMaybe(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fn(event.Context(w, r))
+		fn(server.Context(w, r))
 	})
 }
 
-func (event *Server) Handler(fn func(*Context)) http.HandlerFunc {
+func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		context := event.Context(w, r)
+		context := server.Context(w, r)
 		if context.Event == nil {
 			eventid, _ := context.StringParam("eventid")
 			context.Flash(fmt.Sprintf("Event %q does not exist.", eventid))

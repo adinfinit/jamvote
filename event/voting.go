@@ -9,7 +9,7 @@ import (
 
 type Range struct{ Min, Max, Step float64 }
 
-func (event *Server) FillQueue(context *Context) {
+func (server *Server) FillQueue(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
@@ -50,7 +50,7 @@ func (event *Server) FillQueue(context *Context) {
 	context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
 }
 
-func (event *Server) Voting(context *Context) {
+func (server *Server) Voting(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
@@ -102,7 +102,7 @@ func (event *Server) Voting(context *Context) {
 	context.Render("event-voting")
 }
 
-func (event *Server) Vote(context *Context) {
+func (server *Server) Vote(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
@@ -198,7 +198,7 @@ func (event *Server) Vote(context *Context) {
 	context.Render("event-vote")
 }
 
-func (event *Server) Reveal(context *Context) {
+func (server *Server) Reveal(context *Context) {
 	if !context.Event.Voting {
 		context.Flash("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
@@ -223,7 +223,7 @@ func (event *Server) Reveal(context *Context) {
 	context.Render("todo")
 }
 
-func (event *Server) Results(context *Context) {
+func (server *Server) Results(context *Context) {
 	if !context.Event.Voting {
 		context.Flash("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
@@ -249,7 +249,7 @@ func (event *Server) Results(context *Context) {
 	context.Render("event-results")
 }
 
-func (event *Server) Progress(context *Context) {
+func (server *Server) Progress(context *Context) {
 	results, err := context.Events.Results(context.Event.ID)
 	if err != nil {
 		context.FlashNow(err.Error())

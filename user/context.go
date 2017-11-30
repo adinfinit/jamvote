@@ -13,8 +13,8 @@ type Context struct {
 	*site.Context
 }
 
-func (users *Server) CurrentUser(context *Context) *User {
-	cred := users.Auth.CurrentCredentials(context, context.Request)
+func (server *Server) CurrentUser(context *Context) *User {
+	cred := server.Auth.CurrentCredentials(context, context.Request)
 	if cred == nil {
 		return nil
 	}

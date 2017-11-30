@@ -65,7 +65,7 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 	return team
 }
 
-func (event *Server) CreateTeam(context *Context) {
+func (server *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to create a team.")
@@ -96,7 +96,7 @@ func (event *Server) CreateTeam(context *Context) {
 			return
 		}
 
-		team := event.parseTeamForm(context, users)
+		team := server.parseTeamForm(context, users)
 		context.Data["Team"] = team
 		if err := team.Verify(); err != nil {
 			context.FlashNow(err.Error())
@@ -121,8 +121,8 @@ func (event *Server) CreateTeam(context *Context) {
 	context.Render("event-team-create")
 }
 
-func (event *Server) EditTeam(context *Context) {
-	if !event.canEditTeam(context) {
+func (server *Server) EditTeam(context *Context) {
+	if !server.canEditTeam(context) {
 		return
 	}
 
@@ -140,7 +140,7 @@ func (event *Server) EditTeam(context *Context) {
 			return
 		}
 
-		team := event.parseTeamForm(context, users)
+		team := server.parseTeamForm(context, users)
 		team.EventID = context.Team.EventID
 		team.ID = context.Team.ID
 		context.Data["Team"] = team
@@ -176,7 +176,7 @@ func (event *Server) EditTeam(context *Context) {
 	context.Render("event-team-edit")
 }
 
-func (event *Server) Team(context *Context) {
+func (server *Server) Team(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
 		context.Flash(fmt.Sprintf("Team %v does not exist", teamid))
@@ -187,7 +187,7 @@ func (event *Server) Team(context *Context) {
 	context.Render("event-team")
 }
 
-func (event *Server) Teams(context *Context) {
+func (server *Server) Teams(context *Context) {
 	teams, err := context.Events.Teams(context.Event.ID)
 	if err != nil {
 		context.FlashNow(fmt.Sprintf("Unable to get teams: %v", err))
@@ -213,7 +213,7 @@ func (event *Server) Teams(context *Context) {
 	context.Render("event-teams")
 }
 
-func (event *Server) canEditTeam(context *Context) bool {
+func (server *Server) canEditTeam(context *Context) bool {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
 		context.Flash(fmt.Sprintf("Team %v does not exist.", teamid))

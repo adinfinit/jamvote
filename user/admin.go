@@ -2,7 +2,7 @@ package user
 
 import "net/http"
 
-func (users *Server) List(context *Context) {
+func (server *Server) List(context *Context) {
 	if context.CurrentUser == nil {
 		context.Flash("Must be logged in to see users.")
 		context.Redirect("/", http.StatusSeeOther)

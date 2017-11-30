@@ -8,7 +8,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
-func (event *Server) CreateEvent(context *Context) {
+func (server *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.Flash("Must be admin to create events.")
 		context.Redirect("/", http.StatusSeeOther)
@@ -69,7 +69,7 @@ func (event *Server) CreateEvent(context *Context) {
 	context.Render("event-create")
 }
 
-func (event *Server) EditEvent(context *Context) {
+func (server *Server) EditEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.Flash("Must be admin to edit events.")
 		context.Redirect("/", http.StatusSeeOther)
@@ -110,7 +110,7 @@ func (event *Server) EditEvent(context *Context) {
 	context.Render("event-edit")
 }
 
-func (event *Server) Jammers(context *Context) {
+func (server *Server) Jammers(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.Flash("Must be admin to edit jammers.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
