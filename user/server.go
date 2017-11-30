@@ -74,32 +74,22 @@ func (server *Server) Edit(context *Context) {
 			return
 		}
 
-		name := context.Request.FormValue("name")
-		facebook := context.Request.FormValue("facebook")
-		github := context.Request.FormValue("github")
-		admin := context.Request.FormValue("admin") == "true"
+		user.Name = context.Request.FormValue("name")
+		user.Email = context.Request.FormValue("email")
+		user.Facebook = context.Request.FormValue("facebook")
+		user.Github = context.Request.FormValue("github")
 
+		admin := context.Request.FormValue("admin") == "true"
 		// only other admin can change admin status
-		if !context.CurrentUser.IsAdmin() {
-			// TODO: add flash
-			admin = user.Admin
+		if context.CurrentUser.IsAdmin() {
+			user.Admin = admin
 		}
 
-		if name != user.Name ||
-			facebook != user.Facebook ||
-			github != user.Github ||
-			admin != user.Admin {
-
-			user.Name = name
-			user.Facebook = facebook
-			user.Github = github
-			user.Admin = admin
-
-			err := context.Users.Update(user)
-			if err != nil {
-				context.Error(err.Error(), http.StatusInternalServerError)
-				return
-			}
+		err := context.Users.Update(user)
+		if err != nil {
+			context.FlashError(err.Error())
+		} else {
+			context.FlashMessage("User updated.")
 		}
 	}
 

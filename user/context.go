@@ -21,7 +21,10 @@ func (server *Server) CurrentUser(context *Context) *User {
 
 	user, err := context.Users.ByCredentials(cred)
 	if err == ErrNotExists {
-		user = &User{Name: cred.Name}
+		user = &User{
+			Name:  cred.Name,
+			Email: cred.Email,
+		}
 		_, err := context.Users.Create(cred, user)
 		if err != nil {
 			return nil

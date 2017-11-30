@@ -13,6 +13,13 @@
 			<div class="input" name="name">{{.User.Name}}</div>
 		</div>
 
+		{{ if .CurrentUser.IsAdmin }}
+		<div class="field">
+			<label for="email">Email</label>
+			<div class="input" name="email">{{.User.Email}}</div>
+		</div>
+		{{ end }}
+
 		{{ if .User.Facebook }}
 		<div class="field">
 			<label for="facebook">Facebook</label>

@@ -24,8 +24,9 @@ func (id UserID) String() string { return strconv.Itoa(int(id)) }
 
 type User struct {
 	ID    UserID `datastore:"-"`
-	Name  string
-	Admin bool
+	Name  string `datastore:",noindex"`
+	Email string `datastore:",noindex"`
+	Admin bool   `datastore:",noindex"`
 
 	Facebook string `datastore:",noindex"`
 	Github   string `datastore:",noindex"`

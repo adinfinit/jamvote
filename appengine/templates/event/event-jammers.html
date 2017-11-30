@@ -9,6 +9,7 @@
 				<tr>
 					<th style="width: 2rem;"></th>
 					<th>User</th>
+					<th>Email</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,13 +22,12 @@
 					<td>
 						<label class="basic" for="{{$user.ID}}">{{ $user.Name }}</label>
 					</td>
+					<td>{{ $user.Email }}</td>
 				</tr>
 				{{ end }}
 			</tbody>
 		</table>
-
 		<br>
-		
 		<input type="submit" value="Update">
 	</form>
 </section>
