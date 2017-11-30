@@ -76,8 +76,9 @@ a.button.margin-bottom {
 a.active, a:hover, input[type=submit]:hover {
 	background: #ffebcd;
 }
-.edit.icon:hover { background: #faa; text-align: right; }
-.icon { text-align: center; }
+
+.edit { text-align: center; }
+.edit:hover { background: #faa; }
 
 a:not([href]):hover {
 	background: inherit;
