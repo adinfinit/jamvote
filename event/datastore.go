@@ -2,9 +2,7 @@ package event
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"log"
 	"sort"
 
 	"github.com/adinfinit/jamvote/user"
@@ -309,8 +307,10 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 }
 
 func (repo *Datastore) SubmitBallot(eventid EventID, ballot *Ballot) error {
-	// TODO
-	return errors.New("TODO")
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	ballot.ID = newBallotKey(repo.Context, eventkey, ballot.Voter, ballot.Team)
+	_, err := datastore.Put(repo.Context, ballot.ID, ballot)
+	return datastoreError(err)
 }
 
 func (repo *Datastore) UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error) {
@@ -325,7 +325,6 @@ func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*Ball
 	if err != nil {
 		return nil, err
 	}
-	log.Println("USER BALLOTS", ballots)
 
 	teamids := []TeamID{}
 	for _, ballot := range ballots {

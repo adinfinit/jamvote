@@ -3,35 +3,10 @@ package event
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
-var AspectsInfo = []struct {
-	Name        string
-	Description string
-	Options     []string
-}{
-	{
-		Name:        "Theme",
-		Description: "How well does it interpret the theme?",
-		Options:     []string{"Not even close", "Resembling", "Related", "Spot on", "Novel Interpretation"},
-	}, {
-		Name:        "Enjoyment",
-		Description: "How does the game generally feel?",
-		Options:     []string{"Boring", "Not playing again", "Nice", "Didn't want to stop", "Will play later"},
-	}, {
-		Name:        "Aesthetics",
-		Description: "How well is the story, art and audio executed?",
-		Options:     []string{"None", "Needs tweaks", "Nice", "Really good", "Exceptional"},
-	}, {
-		Name:        "Innovation",
-		Description: "Something novel in the game?",
-		Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen before", "Exceptional"},
-	}, {
-		Name:        "Bonus",
-		Description: "Anything exceptionally special about it?",
-		Options:     []string{"Nothing special", "Really liked *", "Really loved *", "Loved everything", "<3"},
-	},
-}
+type Range struct{ Min, Max, Step float64 }
 
 func (event *Server) StartVoting(context *Context) {
 	if context.CurrentUser == nil {
@@ -129,12 +104,15 @@ func (event *Server) Vote(context *Context) {
 
 	if context.Event.Closed {
 		context.Flash("Voting has been closed.")
-		context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
+		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
 		return
 	}
 
 	ballot, err := context.Events.UserBallot(context.Event.ID, context.CurrentUser.ID, context.Team.ID)
-	if err == ErrNotExists {
+	if err != nil && err != ErrNotExists {
+		context.FlashNow(err.Error())
+	}
+	if ballot == nil {
 		ballot = &Ballot{}
 	}
 
@@ -145,6 +123,46 @@ func (event *Server) Vote(context *Context) {
 
 	context.Data["Aspects"] = AspectsInfo
 	context.Data["Ballot"] = ballotinfo
+
+	if context.Request.Method == http.MethodPost {
+		if err := context.Request.ParseForm(); err != nil {
+			context.FlashNow("Parse form: " + err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-vote")
+			return
+		}
+
+		ballot.Voter = context.CurrentUser.ID
+		ballot.Team = context.Team.ID
+
+		readAspect := func(target *Aspect, name string) {
+			target.Comment = context.Request.FormValue(name + ".Comment")
+			scorestr := context.Request.FormValue(name + ".Score")
+			if val, err := strconv.ParseFloat(scorestr, 64); err == nil {
+				target.Score = val
+			} else {
+				context.Flash(name + " value had error: " + err.Error())
+			}
+		}
+
+		readAspect(&ballot.Theme, "Theme")
+		readAspect(&ballot.Enjoyment, "Enjoyment")
+		readAspect(&ballot.Aesthetics, "Aesthetics")
+		readAspect(&ballot.Innovation, "Innovation")
+		readAspect(&ballot.Bonus, "Bonus")
+
+		ballot.Aspects.EnsureRange()
+		ballot.Aspects.UpdateTotal()
+		ballot.Completed = true
+
+		err := context.Events.SubmitBallot(context.Event.ID, ballot)
+		if err != nil {
+			context.Flash(err.Error())
+		}
+
+		context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
+		return
+	}
 
 	context.Render("event-vote")
 }

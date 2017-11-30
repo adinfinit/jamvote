@@ -1,7 +1,6 @@
 package user
 
 import (
-	"log"
 	"net/http"
 	"path"
 
@@ -98,8 +97,7 @@ func (users *Server) Edit(context *Context) {
 
 			err := context.Users.Update(user)
 			if err != nil {
-				log.Printf("user.Edit: update %q: %v", userid, err)
-				context.Error("", http.StatusInternalServerError)
+				context.Error(err.Error(), http.StatusInternalServerError)
 				return
 			}
 		}

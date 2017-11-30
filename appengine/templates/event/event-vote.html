@@ -22,14 +22,15 @@
 				}
 			}
 		</script>
+		{{ $ballot := . }}
 		{{ range $aspect := Data.Aspects }}
 		<div class="aspect field">
 			<div>
 				<label for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="tiny">{{$aspect.Description}}</span></label>
-				<input id="{{$aspect.Name}}.Score" name="{{$aspect.Name}}" type="range" min="1" max="5" step="0.1">
+				<input id="{{$aspect.Name}}.Score" name="{{$aspect.Name}}.Score" type="range"min="{{$aspect.Min}}" max="{{$aspect.Max}}" step="{{$aspect.Step}}" value="{{$ballot.Score $aspect.Name}}">
 				<div id="{{$aspect.Name}}.Score.Text" class="aspect-text todo">Change the score.</div>
 			</div>
-			<textarea id="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments"></textarea>
+			<textarea id="{{$aspect.Name}}.Comment" name="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
 			<script>
 				(function(){
 					var range = document.getElementById("{{$aspect.Name}}.Score");
@@ -38,10 +39,11 @@
 
 					range.addEventListener("input", function(){
 						var value = parseFloat(range.value);
-						var index = Math.round(value);
-						if(index < 1){ index = 1; }
-						if(index > 5){ index = 5; }
-						text.innerText = value.toFixed(1) + ": " + options[index-1];
+						var index = Math.round(value - {{$aspect.Min}});
+						if(index < 0){ index = 0; }
+						if(index >= options.length){ index = options.length-1; }
+
+						text.innerText = value.toFixed(1) + ": " + options[index];
 						text.className = "aspect-text";
 						UpdateSubmitButton();
 					});
@@ -49,12 +51,16 @@
 			</script>
 		</div>
 		{{ end }}
+		
+		{{ if $ballot.Completed }}
+		<!-- todo mark as completed -->
+		{{ end }}
 
 		<input id="submit" type="submit" class="disabled" disabled value="Vote">
 	</form>
 </section>
 {{ end }}
 
-{{ template "vote-fields" .Team }}
+{{ template "vote-fields" .Ballot }}
 
 {{ template "foot" . }}

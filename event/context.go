@@ -2,7 +2,6 @@ package event
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/adinfinit/jamvote/user"
@@ -28,7 +27,7 @@ func (event *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 			context.Event = event
 			context.Data["Event"] = context.Event
 		} else {
-			log.Printf("Error getting event %q: %v", eventid, err)
+			context.FlashNow(err.Error())
 		}
 	}
 

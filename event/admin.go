@@ -2,7 +2,6 @@ package event
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -93,7 +92,6 @@ func (event *Server) EditEvent(context *Context) {
 		event.Closed = closed
 		event.Revealed = revealed
 		event.Info = info
-		log.Printf("%+v\n", event)
 
 		err := context.Events.Update(event)
 		if err != nil {

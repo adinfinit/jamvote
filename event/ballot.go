@@ -50,8 +50,8 @@ var DefaultAspects = Aspects{
 	Enjoyment:  Aspect{3, ""},
 	Aesthetics: Aspect{3, ""},
 	Innovation: Aspect{3, ""},
-	Bonus:      Aspect{3, ""},
-	Overall:    Aspect{3, ""},
+	Bonus:      Aspect{0, ""},
+	Overall:    Aspect{0, ""},
 }
 
 type Aspects struct {
@@ -68,7 +68,7 @@ type Aspect struct {
 	Comment string
 }
 
-func (aspect *Aspect) String() string {
+func (aspect Aspect) String() string {
 	return fmt.Sprintf("%.1f", aspect.Score)
 }
 
@@ -77,15 +77,90 @@ func (aspects *Aspects) EnsureRange() {
 	clamp(&aspects.Enjoyment.Score, 1, 5)
 	clamp(&aspects.Aesthetics.Score, 1, 5)
 	clamp(&aspects.Innovation.Score, 1, 5)
-	clamp(&aspects.Bonus.Score, 1, 5)
+	clamp(&aspects.Bonus.Score, 0, 2.5)
+	clamp(&aspects.Overall.Score, 0, 5)
+}
+
+func (aspects *Aspects) Score(name string) float64 {
+	switch name {
+	case "Theme":
+		return aspects.Theme.Score
+	case "Enjoyment":
+		return aspects.Enjoyment.Score
+	case "Aesthetics":
+		return aspects.Aesthetics.Score
+	case "Innovation":
+		return aspects.Innovation.Score
+	case "Bonus":
+		return aspects.Bonus.Score
+	case "Overall":
+		return aspects.Overall.Score
+	}
+	return 0
+}
+
+func (aspects *Aspects) Comment(name string) string {
+	switch name {
+	case "Theme":
+		return aspects.Theme.Comment
+	case "Enjoyment":
+		return aspects.Enjoyment.Comment
+	case "Aesthetics":
+		return aspects.Aesthetics.Comment
+	case "Innovation":
+		return aspects.Innovation.Comment
+	case "Bonus":
+		return aspects.Bonus.Comment
+	case "Overall":
+		return aspects.Overall.Comment
+	}
+	return "INVALID"
+}
+
+func (aspects *Aspects) UpdateTotal() {
+	aspects.Overall.Score = aspects.Total()
 }
 
 func (aspects *Aspects) Total() float64 {
-	return (aspects.Theme.Score +
-		aspects.Enjoyment.Score +
-		aspects.Aesthetics.Score +
-		aspects.Innovation.Score +
-		aspects.Bonus.Score*0.5) / (5*4 + 5*0.5)
+	return clamped((aspects.Theme.Score+
+		aspects.Enjoyment.Score+
+		aspects.Aesthetics.Score+
+		aspects.Innovation.Score+
+		aspects.Bonus.Score)/4.5, 1, 5)
+}
+
+var AspectsInfo = []struct {
+	Name        string
+	Description string
+	Range
+	Options []string
+}{
+	{
+		Name:        "Theme",
+		Description: "How well does it interpret the theme?",
+		Range:       Range{Min: 1, Max: 5, Step: 0.1},
+		Options:     []string{"Not even close", "Resembling", "Related", "Spot on", "Novel Interpretation"},
+	}, {
+		Name:        "Enjoyment",
+		Description: "How does the game generally feel?",
+		Range:       Range{Min: 1, Max: 5, Step: 0.1},
+		Options:     []string{"Boring", "Not playing again", "Nice", "Didn't want to stop", "Will play later"},
+	}, {
+		Name:        "Aesthetics",
+		Description: "How well is the story, art and audio executed?",
+		Range:       Range{Min: 1, Max: 5, Step: 0.1},
+		Options:     []string{"None", "Needs tweaks", "Nice", "Really good", "Exceptional"},
+	}, {
+		Name:        "Innovation",
+		Description: "Something novel in the game?",
+		Range:       Range{Min: 1, Max: 5, Step: 0.1},
+		Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen before", "Exceptional"},
+	}, {
+		Name:        "Bonus",
+		Description: "Anything exceptionally special about it?",
+		Range:       Range{Min: 0, Max: 2.5, Step: 0.1},
+		Options:     []string{"Nothing special", "Really liked *", "Really loved *"},
+	},
 }
 
 func clamp(v *float64, min, max float64) {
@@ -95,4 +170,13 @@ func clamp(v *float64, min, max float64) {
 	if *v > max {
 		*v = max
 	}
+}
+
+func clamped(v float64, min, max float64) float64 {
+	if v < min {
+		return min
+	} else if v > max {
+		return max
+	}
+	return v
 }
