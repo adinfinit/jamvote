@@ -16,55 +16,83 @@
 	
 	<a class="input button" {{if .Game.Link.Facebook}}target="_blank" href="{{.Game.Link.Facebook}}"{{end}}>{{.Game.Link.Facebook}}</a>
 	<a class="input button" {{if .Game.Link.Jam}}target="_blank" href="{{.Game.Link.Jam}}"{{end}}>{{.Game.Link.Jam}}</a>
+	
 	{{if .Game.Info}}<div class="input" id="info">{{.Game.Info}}</div>{{end}}
 	
-	<form method="POST">
-		<script>
-			function UpdateSubmitButton(){
-				var todos = document.getElementsByClassName("todo");
-				if(todos.length == 0){
-					var sub = document.getElementById("submit");
-					sub.className = "";
-					sub.disabled = false;
-				}
-			}
-		</script>
-		{{ $ballot := . }}
+	{{ $ballot := . }}
+	<form id="{{$ballot.Team.ID}}" method="POST">
 		{{ range $aspect := Data.Aspects }}
 		<div class="aspect field">
 			<div>
 				<label for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="tiny">{{$aspect.Description}}</span></label>
-				<input id="{{$aspect.Name}}.Score" name="{{$aspect.Name}}.Score" type="range"min="{{$aspect.Min}}" max="{{$aspect.Max}}" step="{{$aspect.Step}}" value="{{$ballot.Score $aspect.Name}}">
-				<div id="{{$aspect.Name}}.Score.Text" class="aspect-text todo">Change the score.</div>
+				<input class="{{$aspect.Name}}" name="{{$aspect.Name}}.Score" type="range"min="{{$aspect.Min}}" max="{{$aspect.Max}}" step="{{$aspect.Step}}" value="{{$ballot.Score $aspect.Name}}">
+				<div class="aspect-text">Change the score.</div>
 			</div>
-			<textarea id="{{$aspect.Name}}.Comment" name="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
-			<script>
-				(function(){
-					var range = document.getElementById("{{$aspect.Name}}.Score");
-					var text = document.getElementById("{{$aspect.Name}}.Score.Text");
-					var options = {{$aspect.Options}};
-
-					range.addEventListener("input", function(){
-						var value = parseFloat(range.value);
-						var index = Math.round(value - {{$aspect.Min}});
-						if(index < 0){ index = 0; }
-						if(index >= options.length){ index = options.length-1; }
-
-						text.innerText = value.toFixed(1) + ": " + options[index];
-						text.className = "aspect-text";
-						UpdateSubmitButton();
-					});
-				})()
-			</script>
+			<textarea name="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
 		</div>
 		{{ end }}
-		
-		{{ if $ballot.Completed }}
-		<!-- todo mark as completed -->
-		{{ end }}
 
-		<input id="submit" type="submit" class="disabled" disabled value="Vote">
+		<input id="submit" class="submit" type="submit" value="Vote">
 	</form>
+
+	<script>
+		(function(){
+			"use strict";
+			var formid = "{{$ballot.Team.ID}}";
+			var completed = {{$ballot.Completed}};
+			var aspects = {{ Data.Aspects }};
+
+
+			var formel = document.getElementById(formid);
+			var submitel = formel.getElementsByClassName("submit")[0];
+			if(!completed){
+				submitel.className = "disabled";
+				submitel.disabled = true;
+			}
+
+			var needsCompletion = [];
+			function markCompleted(range){
+				var i = needsCompletion.indexOf(range);
+				if(i >= 0){
+					needsCompletion.splice(i, 1);
+				}
+				if(needsCompletion.length == 0){
+					submitel.className = "";
+					submitel.disabled = false;
+				}
+			}
+
+			for(var i = 0; i < aspects.length; i++){
+				(function(aspect){
+					var range = formel.getElementsByClassName(aspect.Name)[0];
+					var text = range.nextElementSibling;
+					
+					function updateText(){
+						var value = parseFloat(range.value);
+						var index = Math.round(value - aspect.Min);
+						if(index < 0){ index = 0; }
+						if(index >= aspect.Options.length){
+							index = aspect.Options.length-1;
+						}
+
+						text.innerText = value.toFixed(1) + ": " + aspect.Options[index];
+						text.className = "aspect-text";
+
+						markCompleted(range);
+					}
+
+					range.addEventListener("input", updateText);
+
+					if(completed) {
+						updateText();
+					} else {
+						text.className += " todo";
+						needsCompletion.push(range);
+					}
+				})(aspects[i]);
+			}
+		})();
+	</script>
 </section>
 {{ end }}
 

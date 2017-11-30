@@ -2,7 +2,6 @@
 [ ] 1. voting
 [ ] 1.4. three side-by-side
 
-[x] 5. approved jammers
 [ ] 7. verify for mobile
 
 [ ] 10. auto-refresh progress
@@ -42,6 +41,8 @@
 
 [x] 4. create/edit team/game
 [x] 4.1. unify
+
+[x] 5. approved jammers
 
 [x] 6. team links
 [x] 6.1. Facebook
