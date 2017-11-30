@@ -12,7 +12,6 @@
 [ ] 16. hide or better message for moar games
 
 [ ] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
-[ ] 18. võimaldab uue mängu võtta, mida voteda soovi korral
 
 # completed
 
@@ -55,3 +54,5 @@
 [x] 13. bolden Game not Team
 [x] 14. reduce titles
 [x] 15. only external links
+
+[x] 18. võimaldab uue mängu võtta, mida voteda soovi korral

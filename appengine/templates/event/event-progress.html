@@ -1,14 +1,5 @@
 {{ template "head" . }}
 
-{{ $event := .Event }}
-
-{{ define "team-progress" }}
-<div>
-	<p>{{.Team.Name}}</p>
-	<p>{{.Pending}} | {{.Complete}} | {{Data.Target}}</p>
-</div>
-{{ end }}
-
 <section>
 	<div class="titlemenu">
 		<h1>Voting Progress</h1>
@@ -28,6 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			{{ $event := .Event }}
 			{{ range .Progress }}
 			{{ if .HasSubmitted }}
 			<tr>

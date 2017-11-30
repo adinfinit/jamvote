@@ -6,6 +6,7 @@
 		{{ if .CanEditTeam }}
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
 		{{ end }}
+		<a class="button" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>
 	</div>
 
 	<div class="side-by-side">
