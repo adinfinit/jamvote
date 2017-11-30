@@ -2,6 +2,7 @@ package event
 
 import (
 	"errors"
+	"net/url"
 	"strconv"
 
 	"github.com/adinfinit/jamvote/user"
@@ -50,6 +51,27 @@ func (team *Team) Verify() error {
 	if len(team.Members) == 0 {
 		return errors.New("Team must have at least one member.")
 	}
+
+	if team.Game.Link.Facebook != "" {
+		u, err := url.Parse(team.Game.Link.Facebook)
+		if err != nil {
+			return errors.New("Invalid Facebook link: " + err.Error())
+		}
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return errors.New("Invalid Facebook link.")
+		}
+	}
+
+	if team.Game.Link.Jam != "" {
+		u, err := url.Parse(team.Game.Link.Jam)
+		if err != nil {
+			return errors.New("Invalid Jam link: " + err.Error())
+		}
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return errors.New("Invalid Jam link.")
+		}
+	}
+
 	return nil
 }
 

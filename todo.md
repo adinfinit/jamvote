@@ -11,9 +11,9 @@
 
 [ ] 12. time-left
 
-[ ] 13. bolden Game not Team
-[ ] 14. reduce titles
-[ ] 15. only external links
+[x] 13. bolden Game not Team
+[x] 14. reduce titles
+[x] 15. only external links
 [ ] 16. hide or better message for moar games
 
 [ ] 17. näitab neid hindeid, mida sa just andsid (vb väike roheline fade out ka kohe lehele minnes 1st korda)
