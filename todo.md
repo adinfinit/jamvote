@@ -1,13 +1,26 @@
 
 [ ] 1. voting
 [ ] 1.1. start -> pick 3
-[ ] 1.2. save local session 
-[ ] 1.3. pick new
+
+    list all teams
+    list all ballots
+    shuffle
+    sort by pending
+    pick 3 top
+    create 3 empty ballots
+    attach ballot index to each
+
+[ ] 1.2. pick new
+[ ] 1.3. save local session 
 
 [ ] 2. teams
 [ ] 2.1. spreadsheetish
 
 [ ] 3. progress
+
+    list all teams
+    list all ballots
+    associate and count
 
 [x] 4. create/edit team/game
 [x] 4.1. unify
