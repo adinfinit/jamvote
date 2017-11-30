@@ -2,6 +2,11 @@
 
 {{ $event := .Event }}
 <section>
+	{{ if .Event.Closed }}
+	<div class="flashes">
+		<div class="flash">Voting has been closed.</div>
+	</div>
+	{{ else }}
 	<section>
 		<h1>Queue</h1>
 		
@@ -13,12 +18,14 @@
 		<a class="button special" href="{{.Event.Path "fill-queue"}}">Moar Games Please</a>
 		{{ end }}
 	</section>
+	{{ end }}
 	
 	<section style="margin-top: 6rem;">
-		<h1>Completed</h1>
+		<h1>Votes</h1>
 		<table>
 			<thead>
 				<tr>
+					<th style="width: 2.5rem;"></th>
 					<th>Team</th>
 					<th>Game</th>
 					<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
@@ -32,8 +39,13 @@
 			<tbody>
 				{{ range .Completed }}
 				<tr>
+					{{ if Data.Event.Closed }}
+					<td><a class="edit" href="{{ $event.Path "vote" .Team.ID }}">view</a></td>
+					{{ else }}
+					<td><a class="edit" href="{{ $event.Path "vote" .Team.ID }}">edit</a></td>
+					{{ end }}
 					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-					<td><a class="important" href="{{ $event.Path "vote" .Team.ID }}">{{.Game.Name}}</a></td>
+					<td>{{.Game.Name}}</td>
 					<td title="{{.Ballot.Theme.Comment}}">{{.Ballot.Theme}}</td>
 					<td title="{{.Ballot.Enjoyment.Comment}}">{{.Ballot.Enjoyment}}</td>
 					<td title="{{.Ballot.Aesthetics.Comment}}">{{.Ballot.Aesthetics}}</td>

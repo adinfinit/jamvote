@@ -20,7 +20,8 @@
 	{{if .Game.Info}}<div class="input" id="info">{{.Game.Info}}</div>{{end}}
 	
 	{{ $ballot := . }}
-	<form id="{{$ballot.Team.ID}}" method="POST">
+	<form id="{{$ballot.Team.ID}}" disabled method="POST">
+		{{ if Data.Event.Closed }}<fieldset disabled>{{ end }}
 		{{ range $aspect := Data.Aspects }}
 		<div class="aspect field">
 			<div>
@@ -31,8 +32,8 @@
 			<textarea name="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
 		</div>
 		{{ end }}
-
-		<input id="submit" class="submit" type="submit" value="Vote">
+		{{ if Data.Event.Closed }}</fieldset>{{ end }}
+		{{ if not Data.Event.Closed}}<input id="submit" class="submit" type="submit" value="Vote">{{ end }}
 	</form>
 
 	<script>
@@ -45,7 +46,7 @@
 
 			var formel = document.getElementById(formid);
 			var submitel = formel.getElementsByClassName("submit")[0];
-			if(!completed){
+			if(!completed && submitel){
 				submitel.className = "disabled";
 				submitel.disabled = true;
 			}
@@ -56,7 +57,7 @@
 				if(i >= 0){
 					needsCompletion.splice(i, 1);
 				}
-				if(needsCompletion.length == 0){
+				if((needsCompletion.length == 0) && submitel){
 					submitel.className = "";
 					submitel.disabled = false;
 				}

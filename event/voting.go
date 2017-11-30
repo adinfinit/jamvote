@@ -30,7 +30,7 @@ func (server *Server) FillQueue(context *Context) {
 	}
 
 	if context.Event.Closed {
-		context.FlashMessage("Voting has been closed.")
+		context.FlashMessage("Voting is closed.")
 		if context.Event.Revealed {
 			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
 		} else {
@@ -70,16 +70,6 @@ func (server *Server) Voting(context *Context) {
 		return
 	}
 
-	if context.Event.Closed {
-		context.FlashMessage("Voting has been closed.")
-		if context.Event.Revealed {
-			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
-		} else {
-			context.Redirect(context.Event.Path(), http.StatusSeeOther)
-		}
-		return
-	}
-
 	ballots, err := context.Events.UserBallots(context.Event.ID, context.CurrentUser.ID)
 	if err != nil {
 		context.FlashErrorNow(err.Error())
@@ -94,6 +84,9 @@ func (server *Server) Voting(context *Context) {
 		} else {
 			queue = append(queue, ballot)
 		}
+	}
+	if context.Event.Closed {
+		queue = nil
 	}
 
 	context.Data["Queue"] = queue
@@ -129,15 +122,15 @@ func (server *Server) Vote(context *Context) {
 		return
 	}
 
-	if context.Event.Closed {
-		context.FlashMessage("Voting has been closed.")
-		if context.Event.Revealed {
-			context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
-		} else {
-			context.Redirect(context.Event.Path(), http.StatusSeeOther)
-		}
-		return
-	}
+	//if context.Event.Closed {
+	//	context.FlashMessage("Voting is closed.")
+	//	if context.Event.Revealed {
+	//		context.Redirect(context.Event.Path("results"), http.StatusSeeOther)
+	//	} else {
+	//		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+	//	}
+	//	return
+	//}
 
 	ballot, err := context.Events.UserBallot(context.Event.ID, context.CurrentUser.ID, context.Team.ID)
 	if err != nil && err != ErrNotExists {
@@ -156,6 +149,12 @@ func (server *Server) Vote(context *Context) {
 	context.Data["Ballot"] = ballotinfo
 
 	if context.Request.Method == http.MethodPost {
+		if context.Event.Closed {
+			context.FlashErrorNow("Voting is closed.")
+			context.Response.WriteHeader(http.StatusForbidden)
+			context.Render("event-vote")
+			return
+		}
 		if err := context.Request.ParseForm(); err != nil {
 			context.FlashErrorNow("Parse form: " + err.Error())
 			context.Response.WriteHeader(http.StatusBadRequest)
