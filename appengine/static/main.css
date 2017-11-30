@@ -395,6 +395,10 @@ input[type=submit]{
 
 /* progress */
 
+.not-submitted {
+	background: #ff9797 !important;
+}
+
 .progress {
 	position: relative;
 	background: rgba(50, 70, 56, 0.5)

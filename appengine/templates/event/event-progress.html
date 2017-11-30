@@ -29,7 +29,7 @@
 		</thead>
 		<tbody>
 			{{ range .Progress }}
-			<tr>
+			<tr {{ if not .HasSubmitted }}class="not-submitted"{{ end }}>
 				<td><a class="important" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td><span title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
 				<td class="progress">

@@ -213,6 +213,9 @@ func (event *Server) Progress(context *Context) {
 	}
 
 	sort.Slice(results, func(i, k int) bool {
+		if results[i].HasSubmitted() != results[k].Team.HasSubmitted() {
+			return results[i].HasSubmitted()
+		}
 		return results[i].Team.Name < results[k].Team.Name
 	})
 
