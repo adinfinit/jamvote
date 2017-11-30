@@ -397,7 +397,7 @@ input[type=submit]{
 
 .progress {
 	position: relative;
-	background: rgba(0, 0, 0, 0.1);
+	background: rgba(50, 70, 56, 0.5)
 }
 div.progress {
 	height: 2rem;
@@ -411,10 +411,10 @@ div.progress {
 	bottom: 0;
 }
 .progress > .pending {
-	background: #888;
+	background: #e0d9b5;
 }
 .progress > .complete {
-	background: #61e000;
+	background: #6aea0a;
 }
 .progress > .target {
 	background: #c50000;
