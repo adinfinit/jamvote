@@ -7,12 +7,15 @@
 		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}
 	</div>
 
-	{{ if (not .Event.CanVote) }}
+	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
 	<div class="flashes">
 		{{if (not .Event.Voting)}}
 		<div class="flash">Voting has not yet started.</div>
-		{{ else }}
+		{{ else if .Event.Closed }}
 		<div class="flash">Voting has closed.</div>
+		{{ end }}
+		{{ if (not (.Event.HasJammer .CurrentUser))}}
+		<div class="flash">You have not been approved for this event.</div>
 		{{ end }}
 	</div>
 	<a class="button big disabled" href="#">Start Voting</a>

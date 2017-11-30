@@ -17,6 +17,12 @@ func (event *Server) FillQueue(context *Context) {
 		return
 	}
 
+	if !context.Event.HasJammer(context.CurrentUser) {
+		context.Flash("You have not been approved for this event.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
+
 	if !context.Event.Voting {
 		context.Flash("Voting has not yet started.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
@@ -49,6 +55,12 @@ func (event *Server) Voting(context *Context) {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
 		context.Redirect("/user/login", http.StatusSeeOther)
+		return
+	}
+
+	if !context.Event.HasJammer(context.CurrentUser) {
+		context.Flash("You have not been approved for this event.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
@@ -95,6 +107,12 @@ func (event *Server) Vote(context *Context) {
 		// TODO: add return address to team-creation page
 		context.Flash("You must be logged in to vote.")
 		context.Redirect("/user/login", http.StatusSeeOther)
+		return
+	}
+
+	if !context.Event.HasJammer(context.CurrentUser) {
+		context.Flash("You have not been approved for this event.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
 
