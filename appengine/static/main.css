@@ -543,7 +543,7 @@ div.progress {
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	left: 0;
+	left: 5rem;
 	width: 100%;
 	background: #c5dcb0;
 	transition: width 3s ease-in;
