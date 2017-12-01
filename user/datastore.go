@@ -100,12 +100,12 @@ func (repo *Datastore) ByID(id UserID) (*User, error) {
 func (repo *Datastore) List() ([]*User, error) {
 	users := []*User{}
 
-	q := datastore.NewQuery("User") //.Order("Name")
+	q := datastore.NewQuery("User")
 	keys, err := q.GetAll(repo.Context, &users)
 	for i, user := range users {
 		user.ID = UserID(keys[i].IntID())
 	}
-	// TODO: use datastore.Order
+
 	sort.Slice(users, func(i, k int) bool {
 		return users[i].Name < users[k].Name
 	})
