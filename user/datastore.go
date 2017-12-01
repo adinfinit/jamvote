@@ -5,7 +5,9 @@ import (
 	"sort"
 
 	"github.com/adinfinit/jamvote/auth"
+
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/memcache"
 )
 
 type Datastore struct {
@@ -51,6 +53,13 @@ func (repo *Datastore) Create(cred *auth.Credentials, user *User) (UserID, error
 }
 
 func (repo *Datastore) ByCredentials(cred *auth.Credentials) (*User, error) {
+	if item, err := memcache.Get(repo.Context, "Credential_"+cred.ID); err == nil {
+		user := &User{}
+		if _, err := memcache.Gob.Get(repo.Context, "User_"+string(item.Value), user); err == nil {
+			return user, nil
+		}
+	}
+
 	mapping := &credentialMapping{}
 
 	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
@@ -63,11 +72,25 @@ func (repo *Datastore) ByCredentials(cred *auth.Credentials) (*User, error) {
 	user.ID = UserID(mapping.UserKey.IntID())
 	err = datastore.Get(repo.Context, mapping.UserKey, user)
 
+	memcache.Add(repo.Context, &memcache.Item{
+		Key:   "Credential_" + cred.ID,
+		Value: []byte(UserID(mapping.UserKey.IntID()).String()),
+	})
+	memcache.Add(repo.Context, &memcache.Item{
+		Key:    "User_" + UserID(mapping.UserKey.IntID()).String(),
+		Object: user,
+	})
+
 	return user, datastoreError(err)
 }
 
 func (repo *Datastore) ByID(id UserID) (*User, error) {
 	user := &User{}
+	if _, err := memcache.Gob.Get(repo.Context, "User_"+id.String(), user); err == nil {
+		return user, nil
+	}
+
+	user = &User{}
 	user.ID = id
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(id), nil)
 	err := datastore.Get(repo.Context, userkey, user)
@@ -90,6 +113,8 @@ func (repo *Datastore) List() ([]*User, error) {
 }
 
 func (repo *Datastore) Update(user *User) error {
+	memcache.Delete(repo.Context, "User_"+user.ID.String())
+
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(user.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, user)
 	return datastoreError(err)

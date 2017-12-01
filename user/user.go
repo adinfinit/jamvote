@@ -1,6 +1,7 @@
 package user
 
 import (
+	"encoding/gob"
 	"errors"
 	"strconv"
 
@@ -32,6 +33,10 @@ type User struct {
 	Github   string `datastore:",noindex"`
 
 	NewUser bool `datastore:"-"`
+}
+
+func init() {
+	gob.Register(&User{})
 }
 
 func (user *User) IsAdmin() bool {

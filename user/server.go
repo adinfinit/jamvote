@@ -92,6 +92,9 @@ func (server *Server) Edit(context *Context) {
 		} else {
 			context.FlashMessage("User updated.")
 		}
+
+		context.Redirect(path.Join("/user", context.CurrentUser.ID.String(), "edit"), http.StatusSeeOther)
+		return
 	}
 
 	context.Data["User"] = user
