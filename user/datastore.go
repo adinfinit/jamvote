@@ -114,9 +114,13 @@ func (repo *Datastore) List() ([]*User, error) {
 }
 
 func (repo *Datastore) Update(user *User) error {
-	memcache.Delete(repo.Context, "User_"+user.ID.String())
-
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(user.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, user)
+	if err == nil {
+		memcache.Set(repo.Context, &memcache.Item{
+			Key:    "User_" + user.ID.String(),
+			Object: user,
+		})
+	}
 	return datastoreError(err)
 }

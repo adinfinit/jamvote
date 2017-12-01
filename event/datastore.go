@@ -87,7 +87,12 @@ func (repo *Datastore) ByID(eventid EventID) (*Event, error) {
 func (repo *Datastore) Update(event *Event) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(event.ID), 0, nil)
 	_, err := datastore.Put(repo.Context, eventkey, event)
-	memcache.Delete(repo.Context, "Event_"+event.ID.String())
+	if err == nil {
+		memcache.Gob.Set(repo.Context, &memcache.Item{
+			Key:    "Event_" + event.ID.String(),
+			Object: event,
+		})
+	}
 	return datastoreError(err)
 }
 
