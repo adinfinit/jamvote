@@ -14,10 +14,14 @@
 		{{ else if .Event.Closed }}
 		<div class="flash">Voting has closed.</div>
 		{{ end }}
-		{{ if (not (.Event.HasJammer .CurrentUser))}}
+
+		{{ if not .CurrentUser }}
+		<div class="flash">You are not signed in.</div>
+		{{ else if (not (.Event.HasJammer .CurrentUser))}}
 		<div class="flash">You have not been approved for this event.</div>
 		{{ end }}
 	</div>
+	<br>
 	<a class="button big disabled" href="#">Start Voting</a>
 	{{ else }}
 	<a class="button big" href="{{.Event.Path "fill-queue"}}">Start Voting</a>
