@@ -5,7 +5,9 @@
 <table>
 	<thead>
 		<tr>
+			{{ if $isAdmin}}
 			<th style="width: 2.5rem;"></th>
+			{{ end }}
 			<th>Name</th>
 			{{ if $isAdmin }}<th>Email</th> {{ end }}
 		</tr>

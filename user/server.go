@@ -42,6 +42,7 @@ func (server *Server) RedirectToEdit(context *Context) {
 
 func (server *Server) LoggedIn(context *Context) {
 	if context.CurrentUser == nil || context.CurrentUser.NewUser {
+		context.FlashMessage("Please update your name.")
 		server.RedirectToEdit(context)
 		return
 	}
