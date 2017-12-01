@@ -50,7 +50,7 @@
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" target="_blank" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
 				{{ range .MembersWithEmpty }}
-				{{ if .Name }}<td class="boxed" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed no-member"></td>{{ end }}
+				{{ if .Name }}<td class="boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}

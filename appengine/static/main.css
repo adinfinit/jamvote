@@ -442,7 +442,20 @@ input[type=submit]{
 	margin-bottom: 1rem;
 }
 
-.no-member {
+.unregistered {
+	position: relative;
+	font-style: italic;
+}
+.unregistered::before {
+	position: absolute;
+	content:"🛇";
+	font-style: normal;
+	right: 0.1rem;
+	text-align: center;
+	vertical-align: center;
+	color: rgba(0,0,0,0.4);
+}
+.empty {
 	background: #d3e3f5;
 }
 
