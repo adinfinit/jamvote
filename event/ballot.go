@@ -261,7 +261,7 @@ var AspectDescriptions = []AspectDescription{
 		Name:        "Enjoyment",
 		Description: "How does the game generally feel?",
 		Range:       Range{Min: 1, Max: 5, Step: 0.1},
-		Options:     []string{"Boring", "Not playing again", "Nice", "Didn't want to stop", "Will play later"},
+		Options:     []string{"I want my time back", "Boring", "Nice", "Didn't want to stop", "Will play later"},
 	}, {
 		Name:        "Aesthetics",
 		Description: "How well is the story, art and audio executed?",
@@ -271,7 +271,7 @@ var AspectDescriptions = []AspectDescription{
 		Name:        "Innovation",
 		Description: "Something novel in the game?",
 		Range:       Range{Min: 1, Max: 5, Step: 0.1},
-		Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen before", "Exceptional"},
+		Options:     []string{"Seen it a lot", "Interesting variation", "Interesting approach", "Never seen this before", "Exceptional"},
 	}, {
 		Name:        "Bonus",
 		Description: "Anything exceptionally special about it?",
