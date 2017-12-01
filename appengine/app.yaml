@@ -19,6 +19,7 @@ handlers:
 
 - url: /.*
   script: _go_app
+  secure: always
 
 includes:
   - app.credentials.yaml
