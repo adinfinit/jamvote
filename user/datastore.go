@@ -76,7 +76,8 @@ func (repo *Datastore) ByCredentials(cred *auth.Credentials) (*User, error) {
 		Key:   "Credential_" + cred.ID,
 		Value: []byte(UserID(mapping.UserKey.IntID()).String()),
 	})
-	memcache.Add(repo.Context, &memcache.Item{
+
+	memcache.Gob.Add(repo.Context, &memcache.Item{
 		Key:    "User_" + UserID(mapping.UserKey.IntID()).String(),
 		Object: user,
 	})
