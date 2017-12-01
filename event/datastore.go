@@ -8,6 +8,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 	netcontext "golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/memcache"
 )
 
 type Datastore struct {
@@ -66,15 +67,27 @@ func (repo *Datastore) Create(event *Event) error {
 
 func (repo *Datastore) ByID(eventid EventID) (*Event, error) {
 	event := &Event{}
+	if _, err := memcache.Gob.Get(repo.Context, "Event_"+eventid.String(), event); err == nil {
+		return event, nil
+	}
+
+	event = &Event{}
 	event.ID = eventid
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	err := datastore.Get(repo.Context, eventkey, event)
+
+	memcache.Gob.Add(repo.Context, &memcache.Item{
+		Key:    "Event_" + eventid.String(),
+		Object: event,
+	})
+
 	return event, datastoreError(err)
 }
 
 func (repo *Datastore) Update(event *Event) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(event.ID), 0, nil)
 	_, err := datastore.Put(repo.Context, eventkey, event)
+	memcache.Delete(repo.Context, "Event_"+event.ID.String())
 	return datastoreError(err)
 }
 

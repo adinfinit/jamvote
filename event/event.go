@@ -1,6 +1,7 @@
 package event
 
 import (
+	"encoding/gob"
 	"errors"
 
 	"github.com/adinfinit/jamvote/user"
@@ -21,6 +22,8 @@ var ErrNotExists = errors.New("does not exist")
 var ErrExists = errors.New("already exists")
 
 type EventID string
+
+func (id EventID) String() string { return string(id) }
 
 func (id EventID) Valid() bool {
 	if id == "" {
@@ -54,6 +57,10 @@ type Event struct {
 
 	Organizers []user.UserID `datastore:",noindex"`
 	Jammers    []user.UserID `datastore:",noindex"`
+}
+
+func init() {
+	gob.Register(&Event{})
 }
 
 func (event *Event) CanVote() bool {
