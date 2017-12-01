@@ -207,6 +207,11 @@ func (server *Server) Reveal(context *Context) {
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
 		return
 	}
+	if !context.Event.Closed && !context.Event.Revealed {
+		context.FlashMessage("Voting is not closed.")
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return
+	}
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashMessage("Only admin can use reveal.")
 		context.Redirect(context.Event.Path(), http.StatusSeeOther)
