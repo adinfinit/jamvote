@@ -1,0 +1,30 @@
+{{ template "head" . }}
+
+{{ $event := .Event }}
+<section>
+	<div class="reveal">
+		{{ range $index, $result := .Results }}
+		<div class="place place-{{$index}}">
+			<div class="number">#{{add 1 $index}}</div>
+			<div class="team"><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></div>
+			<div class="game">{{.Game.Name}}</div>
+			<div class="score">{{printf "%.2f" .Average.Overall.Score}}</div>
+			<div class="overlay"></div>
+		</div>
+		{{ end }}
+
+		<script>
+			var places = document.getElementsByClassName("place");
+			for(var i = 0; i < places.length; i++){
+				(function(place){
+					var overlay = place.getElementsByClassName("overlay")[0];
+					overlay.addEventListener("click", function(){
+						overlay.className += " show"
+					});
+				})(places[i]);
+			}
+		</script>
+	</div>
+</section>
+
+{{ template "foot" . }}

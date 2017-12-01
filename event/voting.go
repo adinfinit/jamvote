@@ -222,8 +222,14 @@ func (server *Server) Reveal(context *Context) {
 		return results[i].Average.Overall.Score > results[k].Average.Overall.Score
 	})
 
+	if len(results) > 5 {
+		results = results[:5]
+	}
+
+	context.Data["FullWidth"] = true
+
 	context.Data["Results"] = results
-	context.Render("todo")
+	context.Render("event-reveal")
 }
 
 func (server *Server) Results(context *Context) {

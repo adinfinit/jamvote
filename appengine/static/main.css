@@ -515,3 +515,44 @@ div.progress {
 	width: 0.1rem;
 	min-width: 2px;
 }
+
+/* reveal */
+
+.reveal {
+	
+}
+
+.place {
+	position: relative;
+	display: flex;
+	font-size: 1.6rem;
+	line-height: 2.5rem;
+	padding: 1.5rem 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid #c5dcb0;
+}
+.place .number { width: 5rem; }
+.place .team { flex: 0.5; }
+.place .game { flex: 1; font-weight: bold; }
+.place .score { width: 5rem; }
+
+.place-0 { font-size: 2.5rem; }
+.place-1 { font-size: 2rem; }
+
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #c5dcb0;
+	transition: width 3s ease-in;
+
+	cursor: pointer;
+}
+.place:hover .overlay {
+	background: #c6efa0;
+}
+.overlay.show {
+	width: 0%;
+}
