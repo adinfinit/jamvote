@@ -34,6 +34,18 @@ func (server *Server) initTemplates(glob string) error {
 		"violinLeft":  violinLeft,
 		"violinRight": violinRight,
 
+		"averageViolinScore": func(min, max float64, xs []float64) float64 {
+			if len(xs) == 0 {
+				return 50
+			}
+			t := 0.0
+			for _, x := range xs {
+				t += x
+			}
+			a := t / float64(len(xs))
+			return 100 - 100*(a-min)/(max-min)
+		},
+
 		"add": func(a, b interface{}) float64 {
 			return toFloat(a) + toFloat(b)
 		},
