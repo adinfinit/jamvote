@@ -269,6 +269,10 @@ func (server *Server) Progress(context *Context) {
 		context.FlashErrorNow(err.Error())
 	}
 
+	if context.CurrentUser.IsAdmin() {
+		context.Data["AutoRefresh"] = 60
+	}
+
 	sort.Slice(results, func(i, k int) bool {
 		if results[i].HasSubmitted() != results[k].Team.HasSubmitted() {
 			return results[i].HasSubmitted()

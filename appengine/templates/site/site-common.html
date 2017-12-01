@@ -11,6 +11,8 @@
         <script src="/static/jam.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
+        {{ with .AutoRefresh }} <meta http-equiv="refresh" content="{{.}}" /> {{ end }}
+
         <link rel="shortcut icon" type="image/png" href="/static/favicon.png"/>
     </head>
     <body class="dotted">
