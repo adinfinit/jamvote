@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"log"
-	"net/http"
 	"strings"
 	"time"
 )
@@ -19,40 +18,7 @@ func init() {
 	}
 }
 
-func toFloat(a interface{}) float64 {
-	switch v := a.(type) {
-	case int:
-		return float64(v)
-	case int8:
-		return float64(v)
-	case int16:
-		return float64(v)
-	case int32:
-		return float64(v)
-	case int64:
-		return float64(v)
-	case uint:
-		return float64(v)
-	case uint8:
-		return float64(v)
-	case uint16:
-		return float64(v)
-	case uint32:
-		return float64(v)
-	case uint64:
-		return float64(v)
-	case float32:
-		return float64(v)
-	case float64:
-		return v
-	}
-	return 0
-}
-
-func (context *Context) Render(name string) {
-	context.saveSession()
-
-	// TODO: cache template parsing
+func (server *Server) initTemplates(glob string) error {
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
 		"Data": func() interface{} { return nil },
@@ -82,14 +48,14 @@ func (context *Context) Render(name string) {
 		},
 	})
 
-	t, err := t.ParseGlob("templates/**/*.html")
-	if err != nil {
-		http.Error(context.Response, fmt.Sprintf("Template error: %q", err), http.StatusInternalServerError)
-		return
-	}
+	t, err := t.ParseGlob(glob)
+	server.Templates = t
+	return err
+}
 
-	t = t.Funcs(template.FuncMap{"Data": func() interface{} { return context.Data }})
-
+func (context *Context) Render(name string) {
+	context.saveSession()
+	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() interface{} { return context.Data }})
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		log.Println(err)
 	}
@@ -154,4 +120,34 @@ func cubicPulse(center, radius, at float64) float64 {
 	}
 	at /= radius
 	return 1 - at*at*(3-2*at)
+}
+
+func toFloat(a interface{}) float64 {
+	switch v := a.(type) {
+	case int:
+		return float64(v)
+	case int8:
+		return float64(v)
+	case int16:
+		return float64(v)
+	case int32:
+		return float64(v)
+	case int64:
+		return float64(v)
+	case uint:
+		return float64(v)
+	case uint8:
+		return float64(v)
+	case uint16:
+		return float64(v)
+	case uint32:
+		return float64(v)
+	case uint64:
+		return float64(v)
+	case float32:
+		return float64(v)
+	case float64:
+		return v
+	}
+	return 0
 }

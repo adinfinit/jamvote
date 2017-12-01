@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"google.golang.org/appengine"
@@ -22,7 +23,10 @@ func main() {
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	sites := &site.Server{}
+	sites, err := site.NewServer("templates/**/*.html")
+	if err != nil {
+		log.Fatal(err)
+	}
 	sites.Development = true
 
 	users := &user.Server{sites, auths}

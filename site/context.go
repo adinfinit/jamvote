@@ -2,6 +2,7 @@ package site
 
 import (
 	"context"
+	"html/template"
 	"log"
 	"net/http"
 	"strconv"
@@ -14,9 +15,17 @@ import (
 
 type Server struct {
 	Development bool
+	Templates   *template.Template
+}
+
+func NewServer(templatesglob string) (*Server, error) {
+	server := &Server{}
+	return server, server.initTemplates(templatesglob)
 }
 
 type Context struct {
+	Site *Server
+
 	Request  *http.Request
 	Response http.ResponseWriter
 	Data     map[string]interface{}
@@ -41,6 +50,8 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	data["Development"] = server.Development
 
 	return &Context{
+		Site: server,
+
 		Request:  r,
 		Response: w,
 		Data:     data,
