@@ -17,6 +17,15 @@ html {
 html, body {
 	margin: 0;
 	padding: 0;
+	height: 100%;
+}
+
+.footer {
+	position: fixed;
+	font-size: 0.8rem;
+	right: 0.5rem;
+	bottom: 0.5rem;
+	color: #888;
 }
 
 * {
@@ -43,6 +52,7 @@ h3 {
 .hidden {
 	display: none !important;
 }
+
 
 a, input[type=submit] {
 	text-decoration: none;
