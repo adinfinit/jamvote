@@ -470,12 +470,12 @@ input[type=submit]{
 }
 .unregistered::before {
 	position: absolute;
-	content:"🛇";
+	content:"🚫";
 	font-style: normal;
 	right: 0.1rem;
 	text-align: center;
 	vertical-align: center;
-	color: rgba(0,0,0,0.4);
+	color: rgba(0,0,0,0.3);
 }
 .empty {
 	background: #d3e3f5;
