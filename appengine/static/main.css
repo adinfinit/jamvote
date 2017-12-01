@@ -421,6 +421,7 @@ input[type=submit]{
 .comment {
 	font-size: 0.9rem;
 	margin-bottom: 1rem;
+	word-wrap: break-word;
 }
 
 .aspect-info {
