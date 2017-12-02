@@ -117,7 +117,7 @@ func (repo *Datastore) Update(user *User) error {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(user.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, user)
 	if err == nil {
-		memcache.Set(repo.Context, &memcache.Item{
+		memcache.Gob.Set(repo.Context, &memcache.Item{
 			Key:    "User_" + user.ID.String(),
 			Object: user,
 		})
