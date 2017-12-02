@@ -2,7 +2,7 @@
 
 {{ define "event-links" }}
 {{ range . }}
-<a class="button" href="{{ .Path }}"><div class="title">{{.Name}}</div></a>
+<a class="button" href="{{ .Path }}"><div class="title">{{.Name}} {{ with .Theme }}- <span class="theme">{{.}}</span>{{end}}</div></a>
 {{ end }}
 {{ end }}
 
