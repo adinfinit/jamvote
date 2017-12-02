@@ -20,7 +20,7 @@
 		<h1>All Teams</h1>
 	</div>
 
-	<table>
+	<table style="table-layout: auto;">
 		{{ $isAdmin := .CurrentUser.IsAdmin }}
 		<thead>
 			<tr>
@@ -29,12 +29,12 @@
 				<th>Game</th>
 				<th style="width:2rem;"></th>
 				<th style="width:2rem;"></th>
-				<th style="width:9%; max-width:8rem;">1</th>
-				<th style="width:9%; max-width:8rem;">2</th>
-				<th style="width:9%; max-width:8rem;">3</th>
-				<th style="width:9%; max-width:8rem;">4</th>
-				<th style="width:9%; max-width:8rem;">5</th>
-				<th style="width:9%; max-width:8rem;">6</th>
+				<th style="width:8%; max-width:8rem;">1</th>
+				<th style="width:8%; max-width:8rem;">2</th>
+				<th style="width:8%; max-width:8rem;">3</th>
+				<th style="width:8%; max-width:8rem;">4</th>
+				<th style="width:8%; max-width:8rem;">5</th>
+				<th style="width:8%; max-width:8rem;">6</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -50,7 +50,7 @@
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" target="_blank" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
 				{{ range .MembersWithEmpty }}
-				{{ if .Name }}<td class="boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
+				{{ if .Name }}<td class="member boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
 				{{ end }}
 			</tr>
 			{{ end }}

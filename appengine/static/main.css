@@ -190,6 +190,9 @@ thead > tr, tr:nth-child(even){
 	font-size: 0.7rem;
 	border: 1px solid #aaa;
 }
+.member.unregistered {
+	padding-right: 1rem;
+}
 tbody tr:hover {
 	outline: 3px solid rgba(128, 128, 255, 0.5);
 }
