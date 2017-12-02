@@ -1,0 +1,35 @@
+{{ template "head" . }}
+
+{{ $event := .Event }}
+<section>
+	<div class="titlemenu">
+		<h1>Linking</h1>
+	</div>
+	
+	{{ if .Linking }}
+	{{ range .Linking }}
+	<section style="border:1px solid #ccc; padding: 1rem; margin-bottom: 2rem;">
+		<h1>{{.Team.Name}}: {{.Team.Game.Name}}</h1>
+		
+		{{ if .Unlinked }}
+		<h2>Unlinked</h2>
+		{{ range .Unlinked }}
+		<div>"{{.Member.Name}}" to "{{.User.ID}}"</div>
+		{{ end }}{{ end }}
+
+		{{ if .Unregistered }}
+		<h2>Unregistered</h2>
+		{{ range .Unregistered }}
+		<div>{{.Name}}</div>
+		{{ end }}{{ end }}
+
+		{{ if .Unapproved }}
+		<h2>Unapproved</h2>
+		{{ range .Unapproved }}
+		<div>{{.Name}}</div>
+		{{ end }}{{ end }}
+	</section>
+	{{ end }}{{ end }}
+</section>
+
+{{ template "foot" . }}

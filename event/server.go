@@ -6,6 +6,7 @@ import (
 	"path"
 	"sort"
 
+	"github.com/adinfinit/jamvote/internal/natural"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 
@@ -24,6 +25,7 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}", server.Handler(server.Dashboard))
 	router.HandleFunc("/event/{eventid}/edit", server.Handler(server.EditEvent))
 	router.HandleFunc("/event/{eventid}/jammers", server.Handler(server.Jammers))
+	router.HandleFunc("/event/{eventid}/linking", server.Handler(server.Linking))
 	router.HandleFunc("/event/{eventid}/teams", server.Handler(server.Teams))
 	router.HandleFunc("/event/{eventid}/voting", server.Handler(server.Voting))
 	router.HandleFunc("/event/{eventid}/fill-queue", server.Handler(server.FillQueue))
@@ -60,7 +62,7 @@ func (server *Server) List(context *Context) {
 	}
 
 	sort.Slice(events, func(i, k int) bool {
-		return events[i].Name < events[k].Name
+		return natural.Less(events[i].Name, events[k].Name)
 	})
 
 	byStage := struct {

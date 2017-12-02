@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/adinfinit/jamvote/internal/natural"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -42,6 +43,10 @@ type Game struct {
 		Facebook string `datastore:",noindex"`
 		Jam      string `datastore:",noindex"`
 	} `datastore:",noindex"`
+}
+
+func (team *Team) Less(other *Team) bool {
+	return natural.Less(team.Name, other.Name)
 }
 
 func (team *Team) Verify() error {

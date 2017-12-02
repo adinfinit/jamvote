@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	"github.com/adinfinit/jamvote/auth"
+	"github.com/adinfinit/jamvote/internal/natural"
 
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
@@ -108,7 +109,7 @@ func (repo *Datastore) List() ([]*User, error) {
 	}
 
 	sort.Slice(users, func(i, k int) bool {
-		return users[i].Name < users[k].Name
+		return natural.Less(users[i].Name, users[k].Name)
 	})
 	return users, datastoreError(err)
 }

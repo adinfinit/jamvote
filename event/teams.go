@@ -211,7 +211,7 @@ func (server *Server) Teams(context *Context) {
 	}
 
 	sort.Slice(teams, func(i, k int) bool {
-		return teams[i].Name < teams[k].Name
+		return teams[i].Less(teams[k])
 	})
 
 	context.Data["FullWidth"] = true
@@ -228,6 +228,73 @@ func (server *Server) Teams(context *Context) {
 	}
 
 	context.Render("event-teams")
+}
+
+func (server *Server) Linking(context *Context) {
+	if !context.CurrentUser.IsAdmin() {
+		context.FlashError("Must be admin to view linking information.")
+		context.Redirect("/", http.StatusSeeOther)
+		return
+	}
+
+	users, err := context.Users.List()
+	if err != nil {
+		context.FlashErrorNow(fmt.Sprintf("Unable to get users: %v", err))
+	}
+
+	teams, err := context.Events.Teams(context.Event.ID)
+	if err != nil {
+		context.FlashErrorNow(fmt.Sprintf("Unable to get teams: %v", err))
+	}
+
+	sort.Slice(teams, func(i, k int) bool {
+		return teams[i].Less(teams[k])
+	})
+
+	type UserLink struct {
+		Member Member
+		User   *user.User
+	}
+
+	type Linking struct {
+		Team         *Team
+		Unlinked     []UserLink
+		Unregistered []Member
+		Unapproved   []*user.User
+	}
+
+	var linking []Linking
+
+	for _, team := range teams {
+		link := Linking{}
+		link.Team = team
+		for _, member := range team.Members {
+			if member.ID != 0 {
+				user, ok := findUserByID(users, member.ID)
+				if ok && !context.Event.HasJammer(user) {
+					link.Unapproved = append(link.Unapproved, user)
+				}
+				continue
+			}
+
+			if match, ok := findUserByName(users, member.Name); ok {
+				link.Unlinked = append(link.Unlinked, UserLink{
+					Member: member,
+					User:   match,
+				})
+			} else {
+				link.Unregistered = append(link.Unregistered, member)
+			}
+		}
+
+		if len(link.Unlinked) > 0 || len(link.Unregistered) > 0 || len(link.Unapproved) > 0 {
+			linking = append(linking, link)
+		}
+	}
+
+	context.Data["Linking"] = linking
+
+	context.Render("event-linking")
 }
 
 func (server *Server) canEditTeam(context *Context) bool {

@@ -482,7 +482,7 @@ input[type=submit]{
 	right: 0.1rem;
 	text-align: center;
 	vertical-align: center;
-	color: rgba(0,0,0,0.3);
+	color: rgba(0,0,0,0.5);
 }
 .empty {
 	background: #d3e3f5;
