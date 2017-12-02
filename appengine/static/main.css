@@ -296,6 +296,10 @@ tbody tr:hover {
 	width: 14.5rem;
 	flex: 1;
 }
+.header .theme {
+	font-weight: bold;
+	color: #333;
+}
 .header > a {
 	vertical-align: center;
 	display: block;

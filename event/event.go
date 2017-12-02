@@ -44,9 +44,10 @@ func (id EventID) Valid() bool {
 }
 
 type Event struct {
-	ID   EventID `datastore:"-"`
-	Name string
-	Info string `datastore:",noindex"`
+	ID    EventID `datastore:"-"`
+	Name  string
+	Theme string `datastore:",noindex"`
+	Info  string `datastore:",noindex"`
 
 	// Voting allow voting
 	Voting bool `datastore:",noindex"`

@@ -12,6 +12,11 @@
 			<label for="slug">Slug [cannot be changed later]</label>
 			<input type="text" id="slug" name="slug" value="{{with .NewEvent}}{{.ID}}{{end}}">
 		</div>
+		
+		<div class="field">
+			<label for="theme">Theme</label>
+			<input type="text" id="theme" name="theme" value="{{.Event.Theme}}">
+		</div>
 
 		<div class="field">
 			<label for="info">Info</label>

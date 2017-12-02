@@ -4,6 +4,11 @@
 	<h1>Edit Event</h1>
 	<form method="post">
 		<div class="field">
+			<label for="theme">Theme</label>
+			<input type="text" id="theme" name="theme" value="{{.Event.Theme}}">
+		</div>
+
+		<div class="field">
 			<input type="checkbox" id="voting" name="voting" value="true" {{ if .Event.Voting }}checked{{end}}>
 			<label for="voting">Voting Open</label>
 		</div>

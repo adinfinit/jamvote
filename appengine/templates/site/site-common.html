@@ -32,7 +32,7 @@
         {{ if .Event }}
         <div class="header-outer">
             <div class="header center">
-                <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}</a>
+                <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}{{with .Event.Theme}} - <span class="theme">{{ . }}</span>{{ end }}</a>
                 <a href="{{ .Event.Path "teams" }}">Teams</a>
                 <a {{if (not .Event.CanVote)}}class="disabled"{{end}} href="{{ .Event.Path "voting" }}">Voting</a>
                 <a {{if (not .Event.Voting)}}class="disabled"{{end}} href="{{ .Event.Path "progress" }}">Progress</a>

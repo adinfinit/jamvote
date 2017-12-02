@@ -24,12 +24,14 @@ func (server *Server) CreateEvent(context *Context) {
 		}
 
 		name := context.Request.FormValue("name")
+		theme := context.Request.FormValue("theme")
 		slug := context.Request.FormValue("slug")
 		info := context.Request.FormValue("info")
 
 		event := &Event{}
 		event.ID = EventID(strings.ToLower(slug))
 		event.Name = name
+		event.Theme = theme
 		event.Info = info
 
 		context.Data["NewEvent"] = event
@@ -84,12 +86,14 @@ func (server *Server) EditEvent(context *Context) {
 			return
 		}
 
+		theme := context.Request.FormValue("theme")
 		voting := context.Request.FormValue("voting") == "true"
 		closed := context.Request.FormValue("closed") == "true"
 		revealed := context.Request.FormValue("revealed") == "true"
 		info := context.Request.FormValue("info")
 
 		event := context.Event
+		event.Theme = theme
 		event.Voting = voting
 		event.Closed = closed
 		event.Revealed = revealed
