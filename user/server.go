@@ -93,7 +93,7 @@ func (server *Server) Edit(context *Context) {
 			context.FlashMessage("User updated.")
 		}
 
-		context.Redirect(path.Join("/user", context.CurrentUser.ID.String(), "edit"), http.StatusSeeOther)
+		context.Redirect(path.Join("/user", user.ID.String()), http.StatusSeeOther)
 		return
 	}
 
