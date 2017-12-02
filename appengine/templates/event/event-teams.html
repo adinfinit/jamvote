@@ -5,7 +5,7 @@
 <section>
 	<div class="titlemenu">
 		<h1>{{if .YourTeams}}Your Team{{ if (gt (len .YourTeams) 1) }}s{{end}}{{end}}</h1>	
-		<a class="button {{if not .YourTeams}}highlight{{end}} {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
+		<a class="button {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
 	</div>
 
 	<div>
