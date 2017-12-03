@@ -4,8 +4,11 @@
 <div class="side-by-side">
 	<div>
 		<div class="field">
-			<label class="randomizer" id="Team.Name.Randomizer" for="Team.Name"><span>Team Name</span></label>
-			<input type="text" id="Team.Name" name="Team.Name" value="{{.Name}}">
+			<label for="Team.Name">Team Name</label>
+			<div class="side-by-side">
+				<input type="text" id="Team.Name" name="Team.Name" value="{{.Name}}">
+				<button id="Team.Name.Randomizer" class="randomizer"><span>🎲</span></button>
+			</div>
 			<script>
 				document.getElementById("Team.Name.Randomizer").addEventListener("click", function(event){
 					event.preventDefault();
@@ -27,8 +30,11 @@
 	</div>
 	<div>
 		<div class="field">
-			<label class="randomizer" id="Team.Game.Name.Randomizer" for="Team.Game.Name"><span>Game Name</span></label>
-			<input type="text" id="Team.Game.Name" name="Team.Game.Name" value="{{.Game.Name}}">
+			<label for="Team.Game.Name">Game Name</label>
+			<div class="side-by-side">
+				<input type="text" id="Team.Game.Name" name="Team.Game.Name" value="{{.Game.Name}}">
+				<button id="Team.Game.Name.Randomizer" class="randomizer"><span>🎲</span></button>
+			</div>
 			<script>
 				document.getElementById("Team.Game.Name.Randomizer").addEventListener("click", function(event){
 					event.preventDefault();

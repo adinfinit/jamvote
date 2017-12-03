@@ -136,25 +136,25 @@ a.no-clip[target=_blank]::before {
 	font-weight: bold;
 }
 
-.randomizer > span {
-	display: inline-block;
+.randomizer {
 	user-select: none;
 	cursor: help;
+	font-size: 1.2rem;
+}
+.randomizer > span {
+	display: inline-block;
 	transform: rotate(0deg);
 }
-.randomizer > span:hover, .randomizer > span:active {
-	animation: randomizer-animation 1s ease-in-out infinite alternate;
+.randomizer:hover > span, .randomizer:active > span {
+	animation: randomizer-animation 1s infinite;
 }
 
 @keyframes randomizer-animation {
 	0% {
 		transform: rotate(0deg);
 	}
-	50% {
-		transform: rotate(-30deg);
-	}
 	100% {
-		transform: rotate(30deg);
+		transform: rotate(360deg);
 	}
 }
 
