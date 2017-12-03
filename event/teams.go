@@ -195,6 +195,9 @@ func (server *Server) Team(context *Context) {
 			if !ballot.Completed {
 				continue
 			}
+			if context.CurrentUser != nil && ballot.Voter == context.CurrentUser.ID {
+				context.Data["CurrentUserBallot"] = ballot
+			}
 			aspectsInfo.Add(&ballot.Aspects, context.Team.HasMemberID(ballot.Voter))
 		}
 		context.Data["Aspects"] = AspectDescriptionsWithOverall
