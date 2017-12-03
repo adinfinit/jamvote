@@ -536,7 +536,7 @@ div.progress {
 	line-height: 2.5rem;
 	padding: 1.5rem 1rem;
 	margin-bottom: 1rem;
-	border: 1px solid #c5dcb0;
+	border: 1px solid hsl(210, 30%, 40%);
 }
 .place .number { width: 5rem; }
 .place .team { flex: 0.5; }
@@ -552,13 +552,13 @@ div.progress {
 	bottom: 0;
 	left: 5rem;
 	width: 100%;
-	background: #c5dcb0;
-	transition: width 3s ease-in;
+	background: hsl(210, 30%, 60%);
+	transition: width 3s ease-in-out;
 
 	cursor: pointer;
 }
 .place:hover .overlay {
-	background: #c6efa0;
+	background: hsl(210, 60%, 60%);
 }
 .overlay.show {
 	width: 0%;
