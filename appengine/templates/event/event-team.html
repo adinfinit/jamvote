@@ -2,11 +2,16 @@
 
 <section>
 	<div class="titlemenu">
-		<h1>Team: {{ .Team.Name }}</h1>
+		{{ if .Team.Game.Name }}
+		<div><h1>{{.Team.Game.Name}}</h1>
+		<span>By: {{.Team.Name}}</span></div>
+		{{ else }}
+		<div><h1>{{.Team.Name.Name}}</h1>
+		{{ end }}
 		{{ if .CanEditTeam }}
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
 		{{ end }}
-		<a class="button" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>
+		{{ if .Event.CanVote }}<a class="button" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
 	</div>
 
 	{{ if .Event.Revealed }}
@@ -42,7 +47,7 @@
 
 					{{if Data.CurrentUserBallot}}
 					{{ with $userscore := Data.CurrentUserBallot.Score $aspect.Name }}
-					{{ $userpoint := (sub 100 (mul 100 (div (sub $userscore $aspect.Min) (sub $aspect.Max $aspect.Min)))) }}
+					{{ $userpoint := (averageViolinScore $aspect.Min $aspect.Max $userscore) }}
 					<polyline stroke="#444" points="0,{{$userpoint}} 100,{{$userpoint}}" />
 					<text fill="#444" x=2 y={{$userpoint}} font-size="12">you</text>
 					{{ end }}{{ end }}
@@ -59,11 +64,6 @@
 	<div class="side-by-side">
 		<div>
 			<div class="field">
-				<label for="Team.Name"><span>Team Name</span></label>
-				<div class="input" id="Team.Name" name="Team.Name">{{.Team.Name}}</div>
-			</div>
-
-			<div class="field">
 				<label>Members</label>
 
 				{{ range .Team.Members }}
@@ -72,11 +72,6 @@
 			</div>
 		</div>
 		<div>
-			<div class="field">
-				<label for="Team.Game.Name"><span>Game Name</span></label>
-				<div class="input" id="Team.Game.Name">{{.Team.Game.Name}}</div>
-			</div>
-
 			<div class="field">
 				<label for="Team.Game.Info">Info</label>
 				<div class="input" id="Team.Game.Info" rows=4>{{range paragraphs .Team.Game.Info}}<p>{{.}}</p>{{end}}</div>
