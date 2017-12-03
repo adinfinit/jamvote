@@ -3,6 +3,7 @@ package event
 import (
 	"encoding/gob"
 	"errors"
+	"time"
 
 	"github.com/adinfinit/jamvote/user"
 )
@@ -55,6 +56,9 @@ type Event struct {
 	Closed bool `datastore:",noindex"`
 	// Revealed, results are publicly viewable
 	Revealed bool `datastore:",noindex"`
+
+	VotingOpens  time.Time `datastore:",noindex"`
+	VotingCloses time.Time `datastore:",noindex"`
 
 	Organizers []user.UserID `datastore:",noindex"`
 	Jammers    []user.UserID `datastore:",noindex"`

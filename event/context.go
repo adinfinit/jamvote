@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -28,6 +29,18 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 			context.Data["Event"] = context.Event
 		} else {
 			context.FlashErrorNow(err.Error())
+		}
+	}
+
+	if context.Event != nil {
+		if !context.Event.Voting {
+			if site.IsValidTime(context.Event.VotingOpens) {
+				context.Data["VotingOpens"] = site.NewCountdown(context.Event.VotingOpens)
+			}
+		} else if !context.Event.Closed {
+			if site.IsValidTime(context.Event.VotingCloses) {
+				context.Data["VotingCloses"] = site.NewCountdown(context.Event.VotingCloses)
+			}
 		}
 	}
 

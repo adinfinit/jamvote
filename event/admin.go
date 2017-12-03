@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/adinfinit/jamvote/user"
 )
@@ -92,12 +93,41 @@ func (server *Server) EditEvent(context *Context) {
 		revealed := context.Request.FormValue("revealed") == "true"
 		info := context.Request.FormValue("info")
 
+		votingopens := context.Request.FormValue("VotingOpens")
+		votingcloses := context.Request.FormValue("VotingCloses")
+
 		event := context.Event
 		event.Theme = theme
 		event.Voting = voting
 		event.Closed = closed
 		event.Revealed = revealed
 		event.Info = info
+
+		if votingopens == "" {
+			event.VotingOpens = time.Time{}
+		} else {
+			t, err := time.Parse("2006-01-02T15:04", votingopens)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.VotingOpens = t
+		}
+
+		if votingcloses == "" {
+			event.VotingCloses = time.Time{}
+		} else {
+			t, err := time.Parse("2006-01-02T15:04", votingcloses)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.VotingCloses = t
+		}
 
 		err := context.Events.Update(event)
 		if err != nil {

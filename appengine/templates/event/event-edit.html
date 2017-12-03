@@ -28,6 +28,18 @@
 			<textarea type="text" id="info" name="info" rows=15>{{.Event.Info}}</textarea>
 		</div>
 
+		<fieldset>
+			<legend>Timers</legend>
+			<div class="field">
+				<label for="VotingOpens">Voting Opens</label>
+				<input type="datetime-local" id="VotingOpens" name="VotingOpens" {{ if isValidTime .Event.VotingOpens}}value="{{.Event.VotingOpens.Format "2006-01-02T15:04"}}"{{end}}>
+			</div>
+			<div class="field">
+				<label for="VotingCloses">Voting Closes</label>
+				<input type="datetime-local" id="VotingCloses" name="VotingCloses" {{ if isValidTime .Event.VotingCloses}}value="{{.Event.VotingCloses.Format "2006-01-02T15:04"}}"{{end}}>
+			</div>
+		</fieldset>
+
 		<input type="submit" value="Save">
 	</form>
 </section>

@@ -30,6 +30,8 @@ func (server *Server) initTemplates(glob string) error {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
 		},
+		// hack to work around isZero
+		"isValidTime": IsValidTime,
 
 		"violinLeft":  violinLeft,
 		"violinRight": violinRight,

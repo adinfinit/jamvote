@@ -18,6 +18,21 @@
 		<a class="button special" href="{{.Event.Path "fill-queue"}}">Moar Games Please</a>
 		{{ end }}
 	</section>
+
+	<section>
+		{{ if .VotingOpens }}
+		<div>
+			<h2>Voting Opens: </h2>
+			{{ template "countdown" .VotingOpens }}
+		</div>
+		{{ end }}
+		{{ if .VotingCloses }}
+		<div>
+			<h2>Voting Closes: </h2>
+			{{ template "countdown" .VotingCloses }}
+		</div>
+		{{ end }}
+	</section>
 	{{ end }}
 	
 	<section style="margin-top: 6rem;">

@@ -1,6 +1,21 @@
 {{ template "head" . }}
 
 <section>
+	<section style="float:right; margin: 1rem;">
+		{{ if .VotingOpens }}
+		<div>
+			<h2>Voting Opens: </h2>
+			{{ template "countdown" .VotingOpens }}
+		</div>
+		{{ end }}
+		{{ if .VotingCloses }}
+		<div>
+			<h2>Voting Closes: </h2>
+			{{ template "countdown" .VotingCloses }}
+		</div>
+		{{ end }}
+	</section>
+
 	<h1 style="color: #333; font-size: 1.6rem;">{{.Event.Name}}</h1>
 	<h2 style="color: #333; font-size: 1.4rem;">{{.Event.Theme}}</h2>
 	

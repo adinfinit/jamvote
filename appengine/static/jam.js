@@ -85,4 +85,40 @@
 			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 		}).replace(/\bOr\b/g, "or");
 	}
+
+	global.StartCountdown = function(id, time) {
+		var element = document.getElementById(id);
+
+		var hoursel = element.getElementsByClassName("timer-hours")[0];
+		var minutesel = element.getElementsByClassName("timer-minutes")[0];
+		var secondsel = element.getElementsByClassName("timer-seconds")[0];
+
+		var endtime = new Date(time);
+
+		function pad(x) {
+			return x < 0 ? x : x < 10 ? "0" + x : x;
+		}
+
+		function update() {
+			var now = new Date();
+			var totalSeconds = (endtime - now) / 1000;
+			if (totalSeconds < 0) {
+				if (element.classList) {
+					element.classList.add("timer-expired");
+					totalSeconds = -totalSeconds;
+				}
+			}
+
+			var hours = (totalSeconds / (60 * 60)) | 0;
+			var minutes = ((totalSeconds / 60) - hours * 60) | 0;
+			var seconds = (totalSeconds - minutes * 60 - hours * 60 * 60) | 0;
+
+			hoursel.innerText = pad(hours);
+			minutesel.innerText = pad(minutes);
+			secondsel.innerText = pad(seconds);
+		}
+		update();
+
+		window.setInterval(update, 1000);
+	};
 })(window);
