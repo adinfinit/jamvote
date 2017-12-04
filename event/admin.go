@@ -34,6 +34,7 @@ func (server *Server) CreateEvent(context *Context) {
 		event.Name = name
 		event.Theme = theme
 		event.Info = info
+		event.Registration = true
 
 		context.Data["NewEvent"] = event
 
@@ -88,6 +89,7 @@ func (server *Server) EditEvent(context *Context) {
 		}
 
 		theme := context.Request.FormValue("theme")
+		registration := context.Request.FormValue("registration") == "true"
 		voting := context.Request.FormValue("voting") == "true"
 		closed := context.Request.FormValue("closed") == "true"
 		revealed := context.Request.FormValue("revealed") == "true"
@@ -98,6 +100,7 @@ func (server *Server) EditEvent(context *Context) {
 
 		event := context.Event
 		event.Theme = theme
+		event.Registration = registration
 		event.Voting = voting
 		event.Closed = closed
 		event.Revealed = revealed

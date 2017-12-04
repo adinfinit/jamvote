@@ -50,6 +50,8 @@ type Event struct {
 	Theme string `datastore:",noindex"`
 	Info  string `datastore:",noindex"`
 
+	// New Registration is allowed
+	Registration bool `datastore:",noindex"`
 	// Voting allow voting
 	Voting bool `datastore:",noindex"`
 	// Closed for new entries
@@ -70,6 +72,13 @@ func init() {
 
 func (event *Event) CanVote() bool {
 	return event.Voting && !event.Closed
+}
+
+func (event *Event) CanRegister(u *user.User) bool {
+	if u.IsAdmin() {
+		return true
+	}
+	return !event.Closed && event.Registration
 }
 
 func (event *Event) HasJammer(u *user.User) bool {

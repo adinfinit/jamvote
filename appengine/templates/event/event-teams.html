@@ -5,7 +5,9 @@
 <section>
 	<div class="titlemenu">
 		<h1>{{if .YourTeams}}Your Team{{ if (gt (len .YourTeams) 1) }}s{{end}}{{end}}</h1>	
+		{{ if $event.CanRegister Data.CurrentUser }}
 		<a class="button {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
+		{{ end }}
 	</div>
 
 	<div>
