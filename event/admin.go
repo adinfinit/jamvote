@@ -267,6 +267,9 @@ func (server *Server) BallotsCSV(context *Context) {
 	})
 
 	for _, ballot := range ballots {
+		if !ballot.Completed {
+			continue
+		}
 		voter := userbyid[ballot.Voter]
 		team := teambyid[ballot.Team]
 
