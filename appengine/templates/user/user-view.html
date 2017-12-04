@@ -2,7 +2,7 @@
 <section>
 	<div class="titlemenu">
 		<h1>User: {{ or .User.Name }}</h1>	
-		{{ if (or .CurrentUser.IsAdmin (eq .CurrentUser.ID .User.ID))}}
+		{{ if .User.HasEditor .CurrentUser }}
 		<a class="button" href="/user/{{.User.ID}}/edit">Edit</a>
 		{{ end }}
 	</div>

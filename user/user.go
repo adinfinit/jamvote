@@ -43,6 +43,13 @@ func (user *User) IsAdmin() bool {
 	return user != nil && user.Admin
 }
 
+func (user *User) HasEditor(editor *User) bool {
+	if editor.IsAdmin() {
+		return true
+	}
+	return editor != nil && user.ID == editor.ID
+}
+
 func (user *User) Equals(b *User) bool {
 	return user.ID == b.ID
 }
