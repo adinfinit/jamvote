@@ -30,16 +30,20 @@
 					<polyline stroke="#666" stroke-dasharray="2, 5" points="0,50  100,50" />
 					<polyline stroke="#666" stroke-dasharray="1, 5" points="0,75  100,75" />
 					<polyline stroke="#666" stroke-dasharray="2, 5" points="0,100 100,100" />
-
+					<!--
 					{{ with $info.MemberScores }}
 					{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
 					<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
 					<polyline stroke="#333"  points="0,{{$average}} 50,{{$average}}" />
 					<text fill="#333" x=2 y={{$average}} font-size="12">team</text>
 					{{ end }}
+					-->
 
 					{{ with $info.Scores }}
 					{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
+					<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
+					<polyline stroke="#333"  points="0,{{$average}} 50,{{$average}}" />
+					
 					<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
 					<polyline stroke="#333" points="50,{{$average}} 100,{{$average}}" />
 					<text fill="#333" x=52 y={{$average}} font-size="12">voters</text>
