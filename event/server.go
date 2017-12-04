@@ -33,6 +33,8 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}/reveal", server.Handler(server.Reveal))
 	router.HandleFunc("/event/{eventid}/results", server.Handler(server.Results))
 
+	router.HandleFunc("/event/{eventid}/ballots.csv", server.Handler(server.BallotsCSV))
+
 	router.HandleFunc("/event/{eventid}/team/create", server.Handler(server.CreateTeam))
 	router.HandleFunc("/event/{eventid}/team/{teamid}", server.Handler(server.Team))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", server.Handler(server.EditTeam))

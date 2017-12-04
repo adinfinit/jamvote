@@ -399,6 +399,12 @@ func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
 	return results, nil
 }
 
+func (repo *Datastore) Ballots(eventid EventID) ([]*Ballot, error) {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	ballots, err := allBallots(repo.Context, eventkey)
+	return ballots, datastoreError(err)
+}
+
 func (repo *Datastore) TeamBallots(eventid EventID, teamid TeamID) ([]*Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := teamBallots(repo.Context, eventkey, teamid)

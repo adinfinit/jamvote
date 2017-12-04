@@ -9,6 +9,7 @@ import (
 )
 
 type BallotRepo interface {
+	Ballots(eventid EventID) ([]*Ballot, error)
 	CreateIncompleteBallots(eventid EventID, userid user.UserID) (complete, incomplete []*BallotInfo, err error)
 	SubmitBallot(eventid EventID, ballot *Ballot) error
 	UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error)
