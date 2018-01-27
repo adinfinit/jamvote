@@ -33,6 +33,9 @@ func (server *Server) initTemplates(glob string) error {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
 		},
+		"ServerStartTime": func() string {
+			return server.Start.Format("20060102T150405")
+		},
 		// hack to work around isZero
 		"isValidTime": IsValidTime,
 

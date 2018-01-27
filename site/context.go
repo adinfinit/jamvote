@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -16,11 +17,13 @@ import (
 
 type Server struct {
 	Development bool
+	Start       time.Time
 	Templates   *template.Template
 }
 
 func NewServer(templatesglob string) (*Server, error) {
 	server := &Server{}
+	server.Start = time.Now()
 	return server, server.initTemplates(templatesglob)
 }
 
