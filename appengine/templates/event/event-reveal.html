@@ -7,10 +7,10 @@
 	
 </style>
 		{{ range $index, $result := .Results }}
-		<div class="place-container">
+		<div class="place-container place-container-{{$index}}">
 			<div class="place-number">#{{add 1 $index}}</div>
 			<div class="place-info">
-				<div class="game">{{.Game.Name}}</div>
+				<div class="game"><a href="{{ $event.Path "team" .Team.ID }}">{{.Game.Name}}</a></div>
 				<div class="members">
 					<div class="team">{{.Name}}</div>
 					{{ range $member := .Members }}

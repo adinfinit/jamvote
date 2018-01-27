@@ -606,7 +606,7 @@ div.progress {
 	left: 0;
 	width: 100%;
 
-	background: #aaa;
+	background: #ccc;
 	transition: 
 		width 3s ease-in-out,
 		background 0.2s ease-in-out;
@@ -615,15 +615,31 @@ div.progress {
 }
 
 .place-container:hover .overlay {
-	background: #ddd;
+	background: #eee;
 }
 .place-container .overlay.show {
-	width: 0%;
-	background: #eee;
+	background: #ccc;
+	animation-name: overlay-show;
+	animation-duration: 3s;
+	animation-direction: normal;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+.place-container-0 .overlay.show {
+	animation-name: overlay-show-glitchy;
+	animation-duration: 15s;
+}
 
-	transition: 
-		width 3s ease-in-out,
-		background 3s ease-in-out;
+@keyframes overlay-show {
+	from { width: 100%; }
+	to   { width: 0%; }
+}
+
+@keyframes overlay-show-glitchy {
+	from { width: 100%; }
+	50%  { width: 70%; }
+	80%  { width: 80%; }
+	to   { width: 0%; }
 }
 
 /* timer */
