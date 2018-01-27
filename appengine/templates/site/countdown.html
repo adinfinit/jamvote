@@ -16,6 +16,6 @@
 	</tbody>
 </table>
 <script>
-	StartCountdown("{{.ID}}", "{{.Time}}");
+	StartCountdown("{{.ID}}", "{{formatRFC .Time}}");
 </script>
 {{ end }}

@@ -26,6 +26,9 @@ func (server *Server) initTemplates(glob string) error {
 			// TODO: use event location
 			return t.In(aptLocation).Format("2006-01-02 15:04:05 MST")
 		},
+		"formatRFC": func(t time.Time) string {
+			return t.In(aptLocation).Format(time.RFC3339)
+		},
 		"paragraphs": func(s string) []string {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
