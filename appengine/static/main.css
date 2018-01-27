@@ -436,11 +436,38 @@ input[type=submit]{
 	margin: 0 0.5rem;
 }
 
-.comments {}
+.comments {
+	border-radius: 3px;
+	margin: 0.2rem;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1rem;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.2)
+}
+
+.comments h3 {
+	padding-left: 0.5rem;
+	color: #333;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	margin-top: 0rem;
+	padding-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	padding-bottom: 0.5rem;
+	background: #ddd;
+}
+
 .comment {
 	font-size: 0.9rem;
-	margin-bottom: 1rem;
+	padding: 0.5rem 0.5rem;
 	word-wrap: break-word;
+	margin: 0;
+}
+.comment:nth-child(odd) {
+	background: #f0f0f0;
+}
+.comment:hover {
+	background: #e8e8e8;
 }
 
 .aspect-info {

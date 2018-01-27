@@ -100,6 +100,7 @@
 	{{ if .Event.Revealed }}
 	<section>
 		<h2>Comments</h2>
+		<div class="comments-container">
 		{{ range $aspect := .Aspects }}
 			{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
 			{{ if $info.Comments }}
@@ -111,7 +112,8 @@
 			</div>
 			{{ end }}
 		{{ end }}
-	</section>
+		</div>
+	<section>
 	{{ end }}
 </section>
 
