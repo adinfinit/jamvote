@@ -25,10 +25,10 @@ func (server *Server) CreateEvent(context *Context) {
 			return
 		}
 
-		name := context.Request.FormValue("name")
-		theme := context.Request.FormValue("theme")
-		slug := context.Request.FormValue("slug")
-		info := context.Request.FormValue("info")
+		name := context.FormValue("name")
+		theme := context.FormValue("theme")
+		slug := context.FormValue("slug")
+		info := context.FormValue("info")
 
 		event := &Event{}
 		event.ID = EventID(strings.ToLower(slug))
@@ -89,15 +89,15 @@ func (server *Server) EditEvent(context *Context) {
 			return
 		}
 
-		theme := context.Request.FormValue("theme")
-		registration := context.Request.FormValue("registration") == "true"
-		voting := context.Request.FormValue("voting") == "true"
-		closed := context.Request.FormValue("closed") == "true"
-		revealed := context.Request.FormValue("revealed") == "true"
-		info := context.Request.FormValue("info")
+		theme := context.FormValue("theme")
+		registration := context.FormValue("registration") == "true"
+		voting := context.FormValue("voting") == "true"
+		closed := context.FormValue("closed") == "true"
+		revealed := context.FormValue("revealed") == "true"
+		info := context.FormValue("info")
 
-		votingopens := context.Request.FormValue("VotingOpens")
-		votingcloses := context.Request.FormValue("VotingCloses")
+		votingopens := context.FormValue("VotingOpens")
+		votingcloses := context.FormValue("VotingCloses")
 
 		event := context.Event
 		event.Theme = theme
@@ -173,8 +173,8 @@ func (server *Server) Jammers(context *Context) {
 		removed := []user.UserID{}
 
 		for _, u := range users {
-			before := context.Request.FormValue(fmt.Sprintf("%v.Start", u.ID)) == "approved"
-			after := context.Request.FormValue(fmt.Sprintf("%v", u.ID)) == "approved"
+			before := context.FormValue(fmt.Sprintf("%v.Start", u.ID)) == "approved"
+			after := context.FormValue(fmt.Sprintf("%v", u.ID)) == "approved"
 
 			if before != after {
 				if after {

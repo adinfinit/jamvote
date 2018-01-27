@@ -28,12 +28,11 @@ func findUserByID(users []*user.User, id user.UserID) (*user.User, bool) {
 
 func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team {
 	team := &Team{}
-	team.Name = strings.TrimSpace(context.Request.FormValue("Team.Name"))
+	team.Name = context.FormValue("Team.Name")
 
 	memberNames := []string{}
 	for i := 0; i < MaxTeamMembers; i++ {
-		memberName := context.Request.FormValue(fmt.Sprintf("Team.Member[%v]", i))
-		memberName = strings.TrimSpace(memberName)
+		memberName := context.FormValue(fmt.Sprintf("Team.Member[%v]", i))
 		if memberName != "" {
 			memberNames = append(memberNames, memberName)
 		}
@@ -57,10 +56,10 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 		}
 	}
 
-	team.Game.Name = strings.TrimSpace(context.Request.FormValue("Team.Game.Name"))
-	team.Game.Info = strings.TrimSpace(context.Request.FormValue("Team.Game.Info"))
-	team.Game.Link.Facebook = strings.TrimSpace(context.Request.FormValue("Team.Game.Link.Facebook"))
-	team.Game.Link.Jam = strings.TrimSpace(context.Request.FormValue("Team.Game.Link.Jam"))
+	team.Game.Name = context.FormValue("Team.Game.Name")
+	team.Game.Info = context.FormValue("Team.Game.Info")
+	team.Game.Link.Facebook = context.FormValue("Team.Game.Link.Facebook")
+	team.Game.Link.Jam = context.FormValue("Team.Game.Link.Jam")
 
 	return team
 }

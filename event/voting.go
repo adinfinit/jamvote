@@ -170,8 +170,8 @@ func (server *Server) Vote(context *Context) {
 		ballot.Team = context.Team.ID
 
 		readAspect := func(target *Aspect, name string) {
-			target.Comment = context.Request.FormValue(name + ".Comment")
-			scorestr := context.Request.FormValue(name + ".Score")
+			target.Comment = context.FormValue(name + ".Comment")
+			scorestr := context.FormValue(name + ".Score")
 			if val, err := strconv.ParseFloat(scorestr, 64); err == nil {
 				target.Score = val
 			} else {

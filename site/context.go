@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -129,4 +130,8 @@ func (context *Context) IntParam(name string) (int64, bool) {
 	}
 
 	return v, true
+}
+
+func (context *Context) FormValue(name string) string {
+	return strings.TrimSpace(context.Request.FormValue(name))
 }

@@ -75,12 +75,12 @@ func (server *Server) Edit(context *Context) {
 			return
 		}
 
-		user.Name = context.Request.FormValue("name")
-		user.Email = context.Request.FormValue("email")
-		user.Facebook = context.Request.FormValue("facebook")
-		user.Github = context.Request.FormValue("github")
+		user.Name = context.FormValue("name")
+		user.Email = context.FormValue("email")
+		user.Facebook = context.FormValue("facebook")
+		user.Github = context.FormValue("github")
 
-		admin := context.Request.FormValue("admin") == "true"
+		admin := context.FormValue("admin") == "true"
 		// only other admin can change admin status
 		if context.CurrentUser.IsAdmin() {
 			user.Admin = admin
