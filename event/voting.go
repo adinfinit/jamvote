@@ -283,6 +283,7 @@ func (server *Server) Progress(context *Context) {
 	target := 10
 	averagePending := 0.0
 	averageComplete := 0.0
+	totalComplete := 0
 
 	max := target * 3 / 2
 	for _, result := range results {
@@ -292,10 +293,12 @@ func (server *Server) Progress(context *Context) {
 
 		averagePending += clamped(float64(result.Pending), 0, float64(target))
 		averageComplete += clamped(float64(result.Complete), 0, float64(target))
+		totalComplete += result.Complete
 	}
 
 	context.Data["AveragePending"] = averagePending / float64(len(results))
 	context.Data["AverageComplete"] = averageComplete / float64(len(results))
+	context.Data["TotalComplete"] = totalComplete
 
 	context.Data["VoteTarget"] = target
 	context.Data["VoteMax"] = max

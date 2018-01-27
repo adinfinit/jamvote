@@ -8,6 +8,7 @@
 	<div class="progress">
 		<div class="pending" style="width: {{ mul 100 (div .AveragePending Data.VoteTarget) }}%"></div>
 		<div class="complete" style="width: {{ mul 100 (div .AverageComplete Data.VoteTarget) }}%"></div>
+		<div class="info" style="padding-top: 0.4em;">Total Votes {{ .TotalComplete }}</div>
 	</div>
 	
 	<table>
@@ -29,6 +30,7 @@
 					<div class="pending" style="width: {{ mul 100 (div .Pending Data.VoteMax) }}%"></div>
 					<div class="complete" style="width: {{ mul 100 (div .Complete Data.VoteMax) }}%"></div>
 					<div class="target" style="left: {{ mul 100 (div Data.VoteTarget Data.VoteMax) }}%"></div>
+					<div class="info">Votes {{ .Complete }}</div>
 				</td>
 			</tr>
 			{{ else }}

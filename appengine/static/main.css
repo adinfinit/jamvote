@@ -524,6 +524,12 @@ div.progress {
 	width: 0.1rem;
 	min-width: 2px;
 }
+.progress > .info {
+	padding-left: 1rem;
+	font-weight: bolder;
+
+	text-shadow: 0 1px 2px #fff;
+}
 
 /* reveal */
 
