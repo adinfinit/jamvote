@@ -225,6 +225,8 @@ tbody tr:hover {
 }
 .special {
 	background: #f9c393 !important;
+	font-weight: bold;
+	padding: 2rem .6rem !important;
 }
 .disabled {
 	color: #888;
