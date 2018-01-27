@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -110,7 +111,7 @@ func (server *Server) EditEvent(context *Context) {
 		if votingopens == "" {
 			event.VotingOpens = time.Time{}
 		} else {
-			t, err := time.Parse("2006-01-02T15:04", votingopens)
+			t, err := time.ParseInLocation("2006-01-02T15:04", votingopens, site.APTLocation)
 			if err != nil {
 				context.FlashErrorNow(err.Error())
 				context.Response.WriteHeader(http.StatusBadRequest)

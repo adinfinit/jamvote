@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-var aptLocation *time.Location
+var APTLocation *time.Location
 
 func init() {
 	var err error
-	aptLocation, err = time.LoadLocation("Europe/Tallinn")
+	APTLocation, err = time.LoadLocation("Europe/Tallinn")
 	if err != nil {
 		panic(err)
 	}
@@ -24,10 +24,10 @@ func (server *Server) initTemplates(glob string) error {
 		"Data": func() interface{} { return nil },
 		"formatDateTime": func(t *time.Time) string {
 			// TODO: use event location
-			return t.In(aptLocation).Format("2006-01-02 15:04:05 MST")
+			return t.In(APTLocation).Format("2006-01-02 15:04:05 MST")
 		},
 		"formatRFC": func(t time.Time) string {
-			return t.In(aptLocation).Format(time.RFC3339)
+			return t.In(APTLocation).Format(time.RFC3339)
 		},
 		"paragraphs": func(s string) []string {
 			s = strings.Replace(s, "\r", "", -1)
