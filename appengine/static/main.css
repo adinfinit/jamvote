@@ -530,40 +530,100 @@ div.progress {
 .reveal {
 	
 }
-
-.place {
+.place-container {
 	position: relative;
-	display: flex;
-	font-size: 1.6rem;
-	line-height: 2.5rem;
-	padding: 1.5rem 1rem;
 	margin-bottom: 1rem;
 	border: 1px solid hsl(210, 30%, 40%);
+
+	position: relative;
+	font-size: 1.6rem;
+	line-height: 2.5rem;
 }
-.place .number { width: 5rem; }
-.place .team { flex: 0.5; }
-.place .game { flex: 1; font-weight: bold; }
-.place .score { width: 5rem; }
 
-.place-0 { font-size: 2.5rem; }
-.place-1 { font-size: 2rem; }
+.place-number {
+	position: absolute;
+	left: 0; top: 0; bottom: 0;
+	width: 7rem;
+	padding: 0 1rem;
+	font-size: 1.6em;
+	background: #eee;
+	text-align: center;
 
-.overlay {
+	display: flex;
+	justify-content: center; 
+	align-items: center;
+}
+
+.place-score {
+	position: absolute;
+	right: 0; top: 0; bottom: 0;
+	width: 7rem;
+	background: #eee;
+
+	display: flex;
+	font-size: 1.6em;
+	justify-content: center; 
+	align-items: center;
+}
+.place-info {
+	position: relative;
+	margin-left: 7rem;
+	margin-right: 0;
+	padding-bottom: 0.5rem;
+	text-align: left;
+}
+.place-info .game {
+	padding-left: 1rem;
+	font-size: 2em;
+	line-height: 1.5em;
+	margin-right: 7rem;
+	font-weight: bold;
+}
+.place-info .members {
+	padding-left: 1rem;
+	font-size: 0.6em;
+	line-height: 1.5em;
+	margin-right: 7rem;
+	display: block;
+}
+.place-info .members .team {
+	display: inline-block;
+	margin-right: 0.5rem;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.place-info .members .member {
+	display: inline-block;
+	padding: 0 1rem;
+	margin: 0 0.5rem;
+	border-radius: 3px;
+	background: #eee;
+}
+.place-container .overlay {
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	left: 5rem;
+	left: 0;
 	width: 100%;
-	background: hsl(210, 30%, 60%);
-	transition: width 3s ease-in-out;
+
+	background: #aaa;
+	transition: 
+		width 3s ease-in-out,
+		background 0.2s ease-in-out;
 
 	cursor: pointer;
 }
-.place:hover .overlay {
-	background: hsl(210, 60%, 60%);
+
+.place-container:hover .overlay {
+	background: #ddd;
 }
-.overlay.show {
+.place-container .overlay.show {
 	width: 0%;
+	background: #eee;
+
+	transition: 
+		width 3s ease-in-out,
+		background 3s ease-in-out;
 }
 
 /* timer */
