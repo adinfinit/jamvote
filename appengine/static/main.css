@@ -590,7 +590,7 @@ div.progress {
 .place-score {
 	position: absolute;
 	right: 0; top: 0; bottom: 0;
-	width: 7rem;
+	width: 8rem;
 	background: #eee;
 
 	display: flex;
@@ -609,14 +609,14 @@ div.progress {
 	padding-left: 1rem;
 	font-size: 2em;
 	line-height: 1.5em;
-	margin-right: 7rem;
+	margin-right: 8rem;
 	font-weight: bold;
 }
 .place-info .members {
 	padding-left: 1rem;
 	font-size: 0.6em;
 	line-height: 1.5em;
-	margin-right: 7rem;
+	margin-right: 8rem;
 	display: block;
 }
 .place-info .members .team {
