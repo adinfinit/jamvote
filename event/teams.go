@@ -297,6 +297,53 @@ func (server *Server) Linking(context *Context) {
 	context.Render("event-linking")
 }
 
+func (server *Server) LinkingApproveAll(context *Context) {
+	if !context.CurrentUser.IsAdmin() {
+		context.FlashError("Must be admin to approve all.")
+		context.Redirect("/", http.StatusSeeOther)
+		return
+	}
+
+	users, err := context.Users.List()
+	if err != nil {
+		context.FlashError(fmt.Sprintf("Unable to get users: %v", err))
+		context.Redirect(context.Event.Path("linking"), http.StatusSeeOther)
+		return
+	}
+
+	teams, err := context.Events.Teams(context.Event.ID)
+	if err != nil {
+		context.FlashError(fmt.Sprintf("Unable to get teams: %v", err))
+		context.Redirect(context.Event.Path("linking"), http.StatusSeeOther)
+		return
+	}
+
+	var unapproved []user.UserID
+	for _, team := range teams {
+		for _, member := range team.Members {
+			if member.ID != 0 {
+				user, ok := findUserByID(users, member.ID)
+				if ok && !context.Event.HasJammer(user) {
+					unapproved = append(unapproved, user.ID)
+				}
+				continue
+			}
+		}
+	}
+
+	event := context.Event
+	event.AddRemoveJammers(unapproved, nil)
+
+	err = context.Events.Update(event)
+	if err != nil {
+		context.FlashError(err.Error())
+	} else {
+		context.FlashMessage(fmt.Sprintf("Added %v jammers.", len(unapproved)))
+	}
+
+	context.Redirect(context.Event.Path("linking"), http.StatusSeeOther)
+}
+
 func (server *Server) canEditTeam(context *Context) bool {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")

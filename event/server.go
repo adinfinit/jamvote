@@ -26,6 +26,7 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}/edit", server.Handler(server.EditEvent))
 	router.HandleFunc("/event/{eventid}/jammers", server.Handler(server.Jammers))
 	router.HandleFunc("/event/{eventid}/linking", server.Handler(server.Linking))
+	router.HandleFunc("/event/{eventid}/linking-approve-all", server.Handler(server.LinkingApproveAll))
 	router.HandleFunc("/event/{eventid}/teams", server.Handler(server.Teams))
 	router.HandleFunc("/event/{eventid}/voting", server.Handler(server.Voting))
 	router.HandleFunc("/event/{eventid}/fill-queue", server.Handler(server.FillQueue))
