@@ -6,7 +6,7 @@
 		<div><h1>{{.Team.Game.Name}}</h1>
 		<span>By: {{.Team.Name}}</span></div>
 		{{ else }}
-		<div><h1>{{.Team.Name.Name}}</h1>
+		<div><h1>{{.Team.Name}}</h1>
 		{{ end }}
 		{{ if .CanEditTeam }}
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
