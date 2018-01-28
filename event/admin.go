@@ -124,7 +124,7 @@ func (server *Server) EditEvent(context *Context) {
 		if votingcloses == "" {
 			event.VotingCloses = time.Time{}
 		} else {
-			t, err := time.Parse("2006-01-02T15:04", votingcloses)
+			t, err := time.ParseInLocation("2006-01-02T15:04", votingcloses, site.APTLocation)
 			if err != nil {
 				context.FlashErrorNow(err.Error())
 				context.Response.WriteHeader(http.StatusBadRequest)
