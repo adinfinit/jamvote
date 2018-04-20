@@ -81,17 +81,24 @@
 				<div class="input" id="Team.Game.Info" rows=4>{{range paragraphs .Team.Game.Info}}<p>{{.}}</p>{{end}}</div>
 			</div>
 			
-			{{ if .Team.Game.Link.Facebook }}
-			<div class="field">
-				<label for="Team.Game.Link.Facebook">Facebook Post</label>
-				<a class="button" href="{{.Team.Game.Link.Facebook}}" id="Team.Game.Link.Facebook" >{{.Team.Game.Link.Facebook}}</a>
-			</div>
-			{{ end }}
-
 			{{ if .Team.Game.Link.Jam}}
 			<div class="field">
 				<label for="Team.Game.Link.Jam">Jam Page</label>
 				<a class="button" href="{{.Team.Game.Link.Jam}}" id="Team.Game.Link.Jam" >{{.Team.Game.Link.Jam}}</a>
+			</div>
+			{{ end }}
+
+			{{ if .Team.Game.Link.Download}}
+			<div class="field">
+				<label for="Team.Game.Link.Download">Download Link</label>
+				<a class="button" href="{{.Team.Game.Link.Download}}" id="Team.Game.Link.Download" >{{.Team.Game.Link.Download}}</a>
+			</div>
+			{{ end }}
+
+			{{ if .Team.Game.Link.Facebook }}
+			<div class="field">
+				<label for="Team.Game.Link.Facebook">Facebook Post</label>
+				<a class="button" href="{{.Team.Game.Link.Facebook}}" id="Team.Game.Link.Facebook" >{{.Team.Game.Link.Facebook}}</a>
 			</div>
 			{{ end }}
 		</div>

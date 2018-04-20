@@ -58,8 +58,9 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 
 	team.Game.Name = context.FormValue("Team.Game.Name")
 	team.Game.Info = context.FormValue("Team.Game.Info")
-	team.Game.Link.Facebook = context.FormValue("Team.Game.Link.Facebook")
 	team.Game.Link.Jam = context.FormValue("Team.Game.Link.Jam")
+	team.Game.Link.Download = context.FormValue("Team.Game.Link.Download")
+	team.Game.Link.Facebook = context.FormValue("Team.Game.Link.Facebook")
 
 	return team
 }

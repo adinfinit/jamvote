@@ -40,8 +40,9 @@ type Game struct {
 	Name string
 	Info string `datastore:",noindex"`
 	Link struct {
-		Facebook string `datastore:",noindex"`
 		Jam      string `datastore:",noindex"`
+		Download string `datastore:",noindex"`
+		Facebook string `datastore:",noindex"`
 	} `datastore:",noindex"`
 }
 
@@ -57,16 +58,6 @@ func (team *Team) Verify() error {
 		return errors.New("Team must have at least one member.")
 	}
 
-	if team.Game.Link.Facebook != "" {
-		u, err := url.Parse(team.Game.Link.Facebook)
-		if err != nil {
-			return errors.New("Invalid Facebook link: " + err.Error())
-		}
-		if u.Scheme != "http" && u.Scheme != "https" {
-			return errors.New("Invalid Facebook link.")
-		}
-	}
-
 	if team.Game.Link.Jam != "" {
 		u, err := url.Parse(team.Game.Link.Jam)
 		if err != nil {
@@ -74,6 +65,26 @@ func (team *Team) Verify() error {
 		}
 		if u.Scheme != "http" && u.Scheme != "https" {
 			return errors.New("Invalid Jam link.")
+		}
+	}
+
+	if team.Game.Link.Download != "" {
+		u, err := url.Parse(team.Game.Link.Download)
+		if err != nil {
+			return errors.New("Invalid Download link: " + err.Error())
+		}
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return errors.New("Invalid Download link.")
+		}
+	}
+
+	if team.Game.Link.Facebook != "" {
+		u, err := url.Parse(team.Game.Link.Facebook)
+		if err != nil {
+			return errors.New("Invalid Facebook link: " + err.Error())
+		}
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return errors.New("Invalid Facebook link.")
 		}
 	}
 
