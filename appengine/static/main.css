@@ -179,6 +179,9 @@ td {
 	white-space: nowrap;
 	overflow: hidden;
 }
+tr > td {
+	position: relative;
+}
 tr > td > * {
 	display: block; 
 	padding: 0.35rem 0.1rem;
@@ -196,6 +199,15 @@ thead > tr, tr:nth-child(even){
 tbody tr:hover {
 	outline: 3px solid rgba(128, 128, 255, 0.5);
 }
+.boxed-indicator {
+	float: right;
+	padding-left: 2px;
+	padding-right: 4px;
+	font-size: 0.7rem;
+	font-style: italic;
+	background: rgba(249, 195, 147, 0.64);
+}
+
 /* page layout */
 
 .center {

@@ -45,10 +45,10 @@
 				{{ if $isAdmin }}
 				<td><a class="edit" href="{{$event.Path "team" .ID "edit"}}">edit</a></td>
 				{{ end }}
-				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+				<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="boxed-indicator">NC</span>{{end}}<a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
 				
-				<td>{{ if .Game.Link.Facebook}}<a class="no-clip" href="{{.Game.Link.Facebook}}" title="Facebook">FB</a>{{end}}</td>
+				<td>{{ if .Game.Link.Download}}<a class="no-clip" href="{{.Game.Link.Download}}" title="Download">DL</a>{{end}}</td>
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
 				{{ range .MembersWithEmpty }}

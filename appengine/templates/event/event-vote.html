@@ -13,6 +13,13 @@
 	</div>
 	<br>
 	{{ end }}
+
+	{{ if .Team.Game.Noncompeting }}
+	<div class="flashes">
+		<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
+	</div>
+	<br>
+	{{ end }}
 	
 	<a class="input button" {{if .Game.Link.Facebook}} href="{{.Game.Link.Facebook}}"{{end}}>{{.Game.Link.Facebook}}</a>
 	<a class="input button" {{if .Game.Link.Jam}} href="{{.Game.Link.Jam}}"{{end}}>{{.Game.Link.Jam}}</a>

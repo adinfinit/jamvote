@@ -14,6 +14,13 @@
 		{{ if .Event.CanVote }}<a class="button" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
 	</div>
 
+	{{ if .Team.Game.Noncompeting }}
+	<div class="flashes">
+		<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
+	</div>
+	<br>
+	{{ end }}
+
 	{{ if .Event.Revealed }}
 	<section>
 		<br>

@@ -39,6 +39,9 @@ type Member struct {
 type Game struct {
 	Name string
 	Info string `datastore:",noindex"`
+
+	Noncompeting bool `datastore:",noindex"`
+
 	Link struct {
 		Jam      string `datastore:",noindex"`
 		Download string `datastore:",noindex"`

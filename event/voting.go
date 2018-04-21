@@ -223,6 +223,17 @@ func (server *Server) Reveal(context *Context) {
 		context.FlashErrorNow(err.Error())
 	}
 
+	// remove noncompeting entries
+	{
+		xs := results[:0:cap(results)]
+		for _, x := range results {
+			if !x.Team.Game.Noncompeting {
+				xs = append(xs, x)
+			}
+		}
+		results = xs
+	}
+
 	sort.Slice(results, func(i, k int) bool {
 		return results[i].Average.Overall.Score > results[k].Average.Overall.Score
 	})
@@ -256,7 +267,11 @@ func (server *Server) Results(context *Context) {
 	}
 
 	sort.Slice(results, func(i, k int) bool {
-		return results[i].Average.Overall.Score > results[k].Average.Overall.Score
+		a, b := results[i], results[k]
+		if a.Team.Game.Noncompeting != b.Team.Game.Noncompeting {
+			return !a.Team.Game.Noncompeting
+		}
+		return a.Average.Overall.Score > b.Average.Overall.Score
 	})
 
 	context.Data["Results"] = results

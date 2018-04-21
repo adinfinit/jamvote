@@ -52,6 +52,11 @@
 		</div>
 
 		<div class="field">
+			<input type="checkbox" id="Team.Game.Noncompeting" name="Team.Game.Noncompeting" value="true" {{ if .Game.Noncompeting }}checked{{end}}></input>
+			<label for="Team.Game.Noncompeting">Noncompeting</label>
+		</div>
+
+		<div class="field">
 			<label for="Team.Game.Link.Jam">Jam Page</label>
 			<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" value="{{.Game.Link.Jam}}">
 		</div>
