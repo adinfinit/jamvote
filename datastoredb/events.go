@@ -1,118 +1,119 @@
-package event
+package datastoredb
 
 import (
 	"context"
 	"fmt"
 	"sort"
 
+	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/user"
 	netcontext "golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
 )
 
-type Datastore struct {
+type Events struct {
 	Context context.Context
 }
 
 func datastoreError(err error) error {
 	if err == datastore.ErrNoSuchEntity {
-		return ErrNotExists
+		return event.ErrNotExists
 	}
 	return err
 }
 
-func newEventKey(ctx context.Context, eventid EventID) *datastore.Key {
+func newEventKey(ctx context.Context, eventid event.EventID) *datastore.Key {
 	return datastore.NewKey(ctx, "Event", string(eventid), 0, nil)
 }
-func newTeamKey(ctx context.Context, eventkey *datastore.Key, teamid TeamID) *datastore.Key {
+func newTeamKey(ctx context.Context, eventkey *datastore.Key, teamid event.TeamID) *datastore.Key {
 	return datastore.NewKey(ctx, "Team", "", int64(teamid), eventkey)
 }
-func newBallotKey(ctx context.Context, eventkey *datastore.Key, voter user.UserID, votingFor TeamID) *datastore.Key {
+func newBallotKey(ctx context.Context, eventkey *datastore.Key, voter user.UserID, votingFor event.TeamID) *datastore.Key {
 	id := fmt.Sprintf("%v-%v", voter, votingFor)
 	return datastore.NewKey(ctx, "Ballot", id, 0, eventkey)
 }
 
-func (repo *Datastore) List() ([]*Event, error) {
-	var events []*Event
+func (repo *Events) List() ([]*event.Event, error) {
+	var events []*event.Event
 
 	q := datastore.NewQuery("Event")
 	keys, err := q.GetAll(repo.Context, &events)
-	for i, event := range events {
-		event.ID = EventID(keys[i].StringID())
+	for i, ev := range events {
+		ev.ID = event.EventID(keys[i].StringID())
 	}
 
 	return events, err
 }
 
-func (repo *Datastore) Create(event *Event) error {
+func (repo *Events) Create(ev *event.Event) error {
 	err := datastore.RunInTransaction(repo.Context, func(ctx netcontext.Context) error {
-		eventkey := datastore.NewKey(ctx, "Event", string(event.ID), 0, nil)
+		eventkey := datastore.NewKey(ctx, "Event", string(ev.ID), 0, nil)
 
-		existing := &Event{}
+		existing := &event.Event{}
 		err := datastore.Get(ctx, eventkey, existing)
 		if err != datastore.ErrNoSuchEntity {
 			if err == nil {
-				return ErrExists
+				return event.ErrExists
 			}
 			return err
 		}
 
-		_, err = datastore.Put(ctx, eventkey, event)
+		_, err = datastore.Put(ctx, eventkey, ev)
 		return err
 	}, nil)
 
 	return datastoreError(err)
 }
 
-func (repo *Datastore) ByID(eventid EventID) (*Event, error) {
-	event := &Event{}
-	if _, err := memcache.Gob.Get(repo.Context, "Event_"+eventid.String(), event); err == nil {
-		return event, nil
+func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
+	ev := &event.Event{}
+	if _, err := memcache.Gob.Get(repo.Context, "Event_"+eventid.String(), ev); err == nil {
+		return ev, nil
 	}
 
-	event = &Event{}
-	event.ID = eventid
+	ev = &event.Event{}
+	ev.ID = eventid
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
-	err := datastore.Get(repo.Context, eventkey, event)
+	err := datastore.Get(repo.Context, eventkey, ev)
 
 	memcache.Gob.Add(repo.Context, &memcache.Item{
 		Key:    "Event_" + eventid.String(),
-		Object: event,
+		Object: ev,
 	})
 
-	return event, datastoreError(err)
+	return ev, datastoreError(err)
 }
 
-func (repo *Datastore) Update(event *Event) error {
-	eventkey := datastore.NewKey(repo.Context, "Event", string(event.ID), 0, nil)
-	_, err := datastore.Put(repo.Context, eventkey, event)
+func (repo *Events) Update(ev *event.Event) error {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(ev.ID), 0, nil)
+	_, err := datastore.Put(repo.Context, eventkey, ev)
 	if err == nil {
 		memcache.Gob.Set(repo.Context, &memcache.Item{
-			Key:    "Event_" + event.ID.String(),
-			Object: event,
+			Key:    "Event_" + ev.ID.String(),
+			Object: ev,
 		})
 	}
 	return datastoreError(err)
 }
 
-func (repo *Datastore) CreateTeam(eventid EventID, team *Team) (TeamID, error) {
+func (repo *Events) CreateTeam(eventid event.EventID, team *event.Team) (event.TeamID, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	incompletekey := datastore.NewIncompleteKey(repo.Context, "Team", eventkey)
 	teamkey, err := datastore.Put(repo.Context, incompletekey, team)
-	team.ID = TeamID(teamkey.IntID())
+	team.ID = event.TeamID(teamkey.IntID())
 	return team.ID, datastoreError(err)
 }
 
-func (repo *Datastore) UpdateTeam(eventid EventID, team *Team) error {
+func (repo *Events) UpdateTeam(eventid event.EventID, team *event.Team) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(team.ID), eventkey)
 	_, err := datastore.Put(repo.Context, teamkey, team)
 	return datastoreError(err)
 }
 
-func (repo *Datastore) TeamByID(eventid EventID, teamid TeamID) (*Team, error) {
-	team := &Team{}
+func (repo *Events) TeamByID(eventid event.EventID, teamid event.TeamID) (*event.Team, error) {
+	team := &event.Team{}
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(teamid), eventkey)
 	err := datastore.Get(repo.Context, teamkey, team)
@@ -121,8 +122,8 @@ func (repo *Datastore) TeamByID(eventid EventID, teamid TeamID) (*Team, error) {
 	return team, datastoreError(err)
 }
 
-func (repo *Datastore) TeamsByUser(userid user.UserID) ([]*EventTeam, error) {
-	var allTeams []*Team
+func (repo *Events) TeamsByUser(userid user.UserID) ([]*event.EventTeam, error) {
+	var allTeams []*event.Team
 	q := datastore.NewQuery("Team")
 	keys, err := q.GetAll(repo.Context, &allTeams)
 	if err != nil {
@@ -134,25 +135,25 @@ func (repo *Datastore) TeamsByUser(userid user.UserID) ([]*EventTeam, error) {
 		return nil, err
 	}
 
-	teams := []*EventTeam{}
+	teams := []*event.EventTeam{}
 	for i, team := range allTeams {
 		if !team.HasMemberID(userid) {
 			continue
 		}
 
-		team.EventID = EventID(keys[i].Parent().StringID())
-		team.ID = TeamID(keys[i].IntID())
+		team.EventID = event.EventID(keys[i].Parent().StringID())
+		team.ID = event.TeamID(keys[i].IntID())
 
-		var event *Event
+		var ev *event.Event
 		for _, e := range events {
 			if e.ID == team.EventID {
-				event = e
+				ev = e
 				break
 			}
 		}
 
-		teams = append(teams, &EventTeam{
-			Event: *event,
+		teams = append(teams, &event.EventTeam{
+			Event: *ev,
 			Team:  *team,
 		})
 	}
@@ -160,36 +161,36 @@ func (repo *Datastore) TeamsByUser(userid user.UserID) ([]*EventTeam, error) {
 	return teams, err
 }
 
-func allTeams(ctx context.Context, eventkey *datastore.Key) ([]*Team, error) {
-	var teams []*Team
+func allTeams(ctx context.Context, eventkey *datastore.Key) ([]*event.Team, error) {
+	var teams []*event.Team
 	q := datastore.NewQuery("Team").Ancestor(eventkey)
 	keys, err := q.GetAll(ctx, &teams)
 	for i, team := range teams {
-		team.EventID = EventID(eventkey.StringID())
-		team.ID = TeamID(keys[i].IntID())
+		team.EventID = event.EventID(eventkey.StringID())
+		team.ID = event.TeamID(keys[i].IntID())
 	}
 	return teams, err
 }
 
-func someTeams(ctx context.Context, eventkey *datastore.Key, teamids []TeamID) ([]*Team, error) {
+func someTeams(ctx context.Context, eventkey *datastore.Key, teamids []event.TeamID) ([]*event.Team, error) {
 	var keys []*datastore.Key
-	var teams []*Team
+	var teams []*event.Team
 	for _, teamid := range teamids {
 		keys = append(keys, datastore.NewKey(ctx, "Team", "", int64(teamid), eventkey))
-		teams = append(teams, &Team{})
+		teams = append(teams, &event.Team{})
 	}
 
 	err := datastore.GetMulti(ctx, keys, teams)
 	for i, team := range teams {
-		team.EventID = EventID(eventkey.StringID())
-		team.ID = TeamID(keys[i].IntID())
+		team.EventID = event.EventID(eventkey.StringID())
+		team.ID = event.TeamID(keys[i].IntID())
 	}
 
 	return teams, err
 }
 
-func allBallots(ctx context.Context, eventkey *datastore.Key) ([]*Ballot, error) {
-	var ballots []*Ballot
+func allBallots(ctx context.Context, eventkey *datastore.Key) ([]*event.Ballot, error) {
+	var ballots []*event.Ballot
 	q := datastore.NewQuery("Ballot").Ancestor(eventkey)
 	keys, err := q.GetAll(ctx, &ballots)
 	for i, ballot := range ballots {
@@ -198,8 +199,8 @@ func allBallots(ctx context.Context, eventkey *datastore.Key) ([]*Ballot, error)
 	return ballots, err
 }
 
-func teamBallots(ctx context.Context, eventkey *datastore.Key, teamid TeamID) ([]*Ballot, error) {
-	var ballots []*Ballot
+func teamBallots(ctx context.Context, eventkey *datastore.Key, teamid event.TeamID) ([]*event.Ballot, error) {
+	var ballots []*event.Ballot
 	q := datastore.NewQuery("Ballot").Ancestor(eventkey).Filter("Team =", teamid)
 	keys, err := q.GetAll(ctx, &ballots)
 	for i, ballot := range ballots {
@@ -208,8 +209,8 @@ func teamBallots(ctx context.Context, eventkey *datastore.Key, teamid TeamID) ([
 	return ballots, err
 }
 
-func userBallots(ctx context.Context, eventkey *datastore.Key, userid user.UserID) ([]*Ballot, error) {
-	var ballots []*Ballot
+func userBallots(ctx context.Context, eventkey *datastore.Key, userid user.UserID) ([]*event.Ballot, error) {
+	var ballots []*event.Ballot
 	q := datastore.NewQuery("Ballot").Ancestor(eventkey).Filter("Voter =", userid)
 	keys, err := q.GetAll(ctx, &ballots)
 	for i, ballot := range ballots {
@@ -218,17 +219,17 @@ func userBallots(ctx context.Context, eventkey *datastore.Key, userid user.UserI
 	return ballots, err
 }
 
-func userBallot(ctx context.Context, eventkey *datastore.Key, userid user.UserID, teamid TeamID) (*Ballot, error) {
-	ballot := &Ballot{}
+func userBallot(ctx context.Context, eventkey *datastore.Key, userid user.UserID, teamid event.TeamID) (*event.Ballot, error) {
+	ballot := &event.Ballot{}
 	ballot.ID = newBallotKey(ctx, eventkey, userid, teamid)
 	err := datastore.Get(ctx, ballot.ID, ballot)
 	return ballot, err
 }
 
-func createTeamResults(teams []*Team, ballots []*Ballot) []*TeamResult {
-	cross := map[TeamID]*TeamResult{}
+func createTeamResults(teams []*event.Team, ballots []*event.Ballot) []*event.TeamResult {
+	cross := map[event.TeamID]*event.TeamResult{}
 	for _, team := range teams {
-		res := &TeamResult{}
+		res := &event.TeamResult{}
 		res.Team = team
 		cross[team.ID] = res
 	}
@@ -247,17 +248,17 @@ func createTeamResults(teams []*Team, ballots []*Ballot) []*TeamResult {
 		res.Pending++
 	}
 
-	results := make([]*TeamResult, 0, len(cross))
+	results := make([]*event.TeamResult, 0, len(cross))
 	for _, res := range cross {
 		results = append(results, res)
 	}
 	return results
 }
 
-func createBallotInfos(teams []*Team, ballots []*Ballot) []*BallotInfo {
-	infos := make([]*BallotInfo, 0, len(ballots))
+func createBallotInfos(teams []*event.Team, ballots []*event.Ballot) []*event.BallotInfo {
+	infos := make([]*event.BallotInfo, 0, len(ballots))
 	for _, ballot := range ballots {
-		infos = append(infos, &BallotInfo{
+		infos = append(infos, &event.BallotInfo{
 			Ballot: ballot,
 			Team:   findTeam(teams, ballot.Team),
 		})
@@ -270,7 +271,7 @@ func createBallotInfos(teams []*Team, ballots []*Ballot) []*BallotInfo {
 	return infos
 }
 
-func findTeam(teams []*Team, id TeamID) *Team {
+func findTeam(teams []*event.Team, id event.TeamID) *event.Team {
 	for _, team := range teams {
 		if team.ID == id {
 			return team
@@ -279,13 +280,13 @@ func findTeam(teams []*Team, id TeamID) *Team {
 	return nil
 }
 
-func (repo *Datastore) Teams(eventid EventID) ([]*Team, error) {
+func (repo *Events) Teams(eventid event.EventID) ([]*event.Team, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teams, err := allTeams(repo.Context, eventkey)
 	return teams, datastoreError(err)
 }
 
-func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.UserID) (complete, incomplete []*BallotInfo, err error) {
+func (repo *Events) CreateIncompleteBallots(eventid event.EventID, userid user.UserID) (complete, incomplete []*event.BallotInfo, err error) {
 	const FirstBatchCount = 3
 
 	//TODO: extract tranaction from here
@@ -304,7 +305,7 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 
 		for _, ballot := range ballots {
 			if ballot.Voter == userid {
-				info := &BallotInfo{
+				info := &event.BallotInfo{
 					Team:   findTeam(teams, ballot.Team),
 					Ballot: ballot,
 				}
@@ -340,7 +341,7 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 		}
 
 		createKeys := []*datastore.Key{}
-		createBallots := []*Ballot{}
+		createBallots := []*event.Ballot{}
 		for _, teamresult := range teamresults {
 			if len(incomplete) >= needIncomplete {
 				break
@@ -355,16 +356,16 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 				continue
 			}
 
-			ballot := &Ballot{
+			ballot := &event.Ballot{
 				ID:        newBallotKey(ctx, eventkey, userid, teamresult.Team.ID),
 				Voter:     userid,
 				Team:      teamresult.Team.ID,
 				Index:     int64(len(complete) + len(incomplete)),
 				Completed: false,
-				Aspects:   DefaultAspects,
+				Aspects:   event.DefaultAspects,
 			}
 
-			ballotinfo := &BallotInfo{
+			ballotinfo := &event.BallotInfo{
 				Team:   teamresult.Team,
 				Ballot: ballot,
 			}
@@ -384,27 +385,27 @@ func (repo *Datastore) CreateIncompleteBallots(eventid EventID, userid user.User
 	return complete, incomplete, datastoreError(err)
 }
 
-func (repo *Datastore) SubmitBallot(eventid EventID, ballot *Ballot) error {
+func (repo *Events) SubmitBallot(eventid event.EventID, ballot *event.Ballot) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballot.ID = newBallotKey(repo.Context, eventkey, ballot.Voter, ballot.Team)
 	_, err := datastore.Put(repo.Context, ballot.ID, ballot)
 	return datastoreError(err)
 }
 
-func (repo *Datastore) UserBallot(eventid EventID, userid user.UserID, teamid TeamID) (*Ballot, error) {
+func (repo *Events) UserBallot(eventid event.EventID, userid user.UserID, teamid event.TeamID) (*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballot, err := userBallot(repo.Context, eventkey, userid, teamid)
 	return ballot, datastoreError(err)
 }
 
-func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*BallotInfo, error) {
+func (repo *Events) UserBallots(eventid event.EventID, userid user.UserID) ([]*event.BallotInfo, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := userBallots(repo.Context, eventkey, userid)
 	if err != nil {
 		return nil, datastoreError(err)
 	}
 
-	teamids := []TeamID{}
+	teamids := []event.TeamID{}
 	for _, ballot := range ballots {
 		teamids = append(teamids, ballot.Team)
 	}
@@ -417,7 +418,7 @@ func (repo *Datastore) UserBallots(eventid EventID, userid user.UserID) ([]*Ball
 	return createBallotInfos(teams, ballots), nil
 }
 
-func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
+func (repo *Events) Results(eventid event.EventID) ([]*event.TeamResult, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 
 	ballots, err := allBallots(repo.Context, eventkey)
@@ -432,19 +433,19 @@ func (repo *Datastore) Results(eventid EventID) ([]*TeamResult, error) {
 
 	results := createTeamResults(teams, ballots)
 	for _, result := range results {
-		result.Average = AverageScores(result.Ballots)
+		result.Average = event.AverageScores(result.Ballots)
 	}
 
 	return results, nil
 }
 
-func (repo *Datastore) Ballots(eventid EventID) ([]*Ballot, error) {
+func (repo *Events) Ballots(eventid event.EventID) ([]*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := allBallots(repo.Context, eventkey)
 	return ballots, datastoreError(err)
 }
 
-func (repo *Datastore) TeamBallots(eventid EventID, teamid TeamID) ([]*Ballot, error) {
+func (repo *Events) TeamBallots(eventid event.EventID, teamid event.TeamID) ([]*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := teamBallots(repo.Context, eventkey, teamid)
 	return ballots, datastoreError(err)

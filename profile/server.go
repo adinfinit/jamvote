@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 
@@ -11,7 +12,9 @@ import (
 )
 
 type Server struct {
-	Site  *site.Server
+	Site   *site.Server
+	Events event.DB
+
 	Users *user.Server
 }
 

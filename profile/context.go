@@ -15,7 +15,7 @@ type Context struct {
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
 	context.Context = server.Users.Context(w, r)
-	context.Teams = &event.Datastore{context}
+	context.Teams = server.Events.Events(context)
 	return context
 }
 

@@ -14,7 +14,9 @@ import (
 )
 
 type Server struct {
-	Site  *site.Server
+	Site   *site.Server
+	Events DB
+
 	Users *user.Server
 }
 

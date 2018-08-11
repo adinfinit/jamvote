@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/adinfinit/jamvote/auth"
+	"github.com/adinfinit/jamvote/datastoredb"
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/profile"
 	"github.com/adinfinit/jamvote/site"
@@ -16,6 +17,8 @@ import (
 )
 
 func main() {
+	db := &datastoredb.DB{}
+
 	router := mux.NewRouter()
 
 	auths := auth.NewService("http://localhost:8080")
@@ -31,10 +34,10 @@ func main() {
 	users := &user.Server{sites, auths}
 	users.Register(router)
 
-	events := &event.Server{sites, users}
+	events := &event.Server{sites, db, users}
 	events.Register(router)
 
-	profiles := &profile.Server{sites, users}
+	profiles := &profile.Server{sites, db, users}
 	profiles.Register(router)
 
 	http.Handle("/", router)

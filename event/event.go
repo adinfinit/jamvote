@@ -1,12 +1,17 @@
 package event
 
 import (
+	"context"
 	"encoding/gob"
 	"errors"
 	"time"
 
 	"github.com/adinfinit/jamvote/user"
 )
+
+type DB interface {
+	Events(context context.Context) Repo
+}
 
 type Repo interface {
 	List() ([]*Event, error)
