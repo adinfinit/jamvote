@@ -10,6 +10,7 @@ import (
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/event"
+	"github.com/adinfinit/jamvote/profile"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 )
@@ -32,6 +33,9 @@ func main() {
 
 	events := &event.Server{sites, users}
 	events.Register(router)
+
+	profiles := &profile.Server{sites, users}
+	profiles.Register(router)
 
 	http.Handle("/", router)
 

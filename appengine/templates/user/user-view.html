@@ -34,5 +34,28 @@
 		</div>
 		{{ end }}
 	</div>
+
+	<section>
+		<h2>Teams</h2>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Event</th>
+					<th>Team</th>
+					<th>Game</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range .Teams }}
+				<tr>
+					<td><a href="{{.Event.Path}}" title="{{.Event.Name}}">{{ .Event.Name }}</a></td>
+					<td><a href="{{.Event.Path "team" .Team.ID }}" title="{{.Name}}">{{ .Name }}</a></td>
+					<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+	</section>
 </section>
 {{ template "foot" . }}

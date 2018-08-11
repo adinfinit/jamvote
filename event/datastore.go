@@ -121,6 +121,45 @@ func (repo *Datastore) TeamByID(eventid EventID, teamid TeamID) (*Team, error) {
 	return team, datastoreError(err)
 }
 
+func (repo *Datastore) TeamsByUser(userid user.UserID) ([]*EventTeam, error) {
+	var allTeams []*Team
+	q := datastore.NewQuery("Team")
+	keys, err := q.GetAll(repo.Context, &allTeams)
+	if err != nil {
+		return nil, err
+	}
+
+	events, err := repo.List()
+	if err != nil {
+		return nil, err
+	}
+
+	teams := []*EventTeam{}
+	for i, team := range allTeams {
+		if !team.HasMemberID(userid) {
+			continue
+		}
+
+		team.EventID = EventID(keys[i].Parent().StringID())
+		team.ID = TeamID(keys[i].IntID())
+
+		var event *Event
+		for _, e := range events {
+			if e.ID == team.EventID {
+				event = e
+				break
+			}
+		}
+
+		teams = append(teams, &EventTeam{
+			Event: *event,
+			Team:  *team,
+		})
+	}
+
+	return teams, err
+}
+
 func allTeams(ctx context.Context, eventkey *datastore.Key) ([]*Team, error) {
 	var teams []*Team
 	q := datastore.NewQuery("Team").Ancestor(eventkey)

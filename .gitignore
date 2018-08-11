@@ -1,4 +1,5 @@
 rater
+*.exe
 appengine/app.credentials.yaml
 .DS_Store
 .idea/**

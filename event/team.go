@@ -14,6 +14,7 @@ type TeamRepo interface {
 	UpdateTeam(id EventID, team *Team) error
 	TeamByID(id EventID, teamid TeamID) (*Team, error)
 	Teams(id EventID) ([]*Team, error)
+	TeamsByUser(id user.UserID) ([]*EventTeam, error)
 }
 
 const MaxTeamMembers = 6
@@ -21,6 +22,11 @@ const MaxTeamMembers = 6
 type TeamID int64
 
 func (id TeamID) String() string { return strconv.Itoa(int(id)) }
+
+type EventTeam struct {
+	Event Event
+	Team
+}
 
 type Team struct {
 	EventID EventID `datastore:"-"`
