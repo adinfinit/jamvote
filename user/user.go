@@ -1,12 +1,17 @@
 package user
 
 import (
+	"context"
 	"encoding/gob"
 	"errors"
 	"strconv"
 
 	"github.com/adinfinit/jamvote/auth"
 )
+
+type DB interface {
+	Users(context.Context) Repo
+}
 
 type Repo interface {
 	ByCredentials(cred *auth.Credentials) (*User, error)

@@ -16,7 +16,7 @@ type Events struct {
 	Context context.Context
 }
 
-func datastoreError(err error) error {
+func eventsError(err error) error {
 	if err == datastore.ErrNoSuchEntity {
 		return event.ErrNotExists
 	}
@@ -63,7 +63,7 @@ func (repo *Events) Create(ev *event.Event) error {
 		return err
 	}, nil)
 
-	return datastoreError(err)
+	return eventsError(err)
 }
 
 func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
@@ -82,7 +82,7 @@ func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
 		Object: ev,
 	})
 
-	return ev, datastoreError(err)
+	return ev, eventsError(err)
 }
 
 func (repo *Events) Update(ev *event.Event) error {
@@ -94,7 +94,7 @@ func (repo *Events) Update(ev *event.Event) error {
 			Object: ev,
 		})
 	}
-	return datastoreError(err)
+	return eventsError(err)
 }
 
 func (repo *Events) CreateTeam(eventid event.EventID, team *event.Team) (event.TeamID, error) {
@@ -102,14 +102,14 @@ func (repo *Events) CreateTeam(eventid event.EventID, team *event.Team) (event.T
 	incompletekey := datastore.NewIncompleteKey(repo.Context, "Team", eventkey)
 	teamkey, err := datastore.Put(repo.Context, incompletekey, team)
 	team.ID = event.TeamID(teamkey.IntID())
-	return team.ID, datastoreError(err)
+	return team.ID, eventsError(err)
 }
 
 func (repo *Events) UpdateTeam(eventid event.EventID, team *event.Team) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(team.ID), eventkey)
 	_, err := datastore.Put(repo.Context, teamkey, team)
-	return datastoreError(err)
+	return eventsError(err)
 }
 
 func (repo *Events) TeamByID(eventid event.EventID, teamid event.TeamID) (*event.Team, error) {
@@ -119,7 +119,7 @@ func (repo *Events) TeamByID(eventid event.EventID, teamid event.TeamID) (*event
 	err := datastore.Get(repo.Context, teamkey, team)
 	team.EventID = eventid
 	team.ID = teamid
-	return team, datastoreError(err)
+	return team, eventsError(err)
 }
 
 func (repo *Events) TeamsByUser(userid user.UserID) ([]*event.EventTeam, error) {
@@ -283,7 +283,7 @@ func findTeam(teams []*event.Team, id event.TeamID) *event.Team {
 func (repo *Events) Teams(eventid event.EventID) ([]*event.Team, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	teams, err := allTeams(repo.Context, eventkey)
-	return teams, datastoreError(err)
+	return teams, eventsError(err)
 }
 
 func (repo *Events) CreateIncompleteBallots(eventid event.EventID, userid user.UserID) (complete, incomplete []*event.BallotInfo, err error) {
@@ -382,27 +382,27 @@ func (repo *Events) CreateIncompleteBallots(eventid event.EventID, userid user.U
 		return err
 	}, nil)
 
-	return complete, incomplete, datastoreError(err)
+	return complete, incomplete, eventsError(err)
 }
 
 func (repo *Events) SubmitBallot(eventid event.EventID, ballot *event.Ballot) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballot.ID = newBallotKey(repo.Context, eventkey, ballot.Voter, ballot.Team)
 	_, err := datastore.Put(repo.Context, ballot.ID, ballot)
-	return datastoreError(err)
+	return eventsError(err)
 }
 
 func (repo *Events) UserBallot(eventid event.EventID, userid user.UserID, teamid event.TeamID) (*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballot, err := userBallot(repo.Context, eventkey, userid, teamid)
-	return ballot, datastoreError(err)
+	return ballot, eventsError(err)
 }
 
 func (repo *Events) UserBallots(eventid event.EventID, userid user.UserID) ([]*event.BallotInfo, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := userBallots(repo.Context, eventkey, userid)
 	if err != nil {
-		return nil, datastoreError(err)
+		return nil, eventsError(err)
 	}
 
 	teamids := []event.TeamID{}
@@ -412,7 +412,7 @@ func (repo *Events) UserBallots(eventid event.EventID, userid user.UserID) ([]*e
 
 	teams, err := someTeams(repo.Context, eventkey, teamids)
 	if err != nil {
-		return nil, datastoreError(err)
+		return nil, eventsError(err)
 	}
 
 	return createBallotInfos(teams, ballots), nil
@@ -423,12 +423,12 @@ func (repo *Events) Results(eventid event.EventID) ([]*event.TeamResult, error) 
 
 	ballots, err := allBallots(repo.Context, eventkey)
 	if err != nil {
-		return nil, datastoreError(err)
+		return nil, eventsError(err)
 	}
 
 	teams, err := allTeams(repo.Context, eventkey)
 	if err != nil {
-		return nil, datastoreError(err)
+		return nil, eventsError(err)
 	}
 
 	results := createTeamResults(teams, ballots)
@@ -442,11 +442,11 @@ func (repo *Events) Results(eventid event.EventID) ([]*event.TeamResult, error) 
 func (repo *Events) Ballots(eventid event.EventID) ([]*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := allBallots(repo.Context, eventkey)
-	return ballots, datastoreError(err)
+	return ballots, eventsError(err)
 }
 
 func (repo *Events) TeamBallots(eventid event.EventID, teamid event.TeamID) ([]*event.Ballot, error) {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	ballots, err := teamBallots(repo.Context, eventkey, teamid)
-	return ballots, datastoreError(err)
+	return ballots, eventsError(err)
 }

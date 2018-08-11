@@ -31,7 +31,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	users := &user.Server{sites, auths}
+	users := &user.Server{sites, db, auths}
 	users.Register(router)
 
 	events := &event.Server{sites, db, users}

@@ -12,6 +12,8 @@ import (
 
 type Server struct {
 	Site *site.Server
+	DB   DB
+
 	Auth *auth.Service
 }
 

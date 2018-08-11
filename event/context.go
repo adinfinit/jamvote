@@ -19,7 +19,7 @@ type Context struct {
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
 	context.Context = server.Users.Context(w, r)
-	context.Events = server.Events.Events(context)
+	context.Events = server.DB.Events(context)
 
 	eventid, ok := context.StringParam("eventid")
 	if ok && EventID(eventid).Valid() {
