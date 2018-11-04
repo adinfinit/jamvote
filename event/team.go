@@ -130,10 +130,12 @@ func (team *Team) HasSubmitted() bool {
 	if team.Game.Name == "" {
 		return false
 	}
-	if team.Game.Link.Facebook == "" && team.Game.Link.Jam == "" {
-		return false
-	}
-	return true
+
+	hasFacebook := team.Game.Link.Facebook != ""
+	hasJam := team.Game.Link.Jam != ""
+	hasDownload := team.Game.Link.Download != ""
+
+	return hasFacebook || hasJam || hasDownload
 }
 
 func (team *Team) MembersWithEmpty() []Member {
