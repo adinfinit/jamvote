@@ -23,6 +23,20 @@
 			<textarea type="text" id="info" name="info" rows=4>{{with .NewEvent}}{{.Info}}{{end}}</textarea>
 		</div>
 
+		<fieldset>
+			<legend>Dates</legend>
+
+			<div class="field">
+				<label for="StartTime">Start Time</label>
+				<input type="datetime-local" id="StartTime" name="StartTime">
+			</div>
+
+			<div class="field">
+				<label for="EndTime">End Time</label>
+				<input type="datetime-local" id="EndTime" name="EndTime">
+			</div>
+		</fieldset>	
+
 		<input type="submit" value="Create">
 	</form>
 </section>

@@ -31,6 +31,9 @@ func (server *Server) CreateEvent(context *Context) {
 		slug := context.FormValue("slug")
 		info := context.FormValue("info")
 
+		starttime := context.FormValue("StartTime")
+		endtime := context.FormValue("EndTime")
+
 		event := &Event{}
 		event.ID = EventID(strings.ToLower(slug))
 		event.Name = name
@@ -38,7 +41,35 @@ func (server *Server) CreateEvent(context *Context) {
 		event.Info = info
 		event.Registration = true
 
+		event.Created = time.Now().UTC()
+
 		context.Data["NewEvent"] = event
+
+		if starttime == "" {
+			event.StartTime = time.Time{}
+		} else {
+			t, err := time.ParseInLocation("2006-01-02T15:04", starttime, site.APTLocation)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.StartTime = t
+		}
+
+		if endtime == "" {
+			event.EndTime = time.Time{}
+		} else {
+			t, err := time.ParseInLocation("2006-01-02T15:04", endtime, site.APTLocation)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.EndTime = t
+		}
 
 		if name == "" || !event.ID.Valid() {
 			if name == "" {
@@ -97,6 +128,9 @@ func (server *Server) EditEvent(context *Context) {
 		revealed := context.FormValue("revealed") == "true"
 		info := context.FormValue("info")
 
+		starttime := context.FormValue("StartTime")
+		endtime := context.FormValue("EndTime")
+
 		votingopens := context.FormValue("VotingOpens")
 		votingcloses := context.FormValue("VotingCloses")
 
@@ -107,6 +141,32 @@ func (server *Server) EditEvent(context *Context) {
 		event.Closed = closed
 		event.Revealed = revealed
 		event.Info = info
+
+		if starttime == "" {
+			event.StartTime = time.Time{}
+		} else {
+			t, err := time.ParseInLocation("2006-01-02T15:04", starttime, site.APTLocation)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.StartTime = t
+		}
+
+		if endtime == "" {
+			event.EndTime = time.Time{}
+		} else {
+			t, err := time.ParseInLocation("2006-01-02T15:04", endtime, site.APTLocation)
+			if err != nil {
+				context.FlashErrorNow(err.Error())
+				context.Response.WriteHeader(http.StatusBadRequest)
+				context.Render("event-edit")
+				return
+			}
+			event.EndTime = t
+		}
 
 		if votingopens == "" {
 			event.VotingOpens = time.Time{}

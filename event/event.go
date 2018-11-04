@@ -55,6 +55,13 @@ type Event struct {
 	Theme string `datastore:",noindex"`
 	Info  string `datastore:",noindex"`
 
+	// Created is the time when the event was created
+	Created time.Time `datastore:",noindex"`
+	// StartTime is the starting time of the event
+	StartTime time.Time `datastore:",noindex"`
+	// EndTime is the end time of the event
+	EndTime time.Time `datastore:",noindex"`
+
 	// New Registration is allowed
 	Registration bool `datastore:",noindex"`
 	// Voting allow voting
@@ -116,4 +123,15 @@ func (event *Event) AddRemoveJammers(added, removed []user.UserID) {
 		}
 	}
 	event.Jammers = result
+}
+
+func (event *Event) Less(other *Event) bool {
+	return event.startTime().After(other.startTime())
+}
+
+func (event *Event) startTime() time.Time {
+	if !event.StartTime.IsZero() {
+		return event.StartTime
+	}
+	return event.Created
 }

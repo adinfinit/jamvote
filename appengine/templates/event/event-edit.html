@@ -34,11 +34,23 @@
 		</div>
 
 		<fieldset>
-			<legend>Timers</legend>
+			<legend>Dates</legend>
+
+			<div class="field">
+				<label for="StartTime">Start Time</label>
+				<input type="datetime-local" id="StartTime" name="StartTime" {{ if isValidTime .Event.StartTime}}value="{{.Event.StartTime.Format "2006-01-02T15:04"}}"{{end}}>
+			</div>
+
+			<div class="field">
+				<label for="EndTime">End Time</label>
+				<input type="datetime-local" id="EndTime" name="EndTime" {{ if isValidTime .Event.EndTime}}value="{{.Event.EndTime.Format "2006-01-02T15:04"}}"{{end}}>
+			</div>
+		
 			<div class="field">
 				<label for="VotingOpens">Voting Opens</label>
 				<input type="datetime-local" id="VotingOpens" name="VotingOpens" {{ if isValidTime .Event.VotingOpens}}value="{{.Event.VotingOpens.Format "2006-01-02T15:04"}}"{{end}}>
 			</div>
+			
 			<div class="field">
 				<label for="VotingCloses">Voting Closes</label>
 				<input type="datetime-local" id="VotingCloses" name="VotingCloses" {{ if isValidTime .Event.VotingCloses}}value="{{.Event.VotingCloses.Format "2006-01-02T15:04"}}"{{end}}>

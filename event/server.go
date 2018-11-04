@@ -6,7 +6,6 @@ import (
 	"path"
 	"sort"
 
-	"github.com/adinfinit/jamvote/internal/natural"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 
@@ -67,7 +66,7 @@ func (server *Server) List(context *Context) {
 	}
 
 	sort.Slice(events, func(i, k int) bool {
-		return natural.Less(events[i].Name, events[k].Name)
+		return events[i].Less(events[k])
 	})
 
 	byStage := struct {
