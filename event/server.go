@@ -90,5 +90,26 @@ func (server *Server) List(context *Context) {
 }
 
 func (server *Server) Dashboard(context *Context) {
+	// TODO: deduplicate
+	teams, err := context.Events.Teams(context.Event.ID)
+	if err != nil {
+		context.FlashErrorNow(fmt.Sprintf("Unable to get teams: %v", err))
+	}
+
+	sort.Slice(teams, func(i, k int) bool {
+		return teams[i].Less(teams[k])
+	})
+
+	if context.CurrentUser != nil {
+		nonsubmitted := []*Team{}
+		for _, team := range teams {
+			if team.HasMember(context.CurrentUser) &&
+				!team.IsCompeting() {
+				nonsubmitted = append(nonsubmitted, team)
+			}
+		}
+		context.Data["NotSubmittedTeams"] = nonsubmitted
+	}
+
 	context.Render("event-dashboard")
 }

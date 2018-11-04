@@ -17,6 +17,7 @@ func findUserByName(users []*user.User, name string) (*user.User, bool) {
 	}
 	return nil, false
 }
+
 func findUserByID(users []*user.User, id user.UserID) (*user.User, bool) {
 	for _, user := range users {
 		if user.ID == id {

@@ -1,5 +1,6 @@
 {{ template "head" . }}
 
+{{ $event := .Event }}
 <section>
 	<section style="float:right; margin: 1rem;">
 		{{ if .VotingOpens }}
@@ -22,6 +23,15 @@
 	<div>
 		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}
 	</div>
+	
+	{{ if .NotSubmittedTeams }}
+	<div class="flashes">
+		<div class="flash">Your team has not submitted a game.</div>
+		{{ range .NotSubmittedTeams }}
+		<a class="flash button" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
+		{{ end }}
+	</div>
+	{{ end }}
 
 	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
 	<div class="flashes">
