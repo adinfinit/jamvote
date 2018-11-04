@@ -225,9 +225,9 @@ func (server *Server) Reveal(context *Context) {
 
 	// remove noncompeting entries
 	{
-		xs := results[:0:cap(results)]
+		xs := results[:0]
 		for _, x := range results {
-			if !x.Team.Game.Noncompeting {
+			if x.Team.IsCompeting() {
 				xs = append(xs, x)
 			}
 		}

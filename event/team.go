@@ -138,6 +138,10 @@ func (team *Team) HasSubmitted() bool {
 	return hasFacebook || hasJam || hasDownload
 }
 
+func (team *Team) IsCompeting() bool {
+	return team.HasSubmitted() && !team.Game.Noncompeting
+}
+
 func (team *Team) MembersWithEmpty() []Member {
 	members := append([]Member{}, team.Members...)
 	for len(members) < 6 {
