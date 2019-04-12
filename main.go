@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-
-	"google.golang.org/appengine"
+	"os"
 
 	"github.com/gorilla/mux"
 
@@ -17,6 +17,11 @@ import (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	db := &datastoredb.DB{}
 
 	router := mux.NewRouter()
@@ -31,16 +36,28 @@ func main() {
 		log.Fatal(err)
 	}
 
-	users := &user.Server{sites, db, auths}
+	users := &user.Server{
+		Site: sites,
+		DB:   db,
+		Auth: auths,
+	}
 	users.Register(router)
 
-	events := &event.Server{sites, db, users}
+	events := &event.Server{
+		Site:  sites,
+		DB:    db,
+		Users: users,
+	}
 	events.Register(router)
 
-	profiles := &profile.Server{sites, db, users}
+	profiles := &profile.Server{
+		Site:   sites,
+		Events: db,
+		Users:  users,
+	}
 	profiles.Register(router)
 
 	http.Handle("/", router)
 
-	appengine.Main()
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
