@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
+	"google.golang.org/appengine"
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/datastoredb"
@@ -17,11 +16,6 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
 	db := &datastoredb.DB{}
 
 	router := mux.NewRouter()
@@ -59,5 +53,5 @@ func main() {
 
 	http.Handle("/", router)
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+	appengine.Main()
 }
