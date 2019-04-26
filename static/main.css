@@ -670,20 +670,9 @@ div.progress {
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
 }
-.place-container-0 .overlay.show {
-	animation-name: overlay-show-glitchy;
-	animation-duration: 15s;
-}
 
 @keyframes overlay-show {
 	from { width: 100%; }
-	to   { width: 0%; }
-}
-
-@keyframes overlay-show-glitchy {
-	from { width: 100%; }
-	50%  { width: 70%; }
-	80%  { width: 80%; }
 	to   { width: 0%; }
 }
 
