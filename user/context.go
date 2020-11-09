@@ -7,6 +7,7 @@ import (
 	"github.com/adinfinit/jamvote/site"
 )
 
+// Context contains the request data for a user page.
 type Context struct {
 	CurrentUser *User
 	Users       Repo
@@ -14,6 +15,7 @@ type Context struct {
 	*site.Context
 }
 
+// CurrentUser returns currently logged in user.
 func (server *Server) CurrentUser(context *Context) *User {
 	cred := server.Auth.CurrentCredentials(context, context.Request)
 	if cred == nil {
@@ -41,6 +43,7 @@ func (server *Server) CurrentUser(context *Context) *User {
 	return user
 }
 
+// Context constructs a new user context for a given request.
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
 	context.Context = server.Site.Context(w, r)
@@ -50,6 +53,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	return context
 }
 
+// Handler wraps fn with automatic Context creation.
 func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fn(server.Context(w, r))

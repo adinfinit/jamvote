@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Server implements user management endpoints.
 type Server struct {
 	Site *site.Server
 	DB   DB
@@ -17,6 +18,7 @@ type Server struct {
 	Auth *auth.Server
 }
 
+// Register registers endpoints to router.
 func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user", server.Handler(server.RedirectToEdit))
 	router.HandleFunc("/users", server.Handler(server.List))
@@ -25,6 +27,7 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/logout", server.Handler(server.Logout))
 }
 
+// RedirectToEdit redirects request to edit page.
 func (server *Server) RedirectToEdit(context *Context) {
 	if context.CurrentUser == nil {
 		context.Redirect("/user/login", http.StatusSeeOther)
@@ -35,6 +38,7 @@ func (server *Server) RedirectToEdit(context *Context) {
 	context.Redirect(userurl, http.StatusSeeOther)
 }
 
+// LoggedIn is called after user has logged in.
 func (server *Server) LoggedIn(context *Context) {
 	if context.CurrentUser == nil || context.CurrentUser.NewUser {
 		context.FlashMessage("Please update your full name.")
@@ -45,11 +49,13 @@ func (server *Server) LoggedIn(context *Context) {
 	context.Redirect("/", http.StatusSeeOther)
 }
 
+// Login renders login page.
 func (server *Server) Login(context *Context) {
 	context.Data["Logins"] = server.Auth.Links(context.Request)
 	context.Render("user-login")
 }
 
+// Logout logs out.
 func (server *Server) Logout(context *Context) {
 	server.Auth.Logout(context.Response, context.Request)
 }

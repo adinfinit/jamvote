@@ -2,6 +2,7 @@ package user
 
 import "net/http"
 
+// List displays users list.
 func (server *Server) List(context *Context) {
 	if context.CurrentUser == nil {
 		context.FlashError("Must be logged in to see users.")

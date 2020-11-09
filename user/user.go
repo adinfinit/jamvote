@@ -9,10 +9,12 @@ import (
 	"github.com/adinfinit/jamvote/auth"
 )
 
+// DB is interface for master database.
 type DB interface {
 	Users(context.Context) Repo
 }
 
+// Repo defines interaction with database.
 type Repo interface {
 	ByCredentials(cred *auth.Credentials) (*User, error)
 	ByID(id UserID) (*User, error)
@@ -22,12 +24,16 @@ type Repo interface {
 	Update(user *User) error
 }
 
-var ErrNotExists = errors.New("info does not exist")
+// ErrNotExists is returned from Repo when a user does not exist.
+var ErrNotExists = errors.New("user does not exist")
 
+// UserID is a unique identifier for user.
 type UserID int64
 
+// String returns string representation of the id.
 func (id UserID) String() string { return strconv.Itoa(int(id)) }
 
+// User contains all relevant information about a user.
 type User struct {
 	ID    UserID `datastore:"-"`
 	Name  string `datastore:",noindex"`
@@ -44,10 +50,12 @@ func init() {
 	gob.Register(&User{})
 }
 
+// IsAdmin returns whether a user is an administrator.
 func (user *User) IsAdmin() bool {
 	return user != nil && user.Admin
 }
 
+// HasEditor returns whether user can be edited by editor.
 func (user *User) HasEditor(editor *User) bool {
 	if editor.IsAdmin() {
 		return true
@@ -55,6 +63,7 @@ func (user *User) HasEditor(editor *User) bool {
 	return editor != nil && user.ID == editor.ID
 }
 
+// Equals returns whether b represent the same entity.
 func (user *User) Equals(b *User) bool {
 	return user.ID == b.ID
 }
