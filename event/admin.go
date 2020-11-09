@@ -2,6 +2,7 @@ package event
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -88,7 +89,7 @@ func (server *Server) CreateEvent(context *Context) {
 
 		err := context.Events.Create(event)
 		if err != nil {
-			if err == ErrExists {
+			if errors.Is(err, ErrExists) {
 				context.FlashErrorNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
 				context.Response.WriteHeader(http.StatusConflict)
 			} else {

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/adinfinit/jamvote/site"
@@ -20,7 +21,7 @@ func (server *Server) CurrentUser(context *Context) *User {
 	}
 
 	user, err := context.Users.ByCredentials(cred)
-	if err == ErrNotExists {
+	if errors.Is(err, ErrNotExists) {
 		user = &User{
 			Name:  cred.Name,
 			Email: cred.Email,

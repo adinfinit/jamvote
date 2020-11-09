@@ -2,6 +2,7 @@ package datastoredb
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 
@@ -17,7 +18,7 @@ type Events struct {
 }
 
 func eventsError(err error) error {
-	if err == datastore.ErrNoSuchEntity {
+	if errors.Is(err, datastore.ErrNoSuchEntity) {
 		return event.ErrNotExists
 	}
 	return err
@@ -52,7 +53,7 @@ func (repo *Events) Create(ev *event.Event) error {
 
 		existing := &event.Event{}
 		err := datastore.Get(ctx, eventkey, existing)
-		if err != datastore.ErrNoSuchEntity {
+		if !errors.Is(err, datastore.ErrNoSuchEntity) {
 			if err == nil {
 				return event.ErrExists
 			}

@@ -2,6 +2,7 @@ package datastoredb
 
 import (
 	"context"
+	"errors"
 	"sort"
 
 	"github.com/adinfinit/jamvote/auth"
@@ -24,7 +25,7 @@ type credentialMapping struct {
 }
 
 func usersError(err error) error {
-	if err == datastore.ErrNoSuchEntity {
+	if errors.Is(err, datastore.ErrNoSuchEntity) {
 		return user.ErrNotExists
 	}
 	return err
