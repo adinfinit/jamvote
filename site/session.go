@@ -8,8 +8,10 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+// DefaultSessionName is the name of default session store.
 const DefaultSessionName = "jamvote"
 
+// SessionStore keeps all the alive sessions and cookies.
 var SessionStore sessions.Store
 
 func init() {

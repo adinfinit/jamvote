@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// APTLocation is the location where times are handled.
 var APTLocation *time.Location
 
 func init() {
@@ -18,6 +19,7 @@ func init() {
 	}
 }
 
+// initTemplates loads all templates.
 func (server *Server) initTemplates(glob string) error {
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
@@ -80,6 +82,7 @@ func (server *Server) initTemplates(glob string) error {
 	return err
 }
 
+// Render renders a template.
 func (context *Context) Render(name string) {
 	context.saveSession()
 	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() interface{} { return context.Data }})
@@ -88,8 +91,10 @@ func (context *Context) Render(name string) {
 	}
 }
 
+// violinStep defines level of detail for violin plot.
 const violinStep = 0.05
 
+// violin calculates a violin plot for given scores.
 func violin(min, max float64, scores []float64) []float64 {
 	var values []float64
 	maxvalue := 1.0
@@ -113,6 +118,7 @@ func violin(min, max float64, scores []float64) []float64 {
 	return values
 }
 
+// violinLeft creates left side path of a violin plot.
 func violinLeft(min, max float64, scores []float64) string {
 	points := violin(min, max, scores)
 	s := "50,100 "
@@ -125,6 +131,7 @@ func violinLeft(min, max float64, scores []float64) string {
 	return s
 }
 
+// violinRight creates right side path of a violin plot.
 func violinRight(min, max float64, scores []float64) string {
 	points := violin(min, max, scores)
 	s := "50,100 "
@@ -137,6 +144,7 @@ func violinRight(min, max float64, scores []float64) string {
 	return s
 }
 
+// cubicPulse calculates a smooth distance from a value.
 func cubicPulse(center, radius, at float64) float64 {
 	at = at - center
 	if at < 0 {
@@ -149,6 +157,7 @@ func cubicPulse(center, radius, at float64) float64 {
 	return 1 - at*at*(3-2*at)
 }
 
+// toFloat tries to convert a to a floating point value.
 func toFloat(a interface{}) float64 {
 	switch v := a.(type) {
 	case int:
