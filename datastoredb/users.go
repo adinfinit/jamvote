@@ -13,10 +13,12 @@ import (
 	"google.golang.org/appengine/memcache"
 )
 
+// Users implements user.Repo.
 type Users struct {
 	Context context.Context
 }
 
+// credentialMapping is info that is stored in the datastore.
 type credentialMapping struct {
 	UserKey  *datastore.Key
 	Provider string `datastore:",noindex"`
@@ -24,6 +26,7 @@ type credentialMapping struct {
 	Name     string `datastore:",noindex"`
 }
 
+// usersError converts datastore error to a domain error.
 func usersError(err error) error {
 	if errors.Is(err, datastore.ErrNoSuchEntity) {
 		return user.ErrNotExists
@@ -31,6 +34,7 @@ func usersError(err error) error {
 	return err
 }
 
+// Create creates a new user with the specified credentials and user info.
 func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, error) {
 	incompletekey := datastore.NewIncompleteKey(repo.Context, "User", nil)
 	userkey, err := datastore.Put(repo.Context, incompletekey, u)
@@ -55,6 +59,7 @@ func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, er
 	return u.ID, nil
 }
 
+// ByCredentials finds user info based on credentials.
 func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 	if item, err := memcache.Get(repo.Context, "Credential_"+cred.ID); err == nil {
 		u := &user.User{}
@@ -88,6 +93,7 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 	return u, usersError(err)
 }
 
+// ByID returns user by ID.
 func (repo *Users) ByID(id user.UserID) (*user.User, error) {
 	u := &user.User{}
 	if _, err := memcache.Gob.Get(repo.Context, "User_"+id.String(), u); err == nil {
@@ -101,6 +107,7 @@ func (repo *Users) ByID(id user.UserID) (*user.User, error) {
 	return u, usersError(err)
 }
 
+// List returns all users.
 func (repo *Users) List() ([]*user.User, error) {
 	users := []*user.User{}
 
@@ -116,6 +123,7 @@ func (repo *Users) List() ([]*user.User, error) {
 	return users, usersError(err)
 }
 
+// Update updates a user.
 func (repo *Users) Update(u *user.User) error {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(u.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, u)
