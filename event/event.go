@@ -9,10 +9,12 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+// DB is the master database.
 type DB interface {
 	Events(context context.Context) Repo
 }
 
+// Repo describes interaction with the database.
 type Repo interface {
 	List() ([]*Event, error)
 
@@ -24,13 +26,18 @@ type Repo interface {
 	BallotRepo
 }
 
+// ErrNotExists is returned when an event doesn't exist.
 var ErrNotExists = errors.New("does not exist")
+// ErrExists is returned when an event already exists.
 var ErrExists = errors.New("already exists")
 
+// EventID is a unique identifier for an event.
 type EventID string
 
+// String returns printable event id.
 func (id EventID) String() string { return string(id) }
 
+// Valid checks whether event is valid.
 func (id EventID) Valid() bool {
 	if id == "" {
 		return false
@@ -49,6 +56,7 @@ func (id EventID) Valid() bool {
 	return true
 }
 
+// Event contains all information about an event.
 type Event struct {
 	ID    EventID `datastore:"-"`
 	Name  string
@@ -82,10 +90,12 @@ func init() {
 	gob.Register(&Event{})
 }
 
+// CanVote returns whether it's possible to vote in this event.
 func (event *Event) CanVote() bool {
 	return event.Voting && !event.Closed
 }
 
+// CanRegister returns whether u can register to the event.
 func (event *Event) CanRegister(u *user.User) bool {
 	if u.IsAdmin() {
 		return true
@@ -93,6 +103,7 @@ func (event *Event) CanRegister(u *user.User) bool {
 	return !event.Closed && event.Registration
 }
 
+// HasJammer checks whether u has registered.
 func (event *Event) HasJammer(u *user.User) bool {
 	if u == nil {
 		return false
@@ -101,6 +112,7 @@ func (event *Event) HasJammer(u *user.User) bool {
 	return containsUser(event.Jammers, u.ID)
 }
 
+// containsUser checks whether userids contains userid.
 func containsUser(userids []user.UserID, userid user.UserID) bool {
 	for _, jammer := range userids {
 		if jammer == userid {
@@ -110,6 +122,7 @@ func containsUser(userids []user.UserID, userid user.UserID) bool {
 	return false
 }
 
+// AddRemoveJammers adds and removes jammers from the event.
 func (event *Event) AddRemoveJammers(added, removed []user.UserID) {
 	result := []user.UserID{}
 	for _, userid := range event.Jammers {
@@ -125,10 +138,12 @@ func (event *Event) AddRemoveJammers(added, removed []user.UserID) {
 	event.Jammers = result
 }
 
+// Less compares events based on start time.
 func (event *Event) Less(other *Event) bool {
 	return event.startTime().After(other.startTime())
 }
 
+// startTime returns event start time.
 func (event *Event) startTime() time.Time {
 	if !event.StartTime.IsZero() {
 		return event.StartTime

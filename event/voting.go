@@ -8,8 +8,10 @@ import (
 	"strconv"
 )
 
+// Range is an aspect range.
 type Range struct{ Min, Max, Step float64 }
 
+// FillQueue fills voting queue for a user.
 func (server *Server) FillQueue(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -51,6 +53,7 @@ func (server *Server) FillQueue(context *Context) {
 	context.Redirect(context.Event.Path("voting"), http.StatusSeeOther)
 }
 
+// Voting displays voting queue.
 func (server *Server) Voting(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -100,6 +103,7 @@ func (server *Server) Voting(context *Context) {
 	context.Render("event-voting")
 }
 
+// Vote handles page for casting a ballot.
 func (server *Server) Vote(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -202,6 +206,7 @@ func (server *Server) Vote(context *Context) {
 	context.Render("event-vote")
 }
 
+// Reveal handles page for revealing the final result.
 func (server *Server) Reveal(context *Context) {
 	if !context.Event.Voting {
 		context.FlashMessage("Voting has not yet started.")
@@ -249,6 +254,7 @@ func (server *Server) Reveal(context *Context) {
 	context.Render("event-reveal")
 }
 
+// Results displays all the results.
 func (server *Server) Results(context *Context) {
 	if !context.Event.Voting {
 		context.FlashMessage("Voting has not yet started.")
@@ -279,6 +285,7 @@ func (server *Server) Results(context *Context) {
 	context.Render("event-results")
 }
 
+// Progress displays page for voting progress.
 func (server *Server) Progress(context *Context) {
 	results, err := context.Events.Results(context.Event.ID)
 	if err != nil {

@@ -12,6 +12,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+// CreateEvent handles page for creating a new event.
 func (server *Server) CreateEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to create events.")
@@ -107,6 +108,7 @@ func (server *Server) CreateEvent(context *Context) {
 	context.Render("event-create")
 }
 
+// EditEvent handles page for editing an event.
 func (server *Server) EditEvent(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to edit events.")
@@ -210,6 +212,7 @@ func (server *Server) EditEvent(context *Context) {
 	context.Render("event-edit")
 }
 
+// Jammers handles managing registered jammers for an event.
 func (server *Server) Jammers(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to edit jammers.")
@@ -276,6 +279,7 @@ func (server *Server) Jammers(context *Context) {
 	context.Render("event-jammers")
 }
 
+// BallotsCSV returns all ballots for analysis.
 func (server *Server) BallotsCSV(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to edit jammers.")

@@ -1,13 +1,13 @@
 package event
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/adinfinit/jamvote/user"
 	"google.golang.org/appengine/datastore"
 )
 
+// BallotRepo is used to manage ballots for an event.
 type BallotRepo interface {
 	Ballots(eventid EventID) ([]*Ballot, error)
 	CreateIncompleteBallots(eventid EventID, userid user.UserID) (complete, incomplete []*BallotInfo, err error)
@@ -18,8 +18,7 @@ type BallotRepo interface {
 	TeamBallots(eventid EventID, teamid TeamID) ([]*Ballot, error)
 }
 
-var ErrUnfinished = errors.New("Incomplete ballots.")
-
+// Ballot is all information for a single ballot.
 type Ballot struct {
 	ID        *datastore.Key `datastore:"-"`
 	Voter     user.UserID
@@ -29,11 +28,13 @@ type Ballot struct {
 	Aspects
 }
 
+// BallotInfo is a single ballot, but contains a reference to the target team.
 type BallotInfo struct {
 	*Team
 	*Ballot
 }
 
+// TeamResult contains all information about a single teams result.
 type TeamResult struct {
 	*Team
 	Ballots  []*Ballot
@@ -44,6 +45,7 @@ type TeamResult struct {
 	MemberBallots []*Ballot
 }
 
+// HasReviewer checks whether team results contains userid.
 func (info *TeamResult) HasReviewer(userid user.UserID) bool {
 	for _, ballot := range info.Ballots {
 		if ballot.Voter == userid {
@@ -53,6 +55,7 @@ func (info *TeamResult) HasReviewer(userid user.UserID) bool {
 	return false
 }
 
+// DefaultAspects contains defaults for aspects.
 var DefaultAspects = Aspects{
 	Theme:      Aspect{3, ""},
 	Enjoyment:  Aspect{3, ""},
@@ -62,6 +65,7 @@ var DefaultAspects = Aspects{
 	Overall:    Aspect{0, ""},
 }
 
+// AverageScores returns averages for all aspects.
 func AverageScores(ballots []*Ballot) Aspects {
 	count := 0.0
 	average := Aspects{}
@@ -90,6 +94,7 @@ func AverageScores(ballots []*Ballot) Aspects {
 	return average
 }
 
+// Aspects contains criteria for scoring a game.
 type Aspects struct {
 	Theme      Aspect
 	Enjoyment  Aspect
@@ -99,11 +104,13 @@ type Aspects struct {
 	Overall    Aspect
 }
 
+// Aspect is a single criteria with an optional comment.
 type Aspect struct {
 	Score   float64
 	Comment string
 }
 
+// AspectsInfo contains all scores for aspects.
 type AspectsInfo struct {
 	Theme      AspectInfo
 	Enjoyment  AspectInfo
@@ -113,16 +120,19 @@ type AspectsInfo struct {
 	Overall    AspectInfo
 }
 
+// AspectInfo contains all scores for an aspect.
 type AspectInfo struct {
 	Scores       []float64
 	MemberScores []float64
 	Comments     []string
 }
 
+// String pretty prints an aspect.
 func (aspect Aspect) String() string {
 	return fmt.Sprintf("%.1f", aspect.Score)
 }
 
+// ClearComments clears all comments in aspects.
 func (aspects *Aspects) ClearComments() {
 	aspects.Theme.Comment = ""
 	aspects.Enjoyment.Comment = ""
@@ -132,6 +142,7 @@ func (aspects *Aspects) ClearComments() {
 	aspects.Overall.Comment = ""
 }
 
+// Item fetches an aspect by name.
 func (aspects *AspectsInfo) Item(name string) AspectInfo {
 	switch name {
 	case "Theme":
@@ -150,6 +161,7 @@ func (aspects *AspectsInfo) Item(name string) AspectInfo {
 	return AspectInfo{}
 }
 
+// Add adds together two aspects.
 func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Theme.Score += other.Theme.Score
 	aspects.Enjoyment.Score += other.Enjoyment.Score
@@ -159,6 +171,7 @@ func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Overall.Score += other.Overall.Score
 }
 
+// Add includes other into aspects.
 func (aspects *AspectsInfo) Add(other *Aspects, isMember bool) {
 	aspects.Theme.Add(&other.Theme, isMember)
 	aspects.Enjoyment.Add(&other.Enjoyment, isMember)
@@ -168,6 +181,7 @@ func (aspects *AspectsInfo) Add(other *Aspects, isMember bool) {
 	aspects.Overall.Add(&other.Overall, isMember)
 }
 
+// Add includes other into aspect.
 func (aspect *AspectInfo) Add(other *Aspect, isMember bool) {
 	if isMember {
 		aspect.MemberScores = append(aspect.MemberScores, other.Score)
@@ -179,6 +193,7 @@ func (aspect *AspectInfo) Add(other *Aspect, isMember bool) {
 	}
 }
 
+// EnsureRange ensures that all scores are in the appropriate ranges.
 func (aspects *Aspects) EnsureRange() {
 	clamp(&aspects.Theme.Score, 1, 5)
 	clamp(&aspects.Enjoyment.Score, 1, 5)
@@ -188,6 +203,7 @@ func (aspects *Aspects) EnsureRange() {
 	clamp(&aspects.Overall.Score, 0, 5)
 }
 
+// Score returns an aspect score based on a name.
 func (aspects *Aspects) Score(name string) float64 {
 	switch name {
 	case "Theme":
@@ -206,6 +222,7 @@ func (aspects *Aspects) Score(name string) float64 {
 	return 0
 }
 
+// Comment returns an aspect comment based on a name.
 func (aspects *Aspects) Comment(name string) string {
 	switch name {
 	case "Theme":
@@ -224,10 +241,12 @@ func (aspects *Aspects) Comment(name string) string {
 	return "INVALID"
 }
 
+// UpdateTotal updates overall score.
 func (aspects *Aspects) UpdateTotal() {
 	aspects.Overall.Score = aspects.Total()
 }
 
+// Total calculates total score.
 func (aspects *Aspects) Total() float64 {
 	return clamped((aspects.Theme.Score+
 		aspects.Enjoyment.Score+
@@ -236,6 +255,7 @@ func (aspects *Aspects) Total() float64 {
 		aspects.Bonus.Score)/4.5, 1, 5)
 }
 
+// AspectNames contains all names of aspects.
 var AspectNames = []string{
 	"Theme",
 	"Enjoyment",
@@ -245,6 +265,7 @@ var AspectNames = []string{
 	"Overall",
 }
 
+// AspectDescription describes an aspect.
 type AspectDescription struct {
 	Name        string
 	Description string
@@ -252,6 +273,7 @@ type AspectDescription struct {
 	Options []string
 }
 
+// AspectDescriptions contains information about aspects.
 var AspectDescriptions = []AspectDescription{
 	{
 		Name:        "Theme",
@@ -281,6 +303,7 @@ var AspectDescriptions = []AspectDescription{
 	},
 }
 
+// AspectDescriptionsWithOverall also includes the overall.
 var AspectDescriptionsWithOverall = append(AspectDescriptions,
 	AspectDescription{
 		Name:        "Overall",
@@ -288,6 +311,7 @@ var AspectDescriptionsWithOverall = append(AspectDescriptions,
 		Range:       Range{Min: 1, Max: 5, Step: 0.1},
 	})
 
+// Clamp forces v to be between min and max.
 func clamp(v *float64, min, max float64) {
 	if *v < min {
 		*v = min
@@ -297,6 +321,7 @@ func clamp(v *float64, min, max float64) {
 	}
 }
 
+// clamped returns v such that it is between min and max.
 func clamped(v float64, min, max float64) float64 {
 	if v < min {
 		return min

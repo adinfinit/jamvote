@@ -8,6 +8,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+// Context contains an event request.
 type Context struct {
 	Event  *Event
 	Team   *Team
@@ -16,6 +17,7 @@ type Context struct {
 	*user.Context
 }
 
+// Context creates a new context for the given request.
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	context := &Context{}
 	context.Context = server.Users.Context(w, r)
@@ -57,12 +59,14 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	return context
 }
 
+// HandlerMaybe wraps fn with automatic Context creation.
 func (server *Server) HandlerMaybe(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fn(server.Context(w, r))
 	})
 }
 
+// Handler wraps fn with Context, however a valid event id is required.
 func (server *Server) Handler(fn func(*Context)) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		context := server.Context(w, r)

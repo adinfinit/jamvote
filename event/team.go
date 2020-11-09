@@ -9,6 +9,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+// TeamRepo contains team management in an event.
 type TeamRepo interface {
 	CreateTeam(id EventID, team *Team) (TeamID, error)
 	UpdateTeam(id EventID, team *Team) error
@@ -17,17 +18,22 @@ type TeamRepo interface {
 	TeamsByUser(id user.UserID) ([]*EventTeam, error)
 }
 
+// MaxTeamMembers defines maximum number of team members.
 const MaxTeamMembers = 6
 
+// TeamID is a unique identifier for a team.
 type TeamID int64
 
+// String is the string representation of the team id.
 func (id TeamID) String() string { return strconv.Itoa(int(id)) }
 
+// EventTeam contains information about the event and team.
 type EventTeam struct {
 	Event Event
 	Team
 }
 
+// Team contains all information about a team.
 type Team struct {
 	EventID EventID `datastore:"-"`
 	ID      TeamID  `datastore:"-"`
@@ -37,11 +43,13 @@ type Team struct {
 	Game    Game `datastore:",noindex"`
 }
 
+// Member is a team member. There may not be a registered user.
 type Member struct {
 	ID   user.UserID // can be zero
 	Name string
 }
 
+// Game contains all information about a game.
 type Game struct {
 	Name string
 	Info string `datastore:",noindex"`
@@ -55,10 +63,12 @@ type Game struct {
 	} `datastore:",noindex"`
 }
 
+// Less compares teams by name.
 func (team *Team) Less(other *Team) bool {
 	return natural.Less(team.Name, other.Name)
 }
 
+// Verify verifies whether team has valid state.
 func (team *Team) Verify() error {
 	if team.Name == "" {
 		return errors.New("Team name cannot be empty.")
@@ -100,6 +110,7 @@ func (team *Team) Verify() error {
 	return nil
 }
 
+// HasEditor checks whether user can edit the team.
 func (team *Team) HasEditor(user *user.User) bool {
 	if user == nil {
 		return false
@@ -110,6 +121,7 @@ func (team *Team) HasEditor(user *user.User) bool {
 	return team.HasMember(user)
 }
 
+// HasMember checks whether user is a member of the team.
 func (team *Team) HasMember(user *user.User) bool {
 	if user == nil {
 		return false
@@ -117,6 +129,7 @@ func (team *Team) HasMember(user *user.User) bool {
 	return team.HasMemberID(user.ID)
 }
 
+// HasMemberID checks whether user is a member by userid.
 func (team *Team) HasMemberID(userid user.UserID) bool {
 	for _, m := range team.Members {
 		if m.ID == userid {
@@ -126,6 +139,7 @@ func (team *Team) HasMemberID(userid user.UserID) bool {
 	return false
 }
 
+// HasSubmitted checks whether team has all information necessary.
 func (team *Team) HasSubmitted() bool {
 	if team.Game.Name == "" {
 		return false
@@ -138,10 +152,12 @@ func (team *Team) HasSubmitted() bool {
 	return hasFacebook || hasJam || hasDownload
 }
 
+// IsCompeting returns whether team is part of the prizes.
 func (team *Team) IsCompeting() bool {
 	return team.HasSubmitted() && !team.Game.Noncompeting
 }
 
+// MembersWithEmpty returns slice with additional empty members if needed.
 func (team *Team) MembersWithEmpty() []Member {
 	members := append([]Member{}, team.Members...)
 	for len(members) < 6 {

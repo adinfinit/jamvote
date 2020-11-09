@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Server handles pages related to an event.
 type Server struct {
 	Site *site.Server
 	DB   DB
@@ -19,6 +20,7 @@ type Server struct {
 	Users *user.Server
 }
 
+// Register registers all endpoints to router.
 func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/", server.HandlerMaybe(server.List))
 	router.HandleFunc("/event/create", server.HandlerMaybe(server.CreateEvent))
@@ -43,6 +45,7 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}/vote/{teamid}", server.Handler(server.Vote))
 }
 
+// Path returns a proper route for an event.
 func (event *Event) Path(subroutes ...interface{}) string {
 	route := []string{"/event", string(event.ID)}
 	for _, r := range subroutes {
@@ -58,6 +61,7 @@ func (event *Event) Path(subroutes ...interface{}) string {
 	return path.Join(route...)
 }
 
+// List lists all events.
 func (server *Server) List(context *Context) {
 	events, err := context.Events.List()
 	if err != nil {
@@ -88,6 +92,7 @@ func (server *Server) List(context *Context) {
 	context.Render("event-list")
 }
 
+// Dashboard returns main page for an event.
 func (server *Server) Dashboard(context *Context) {
 	// TODO: deduplicate
 	teams, err := context.Events.Teams(context.Event.ID)

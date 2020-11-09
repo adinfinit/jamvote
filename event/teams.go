@@ -9,6 +9,7 @@ import (
 	"github.com/adinfinit/jamvote/user"
 )
 
+// findUserByName finds a user by name from users.
 func findUserByName(users []*user.User, name string) (*user.User, bool) {
 	for _, user := range users {
 		if strings.EqualFold(user.Name, name) {
@@ -18,6 +19,7 @@ func findUserByName(users []*user.User, name string) (*user.User, bool) {
 	return nil, false
 }
 
+// findUserByID finds a user by ID from users.
 func findUserByID(users []*user.User, id user.UserID) (*user.User, bool) {
 	for _, user := range users {
 		if user.ID == id {
@@ -27,6 +29,7 @@ func findUserByID(users []*user.User, id user.UserID) (*user.User, bool) {
 	return nil, false
 }
 
+// parseTeamForm parses edited team page.
 func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team {
 	team := &Team{}
 	team.Name = context.FormValue("Team.Name")
@@ -67,6 +70,7 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 	return team
 }
 
+// CreateTeam handles page for creating a new team.
 func (server *Server) CreateTeam(context *Context) {
 	if context.CurrentUser == nil {
 		// TODO: add return address to team-creation page
@@ -121,6 +125,7 @@ func (server *Server) CreateTeam(context *Context) {
 	context.Render("event-team-create")
 }
 
+// EditTeam handles page for editing a team.
 func (server *Server) EditTeam(context *Context) {
 	if !server.canEditTeam(context) {
 		return
@@ -176,6 +181,7 @@ func (server *Server) EditTeam(context *Context) {
 	context.Render("event-team-edit")
 }
 
+// Team displays team information.
 func (server *Server) Team(context *Context) {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
@@ -207,6 +213,7 @@ func (server *Server) Team(context *Context) {
 	context.Render("event-team")
 }
 
+// Teams displays all teams.
 func (server *Server) Teams(context *Context) {
 	teams, err := context.Events.Teams(context.Event.ID)
 	if err != nil {
@@ -233,6 +240,7 @@ func (server *Server) Teams(context *Context) {
 	context.Render("event-teams")
 }
 
+// Linking displays information about users who have not been linked to their users.
 func (server *Server) Linking(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to view linking information.")
@@ -300,6 +308,7 @@ func (server *Server) Linking(context *Context) {
 	context.Render("event-linking")
 }
 
+// LinkingApproveAll tries to associate all team members with appropriate teams and users.
 func (server *Server) LinkingApproveAll(context *Context) {
 	if !context.CurrentUser.IsAdmin() {
 		context.FlashError("Must be admin to approve all.")
@@ -347,6 +356,7 @@ func (server *Server) LinkingApproveAll(context *Context) {
 	context.Redirect(context.Event.Path("linking"), http.StatusSeeOther)
 }
 
+// canEditTeam checks whether caller can edit the team.
 func (server *Server) canEditTeam(context *Context) bool {
 	if context.Team == nil {
 		teamid, _ := context.IntParam("teamid")
