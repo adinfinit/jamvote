@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
-	"errors"
 	"log"
 	"net/http"
 	"strings"
@@ -16,6 +15,7 @@ import (
 	"google.golang.org/appengine/user"
 )
 
+// Credentials represents users authentication method.
 type Credentials struct {
 	Provider string
 	ID       string
@@ -24,11 +24,8 @@ type Credentials struct {
 	Admin    bool
 }
 
-var (
-	ErrNotLoggedIn = errors.New("not logged in")
-)
-
-type Service struct {
+// Server implements authentication endpoints.
+type Server struct {
 	Development bool
 
 	Domain         string
@@ -36,8 +33,9 @@ type Service struct {
 	LoginCompleted string
 }
 
-func NewService(domain string) *Service {
-	service := &Service{}
+// NewServer returns new Server for the given domain.
+func NewServer(domain string) *Server {
+	service := &Server{}
 
 	service.Development = false
 
@@ -48,18 +46,21 @@ func NewService(domain string) *Service {
 	return service
 }
 
-func (service *Service) Register(router *mux.Router) {
+// Register registers handlers for /auth/*.
+func (service *Server) Register(router *mux.Router) {
 	router.HandleFunc("/auth/callback", service.Callback)
 	router.HandleFunc("/auth/development-login", service.DevelopmentLogin)
 	router.HandleFunc("/auth/logout", service.Logout)
 }
 
+// Link represents a single login URL for a provider.
 type Link struct {
 	Title string
 	URL   string
 }
 
-func (service *Service) Links(r *http.Request) []Link {
+// Links returns all available login URLs.
+func (service *Server) Links(r *http.Request) []Link {
 	infos := []Link{}
 
 	c := appengine.NewContext(r)
@@ -73,7 +74,8 @@ func (service *Service) Links(r *http.Request) []Link {
 	return infos
 }
 
-func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
+// CurrentCredentials returns credentials associated with the request.
+func (service *Server) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
 	if service.Development {
 		sess, _ := developmentSessionStore.New(r, developmentSession)
 		if val, ok := sess.Values["User"]; ok {
@@ -108,7 +110,8 @@ func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *
 	return nil
 }
 
-func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
+// Callback is called after a login event.
+func (service *Server) Callback(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	aeuser := user.Current(c)
 	if aeuser != nil {
@@ -118,7 +121,8 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
+// Logout is called when a user wants to log out.
+func (service *Server) Logout(w http.ResponseWriter, r *http.Request) {
 	if service.Development {
 		sess, _ := developmentSessionStore.New(r, developmentSession)
 		sess.Values["User"] = ""
@@ -134,7 +138,8 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request) {
+// DevelopmentLogin is a way to login to a development server.
+func (service *Server) DevelopmentLogin(w http.ResponseWriter, r *http.Request) {
 	if !service.Development {
 		return
 	}
@@ -152,6 +157,7 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 	}
 }
 
+// developmentUserID dynamically creates a user ID.
 func developmentUserID(username string) string {
 	h := sha1.Sum([]byte(username))
 	return hex.EncodeToString(h[:])
@@ -159,6 +165,7 @@ func developmentUserID(username string) string {
 
 const developmentSession = "jamvote-development"
 
+// developmentSessionStore is used for development logins.
 var developmentSessionStore sessions.Store
 
 func init() {

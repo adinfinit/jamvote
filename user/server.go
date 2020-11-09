@@ -14,7 +14,7 @@ type Server struct {
 	Site *site.Server
 	DB   DB
 
-	Auth *auth.Service
+	Auth *auth.Server
 }
 
 func (server *Server) Register(router *mux.Router) {
