@@ -24,8 +24,8 @@ type Credentials struct {
 	Admin    bool
 }
 
-// Server implements authentication endpoints.
-type Server struct {
+// Service implements authentication endpoints.
+type Service struct {
 	Development bool
 
 	Domain         string
@@ -33,9 +33,9 @@ type Server struct {
 	LoginCompleted string
 }
 
-// NewServer returns new Server for the given domain.
-func NewServer(domain string) *Server {
-	service := &Server{}
+// NewService returns new Service for the given domain.
+func NewService(domain string) *Service {
+	service := &Service{}
 
 	service.Development = false
 
@@ -47,7 +47,7 @@ func NewServer(domain string) *Server {
 }
 
 // Register registers handlers for /auth/*.
-func (service *Server) Register(router *mux.Router) {
+func (service *Service) Register(router *mux.Router) {
 	router.HandleFunc("/auth/callback", service.Callback)
 	router.HandleFunc("/auth/development-login", service.DevelopmentLogin)
 	router.HandleFunc("/auth/logout", service.Logout)
@@ -60,7 +60,7 @@ type Link struct {
 }
 
 // Links returns all available login URLs.
-func (service *Server) Links(r *http.Request) []Link {
+func (service *Service) Links(r *http.Request) []Link {
 	infos := []Link{}
 
 	c := appengine.NewContext(r)
@@ -75,7 +75,7 @@ func (service *Server) Links(r *http.Request) []Link {
 }
 
 // CurrentCredentials returns credentials associated with the request.
-func (service *Server) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
+func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
 	if service.Development {
 		sess, _ := developmentSessionStore.New(r, developmentSession)
 		if val, ok := sess.Values["User"]; ok {
@@ -111,7 +111,7 @@ func (service *Server) CurrentCredentials(c context.Context, r *http.Request) *C
 }
 
 // Callback is called after a login event.
-func (service *Server) Callback(w http.ResponseWriter, r *http.Request) {
+func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	aeuser := user.Current(c)
 	if aeuser != nil {
@@ -122,7 +122,7 @@ func (service *Server) Callback(w http.ResponseWriter, r *http.Request) {
 }
 
 // Logout is called when a user wants to log out.
-func (service *Server) Logout(w http.ResponseWriter, r *http.Request) {
+func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	if service.Development {
 		sess, _ := developmentSessionStore.New(r, developmentSession)
 		sess.Values["User"] = ""
@@ -139,7 +139,7 @@ func (service *Server) Logout(w http.ResponseWriter, r *http.Request) {
 }
 
 // DevelopmentLogin is a way to login to a development server.
-func (service *Server) DevelopmentLogin(w http.ResponseWriter, r *http.Request) {
+func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request) {
 	if !service.Development {
 		return
 	}

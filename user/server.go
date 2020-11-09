@@ -15,7 +15,7 @@ type Server struct {
 	Site *site.Server
 	DB   DB
 
-	Auth *auth.Server
+	Auth *auth.Service
 }
 
 // Register registers endpoints to router.

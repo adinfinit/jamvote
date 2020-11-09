@@ -20,7 +20,7 @@ func main() {
 
 	router := mux.NewRouter()
 
-	auths := auth.NewServer("http://localhost:8080")
+	auths := auth.NewService("http://localhost:8080")
 	auths.LoginCompleted = "/user/logged-in"
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
