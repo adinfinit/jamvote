@@ -5,6 +5,7 @@ import (
 	"unicode/utf8"
 )
 
+// Less implements natural comparison.
 func Less(a, b string) bool {
 	ai, bi := 0, 0
 	for ai < len(a) && bi < len(b) {
@@ -47,6 +48,7 @@ func Less(a, b string) bool {
 	return len(a) < len(b)
 }
 
+// parsenum reads a digit sequence.
 func parsenum(a string) string {
 	for i, r := range a {
 		if !unicode.IsDigit(r) {
