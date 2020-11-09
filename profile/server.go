@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Server implements profile views for users.
 type Server struct {
 	Site   *site.Server
 	Events event.DB
@@ -18,16 +19,44 @@ type Server struct {
 	Users *user.Server
 }
 
+// Register registers user related endpoints.
 func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/user/{userid}/edit", server.Handler(server.Edit))
 	router.HandleFunc("/user/{userid}", server.Handler(server.Profile))
 }
 
+// getUserID retrieves user ID from a URL argument.
 func getUserID(context *Context) (user.UserID, bool) {
 	id, ok := context.IntParam("userid")
 	return user.UserID(id), ok
 }
 
+// Profile displays a user profile.
+func (server *Server) Profile(context *Context) {
+	userid, ok := getUserID(context)
+	if !ok {
+		context.Error("User ID not specified", http.StatusBadRequest)
+		return
+	}
+
+	user, err := context.Users.ByID(userid)
+	if err != nil {
+		context.Error(err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	teams, err := context.Teams.TeamsByUser(userid)
+	if err != nil {
+		context.Error(err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	context.Data["User"] = user
+	context.Data["Teams"] = teams
+	context.Render("user-view")
+}
+
+// Edit displays a page for editing a user.
 func (server *Server) Edit(context *Context) {
 	userid, ok := getUserID(context)
 	if !ok {
@@ -77,28 +106,4 @@ func (server *Server) Edit(context *Context) {
 
 	context.Data["User"] = user
 	context.Render("user-edit")
-}
-
-func (server *Server) Profile(context *Context) {
-	userid, ok := getUserID(context)
-	if !ok {
-		context.Error("User ID not specified", http.StatusBadRequest)
-		return
-	}
-
-	user, err := context.Users.ByID(userid)
-	if err != nil {
-		context.Error(err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	teams, err := context.Teams.TeamsByUser(userid)
-	if err != nil {
-		context.Error(err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	context.Data["User"] = user
-	context.Data["Teams"] = teams
-	context.Render("user-view")
 }
