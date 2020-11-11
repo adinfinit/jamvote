@@ -11,8 +11,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-
-	"google.golang.org/appengine"
 )
 
 // Server implements the root request handler.
@@ -64,7 +62,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 		Response: w,
 		Data:     data,
 		Session:  sess,
-		Context:  appengine.NewContext(r),
+		Context:  r.Context(),
 	}
 }
 
@@ -114,6 +112,7 @@ func (context *Context) FlashErrorNow(message ...string) {
 func (context *Context) FlashMessage(message ...string) {
 	context.flash("_flash", message...)
 }
+
 // FlashMessage adds regular message for current request.
 func (context *Context) FlashMessageNow(message ...string) {
 	context.flashNow("Flashes", message...)

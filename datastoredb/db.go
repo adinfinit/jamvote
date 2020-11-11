@@ -8,7 +8,14 @@ import (
 )
 
 // DB implements master database.
-type DB struct{}
+type DB struct {
+	projectID string
+}
+
+// OpenDB creates a new database.
+func OpenDB(projectID string) *DB {
+	return &DB{projectID: projectID}
+}
 
 // Events returns event.Repo.
 func (db *DB) Events(ctx context.Context) event.Repo {

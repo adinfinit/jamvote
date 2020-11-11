@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 
-	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"
 )
 
@@ -63,7 +62,7 @@ type Link struct {
 func (service *Service) Links(r *http.Request) []Link {
 	infos := []Link{}
 
-	c := appengine.NewContext(r)
+	c := r.Context()
 	loginurl, err := user.LoginURL(c, "/auth/callback")
 	if err != nil {
 		log.Println(err)
@@ -112,7 +111,7 @@ func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *
 
 // Callback is called after a login event.
 func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
+	c := r.Context()
 	aeuser := user.Current(c)
 	if aeuser != nil {
 		http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
@@ -129,7 +128,7 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 		sess.Save(r, w)
 	}
 
-	c := appengine.NewContext(r)
+	c := r.Context()
 	logout, err := user.LogoutURL(c, "/")
 	if err == nil {
 		http.Redirect(w, r, logout, http.StatusSeeOther)

@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
-	"google.golang.org/appengine"
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/datastoredb"
@@ -16,7 +16,9 @@ import (
 )
 
 func main() {
-	db := &datastoredb.DB{}
+	projectid := os.Getenv("GOOGLE_CLOUD_PROJECT")
+	db := datastoredb.OpenDB(projectid)
+	log.Printf("Opened database with project-id:%q", projectid)
 
 	router := mux.NewRouter()
 
@@ -53,5 +55,14 @@ func main() {
 
 	http.Handle("/", router)
 
-	appengine.Main()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+
+	log.Printf("Listening on port %s", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatal(err)
+	}
 }
