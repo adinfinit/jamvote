@@ -10,6 +10,7 @@ Install [Google App Engine Standard](https://cloud.google.com/appengine/docs/sta
 cd $GOPATH/src/github.com/adinfinit
 git clone git@github.com:adinfinit/jamvote.git
 cd jamvote
-go get -u ./...
-dev_appserver.py appengine
+
+go mod download
+dev_appserver.py .
 ```
