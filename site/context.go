@@ -15,16 +15,22 @@ import (
 	"google.golang.org/appengine"
 )
 
+// DefaultSessionName is the name of default session store.
+const DefaultSessionName = "jamvote"
+
 // Server implements the root request handler.
 type Server struct {
 	Development bool
 	Start       time.Time
 	Templates   *template.Template
+
+	Sessions sessions.Store
 }
 
 // NewServer creates a new server with the specified templates.
-func NewServer(templatesglob string) (*Server, error) {
+func NewServer(sess sessions.Store, templatesglob string) (*Server, error) {
 	server := &Server{}
+	server.Sessions = sess
 	server.Start = time.Now()
 	return server, server.initTemplates(templatesglob)
 }
@@ -43,7 +49,7 @@ type Context struct {
 
 // Context creates a new Context for a given request.
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
-	sess, err := SessionStore.New(r, DefaultSessionName)
+	sess, err := server.Sessions.New(r, DefaultSessionName)
 	if err != nil {
 		log.Println("Failed to get session: ", err)
 	}
@@ -114,6 +120,7 @@ func (context *Context) FlashErrorNow(message ...string) {
 func (context *Context) FlashMessage(message ...string) {
 	context.flash("_flash", message...)
 }
+
 // FlashMessage adds regular message for current request.
 func (context *Context) FlashMessageNow(message ...string) {
 	context.flashNow("Flashes", message...)

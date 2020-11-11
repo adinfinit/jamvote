@@ -1,10 +1,13 @@
 package main
 
 import (
+	"crypto/rand"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 	"google.golang.org/appengine"
 
 	"github.com/adinfinit/jamvote/auth"
@@ -25,7 +28,8 @@ func main() {
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	sites, err := site.NewServer("templates/**/*.html")
+	sessionsStore := newCookieSessionStore(os.Getenv("COOKIESTORE_SECRET"))
+	sites, err := site.NewServer(sessionsStore, "templates/**/*.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,4 +58,25 @@ func main() {
 	http.Handle("/", router)
 
 	appengine.Main()
+}
+
+func newCookieSessionStore(secretString string) sessions.Store {
+	secret := []byte(secretString)
+	if len(secret) == 0 {
+		log.Println("Cookie Secret missing")
+		var code [64]byte
+		_, err := rand.Read(code[:])
+		if err != nil {
+			log.Println(err)
+			secret = code[:]
+		}
+	}
+
+	cookieStore := sessions.NewCookieStore(secret)
+	cookieStore.Options = &sessions.Options{
+		Path:     "/",
+		HttpOnly: true,
+	}
+
+	return cookieStore
 }
