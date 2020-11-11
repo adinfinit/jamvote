@@ -1,7 +1,6 @@
 package event
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"sort"
@@ -142,7 +141,7 @@ func (server *Server) Vote(context *Context) {
 	//}
 
 	ballot, err := context.Events.UserBallot(context.Event.ID, context.CurrentUser.ID, context.Team.ID)
-	if err != nil && !errors.Is(err, ErrNotExists) {
+	if err != nil && err != ErrNotExists {
 		context.FlashErrorNow(err.Error())
 	}
 	if ballot == nil {

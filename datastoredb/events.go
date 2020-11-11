@@ -2,7 +2,6 @@ package datastoredb
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"sort"
 
@@ -20,7 +19,7 @@ type Events struct {
 
 // eventsError converts a datastore error to domain error.
 func eventsError(err error) error {
-	if errors.Is(err, datastore.ErrNoSuchEntity) {
+	if err == datastore.ErrNoSuchEntity {
 		return event.ErrNotExists
 	}
 	return err
@@ -62,7 +61,7 @@ func (repo *Events) Create(ev *event.Event) error {
 
 		existing := &event.Event{}
 		err := datastore.Get(ctx, eventkey, existing)
-		if !errors.Is(err, datastore.ErrNoSuchEntity) {
+		if err != datastore.ErrNoSuchEntity {
 			if err == nil {
 				return event.ErrExists
 			}
