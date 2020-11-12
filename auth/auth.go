@@ -24,9 +24,15 @@ type Credentials struct {
 	Admin    bool
 }
 
+// DefaultDevelopmentSession is the default session name for development login.
+const DefaultDevelopmentSession = "jamvote-development"
+
 // Service implements authentication endpoints.
 type Service struct {
-	Development bool
+	Development struct {
+		Enabled  bool
+		Sessions sessions.Store
+	}
 
 	Domain         string
 	LoginFailed    string
@@ -37,7 +43,15 @@ type Service struct {
 func NewService(domain string) *Service {
 	service := &Service{}
 
-	service.Development = false
+	service.Development.Enabled = false
+	if service.Development.Enabled {
+		cookieStore := sessions.NewCookieStore([]byte("DEVELOPMENT"))
+		cookieStore.Options = &sessions.Options{
+			Path:     "/",
+			HttpOnly: true,
+		}
+		service.Development.Sessions = cookieStore
+	}
 
 	service.Domain = domain
 	service.LoginFailed = "/"
@@ -76,8 +90,8 @@ func (service *Service) Links(r *http.Request) []Link {
 
 // CurrentCredentials returns credentials associated with the request.
 func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
-	if service.Development {
-		sess, _ := developmentSessionStore.New(r, developmentSession)
+	if service.Development.Enabled {
+		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		if val, ok := sess.Values["User"]; ok {
 			if username, ok := val.(string); ok && username != "" {
 				return &Credentials{
@@ -123,8 +137,8 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 
 // Logout is called when a user wants to log out.
 func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
-	if service.Development {
-		sess, _ := developmentSessionStore.New(r, developmentSession)
+	if service.Development.Enabled {
+		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		sess.Values["User"] = ""
 		sess.Save(r, w)
 	}
@@ -140,11 +154,11 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 
 // DevelopmentLogin is a way to login to a development server.
 func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request) {
-	if !service.Development {
+	if !service.Development.Enabled {
 		return
 	}
 
-	sess, _ := developmentSessionStore.New(r, developmentSession)
+	sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 	r.ParseForm()
 	username := strings.TrimSpace(r.FormValue("name"))
 
@@ -161,18 +175,4 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 func developmentUserID(username string) string {
 	h := sha1.Sum([]byte(username))
 	return hex.EncodeToString(h[:])
-}
-
-const developmentSession = "jamvote-development"
-
-// developmentSessionStore is used for development logins.
-var developmentSessionStore sessions.Store
-
-func init() {
-	cookieStore := sessions.NewCookieStore([]byte("DEVELOPMENT"))
-	cookieStore.Options = &sessions.Options{
-		Path:     "/",
-		HttpOnly: true,
-	}
-	developmentSessionStore = cookieStore
 }
