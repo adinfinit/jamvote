@@ -22,17 +22,24 @@ const DefaultSessionName = "jamvote"
 type Server struct {
 	Development bool
 	Start       time.Time
+	Static      http.FileSystem
 	Templates   *template.Template
 
 	Sessions sessions.Store
 }
 
 // NewServer creates a new server with the specified templates.
-func NewServer(sess sessions.Store, templatesglob string) (*Server, error) {
+func NewServer(sess sessions.Store, staticdir string, templatesglob string) (*Server, error) {
 	server := &Server{}
 	server.Sessions = sess
+	server.Static = http.Dir(staticdir)
 	server.Start = time.Now()
 	return server, server.initTemplates(templatesglob)
+}
+
+func (server *Server) Register(router *mux.Router) {
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(server.Static)))
+	router.Handle("/favicon.png", http.FileServer(server.Static))
 }
 
 // Context contains all information about a single request.

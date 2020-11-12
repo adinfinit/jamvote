@@ -29,10 +29,12 @@ func main() {
 	auths.Register(router)
 
 	sessionsStore := newCookieSessionStore(os.Getenv("COOKIESTORE_SECRET"))
-	sites, err := site.NewServer(sessionsStore, "templates/**/*.html")
+
+	sites, err := site.NewServer(sessionsStore, "./static", "templates/**/*.html")
 	if err != nil {
 		log.Fatal(err)
 	}
+	sites.Register(router)
 
 	users := &user.Server{
 		Site: sites,
