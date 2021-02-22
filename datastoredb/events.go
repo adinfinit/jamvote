@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/adinfinit/jamvote/event"
-	"github.com/adinfinit/jamvote/user"
 	netcontext "golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
-	"google.golang.org/appengine/memcache"
+
+	"github.com/adinfinit/jamvote/event"
+	"github.com/adinfinit/jamvote/user"
 )
 
 // Events contains methods for managing events.
@@ -78,19 +78,11 @@ func (repo *Events) Create(ev *event.Event) error {
 // ByID retrieves an event by ID.
 func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
 	ev := &event.Event{}
-	if _, err := memcache.Gob.Get(repo.Context, "Event_"+eventid.String(), ev); err == nil {
-		return ev, nil
-	}
 
 	ev = &event.Event{}
 	ev.ID = eventid
 	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
 	err := datastore.Get(repo.Context, eventkey, ev)
-
-	memcache.Gob.Add(repo.Context, &memcache.Item{
-		Key:    "Event_" + eventid.String(),
-		Object: ev,
-	})
 
 	return ev, eventsError(err)
 }
@@ -99,12 +91,6 @@ func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
 func (repo *Events) Update(ev *event.Event) error {
 	eventkey := datastore.NewKey(repo.Context, "Event", string(ev.ID), 0, nil)
 	_, err := datastore.Put(repo.Context, eventkey, ev)
-	if err == nil {
-		memcache.Gob.Set(repo.Context, &memcache.Item{
-			Key:    "Event_" + ev.ID.String(),
-			Object: ev,
-		})
-	}
 	return eventsError(err)
 }
 

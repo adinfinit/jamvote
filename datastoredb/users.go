@@ -9,7 +9,6 @@ import (
 	"github.com/adinfinit/jamvote/user"
 
 	"google.golang.org/appengine/datastore"
-	"google.golang.org/appengine/memcache"
 )
 
 // Users implements user.Repo.
@@ -60,13 +59,6 @@ func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, er
 
 // ByCredentials finds user info based on credentials.
 func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
-	if item, err := memcache.Get(repo.Context, "Credential_"+cred.ID); err == nil {
-		u := &user.User{}
-		if _, err := memcache.Gob.Get(repo.Context, "User_"+string(item.Value), u); err == nil {
-			return u, nil
-		}
-	}
-
 	mapping := &credentialMapping{}
 
 	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
@@ -79,25 +71,12 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 	u.ID = user.UserID(mapping.UserKey.IntID())
 	err = datastore.Get(repo.Context, mapping.UserKey, u)
 
-	memcache.Add(repo.Context, &memcache.Item{
-		Key:   "Credential_" + cred.ID,
-		Value: []byte(user.UserID(mapping.UserKey.IntID()).String()),
-	})
-
-	memcache.Gob.Add(repo.Context, &memcache.Item{
-		Key:    "User_" + user.UserID(mapping.UserKey.IntID()).String(),
-		Object: u,
-	})
-
 	return u, usersError(err)
 }
 
 // ByID returns user by ID.
 func (repo *Users) ByID(id user.UserID) (*user.User, error) {
 	u := &user.User{}
-	if _, err := memcache.Gob.Get(repo.Context, "User_"+id.String(), u); err == nil {
-		return u, nil
-	}
 
 	u = &user.User{}
 	u.ID = id
@@ -126,11 +105,5 @@ func (repo *Users) List() ([]*user.User, error) {
 func (repo *Users) Update(u *user.User) error {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(u.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, u)
-	if err == nil {
-		memcache.Gob.Set(repo.Context, &memcache.Item{
-			Key:    "User_" + u.ID.String(),
-			Object: u,
-		})
-	}
 	return usersError(err)
 }
