@@ -6,7 +6,7 @@
 		<h1>{{.Game.Name}}</h1>
 		<span>By: {{.Name}}</span>
 	</div>
-	
+
 	{{ if .HasMember Data.CurrentUser }}
 	<div class="flashes">
 		<div class="flash">Votes for your own team won't be counted in the totals.</div>
@@ -20,13 +20,13 @@
 	</div>
 	<br>
 	{{ end }}
-	
+
 	<a class="input button" {{if .Game.Link.Facebook}} href="{{.Game.Link.Facebook}}"{{end}}>{{.Game.Link.Facebook}}</a>
 	<a class="input button" {{if .Game.Link.Jam}} href="{{.Game.Link.Jam}}"{{end}}>{{.Game.Link.Jam}}</a>
 	<a class="input button" {{if .Game.Link.Download}} href="{{.Game.Link.Download}}"{{end}}>{{.Game.Link.Download}}</a>
-	
+
 	{{if .Game.Info}}<div class="input" id="info">{{range paragraphs .Game.Info}}<p>{{.}}</p>{{end}}</div>{{end}}
-	
+
 	{{ $ballot := . }}
 	<form id="{{$ballot.Team.ID}}" disabled method="POST">
 		{{ if Data.Event.Closed }}<fieldset disabled>{{ end }}
@@ -75,7 +75,7 @@
 				(function(aspect){
 					var range = formel.getElementsByClassName(aspect.Name)[0];
 					var text = range.nextElementSibling;
-					
+
 					function updateText(){
 						var value = parseFloat(range.value);
 						var index = Math.round(value - aspect.Min);

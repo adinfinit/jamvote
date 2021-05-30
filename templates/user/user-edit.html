@@ -6,7 +6,7 @@
 			<label for="name">Full Name</label>
 			<input type="text" id="name" name="name" value="{{ .User.Name }}">
 		</div>
-		
+
 		<div class="field">
 			<label for="email">Email</label>
 			<input type="text" id="email" name="email" value="{{ .User.Email }}">
@@ -16,12 +16,12 @@
 			<label for="facebook">Facebook</label>
 			<input type="text" id="facebook" name="facebook" value="{{ .User.Facebook }}">
 		</div>
-	
+
 		<div class="field">
 			<label for="github">Github</label>
 			<input type="text" id="github" name="github" value="{{ .User.Github }}">
 		</div>
-				
+
 		{{ if .CurrentUser.IsAdmin }}
 		<div class="field">
 			<input type="checkbox" id="admin" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>

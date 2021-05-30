@@ -6,12 +6,12 @@
 		<h1>Linking</h1>
 		<a href="{{$event.Path "linking-approve-all"}}" class="button">Approve All</a>
 	</div>
-	
+
 	{{ if .Linking }}
 	{{ range .Linking }}
 	<section style="border:1px solid #ccc; padding: 1rem; margin-bottom: 2rem;">
 		<h1>{{.Team.Name}}: {{.Team.Game.Name}}</h1>
-		
+
 		{{ if .Unlinked }}
 		<h2>Unlinked</h2>
 		{{ range .Unlinked }}

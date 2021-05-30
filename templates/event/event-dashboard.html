@@ -19,11 +19,11 @@
 
 	<h1 style="color: #333; font-size: 1.6rem;">{{.Event.Name}}</h1>
 	<h2 style="color: #333; font-size: 1.4rem;">{{.Event.Theme}}</h2>
-	
+
 	<div>
 		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}
 	</div>
-	
+
 	{{ if .NotSubmittedTeams }}
 	<div class="flashes">
 		<div class="flash">Your team has not submitted a game.</div>

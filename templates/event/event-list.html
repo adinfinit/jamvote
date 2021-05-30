@@ -8,7 +8,7 @@
 
 <section>
 	<div class="titlemenu">
-		<h1>Events</h1>	
+		<h1>Events</h1>
 		{{ if .CurrentUser.IsAdmin }}
 		<a class="button" href="/event/create">Create Event</a>
 		{{ end }}
@@ -23,7 +23,7 @@
 
 	{{ with $events := .Events.Finished }}
 	<div>
-		<h2>Finished</h2>	
+		<h2>Finished</h2>
 		{{ template "event-links" $events }}
 	</div>
 	{{ end }}

@@ -50,7 +50,7 @@
 					{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
 					<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
 					<polyline stroke="#333"  points="0,{{$average}} 50,{{$average}}" />
-					
+
 					<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
 					<polyline stroke="#333" points="50,{{$average}} 100,{{$average}}" />
 					<text fill="#333" x=52 y={{$average}} font-size="12">voters</text>
@@ -87,7 +87,7 @@
 				<label for="Team.Game.Info">Info</label>
 				<div class="input" id="Team.Game.Info" rows=4>{{range paragraphs .Team.Game.Info}}<p>{{.}}</p>{{end}}</div>
 			</div>
-			
+
 			{{ if .Team.Game.Link.Jam}}
 			<div class="field">
 				<label for="Team.Game.Link.Jam">Jam Page</label>
@@ -110,7 +110,7 @@
 			{{ end }}
 		</div>
 	</div>
-	
+
 	{{ if .Event.Revealed }}
 	<section>
 		<h2>Comments</h2>
