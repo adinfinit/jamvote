@@ -168,3 +168,17 @@ func (team *Team) MembersWithEmpty() []Member {
 	}
 	return members
 }
+
+// MembersForEdit returns slice with additional empty members if needed.
+func (team *Team) MembersForEdit(isAdmin bool) []Member {
+	members := append([]Member{}, team.Members...)
+
+	maxMembers := SuggestedTeamMembers
+	if isAdmin {
+		maxMembers = MaxTeamMembers
+	}
+	for len(members) < maxMembers {
+		members = append(members, Member{})
+	}
+	return members
+}

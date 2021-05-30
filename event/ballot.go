@@ -3,8 +3,9 @@ package event
 import (
 	"fmt"
 
-	"github.com/adinfinit/jamvote/user"
 	"google.golang.org/appengine/datastore"
+
+	"github.com/adinfinit/jamvote/user"
 )
 
 // BallotRepo is used to manage ballots for an event.

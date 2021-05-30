@@ -48,7 +48,7 @@
 				<td>{{ if .Game.Link.Download}}<a class="no-clip" href="{{.Game.Link.Download}}" title="Download">DL</a>{{end}}</td>
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
-				{{ range .MembersWithEmpty }}
+				{{ range .Members }}
 				{{ if .Name }}<td class="member boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
 				{{ end }}
 			</tr>

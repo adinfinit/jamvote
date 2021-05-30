@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/adinfinit/jamvote/event"
-	"github.com/adinfinit/jamvote/user"
 	netcontext "golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
+
+	"github.com/adinfinit/jamvote/event"
+	"github.com/adinfinit/jamvote/user"
 )
 
 // Events contains methods for managing events.

@@ -28,6 +28,7 @@ type Repo interface {
 
 // ErrNotExists is returned when an event doesn't exist.
 var ErrNotExists = errors.New("does not exist")
+
 // ErrExists is returned when an event already exists.
 var ErrExists = errors.New("already exists")
 

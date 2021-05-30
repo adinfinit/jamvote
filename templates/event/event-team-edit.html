@@ -1,6 +1,8 @@
 {{ template "head" . }}
 
 {{ define "team-fields" }}
+{{ $isAdmin := .CurrentUser.IsAdmin }}
+{{ with .Team }}
 <div class="side-by-side">
 	<div>
 		<div class="field">
@@ -23,7 +25,7 @@
 		<div class="field">
 			<label>Members</label>
 
-			{{ range $i, $member := .MembersWithEmpty }}
+			{{ range $i, $member := .MembersForEdit $isAdmin }}
 			<input type="text" class="tight" name="Team.Member[{{$i}}]" list="Users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
 			{{ end }}
 		</div>
@@ -73,6 +75,7 @@
 	</div>
 </div>
 {{ end }}
+{{ end }}
 
 <section>
 	<h1>Team: {{.Team.Name}}</h1>
@@ -83,7 +86,7 @@
 			{{ end }}
 		</datalist>
 
-		{{ template "team-fields" .Team }}
+		{{ template "team-fields" . }}
 		<input type="submit" value="Save">
 	</form>
 </section>
