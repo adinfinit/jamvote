@@ -2,6 +2,7 @@
 
 {{ define "team-fields" }}
 {{ $isAdmin := .CurrentUser.IsAdmin }}
+
 {{ with .Team }}
 <div class="side-by-side">
 	<div>
@@ -78,6 +79,13 @@
 {{ end }}
 
 <section>
+	{{ if .CanDeleteTeam }}
+	<div class="titlemenu">
+		<div></div>
+		<a class="button" href="{{.Event.Path "team" .Team.ID "delete"}}" onclick="return confirm('Are you sure?\nThis cannot be reversed.')">Delete</a>
+	</div>
+	{{ end }}
+
 	<h1>Team: {{.Team.Name}}</h1>
 	<form method="POST">
 		<datalist id="Users">

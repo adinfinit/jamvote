@@ -13,6 +13,7 @@ import (
 type TeamRepo interface {
 	CreateTeam(id EventID, team *Team) (TeamID, error)
 	UpdateTeam(id EventID, team *Team) error
+	DeleteTeam(id EventID, teamid TeamID) error
 	TeamByID(id EventID, teamid TeamID) (*Team, error)
 	Teams(id EventID) ([]*Team, error)
 	TeamsByUser(id user.UserID) ([]*EventTeam, error)

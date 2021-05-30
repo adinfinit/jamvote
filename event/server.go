@@ -6,10 +6,10 @@ import (
 	"path"
 	"sort"
 
+	"github.com/gorilla/mux"
+
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
-
-	"github.com/gorilla/mux"
 )
 
 // Server handles pages related to an event.
@@ -42,6 +42,7 @@ func (server *Server) Register(router *mux.Router) {
 	router.HandleFunc("/event/{eventid}/team/create", server.Handler(server.CreateTeam))
 	router.HandleFunc("/event/{eventid}/team/{teamid}", server.Handler(server.Team))
 	router.HandleFunc("/event/{eventid}/team/{teamid}/edit", server.Handler(server.EditTeam))
+	router.HandleFunc("/event/{eventid}/team/{teamid}/delete", server.Handler(server.DeleteTeam))
 	router.HandleFunc("/event/{eventid}/vote/{teamid}", server.Handler(server.Vote))
 }
 

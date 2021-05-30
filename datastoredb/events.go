@@ -137,6 +137,15 @@ func (repo *Events) TeamByID(eventid event.EventID, teamid event.TeamID) (*event
 	return team, eventsError(err)
 }
 
+// DeleteTeam deletes a team.
+func (repo *Events) DeleteTeam(eventid event.EventID, teamid event.TeamID) error {
+	eventkey := datastore.NewKey(repo.Context, "Event", string(eventid), 0, nil)
+	teamkey := datastore.NewKey(repo.Context, "Team", "", int64(teamid), eventkey)
+
+	err := datastore.Delete(repo.Context, teamkey)
+	return eventsError(err)
+}
+
 // TeamsByUser returns all teams associated with the user.
 func (repo *Events) TeamsByUser(userid user.UserID) ([]*event.EventTeam, error) {
 	var allTeams []*event.Team

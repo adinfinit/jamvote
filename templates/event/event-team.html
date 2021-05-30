@@ -11,7 +11,7 @@
 		{{ if .CanEditTeam }}
 		<a class="button" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
 		{{ end }}
-		{{ if .Event.CanVote }}<a class="button" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
+		{{ if .Event.CanVote }}<a class="button" hrfelink ="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
 	</div>
 
 	{{ if .Team.Game.Noncompeting }}

@@ -181,6 +181,24 @@ func (server *Server) EditTeam(context *Context) {
 	context.Render("event-team-edit")
 }
 
+// DeleteTeam handles page for deleting a team.
+func (server *Server) DeleteTeam(context *Context) {
+	if !server.canDeleteTeam(context) {
+		return
+	}
+
+	err := context.Events.DeleteTeam(context.Event.ID, context.Team.ID)
+	if err != nil {
+		context.FlashError(fmt.Sprintf("Unable to update team: %v", err))
+		context.Response.WriteHeader(http.StatusSeeOther)
+		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
+		return
+	}
+
+	context.FlashMessage(fmt.Sprintf("Team %v deleted.", context.Team.ID))
+	context.Redirect(context.Event.Path("teams"), http.StatusSeeOther)
+}
+
 // Team displays team information.
 func (server *Server) Team(context *Context) {
 	if context.Team == nil {
@@ -375,6 +393,29 @@ func (server *Server) canEditTeam(context *Context) bool {
 
 	if !context.Team.HasEditor(context.CurrentUser) {
 		context.FlashError(fmt.Sprintf("You are not allowed to edit team %v.", context.Team.ID))
+		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
+		return false
+	}
+	return true
+}
+
+// canDeleteTeam checks whether caller can edit the team.
+func (server *Server) canDeleteTeam(context *Context) bool {
+	if context.Team == nil {
+		teamid, _ := context.IntParam("teamid")
+		context.FlashError(fmt.Sprintf("Team %v does not exist.", teamid))
+		context.Redirect(context.Event.Path(), http.StatusSeeOther)
+		return false
+	}
+
+	if context.Event.Voting || context.Event.Closed || context.Event.Revealed {
+		context.FlashError("Team can only be deleted during registration.")
+		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
+		return false
+	}
+
+	if !context.CurrentUser.IsAdmin() {
+		context.FlashError(fmt.Sprintf("You are not allowed to delete team %v.", context.Team.ID))
 		context.Redirect(context.Event.Path("team", context.Team.ID.String()), http.StatusSeeOther)
 		return false
 	}

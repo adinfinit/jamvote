@@ -53,6 +53,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 			context.Team = team
 			context.Data["Team"] = context.Team
 			context.Data["CanEditTeam"] = context.Team.HasEditor(context.CurrentUser)
+			context.Data["CanDeleteTeam"] = context.CurrentUser.IsAdmin()
 		}
 	}
 
