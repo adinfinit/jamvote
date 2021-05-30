@@ -227,6 +227,14 @@ func (server *Server) Teams(context *Context) {
 	context.Data["FullWidth"] = true
 	context.Data["Teams"] = teams
 
+	maxMembers := SuggestedTeamMembers
+	for _, t := range teams {
+		if len(t.Members) > maxMembers {
+			maxMembers = len(t.Members)
+		}
+	}
+	context.Data["MaxMemberCount"] = maxMembers
+
 	if context.CurrentUser != nil {
 		yourteams := []*Team{}
 		for _, team := range teams {

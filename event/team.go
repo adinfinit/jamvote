@@ -18,8 +18,11 @@ type TeamRepo interface {
 	TeamsByUser(id user.UserID) ([]*EventTeam, error)
 }
 
-// MaxTeamMembers defines maximum number of team members.
-const MaxTeamMembers = 6
+// MaxTeamMembers defines hard limit on team members.
+const MaxTeamMembers = 9
+
+// SuggestedTeamMemberes defines how many members are shown by default.
+const SuggestedTeamMembers = 6
 
 // TeamID is a unique identifier for a team.
 type TeamID int64
@@ -160,7 +163,7 @@ func (team *Team) IsCompeting() bool {
 // MembersWithEmpty returns slice with additional empty members if needed.
 func (team *Team) MembersWithEmpty() []Member {
 	members := append([]Member{}, team.Members...)
-	for len(members) < 6 {
+	for len(members) < SuggestedTeamMembers {
 		members = append(members, Member{})
 	}
 	return members

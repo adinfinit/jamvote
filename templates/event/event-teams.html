@@ -31,12 +31,9 @@
 				<th>Game</th>
 				<th style="width:2rem;"></th>
 				<th style="width:2rem;"></th>
-				<th style="width:8%; max-width:8rem;">1</th>
-				<th style="width:8%; max-width:8rem;">2</th>
-				<th style="width:8%; max-width:8rem;">3</th>
-				<th style="width:8%; max-width:8rem;">4</th>
-				<th style="width:8%; max-width:8rem;">5</th>
-				<th style="width:8%; max-width:8rem;">6</th>
+				{{ range $val := sequence1 .MaxMemberCount }}
+				<th style="width:8%; max-width:8rem;">{{ $val }}</th>
+				{{ end }}
 			</tr>
 		</thead>
 		<tbody>
@@ -47,7 +44,7 @@
 				{{ end }}
 				<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="boxed-indicator">NC</span>{{end}}<a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
-				
+
 				<td>{{ if .Game.Link.Download}}<a class="no-clip" href="{{.Game.Link.Download}}" title="Download">DL</a>{{end}}</td>
 				<td>{{ if .Game.Link.Jam}}<a class="no-clip" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 

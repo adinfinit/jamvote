@@ -75,6 +75,13 @@ func (server *Server) initTemplates(glob string) error {
 		"div": func(a, b interface{}) float64 {
 			return toFloat(a) / toFloat(b)
 		},
+		"sequence1": func(count int) []int {
+			xs := make([]int, count)
+			for i := range xs {
+				xs[i] = i + 1
+			}
+			return xs
+		},
 	})
 
 	t, err := t.ParseGlob(glob)
