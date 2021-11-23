@@ -58,7 +58,7 @@ type Context struct {
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	sess, err := server.Sessions.New(r, DefaultSessionName)
 	if err != nil {
-		log.Println("Failed to get session: ", err)
+		log.Println("Failed to get session:", err)
 	}
 
 	data := map[string]interface{}{}
@@ -83,7 +83,10 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 
 // saveSession saves flashes for a given request.
 func (context *Context) saveSession() {
-	context.Session.Save(context.Request, context.Response)
+	err := context.Session.Save(context.Request, context.Response)
+	if err != nil {
+		log.Println("Failed to save session:", err)
+	}
 }
 
 // Handler wraps fn with automatic Context creation.

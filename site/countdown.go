@@ -23,7 +23,7 @@ func NewCountdown(target time.Time) Countdown {
 	return Countdown{
 		ID:   rand.Int(),
 		Time: target,
-		Left: target.Sub(time.Now()),
+		Left: time.Until(target),
 	}
 }
 

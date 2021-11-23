@@ -140,7 +140,10 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	if service.Development.Enabled {
 		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		sess.Values["User"] = ""
-		sess.Save(r, w)
+		err := sess.Save(r, w)
+		if err != nil {
+			log.Println("Failed to logout:", err)
+		}
 	}
 
 	c := appengine.NewContext(r)
@@ -157,14 +160,26 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 	if !service.Development.Enabled {
 		return
 	}
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "invalid request", http.StatusBadRequest)
+		return
+	}
 
-	sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
-	r.ParseForm()
+	sess, err := service.Development.Sessions.New(r, DefaultDevelopmentSession)
+	if err != nil {
+		log.Println("Unable to create development session:", err)
+		http.Error(w, "unable to create development session", http.StatusInternalServerError)
+		return
+	}
+
 	username := strings.TrimSpace(r.FormValue("name"))
 
 	if username != "" {
 		sess.Values["User"] = username
-		sess.Save(r, w)
+		err := sess.Save(r, w)
+		if err != nil {
+			log.Println("Unable to save development session:", err)
+		}
 		http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
 	} else {
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)

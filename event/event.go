@@ -48,7 +48,7 @@ func (id EventID) Valid() bool {
 		switch {
 		case 'a' <= r && r <= 'z':
 		case '0' <= r && r <= '9':
-		case '-' == r:
+		case r == '-':
 		default:
 			return false
 		}

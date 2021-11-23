@@ -79,15 +79,17 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 	u.ID = user.UserID(mapping.UserKey.IntID())
 	err = datastore.Get(repo.Context, mapping.UserKey, u)
 
-	memcache.Add(repo.Context, &memcache.Item{
-		Key:   "Credential_" + cred.ID,
-		Value: []byte(user.UserID(mapping.UserKey.IntID()).String()),
-	})
+	if err == nil {
+		_ = memcache.Add(repo.Context, &memcache.Item{
+			Key:   "Credential_" + cred.ID,
+			Value: []byte(user.UserID(mapping.UserKey.IntID()).String()),
+		})
 
-	memcache.Gob.Add(repo.Context, &memcache.Item{
-		Key:    "User_" + user.UserID(mapping.UserKey.IntID()).String(),
-		Object: u,
-	})
+		_ = memcache.Gob.Add(repo.Context, &memcache.Item{
+			Key:    "User_" + user.UserID(mapping.UserKey.IntID()).String(),
+			Object: u,
+		})
+	}
 
 	return u, usersError(err)
 }
@@ -127,7 +129,7 @@ func (repo *Users) Update(u *user.User) error {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(u.ID), nil)
 	_, err := datastore.Put(repo.Context, userkey, u)
 	if err == nil {
-		memcache.Gob.Set(repo.Context, &memcache.Item{
+		_ = memcache.Gob.Set(repo.Context, &memcache.Item{
 			Key:    "User_" + u.ID.String(),
 			Object: u,
 		})

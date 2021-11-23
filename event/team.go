@@ -75,39 +75,39 @@ func (team *Team) Less(other *Team) bool {
 // Verify verifies whether team has valid state.
 func (team *Team) Verify() error {
 	if team.Name == "" {
-		return errors.New("Team name cannot be empty.")
+		return errors.New("team name cannot be empty")
 	}
 	if len(team.Members) == 0 {
-		return errors.New("Team must have at least one member.")
+		return errors.New("team must have at least one member")
 	}
 
 	if team.Game.Link.Jam != "" {
 		u, err := url.Parse(team.Game.Link.Jam)
 		if err != nil {
-			return errors.New("Invalid Jam link: " + err.Error())
+			return errors.New("invalid Jam link: " + err.Error())
 		}
 		if u.Scheme != "http" && u.Scheme != "https" {
-			return errors.New("Invalid Jam link.")
+			return errors.New("invalid Jam link")
 		}
 	}
 
 	if team.Game.Link.Download != "" {
 		u, err := url.Parse(team.Game.Link.Download)
 		if err != nil {
-			return errors.New("Invalid Download link: " + err.Error())
+			return errors.New("invalid Download link: " + err.Error())
 		}
 		if u.Scheme != "http" && u.Scheme != "https" {
-			return errors.New("Invalid Download link.")
+			return errors.New("invalid Download link")
 		}
 	}
 
 	if team.Game.Link.Facebook != "" {
 		u, err := url.Parse(team.Game.Link.Facebook)
 		if err != nil {
-			return errors.New("Invalid Facebook link: " + err.Error())
+			return errors.New("invalid Facebook link: " + err.Error())
 		}
 		if u.Scheme != "http" && u.Scheme != "https" {
-			return errors.New("Invalid Facebook link.")
+			return errors.New("invalid Facebook link")
 		}
 	}
 

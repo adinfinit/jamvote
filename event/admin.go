@@ -317,7 +317,7 @@ func (server *Server) BallotsCSV(context *Context) {
 	writer := csv.NewWriter(context.Response)
 	defer writer.Flush()
 
-	writer.Write([]string{
+	_ = writer.Write([]string{
 		"VoterID",
 		"VoterName",
 		"TeamID",
@@ -338,7 +338,7 @@ func (server *Server) BallotsCSV(context *Context) {
 		voter := userbyid[ballot.Voter]
 		team := teambyid[ballot.Team]
 
-		writer.Write([]string{
+		_ = writer.Write([]string{
 			voter.ID.String(),
 			voter.Name,
 			team.ID.String(),
