@@ -40,6 +40,7 @@ func NewServer(sess sessions.Store, staticdir string, templatesglob string) (*Se
 func (server *Server) Register(router *mux.Router) {
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(server.Static)))
 	router.Handle("/favicon.png", http.FileServer(server.Static))
+	router.Handle("/robots.txt", http.FileServer(server.Static))
 }
 
 // Context contains all information about a single request.
