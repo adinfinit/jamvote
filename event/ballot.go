@@ -67,32 +67,60 @@ var DefaultAspects = Aspects{
 }
 
 // AverageScores returns averages for all aspects.
-func AverageScores(ballots []*Ballot) Aspects {
-	count := 0.0
-	average := Aspects{}
+func AverageScores(ballots []*Ballot, event *Event) Aspects {
+	judgePercentage := event.JudgePercentage
+
+	normalCount := 0.0
+	judgeCount := 0.0
+	normalSum := Aspects{}
+	judgeSum := Aspects{}
+
 	for _, ballot := range ballots {
 		if !ballot.Completed {
 			continue
 		}
 
-		if count == 0 {
-			average = ballot.Aspects
+		if event.HasJudgeById(&ballot.Voter) {
+			if judgeCount == 0 {
+				judgeSum = ballot.Aspects
+			} else {
+				judgeSum.Add(&ballot.Aspects)
+			}
+			judgeCount += 1.0
+
 		} else {
-			average.Add(&ballot.Aspects)
+			if normalCount == 0 {
+				normalSum = ballot.Aspects
+			} else {
+				normalSum.Add(&ballot.Aspects)
+			}
+			normalCount += 1.0
 		}
-		count += 1.0
 	}
 
-	if count > 0 {
-		average.Theme.Score /= count
-		average.Enjoyment.Score /= count
-		average.Aesthetics.Score /= count
-		average.Innovation.Score /= count
-		average.Bonus.Score /= count
-		average.Overall.Score /= count
+	if judgePercentage != 100 {
+		multiplier := normalCount / judgeCount
+	
+		multiplier *= judgePercentage/(100-judgePercentage)
+	
+		judgeCount *= multiplier
+		judgeSum.MultiplyByScalar(multiplier)
+	
+		judgeCount += normalCount
+		judgeSum.Add(&normalSum)
 	}
 
-	return average
+
+	if judgeCount > 0 {
+		judgeSum.Theme.Score /= judgeCount
+		judgeSum.Enjoyment.Score /= judgeCount
+		judgeSum.Aesthetics.Score /= judgeCount
+		judgeSum.Innovation.Score /= judgeCount
+		judgeSum.Bonus.Score /= judgeCount
+		judgeSum.Overall.Score /= judgeCount
+	}
+
+	return judgeSum //average
 }
 
 // Aspects contains criteria for scoring a game.
@@ -170,6 +198,15 @@ func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Innovation.Score += other.Innovation.Score
 	aspects.Bonus.Score += other.Bonus.Score
 	aspects.Overall.Score += other.Overall.Score
+}
+
+func (aspects *Aspects) MultiplyByScalar(multiplier float64) {
+	aspects.Theme.Score *= multiplier
+	aspects.Enjoyment.Score *= multiplier
+	aspects.Aesthetics.Score *= multiplier
+	aspects.Innovation.Score *= multiplier
+	aspects.Bonus.Score *= multiplier
+	aspects.Overall.Score *= multiplier
 }
 
 // Add includes other into aspects.

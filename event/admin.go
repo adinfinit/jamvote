@@ -3,7 +3,9 @@ package event
 import (
 	"encoding/csv"
 	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -124,20 +126,28 @@ func (server *Server) EditEvent(context *Context) {
 		}
 
 		theme := context.FormValue("theme")
+		
+		judgePercentage, err := strconv.ParseFloat(context.FormValue("judgePercentage"),64)
+		if err != nil {
+			judgePercentage = 50.0
+			log.Println(err.Error())
+		}
+		
 		registration := context.FormValue("registration") == "true"
 		voting := context.FormValue("voting") == "true"
 		closed := context.FormValue("closed") == "true"
 		revealed := context.FormValue("revealed") == "true"
 		info := context.FormValue("info")
-
+		
 		starttime := context.FormValue("StartTime")
 		endtime := context.FormValue("EndTime")
-
+		
 		votingopens := context.FormValue("VotingOpens")
 		votingcloses := context.FormValue("VotingCloses")
-
+		
 		event := context.Event
 		event.Theme = theme
+		event.JudgePercentage = judgePercentage
 		event.Registration = registration
 		event.Voting = voting
 		event.Closed = closed
@@ -196,7 +206,7 @@ func (server *Server) EditEvent(context *Context) {
 			event.VotingCloses = t
 		}
 
-		err := context.Events.Update(event)
+		err = context.Events.Update(event)
 		if err != nil {
 			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusInternalServerError)
@@ -233,24 +243,38 @@ func (server *Server) Jammers(context *Context) {
 			return
 		}
 
-		added := []user.UserID{}
-		removed := []user.UserID{}
+		jammersAdded := []user.UserID{}
+		jammersRemoved := []user.UserID{}
+		judgesAdded := []user.UserID{}
+		judgesRemoved := []user.UserID{}
 
 		for _, u := range users {
-			before := context.FormValue(fmt.Sprintf("%v.Start", u.ID)) == "approved"
-			after := context.FormValue(fmt.Sprintf("%v", u.ID)) == "approved"
+			jammersBefore := context.FormValue(fmt.Sprintf("%v.Jammer.Start", u.ID)) == "approved"
+			jammersAfter := context.FormValue(fmt.Sprintf("%v.Jammer", u.ID)) == "approved"
 
-			if before != after {
-				if after {
-					added = append(added, u.ID)
+			judgesBefore := context.FormValue(fmt.Sprintf("%v.Judge.Start", u.ID)) == "isjudge"
+			judgesAfter := context.FormValue(fmt.Sprintf("%v.Judge", u.ID)) == "isjudge"
+
+			if jammersBefore != jammersAfter {
+				if jammersAfter {
+					jammersAdded = append(jammersAdded, u.ID)
 				} else {
-					removed = append(removed, u.ID)
+					jammersRemoved = append(jammersRemoved, u.ID)
+				}
+			}
+
+			if judgesBefore != judgesAfter {
+				if judgesAfter {
+					judgesAdded = append(judgesAdded, u.ID)
+				} else {
+					judgesRemoved = append(judgesRemoved, u.ID)
 				}
 			}
 		}
 
 		event := context.Event
-		event.AddRemoveJammers(added, removed)
+		event.AddRemoveJammers(jammersAdded, jammersRemoved)
+		event.AddRemoveJudges(judgesAdded, judgesRemoved)
 
 		err := context.Events.Update(event)
 		if err != nil {
@@ -261,12 +285,19 @@ func (server *Server) Jammers(context *Context) {
 		}
 
 		s := ""
-		if len(removed) > 0 {
-			s += fmt.Sprintf(" Removed %v jammers.", len(removed))
+		if len(jammersRemoved) > 0 {
+			s += fmt.Sprintf(" Removed %v jammers.\n", len(jammersRemoved))
 		}
-		if len(added) > 0 {
-			s += fmt.Sprintf(" Added %v jammers.", len(added))
+		if len(jammersAdded) > 0 {
+			s += fmt.Sprintf(" Added %v jammers.\n", len(jammersAdded))
 		}
+		if len(judgesRemoved) > 0 {
+			s += fmt.Sprintf(" Removed %v judges.\n", len(judgesRemoved))
+		}
+		if len(judgesAdded) > 0 {
+			s += fmt.Sprintf(" Added %v judges.", len(judgesAdded))
+		}
+
 		if s != "" {
 			context.FlashError(s)
 		}

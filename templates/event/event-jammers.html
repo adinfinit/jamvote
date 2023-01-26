@@ -10,19 +10,24 @@
 					<th style="width: 2rem;"></th>
 					<th>User</th>
 					<th>Email</th>
+					<th style="width: 5rem; text-align: center;">Judge</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{ range $user := .Users }}
 				<tr>
 					<td style="text-align: center;">
-						<input type="checkbox" class="hidden" name="{{$user.ID}}.Start" value="approved" {{ if $event.HasJammer $user }}checked{{ end }}>
-						<input type="checkbox" id="{{$user.ID}}" name="{{$user.ID}}" value="approved" {{ if $event.HasJammer $user }}checked{{ end }} >
+						<input type="checkbox" class="hidden" name="{{$user.ID}}.Jammer.Start" value="approved" {{ if $event.HasJammer $user }}checked{{ end }}>
+						<input type="checkbox" id="{{$user.ID}}" name="{{$user.ID}}.Jammer" value="approved" {{ if $event.HasJammer $user }}checked{{ end }} >
 					</td>
 					<td>
 						<label class="basic" for="{{$user.ID}}">{{ $user.Name }}</label>
 					</td>
 					<td>{{ $user.Email }}</td>
+					<td style="text-align: center;">
+						<input type="checkbox" class="hidden" name="{{$user.ID}}.Judge.Start" value="isjudge" {{ if $event.HasJudge $user }}checked{{ end }}>
+						<input type="checkbox" id="{{$user.ID}}" name="{{$user.ID}}.Judge" value="isjudge" {{ if $event.HasJudge $user }}checked{{ end }} >
+					</td>
 				</tr>
 				{{ end }}
 			</tbody>
