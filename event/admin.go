@@ -34,6 +34,22 @@ func (server *Server) CreateEvent(context *Context) {
 		slug := context.FormValue("slug")
 		info := context.FormValue("info")
 
+		var judgePercentage float64
+		var err error
+
+		if context.FormValue("judgePercentage") == "" {
+			judgePercentage = 0
+		} else {
+			judgePercentage, err = strconv.ParseFloat(context.FormValue("judgePercentage"), 64)
+		}
+
+		if err != nil {
+			context.FlashErrorNow(err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-edit")
+			return
+		}
+
 		starttime := context.FormValue("StartTime")
 		endtime := context.FormValue("EndTime")
 
@@ -43,6 +59,7 @@ func (server *Server) CreateEvent(context *Context) {
 		event.Theme = theme
 		event.Info = info
 		event.Registration = true
+		event.JudgePercentage = judgePercentage
 
 		event.Created = time.Now().UTC()
 
@@ -89,7 +106,7 @@ func (server *Server) CreateEvent(context *Context) {
 
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
-		err := context.Events.Create(event)
+		err = context.Events.Create(event)
 		if err != nil {
 			if err == ErrExists {
 				context.FlashErrorNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
