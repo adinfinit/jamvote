@@ -3,7 +3,6 @@ package event
 import (
 	"encoding/csv"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -143,25 +142,34 @@ func (server *Server) EditEvent(context *Context) {
 		}
 
 		theme := context.FormValue("theme")
-		
-		judgePercentage, err := strconv.ParseFloat(context.FormValue("judgePercentage"),64)
-		if err != nil {
-			judgePercentage = 50.0
-			log.Println(err.Error())
+
+		var judgePercentage float64
+		var err error
+		if context.FormValue("judgePercentage") == "" {
+			judgePercentage = 0
+		} else {
+			judgePercentage, err = strconv.ParseFloat(context.FormValue("judgePercentage"), 64)
 		}
-		
+
+		if err != nil {
+			context.FlashErrorNow(err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-edit")
+			return
+		}
+
 		registration := context.FormValue("registration") == "true"
 		voting := context.FormValue("voting") == "true"
 		closed := context.FormValue("closed") == "true"
 		revealed := context.FormValue("revealed") == "true"
 		info := context.FormValue("info")
-		
+
 		starttime := context.FormValue("StartTime")
 		endtime := context.FormValue("EndTime")
-		
+
 		votingopens := context.FormValue("VotingOpens")
 		votingcloses := context.FormValue("VotingCloses")
-		
+
 		event := context.Event
 		event.Theme = theme
 		event.JudgePercentage = judgePercentage
