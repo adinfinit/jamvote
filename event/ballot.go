@@ -38,8 +38,12 @@ type BallotInfo struct {
 // TeamResult contains all information about a single teams result.
 type TeamResult struct {
 	*Team
-	Ballots  []*Ballot
-	Average  Aspects
+	Ballots []*Ballot
+
+	Average       Aspects
+	JudgeAverage  Aspects
+	JammerAverage Aspects
+
 	Pending  int
 	Complete int
 
@@ -67,60 +71,70 @@ var DefaultAspects = Aspects{
 }
 
 // AverageScores returns averages for all aspects.
-func AverageScores(ballots []*Ballot, event *Event) Aspects {
-	judgePercentage := event.JudgePercentage
-
-	normalCount := 0.0
-	judgeCount := 0.0
-	normalSum := Aspects{}
+func AverageScores(ballots []*Ballot, event *Event) (Aspects, Aspects, Aspects) {
 	judgeSum := Aspects{}
+	judgeCount := 0.0
+
+	jammerSum := Aspects{}
+	JammerCount := 0.0
 
 	for _, ballot := range ballots {
-		if !ballot.Completed {
-			continue
-		}
-
 		if event.HasJudgeById(&ballot.Voter) {
-			if judgeCount == 0 {
-				judgeSum = ballot.Aspects
-			} else {
-				judgeSum.Add(&ballot.Aspects)
+			if !ballot.Completed {
+				continue
 			}
+
+			judgeSum.Add(&ballot.Aspects)
 			judgeCount += 1.0
 
 		} else {
-			if normalCount == 0 {
-				normalSum = ballot.Aspects
-			} else {
-				normalSum.Add(&ballot.Aspects)
+			if !ballot.Completed {
+				continue
 			}
-			normalCount += 1.0
+
+			jammerSum.Add(&ballot.Aspects)
+			JammerCount += 1.0
 		}
 	}
-
-	if judgePercentage != 100 {
-		multiplier := normalCount / judgeCount
-	
-		multiplier *= judgePercentage/(100-judgePercentage)
-	
-		judgeCount *= multiplier
-		judgeSum.MultiplyByScalar(multiplier)
-	
-		judgeCount += normalCount
-		judgeSum.Add(&normalSum)
-	}
-
+	totalSum := Aspects{}
+	totalCount := 0.0
 
 	if judgeCount > 0 {
-		judgeSum.Theme.Score /= judgeCount
-		judgeSum.Enjoyment.Score /= judgeCount
-		judgeSum.Aesthetics.Score /= judgeCount
-		judgeSum.Innovation.Score /= judgeCount
-		judgeSum.Bonus.Score /= judgeCount
-		judgeSum.Overall.Score /= judgeCount
+		multiplier := JammerCount / judgeCount
+
+		if JammerCount == 0 {
+			multiplier = 1
+		}
+
+		if event.JudgePercentage != 100 {
+			multiplier *= event.JudgePercentage / (100 - event.JudgePercentage)
+		} else {
+			multiplier = 1
+		}
+
+		if event.JudgePercentage != 0 {
+			judgeCount *= multiplier
+			judgeSum.MultiplyByScalar(multiplier)
+			totalSum.Add(&judgeSum)
+			totalCount += judgeCount
+		}
+
+		judgeSum.MultiplyByScalar(1 / judgeCount)
 	}
 
-	return judgeSum //average
+	if event.JudgePercentage != 100 {
+		totalCount += JammerCount 
+		totalSum.Add(&jammerSum)
+	}
+
+	if totalCount > 0 {
+		totalSum.MultiplyByScalar(1 / totalCount)
+	}
+	if JammerCount > 0 {
+		jammerSum.MultiplyByScalar(1 / JammerCount)
+	}
+
+	return totalSum, jammerSum, judgeSum
 }
 
 // Aspects contains criteria for scoring a game.
