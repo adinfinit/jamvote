@@ -476,6 +476,10 @@ func (repo *Events) Results(eventid event.EventID) ([]*event.TeamResult, error) 
 
 	currentEvent, err := repo.ByID(eventid)
 
+	if err != nil {
+		return nil, eventsError(err)
+	}
+
 	for _, result := range results {
 		result.Average = event.AverageScores(result.Ballots, currentEvent)
 	}
