@@ -186,3 +186,7 @@ func (event *Event) HasJudge(u *user.User) bool {
 
 	return containsUser(event.Judges, u.ID)
 }
+
+func (event *Event) JudgesExist() bool {
+	return len(event.Judges) != 0
+}
