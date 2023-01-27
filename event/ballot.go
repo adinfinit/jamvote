@@ -114,12 +114,12 @@ func AverageScores(ballots []*Ballot, event *Event) (Aspects, Aspects, Aspects) 
 
 		if event.JudgePercentage != 0 {
 			judgeCount *= multiplier
-			judgeSum.MultiplyByScalar(multiplier)
+			judgeSum.Scale(multiplier)
 			totalSum.Add(&judgeSum)
 			totalCount += judgeCount
 		}
 
-		judgeSum.MultiplyByScalar(1 / judgeCount)
+		judgeSum.Scale(1 / judgeCount)
 	}
 
 	if event.JudgePercentage != 100 {
@@ -128,10 +128,10 @@ func AverageScores(ballots []*Ballot, event *Event) (Aspects, Aspects, Aspects) 
 	}
 
 	if totalCount > 0 {
-		totalSum.MultiplyByScalar(1 / totalCount)
+		totalSum.Scale(1 / totalCount)
 	}
 	if JammerCount > 0 {
-		jammerSum.MultiplyByScalar(1 / JammerCount)
+		jammerSum.Scale(1 / JammerCount)
 	}
 
 	return totalSum, jammerSum, judgeSum
@@ -214,7 +214,7 @@ func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Overall.Score += other.Overall.Score
 }
 
-func (aspects *Aspects) MultiplyByScalar(multiplier float64) {
+func (aspects *Aspects) Scale(multiplier float64) {
 	aspects.Theme.Score *= multiplier
 	aspects.Enjoyment.Score *= multiplier
 	aspects.Aesthetics.Score *= multiplier
