@@ -20,8 +20,7 @@
 
 		<div class="field">
 			<label for="judgePercentage">Percentage of judge votes</label>
-			<input type="range" min="0" max="100" step="10" id="judgePercentage" name="judgePercentage" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
-			<p id="judgePercentageInfoText">Current percentage: 0%</p>
+			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
 		</div>
 
 		<div class="field">
