@@ -301,22 +301,17 @@ func (server *Server) Jammers(context *Context) {
 			return
 		}
 
-		s := ""
 		if len(jammersRemoved) > 0 {
-			s += fmt.Sprintf(" Removed %v jammers.\n", len(jammersRemoved))
-		}
-		if len(jammersAdded) > 0 {
-			s += fmt.Sprintf(" Added %v jammers.\n", len(jammersAdded))
+			context.FlashError(fmt.Sprintf("Removed %v jammers.", len(jammersRemoved)))
 		}
 		if len(judgesRemoved) > 0 {
-			s += fmt.Sprintf(" Removed %v judges.\n", len(judgesRemoved))
+			context.FlashError(fmt.Sprintf("Removed %v judges.", len(judgesRemoved)))
+		}
+		if len(jammersAdded) > 0 {
+			context.FlashMessage(fmt.Sprintf("Added %v jammers.", len(jammersAdded)))
 		}
 		if len(judgesAdded) > 0 {
-			s += fmt.Sprintf(" Added %v judges.", len(judgesAdded))
-		}
-
-		if s != "" {
-			context.FlashError(s)
+			context.FlashMessage(fmt.Sprintf("Added %v judges.", len(judgesAdded)))
 		}
 
 		context.Redirect(string(event.Path()), http.StatusSeeOther)
