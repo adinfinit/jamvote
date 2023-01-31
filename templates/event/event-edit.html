@@ -9,6 +9,11 @@
 		</div>
 
 		<div class="field">
+			<label for="judgePercentage">Percentage of judge votes</label>
+			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="{{.Event.JudgePercentage}}" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
+		</div>
+
+		<div class="field">
 			<input type="checkbox" id="registration" name="registration" value="true" {{ if .Event.Registration }}checked{{end}}>
 			<label for="registration">Registration</label>
 		</div>

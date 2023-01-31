@@ -38,8 +38,12 @@ type BallotInfo struct {
 // TeamResult contains all information about a single teams result.
 type TeamResult struct {
 	*Team
-	Ballots  []*Ballot
-	Average  Aspects
+	Ballots []*Ballot
+
+	Average       Aspects
+	JudgeAverage  Aspects
+	JammerAverage Aspects
+
 	Pending  int
 	Complete int
 
@@ -67,32 +71,70 @@ var DefaultAspects = Aspects{
 }
 
 // AverageScores returns averages for all aspects.
-func AverageScores(ballots []*Ballot) Aspects {
-	count := 0.0
-	average := Aspects{}
+func AverageScores(ballots []*Ballot, event *Event) (Aspects, Aspects, Aspects) {
+	judgeSum := Aspects{}
+	judgeCount := 0.0
+
+	jammerSum := Aspects{}
+	JammerCount := 0.0
+
 	for _, ballot := range ballots {
-		if !ballot.Completed {
-			continue
-		}
+		if event.HasJudgeById(&ballot.Voter) {
+			if !ballot.Completed {
+				continue
+			}
 
-		if count == 0 {
-			average = ballot.Aspects
+			judgeSum.Add(&ballot.Aspects)
+			judgeCount += 1.0
+
 		} else {
-			average.Add(&ballot.Aspects)
+			if !ballot.Completed {
+				continue
+			}
+
+			jammerSum.Add(&ballot.Aspects)
+			JammerCount += 1.0
 		}
-		count += 1.0
+	}
+	totalSum := Aspects{}
+	totalCount := 0.0
+
+	if judgeCount > 0 {
+		multiplier := JammerCount / judgeCount
+
+		if JammerCount == 0 {
+			multiplier = 1
+		}
+
+		if event.JudgePercentage != 100 {
+			multiplier *= event.JudgePercentage / (100 - event.JudgePercentage)
+		} else {
+			multiplier = 1
+		}
+
+		if event.JudgePercentage != 0 {
+			judgeCount *= multiplier
+			judgeSum.Scale(multiplier)
+			totalSum.Add(&judgeSum)
+			totalCount += judgeCount
+		}
+
+		judgeSum.Scale(1 / judgeCount)
 	}
 
-	if count > 0 {
-		average.Theme.Score /= count
-		average.Enjoyment.Score /= count
-		average.Aesthetics.Score /= count
-		average.Innovation.Score /= count
-		average.Bonus.Score /= count
-		average.Overall.Score /= count
+	if event.JudgePercentage != 100 {
+		totalCount += JammerCount 
+		totalSum.Add(&jammerSum)
 	}
 
-	return average
+	if totalCount > 0 {
+		totalSum.Scale(1 / totalCount)
+	}
+	if JammerCount > 0 {
+		jammerSum.Scale(1 / JammerCount)
+	}
+
+	return totalSum, jammerSum, judgeSum
 }
 
 // Aspects contains criteria for scoring a game.
@@ -170,6 +212,15 @@ func (aspects *Aspects) Add(other *Aspects) {
 	aspects.Innovation.Score += other.Innovation.Score
 	aspects.Bonus.Score += other.Bonus.Score
 	aspects.Overall.Score += other.Overall.Score
+}
+
+func (aspects *Aspects) Scale(multiplier float64) {
+	aspects.Theme.Score *= multiplier
+	aspects.Enjoyment.Score *= multiplier
+	aspects.Aesthetics.Score *= multiplier
+	aspects.Innovation.Score *= multiplier
+	aspects.Bonus.Score *= multiplier
+	aspects.Overall.Score *= multiplier
 }
 
 // Add includes other into aspects.

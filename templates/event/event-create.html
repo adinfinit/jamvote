@@ -19,6 +19,11 @@
 		</div>
 
 		<div class="field">
+			<label for="judgePercentage">Percentage of judge votes</label>
+			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
+		</div>
+
+		<div class="field">
 			<label for="info">Info</label>
 			<textarea type="text" id="info" name="info" rows=4>{{with .NewEvent}}{{.Info}}{{end}}</textarea>
 		</div>

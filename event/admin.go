@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -32,6 +33,22 @@ func (server *Server) CreateEvent(context *Context) {
 		slug := context.FormValue("slug")
 		info := context.FormValue("info")
 
+		var judgePercentage float64
+		var err error
+
+		if context.FormValue("judgePercentage") == "" {
+			judgePercentage = 0
+		} else {
+			judgePercentage, err = strconv.ParseFloat(context.FormValue("judgePercentage"), 64)
+		}
+
+		if err != nil {
+			context.FlashErrorNow(err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-edit")
+			return
+		}
+
 		starttime := context.FormValue("StartTime")
 		endtime := context.FormValue("EndTime")
 
@@ -41,6 +58,7 @@ func (server *Server) CreateEvent(context *Context) {
 		event.Theme = theme
 		event.Info = info
 		event.Registration = true
+		event.JudgePercentage = judgePercentage
 
 		event.Created = time.Now().UTC()
 
@@ -87,7 +105,7 @@ func (server *Server) CreateEvent(context *Context) {
 
 		event.Organizers = append(event.Organizers, context.CurrentUser.ID)
 
-		err := context.Events.Create(event)
+		err = context.Events.Create(event)
 		if err != nil {
 			if err == ErrExists {
 				context.FlashErrorNow(fmt.Sprintf("Event with slug %q already exists.", event.ID))
@@ -124,6 +142,22 @@ func (server *Server) EditEvent(context *Context) {
 		}
 
 		theme := context.FormValue("theme")
+
+		var judgePercentage float64
+		var err error
+		if context.FormValue("judgePercentage") == "" {
+			judgePercentage = 0
+		} else {
+			judgePercentage, err = strconv.ParseFloat(context.FormValue("judgePercentage"), 64)
+		}
+
+		if err != nil {
+			context.FlashErrorNow(err.Error())
+			context.Response.WriteHeader(http.StatusBadRequest)
+			context.Render("event-edit")
+			return
+		}
+
 		registration := context.FormValue("registration") == "true"
 		voting := context.FormValue("voting") == "true"
 		closed := context.FormValue("closed") == "true"
@@ -138,6 +172,7 @@ func (server *Server) EditEvent(context *Context) {
 
 		event := context.Event
 		event.Theme = theme
+		event.JudgePercentage = judgePercentage
 		event.Registration = registration
 		event.Voting = voting
 		event.Closed = closed
@@ -196,7 +231,7 @@ func (server *Server) EditEvent(context *Context) {
 			event.VotingCloses = t
 		}
 
-		err := context.Events.Update(event)
+		err = context.Events.Update(event)
 		if err != nil {
 			context.FlashErrorNow(err.Error())
 			context.Response.WriteHeader(http.StatusInternalServerError)
@@ -233,24 +268,38 @@ func (server *Server) Jammers(context *Context) {
 			return
 		}
 
-		added := []user.UserID{}
-		removed := []user.UserID{}
+		jammersAdded := []user.UserID{}
+		jammersRemoved := []user.UserID{}
+		judgesAdded := []user.UserID{}
+		judgesRemoved := []user.UserID{}
 
 		for _, u := range users {
-			before := context.FormValue(fmt.Sprintf("%v.Start", u.ID)) == "approved"
-			after := context.FormValue(fmt.Sprintf("%v", u.ID)) == "approved"
+			jammersBefore := context.FormValue(fmt.Sprintf("%v.Jammer.Start", u.ID)) == "approved"
+			jammersAfter := context.FormValue(fmt.Sprintf("%v.Jammer", u.ID)) == "approved"
 
-			if before != after {
-				if after {
-					added = append(added, u.ID)
+			judgesBefore := context.FormValue(fmt.Sprintf("%v.Judge.Start", u.ID)) == "isjudge"
+			judgesAfter := context.FormValue(fmt.Sprintf("%v.Judge", u.ID)) == "isjudge"
+
+			if jammersBefore != jammersAfter {
+				if jammersAfter {
+					jammersAdded = append(jammersAdded, u.ID)
 				} else {
-					removed = append(removed, u.ID)
+					jammersRemoved = append(jammersRemoved, u.ID)
+				}
+			}
+
+			if judgesBefore != judgesAfter {
+				if judgesAfter {
+					judgesAdded = append(judgesAdded, u.ID)
+				} else {
+					judgesRemoved = append(judgesRemoved, u.ID)
 				}
 			}
 		}
 
 		event := context.Event
-		event.AddRemoveJammers(added, removed)
+		event.AddRemoveJammers(jammersAdded, jammersRemoved)
+		event.AddRemoveJudges(judgesAdded, judgesRemoved)
 
 		err := context.Events.Update(event)
 		if err != nil {
@@ -260,15 +309,17 @@ func (server *Server) Jammers(context *Context) {
 			return
 		}
 
-		s := ""
-		if len(removed) > 0 {
-			s += fmt.Sprintf(" Removed %v jammers.", len(removed))
+		if len(jammersRemoved) > 0 {
+			context.FlashError(fmt.Sprintf("Removed %v jammers.", len(jammersRemoved)))
 		}
-		if len(added) > 0 {
-			s += fmt.Sprintf(" Added %v jammers.", len(added))
+		if len(judgesRemoved) > 0 {
+			context.FlashError(fmt.Sprintf("Removed %v judges.", len(judgesRemoved)))
 		}
-		if s != "" {
-			context.FlashError(s)
+		if len(jammersAdded) > 0 {
+			context.FlashMessage(fmt.Sprintf("Added %v jammers.", len(jammersAdded)))
+		}
+		if len(judgesAdded) > 0 {
+			context.FlashMessage(fmt.Sprintf("Added %v judges.", len(judgesAdded)))
 		}
 
 		context.Redirect(string(event.Path()), http.StatusSeeOther)

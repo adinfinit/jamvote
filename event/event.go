@@ -71,6 +71,8 @@ type Event struct {
 	// EndTime is the end time of the event
 	EndTime time.Time `datastore:",noindex"`
 
+	JudgePercentage float64 `datastore:",noindex"`
+
 	// New Registration is allowed
 	Registration bool `datastore:",noindex"`
 	// Voting allow voting
@@ -85,6 +87,7 @@ type Event struct {
 
 	Organizers []user.UserID `datastore:",noindex"`
 	Jammers    []user.UserID `datastore:",noindex"`
+	Judges     []user.UserID `datastore:",noindex"`
 }
 
 func init() {
@@ -139,6 +142,22 @@ func (event *Event) AddRemoveJammers(added, removed []user.UserID) {
 	event.Jammers = result
 }
 
+// AddRemoveJudges adds and removes judges from the event.
+func (event *Event) AddRemoveJudges(added, removed []user.UserID) {
+	result := []user.UserID{}
+	for _, userid := range event.Judges {
+		if !containsUser(removed, userid) {
+			result = append(result, userid)
+		}
+	}
+	for _, userid := range added {
+		if !containsUser(result, userid) {
+			result = append(result, userid)
+		}
+	}
+	event.Judges = result
+}
+
 // Less compares events based on start time.
 func (event *Event) Less(other *Event) bool {
 	return event.startTime().After(other.startTime())
@@ -150,4 +169,24 @@ func (event *Event) startTime() time.Time {
 		return event.StartTime
 	}
 	return event.Created
+}
+
+func (event *Event) HasJudgeById(userId *user.UserID) bool {
+	if userId == nil {
+		return false
+	}
+
+	return containsUser(event.Judges, *userId)
+}
+
+func (event *Event) HasJudge(u *user.User) bool {
+	if u == nil {
+		return false
+	}
+
+	return containsUser(event.Judges, u.ID)
+}
+
+func (event *Event) JudgesExist() bool {
+	return len(event.Judges) != 0
 }
