@@ -38,6 +38,7 @@
 		</tbody>
 	</table>
 
+	{{ if .Event.JudgesExist }}
 	<div class="titlemenu">
 		<h1>Jammers Voting Results</h1>
 	</div>
@@ -73,7 +74,7 @@
 			{{ end }}
 		</tbody>
 	</table>
-	{{ if .Event.JudgesExist }}
+
 	<div class="titlemenu">
 		<h1>Judge Voting Results</h1>
 	</div>
