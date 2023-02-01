@@ -310,10 +310,10 @@ func (server *Server) Jammers(context *Context) {
 		}
 
 		if len(jammersRemoved) > 0 {
-			context.FlashError(fmt.Sprintf("Removed %v jammers.", len(jammersRemoved)))
+			context.FlashMessage(fmt.Sprintf("Removed %v jammers.", len(jammersRemoved)))
 		}
 		if len(judgesRemoved) > 0 {
-			context.FlashError(fmt.Sprintf("Removed %v judges.", len(judgesRemoved)))
+			context.FlashMessage(fmt.Sprintf("Removed %v judges.", len(judgesRemoved)))
 		}
 		if len(jammersAdded) > 0 {
 			context.FlashMessage(fmt.Sprintf("Added %v jammers.", len(jammersAdded)))
