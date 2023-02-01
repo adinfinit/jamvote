@@ -188,5 +188,5 @@ func (event *Event) HasJudge(u *user.User) bool {
 }
 
 func (event *Event) JudgesExist() bool {
-	return len(event.Judges) != 0
+	return event.JudgePercentage > 0 && len(event.Judges) != 0
 }

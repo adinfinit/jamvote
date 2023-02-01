@@ -71,70 +71,45 @@ var DefaultAspects = Aspects{
 }
 
 // AverageScores returns averages for all aspects.
-func AverageScores(ballots []*Ballot, event *Event) (Aspects, Aspects, Aspects) {
-	judgeSum := Aspects{}
+func AverageScores(ballots []*Ballot, event *Event) (final, jammers, judges Aspects) {
 	judgeCount := 0.0
-
-	jammerSum := Aspects{}
-	JammerCount := 0.0
-
+	jammerCount := 0.0
 	for _, ballot := range ballots {
-		if event.HasJudgeById(&ballot.Voter) {
-			if !ballot.Completed {
-				continue
-			}
+		if !ballot.Completed {
+			continue
+		}
 
-			judgeSum.Add(&ballot.Aspects)
+		if event.JudgePercentage > 0 && event.HasJudgeById(&ballot.Voter) {
+			judges.Add(&ballot.Aspects)
 			judgeCount += 1.0
-
 		} else {
-			if !ballot.Completed {
-				continue
-			}
-
-			jammerSum.Add(&ballot.Aspects)
-			JammerCount += 1.0
+			jammers.Add(&ballot.Aspects)
+			jammerCount += 1.0
 		}
 	}
-	totalSum := Aspects{}
-	totalCount := 0.0
 
+	if jammerCount > 0 {
+		jammers.Scale(1 / jammerCount)
+	}
 	if judgeCount > 0 {
-		multiplier := JammerCount / judgeCount
-
-		if JammerCount == 0 {
-			multiplier = 1
-		}
-
-		if event.JudgePercentage != 100 {
-			multiplier *= event.JudgePercentage / (100 - event.JudgePercentage)
-		} else {
-			multiplier = 1
-		}
-
-		if event.JudgePercentage != 0 {
-			judgeCount *= multiplier
-			judgeSum.Scale(multiplier)
-			totalSum.Add(&judgeSum)
-			totalCount += judgeCount
-		}
-
-		judgeSum.Scale(1 / judgeCount)
+		judges.Scale(1 / judgeCount)
 	}
 
-	if event.JudgePercentage != 100 {
-		totalCount += JammerCount 
-		totalSum.Add(&jammerSum)
+	if event.JudgePercentage == 0 {
+		final = jammers
+		return
 	}
 
-	if totalCount > 0 {
-		totalSum.Scale(1 / totalCount)
-	}
-	if JammerCount > 0 {
-		jammerSum.Scale(1 / JammerCount)
-	}
+	p := event.JudgePercentage / 100
+	jammerPart := jammers
+	jammerPart.Scale(1 - p)
+	final.Add(&jammerPart)
 
-	return totalSum, jammerSum, judgeSum
+	judgesPart := judges
+	judgesPart.Scale(p)
+	final.Add(&judgesPart)
+
+	return final, jammers, judges
 }
 
 // Aspects contains criteria for scoring a game.
