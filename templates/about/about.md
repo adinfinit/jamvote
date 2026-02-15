@@ -1,6 +1,7 @@
 # About jamvote
 
-jamvote is a voting tool for game jams. It helps organizers run a
+jamvote is a voting tool for game jams — events where people create
+games in a short time, usually 24–72 hours. It helps organizers run a
 peer-review process where every participant gets to play and rate the
 other entries.
 
