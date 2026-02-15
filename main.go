@@ -19,6 +19,7 @@ import (
 	"github.com/adinfinit/jamvote/about"
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/datastoredb"
+	"github.com/adinfinit/jamvote/devdata"
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/profile"
 	"github.com/adinfinit/jamvote/site"
@@ -61,6 +62,14 @@ func main() {
 		logger.Error("failed to create site server", "error", err)
 		os.Exit(1)
 	}
+
+	if os.Getenv("DEVELOPMENT") != "" {
+		logger.Info("development mode enabled")
+		sites.Development = true
+		auths.EnableDevelopment()
+		devdata.Seed(logger, db)
+	}
+
 	sites.Register(router)
 
 	users := &user.Server{

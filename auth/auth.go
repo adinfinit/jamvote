@@ -49,16 +49,6 @@ func NewService(log *slog.Logger, domain string, oauthConfig *oauth2.Config, ses
 	service := &Service{}
 	service.Log = log
 
-	service.Development.Enabled = false
-	if service.Development.Enabled {
-		cookieStore := sessions.NewCookieStore([]byte("DEVELOPMENT"))
-		cookieStore.Options = &sessions.Options{
-			Path:     "/",
-			HttpOnly: true,
-		}
-		service.Development.Sessions = cookieStore
-	}
-
 	service.OAuth2 = oauthConfig
 	service.Sessions = sess
 	service.Domain = domain
@@ -66,6 +56,17 @@ func NewService(log *slog.Logger, domain string, oauthConfig *oauth2.Config, ses
 	service.LoginCompleted = "/"
 
 	return service
+}
+
+// EnableDevelopment enables the development login flow.
+func (service *Service) EnableDevelopment() {
+	service.Development.Enabled = true
+	cookieStore := sessions.NewCookieStore([]byte("DEVELOPMENT"))
+	cookieStore.Options = &sessions.Options{
+		Path:     "/",
+		HttpOnly: true,
+	}
+	service.Development.Sessions = cookieStore
 }
 
 // Register registers handlers for /auth/*.
@@ -95,7 +96,7 @@ func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
 			if username, ok := val.(string); ok && username != "" {
 				return &Credentials{
 					Provider: "development",
-					ID:       developmentUserID(username),
+					ID:       DevelopmentUserID(username),
 					Name:     username,
 					Email:    username,
 					Admin:    username == "Admin",
@@ -259,8 +260,8 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-// developmentUserID dynamically creates a user ID.
-func developmentUserID(username string) string {
+// DevelopmentUserID dynamically creates a user ID from a username.
+func DevelopmentUserID(username string) string {
 	h := sha1.Sum([]byte(username))
 	return hex.EncodeToString(h[:])
 }
