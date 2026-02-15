@@ -16,7 +16,7 @@ lint:
 	staticcheck ./...
 
 emulator:
-	exec gcloud beta emulators datastore start --project=local-dev --host-port=localhost:8081 --no-store-on-disk
+	trap 'kill 0' EXIT; gcloud beta emulators datastore start --project=local-dev --host-port=localhost:8081 --no-store-on-disk
 
 run:
 	DEVELOPMENT=1 GOOGLE_CLOUD_PROJECT=local-dev DATASTORE_EMULATOR_HOST=localhost:8081 go run main.go

@@ -85,15 +85,15 @@ var eventDefs = []eventDef{
 	{"shadow-realm", "Shadow Realm", "Light and Darkness", false, true, false, false, 10},
 
 	// Voting closed (voting just finished, results pending)
-	{"wild-cards", "Wild Cards", "Randomness", false, false, true, false, 20},
+	{"wild-cards", "Wild Cards", "Randomness", false, true, true, false, 20},
 
 	// Completed/revealed (past jams with results)
-	{"ocean-depths", "Ocean Depths", "Underwater Adventure", false, false, true, true, 35},
-	{"robot-uprising", "Robot Uprising", "AI Gone Wrong", false, false, true, true, 60},
-	{"mystic-forest", "Mystic Forest", "Nature Magic", false, false, true, true, 90},
-	{"fire-and-ice", "Fire and Ice", "Elemental Forces", false, false, true, true, 120},
-	{"tiny-worlds", "Tiny Worlds", "Microscopic", false, false, true, true, 180},
-	{"last-stand", "Last Stand", "Survival", false, false, true, true, 365},
+	{"ocean-depths", "Ocean Depths", "Underwater Adventure", false, true, true, true, 35},
+	{"robot-uprising", "Robot Uprising", "AI Gone Wrong", false, true, true, true, 60},
+	{"mystic-forest", "Mystic Forest", "Nature Magic", false, true, true, true, 90},
+	{"fire-and-ice", "Fire and Ice", "Elemental Forces", false, true, true, true, 120},
+	{"tiny-worlds", "Tiny Worlds", "Microscopic", false, true, true, true, 180},
+	{"last-stand", "Last Stand", "Survival", false, true, true, true, 365},
 }
 
 var gameNames = []string{

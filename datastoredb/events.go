@@ -231,7 +231,7 @@ func (repo *Events) allBallots(eventkey *datastore.Key, tx *datastore.Transactio
 // teamBallots returns all event ballots in a team.
 func (repo *Events) teamBallots(eventkey *datastore.Key, teamid event.TeamID) ([]*event.Ballot, error) {
 	var ballots []*event.Ballot
-	q := datastore.NewQuery("Ballot").Ancestor(eventkey).FilterField("Team", "=", teamid)
+	q := datastore.NewQuery("Ballot").Ancestor(eventkey).FilterField("Team", "=", int64(teamid))
 	keys, err := repo.Client.GetAll(repo.Context, q, &ballots)
 	for i, ballot := range ballots {
 		ballot.ID = keys[i]
@@ -242,7 +242,7 @@ func (repo *Events) teamBallots(eventkey *datastore.Key, teamid event.TeamID) ([
 // userBallots returns all event ballots of an user.
 func (repo *Events) userBallots(eventkey *datastore.Key, userid user.UserID) ([]*event.Ballot, error) {
 	var ballots []*event.Ballot
-	q := datastore.NewQuery("Ballot").Ancestor(eventkey).FilterField("Voter", "=", userid)
+	q := datastore.NewQuery("Ballot").Ancestor(eventkey).FilterField("Voter", "=", int64(userid))
 	keys, err := repo.Client.GetAll(repo.Context, q, &ballots)
 	for i, ballot := range ballots {
 		ballot.ID = keys[i]
