@@ -1,10 +1,10 @@
 package about
 
 import (
+	"net/http"
+
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
-
-	"github.com/gorilla/mux"
 )
 
 // Server implements profile views for users.
@@ -14,7 +14,7 @@ type Server struct {
 }
 
 // Register registers user related endpoints.
-func (server *Server) Register(router *mux.Router) {
+func (server *Server) Register(router *http.ServeMux) {
 	router.HandleFunc("/about", server.Handler(server.About))
 	router.HandleFunc("/about/jamming", server.Handler(server.Jamming))
 	router.HandleFunc("/about/scoring", server.Handler(server.Scoring))

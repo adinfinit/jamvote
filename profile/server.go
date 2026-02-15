@@ -7,8 +7,6 @@ import (
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
-
-	"github.com/gorilla/mux"
 )
 
 // Server implements profile views for users.
@@ -20,7 +18,7 @@ type Server struct {
 }
 
 // Register registers user related endpoints.
-func (server *Server) Register(router *mux.Router) {
+func (server *Server) Register(router *http.ServeMux) {
 	router.HandleFunc("/user/{userid}/edit", server.Handler(server.Edit))
 	router.HandleFunc("/user/{userid}", server.Handler(server.Profile))
 }

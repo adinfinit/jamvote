@@ -11,7 +11,6 @@ import (
 	"cloud.google.com/go/datastore"
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	secretmanagerpb "cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
-	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -41,7 +40,7 @@ func main() {
 
 	db := &datastoredb.DB{Client: dsClient}
 
-	router := mux.NewRouter()
+	router := http.NewServeMux()
 
 	sessionsStore := newCookieSessionStore(logger, os.Getenv("COOKIESTORE_SECRET"))
 

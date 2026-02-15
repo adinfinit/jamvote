@@ -5,7 +5,6 @@ go 1.25
 require (
 	cloud.google.com/go/datastore v1.22.0
 	cloud.google.com/go/secretmanager v1.16.0
-	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/sessions v1.4.0
 	golang.org/x/oauth2 v0.35.0
 	rsc.io/markdown v0.0.0-20241212154241-6bf72452917f

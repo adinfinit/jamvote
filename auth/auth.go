@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"golang.org/x/oauth2"
 )
@@ -70,7 +69,7 @@ func (service *Service) EnableDevelopment() {
 }
 
 // Register registers handlers for /auth/*.
-func (service *Service) Register(router *mux.Router) {
+func (service *Service) Register(router *http.ServeMux) {
 	router.HandleFunc("/auth/login", service.Login)
 	router.HandleFunc("/auth/callback", service.Callback)
 	router.HandleFunc("/auth/development-login", service.DevelopmentLogin)

@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
 
@@ -45,8 +44,8 @@ func NewServer(log *slog.Logger, sess sessions.Store, staticdir string, template
 	return server, err
 }
 
-func (server *Server) Register(router *mux.Router) {
-	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(server.Static)))
+func (server *Server) Register(router *http.ServeMux) {
+	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(server.Static)))
 	router.Handle("/favicon.png", http.FileServer(server.Static))
 	router.Handle("/robots.txt", http.FileServer(server.Static))
 }
@@ -159,8 +158,8 @@ func (context *Context) Error(text string, status int) {
 
 // StringParam returns a string argument.
 func (context *Context) StringParam(name string) (string, bool) {
-	s, ok := mux.Vars(context.Request)[name]
-	return s, ok
+	s := context.Request.PathValue(name)
+	return s, s != ""
 }
 
 // IntParam returns an integer param.

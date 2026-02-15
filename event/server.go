@@ -6,8 +6,6 @@ import (
 	"path"
 	"sort"
 
-	"github.com/gorilla/mux"
-
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
 )
@@ -21,7 +19,7 @@ type Server struct {
 }
 
 // Register registers all endpoints to router.
-func (server *Server) Register(router *mux.Router) {
+func (server *Server) Register(router *http.ServeMux) {
 	router.HandleFunc("/", server.HandlerMaybe(server.List))
 	router.HandleFunc("/event/create", server.HandlerMaybe(server.CreateEvent))
 

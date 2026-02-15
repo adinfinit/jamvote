@@ -6,8 +6,6 @@ import (
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/site"
-
-	"github.com/gorilla/mux"
 )
 
 // Server implements user management endpoints.
@@ -19,7 +17,7 @@ type Server struct {
 }
 
 // Register registers endpoints to router.
-func (server *Server) Register(router *mux.Router) {
+func (server *Server) Register(router *http.ServeMux) {
 	router.HandleFunc("/user", server.Handler(server.RedirectToEdit))
 	router.HandleFunc("/users", server.Handler(server.List))
 	router.HandleFunc("/user/logged-in", server.Handler(server.LoggedIn))
