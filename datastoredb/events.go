@@ -77,17 +77,16 @@ func (repo *Events) Create(ev *event.Event) error {
 
 // ByID retrieves an event by ID.
 func (repo *Events) ByID(eventid event.EventID) (*event.Event, error) {
-	ev := &event.Event{}
-	if appCache.Get("Event_"+eventid.String(), ev) {
+	if ev, ok := eventCache.Get("Event_" + eventid.String()); ok {
 		return ev, nil
 	}
 
-	ev = &event.Event{}
+	ev := &event.Event{}
 	ev.ID = eventid
 	eventkey := newEventKey(eventid)
 	err := repo.Client.Get(repo.Context, eventkey, ev)
 	if err == nil {
-		appCache.Set("Event_"+eventid.String(), ev)
+		eventCache.Set("Event_"+eventid.String(), ev)
 	}
 
 	return ev, eventsError(err)
@@ -98,7 +97,7 @@ func (repo *Events) Update(ev *event.Event) error {
 	eventkey := newEventKey(ev.ID)
 	_, err := repo.Client.Put(repo.Context, eventkey, ev)
 	if err == nil {
-		appCache.Set("Event_"+ev.ID.String(), ev)
+		eventCache.Set("Event_"+ev.ID.String(), ev)
 	}
 	return eventsError(err)
 }

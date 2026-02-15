@@ -60,8 +60,7 @@ func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, er
 
 // ByCredentials finds user info based on credentials.
 func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
-	u := &user.User{}
-	if appCache.Get("Credential_"+cred.ID, u) {
+	if u, ok := userCache.Get("Credential_" + cred.ID); ok {
 		return u, nil
 	}
 
@@ -73,13 +72,13 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 		return nil, usersError(err)
 	}
 
-	u = &user.User{}
+	u := &user.User{}
 	u.ID = user.UserID(mapping.UserKey.ID)
 	err = repo.Client.Get(repo.Context, mapping.UserKey, u)
 
 	if err == nil {
-		appCache.Set("Credential_"+cred.ID, u)
-		appCache.Set("User_"+u.ID.String(), u)
+		userCache.Set("Credential_"+cred.ID, u)
+		userCache.Set("User_"+u.ID.String(), u)
 	}
 
 	return u, usersError(err)
@@ -87,12 +86,11 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 
 // ByID returns user by ID.
 func (repo *Users) ByID(id user.UserID) (*user.User, error) {
-	u := &user.User{}
-	if appCache.Get("User_"+id.String(), u) {
+	if u, ok := userCache.Get("User_" + id.String()); ok {
 		return u, nil
 	}
 
-	u = &user.User{}
+	u := &user.User{}
 	u.ID = id
 	userkey := datastore.IDKey("User", int64(id), nil)
 	err := repo.Client.Get(repo.Context, userkey, u)
@@ -153,7 +151,7 @@ func (repo *Users) Update(u *user.User) error {
 	userkey := datastore.IDKey("User", int64(u.ID), nil)
 	_, err := repo.Client.Put(repo.Context, userkey, u)
 	if err == nil {
-		appCache.Set("User_"+u.ID.String(), u)
+		userCache.Set("User_"+u.ID.String(), u)
 	}
 	return usersError(err)
 }
