@@ -8,13 +8,13 @@ import (
 	"net/http"
 	"os"
 
+	"cloud.google.com/go/datastore"
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	secretmanagerpb "cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"google.golang.org/appengine/v2"
 
 	"github.com/adinfinit/jamvote/about"
 	"github.com/adinfinit/jamvote/auth"
@@ -26,7 +26,16 @@ import (
 )
 
 func main() {
-	db := &datastoredb.DB{}
+	ctx := context.Background()
+
+	project := os.Getenv("GOOGLE_CLOUD_PROJECT")
+	dsClient, err := datastore.NewClient(ctx, project)
+	if err != nil {
+		log.Fatalf("Failed to create datastore client: %v", err)
+	}
+	defer dsClient.Close()
+
+	db := &datastoredb.DB{Client: dsClient}
 
 	router := mux.NewRouter()
 
@@ -82,11 +91,9 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
-		log.Printf("Listening on port %s", port)
-		log.Fatal(http.ListenAndServe(":"+port, nil))
-	} else {
-		appengine.Main()
 	}
+	log.Printf("Listening on port %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 // loadOAuthConfig loads the Google OAuth2 credentials JSON and returns an oauth2.Config.

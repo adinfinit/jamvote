@@ -11,8 +11,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-
-	"google.golang.org/appengine/v2"
 )
 
 // DefaultSessionName is the name of default session store.
@@ -79,7 +77,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 		Response: w,
 		Data:     data,
 		Session:  sess,
-		Context:  appengine.NewContext(r),
+		Context:  r.Context(),
 	}
 }
 

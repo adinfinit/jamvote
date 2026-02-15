@@ -4,17 +4,17 @@ import (
 	"context"
 	"sort"
 
+	"cloud.google.com/go/datastore"
+
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/internal/natural"
 	"github.com/adinfinit/jamvote/user"
-
-	"google.golang.org/appengine/v2/datastore"
-	"google.golang.org/appengine/v2/memcache"
 )
 
 // Users implements user.Repo.
 type Users struct {
 	Context context.Context
+	Client  *datastore.Client
 }
 
 // credentialMapping is info that is stored in the datastore.
@@ -35,14 +35,14 @@ func usersError(err error) error {
 
 // Create creates a new user with the specified credentials and user info.
 func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, error) {
-	incompletekey := datastore.NewIncompleteKey(repo.Context, "User", nil)
-	userkey, err := datastore.Put(repo.Context, incompletekey, u)
+	incompletekey := datastore.IncompleteKey("User", nil)
+	userkey, err := repo.Client.Put(repo.Context, incompletekey, u)
 	if err != nil {
 		return 0, usersError(err)
 	}
-	u.ID = user.UserID(userkey.IntID())
+	u.ID = user.UserID(userkey.ID)
 
-	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
+	mappingkey := datastore.NameKey("Credential", cred.ID, nil)
 
 	mapping := &credentialMapping{}
 	mapping.UserKey = userkey
@@ -50,7 +50,7 @@ func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, er
 	mapping.Email = cred.Email
 	mapping.Name = cred.Name
 
-	_, err = datastore.Put(repo.Context, mappingkey, mapping)
+	_, err = repo.Client.Put(repo.Context, mappingkey, mapping)
 	if err != nil {
 		return 0, usersError(err)
 	}
@@ -60,35 +60,26 @@ func (repo *Users) Create(cred *auth.Credentials, u *user.User) (user.UserID, er
 
 // ByCredentials finds user info based on credentials.
 func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
-	if item, err := memcache.Get(repo.Context, "Credential_"+cred.ID); err == nil {
-		u := &user.User{}
-		if _, err := memcache.Gob.Get(repo.Context, "User_"+string(item.Value), u); err == nil {
-			return u, nil
-		}
+	u := &user.User{}
+	if appCache.Get("Credential_"+cred.ID, u) {
+		return u, nil
 	}
 
 	mapping := &credentialMapping{}
 
-	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
-	err := datastore.Get(repo.Context, mappingkey, mapping)
+	mappingkey := datastore.NameKey("Credential", cred.ID, nil)
+	err := repo.Client.Get(repo.Context, mappingkey, mapping)
 	if err != nil {
 		return nil, usersError(err)
 	}
 
-	u := &user.User{}
-	u.ID = user.UserID(mapping.UserKey.IntID())
-	err = datastore.Get(repo.Context, mapping.UserKey, u)
+	u = &user.User{}
+	u.ID = user.UserID(mapping.UserKey.ID)
+	err = repo.Client.Get(repo.Context, mapping.UserKey, u)
 
 	if err == nil {
-		_ = memcache.Add(repo.Context, &memcache.Item{
-			Key:   "Credential_" + cred.ID,
-			Value: []byte(user.UserID(mapping.UserKey.IntID()).String()),
-		})
-
-		_ = memcache.Gob.Add(repo.Context, &memcache.Item{
-			Key:    "User_" + user.UserID(mapping.UserKey.IntID()).String(),
-			Object: u,
-		})
+		appCache.Set("Credential_"+cred.ID, u)
+		appCache.Set("User_"+u.ID.String(), u)
 	}
 
 	return u, usersError(err)
@@ -97,14 +88,14 @@ func (repo *Users) ByCredentials(cred *auth.Credentials) (*user.User, error) {
 // ByID returns user by ID.
 func (repo *Users) ByID(id user.UserID) (*user.User, error) {
 	u := &user.User{}
-	if _, err := memcache.Gob.Get(repo.Context, "User_"+id.String(), u); err == nil {
+	if appCache.Get("User_"+id.String(), u) {
 		return u, nil
 	}
 
 	u = &user.User{}
 	u.ID = id
-	userkey := datastore.NewKey(repo.Context, "User", "", int64(id), nil)
-	err := datastore.Get(repo.Context, userkey, u)
+	userkey := datastore.IDKey("User", int64(id), nil)
+	err := repo.Client.Get(repo.Context, userkey, u)
 	return u, usersError(err)
 }
 
@@ -113,9 +104,9 @@ func (repo *Users) List() ([]*user.User, error) {
 	users := []*user.User{}
 
 	q := datastore.NewQuery("User")
-	keys, err := q.GetAll(repo.Context, &users)
+	keys, err := repo.Client.GetAll(repo.Context, q, &users)
 	for i, u := range users {
-		u.ID = user.UserID(keys[i].IntID())
+		u.ID = user.UserID(keys[i].ID)
 	}
 
 	sort.Slice(users, func(i, k int) bool {
@@ -127,14 +118,14 @@ func (repo *Users) List() ([]*user.User, error) {
 // FindCredentialByEmail scans all credentials for a matching email and returns the associated UserID.
 func (repo *Users) FindCredentialByEmail(email string) (user.UserID, error) {
 	var mappings []credentialMapping
-	_, err := datastore.NewQuery("Credential").GetAll(repo.Context, &mappings)
+	_, err := repo.Client.GetAll(repo.Context, datastore.NewQuery("Credential"), &mappings)
 	if err != nil {
 		return 0, err
 	}
 
 	for _, m := range mappings {
 		if m.Email == email {
-			return user.UserID(m.UserKey.IntID()), nil
+			return user.UserID(m.UserKey.ID), nil
 		}
 	}
 
@@ -143,8 +134,8 @@ func (repo *Users) FindCredentialByEmail(email string) (user.UserID, error) {
 
 // CreateCredentialAlias creates a new credential mapping pointing to an existing user.
 func (repo *Users) CreateCredentialAlias(cred *auth.Credentials, existingUserID user.UserID) error {
-	userkey := datastore.NewKey(repo.Context, "User", "", int64(existingUserID), nil)
-	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
+	userkey := datastore.IDKey("User", int64(existingUserID), nil)
+	mappingkey := datastore.NameKey("Credential", cred.ID, nil)
 
 	mapping := &credentialMapping{
 		UserKey:  userkey,
@@ -153,19 +144,16 @@ func (repo *Users) CreateCredentialAlias(cred *auth.Credentials, existingUserID 
 		Name:     cred.Name,
 	}
 
-	_, err := datastore.Put(repo.Context, mappingkey, mapping)
+	_, err := repo.Client.Put(repo.Context, mappingkey, mapping)
 	return err
 }
 
 // Update updates a user.
 func (repo *Users) Update(u *user.User) error {
-	userkey := datastore.NewKey(repo.Context, "User", "", int64(u.ID), nil)
-	_, err := datastore.Put(repo.Context, userkey, u)
+	userkey := datastore.IDKey("User", int64(u.ID), nil)
+	_, err := repo.Client.Put(repo.Context, userkey, u)
 	if err == nil {
-		_ = memcache.Gob.Set(repo.Context, &memcache.Item{
-			Key:    "User_" + u.ID.String(),
-			Object: u,
-		})
+		appCache.Set("User_"+u.ID.String(), u)
 	}
 	return usersError(err)
 }

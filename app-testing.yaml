@@ -1,6 +1,4 @@
 runtime: go125
-app_engine_apis: true
-
 env_variables:
   DOMAIN: "https://jamvote-testing.appspot.com"
 
