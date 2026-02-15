@@ -21,10 +21,12 @@
 	</div>
 	{{ end }}
 
-	{{ with $events := .Events.Finished }}
+	<h2>Finished</h2>
+
+	{{ range .Events.Finished }}
 	<div>
-		<h2>Finished</h2>
-		{{ template "event-links" $events }}
+		<h3>{{ .Year }}</h3>
+		{{ template "event-links" .Events }}
 	</div>
 	{{ end }}
 </section>

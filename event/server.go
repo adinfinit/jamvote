@@ -74,10 +74,15 @@ func (server *Server) List(context *Context) {
 		return events[i].Less(events[k])
 	})
 
+	type YearEvents struct {
+		Year   int
+		Events []*Event
+	}
+
 	byStage := struct {
 		All      []*Event
 		Started  []*Event
-		Finished []*Event
+		Finished []YearEvents
 	}{}
 	byStage.All = events
 
@@ -85,7 +90,12 @@ func (server *Server) List(context *Context) {
 		if !event.Closed {
 			byStage.Started = append(byStage.Started, event)
 		} else {
-			byStage.Finished = append(byStage.Finished, event)
+			year := event.startTime().Year()
+			if n := len(byStage.Finished); n > 0 && byStage.Finished[n-1].Year == year {
+				byStage.Finished[n-1].Events = append(byStage.Finished[n-1].Events, event)
+			} else {
+				byStage.Finished = append(byStage.Finished, YearEvents{Year: year, Events: []*Event{event}})
+			}
 		}
 	}
 
