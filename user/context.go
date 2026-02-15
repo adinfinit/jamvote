@@ -16,13 +16,26 @@ type Context struct {
 
 // CurrentUser returns currently logged in user.
 func (server *Server) CurrentUser(context *Context) *User {
-	cred := server.Auth.CurrentCredentials(context, context.Request)
+	cred := server.Auth.CurrentCredentials(context.Request)
 	if cred == nil {
 		return nil
 	}
 
 	user, err := context.Users.ByCredentials(cred)
 	if err == ErrNotExists {
+		// Try email-based migration for OAuth2 users.
+		if cred.Provider == "google" && cred.Email != "" {
+			existingID, findErr := context.Users.FindCredentialByEmail(cred.Email)
+			if findErr == nil {
+				if aliasErr := context.Users.CreateCredentialAlias(cred, existingID); aliasErr == nil {
+					if migrated, byErr := context.Users.ByCredentials(cred); byErr == nil {
+						migrated.Admin = migrated.Admin || cred.Admin
+						return migrated
+					}
+				}
+			}
+		}
+
 		user = &User{
 			Name:  cred.Name,
 			Email: cred.Email,

@@ -1,18 +1,19 @@
 package auth
 
 import (
-	"context"
+	"crypto/rand"
 	"crypto/sha1"
+	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-
-	"google.golang.org/appengine/v2"
-	"google.golang.org/appengine/v2/user"
+	"golang.org/x/oauth2"
 )
 
 // Credentials represents users authentication method.
@@ -34,13 +35,15 @@ type Service struct {
 		Sessions sessions.Store
 	}
 
+	OAuth2         *oauth2.Config
+	Sessions       sessions.Store
 	Domain         string
 	LoginFailed    string
 	LoginCompleted string
 }
 
 // NewService returns new Service for the given domain.
-func NewService(domain string) *Service {
+func NewService(domain string, oauthConfig *oauth2.Config, sess sessions.Store) *Service {
 	service := &Service{}
 
 	service.Development.Enabled = false
@@ -53,6 +56,8 @@ func NewService(domain string) *Service {
 		service.Development.Sessions = cookieStore
 	}
 
+	service.OAuth2 = oauthConfig
+	service.Sessions = sess
 	service.Domain = domain
 	service.LoginFailed = "/"
 	service.LoginCompleted = "/"
@@ -62,6 +67,7 @@ func NewService(domain string) *Service {
 
 // Register registers handlers for /auth/*.
 func (service *Service) Register(router *mux.Router) {
+	router.HandleFunc("/auth/login", service.Login)
 	router.HandleFunc("/auth/callback", service.Callback)
 	router.HandleFunc("/auth/development-login", service.DevelopmentLogin)
 	router.HandleFunc("/auth/logout", service.Logout)
@@ -75,21 +81,11 @@ type Link struct {
 
 // Links returns all available login URLs.
 func (service *Service) Links(r *http.Request) []Link {
-	infos := []Link{}
-
-	c := appengine.NewContext(r)
-	loginurl, err := user.LoginURL(c, "/auth/callback")
-	if err != nil {
-		log.Println(err)
-		return infos
-	}
-	infos = append(infos, Link{"Google", loginurl})
-
-	return infos
+	return []Link{{"Google", "/auth/login"}}
 }
 
 // CurrentCredentials returns credentials associated with the request.
-func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *Credentials {
+func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
 	if service.Development.Enabled {
 		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		if val, ok := sess.Values["User"]; ok {
@@ -105,34 +101,106 @@ func (service *Service) CurrentCredentials(c context.Context, r *http.Request) *
 		}
 	}
 
-	aeuser := user.Current(c)
-	if aeuser != nil {
-		name := aeuser.Email
-		if p := strings.Index(name, "@"); p >= 0 {
-			name = name[:p]
-		}
-
-		return &Credentials{
-			Provider: "appengine",
-			ID:       aeuser.ID,
-			Name:     name,
-			Email:    aeuser.Email,
-			Admin:    aeuser.Admin,
-		}
+	sess, err := service.Sessions.Get(r, "jamvote")
+	if err != nil {
+		return nil
 	}
 
-	return nil
+	provider, _ := sess.Values["auth_provider"].(string)
+	id, _ := sess.Values["auth_id"].(string)
+	if provider == "" || id == "" {
+		return nil
+	}
+
+	email, _ := sess.Values["auth_email"].(string)
+	name, _ := sess.Values["auth_name"].(string)
+
+	return &Credentials{
+		Provider: provider,
+		ID:       id,
+		Email:    email,
+		Name:     name,
+		Admin:    false,
+	}
+}
+
+// Login initiates the OAuth2 flow.
+func (service *Service) Login(w http.ResponseWriter, r *http.Request) {
+	if service.OAuth2.ClientID == "" {
+		log.Println("OAuth2 not configured: missing client ID")
+		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
+		return
+	}
+
+	state, err := generateState()
+	if err != nil {
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+
+	sess, _ := service.Sessions.Get(r, "jamvote")
+	sess.Values["oauth_state"] = state
+	if err := sess.Save(r, w); err != nil {
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+
+	url := service.OAuth2.AuthCodeURL(state)
+	http.Redirect(w, r, url, http.StatusFound)
+}
+
+// idTokenClaims represents the relevant claims from a Google ID token.
+type idTokenClaims struct {
+	Sub   string `json:"sub"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
 }
 
 // Callback is called after a login event.
 func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	aeuser := user.Current(c)
-	if aeuser != nil {
-		http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
-	} else {
+	sess, _ := service.Sessions.Get(r, "jamvote")
+
+	// Verify CSRF state.
+	expectedState, _ := sess.Values["oauth_state"].(string)
+	delete(sess.Values, "oauth_state")
+	if expectedState == "" || r.FormValue("state") != expectedState {
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
+		return
 	}
+
+	// Exchange code for token.
+	token, err := service.OAuth2.Exchange(r.Context(), r.FormValue("code"))
+	if err != nil {
+		log.Println("OAuth2 exchange error:", err)
+		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
+		return
+	}
+
+	// Parse the id_token from the token response.
+	idToken, ok := token.Extra("id_token").(string)
+	if !ok {
+		log.Println("No id_token in OAuth2 response")
+		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
+		return
+	}
+
+	claims, err := parseIDToken(idToken)
+	if err != nil {
+		log.Println("Failed to parse id_token:", err)
+		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
+		return
+	}
+
+	// Store credentials in session.
+	sess.Values["auth_provider"] = "google"
+	sess.Values["auth_id"] = claims.Sub
+	sess.Values["auth_email"] = claims.Email
+	sess.Values["auth_name"] = claims.Name
+	if err := sess.Save(r, w); err != nil {
+		log.Println("Failed to save session:", err)
+	}
+
+	http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
 }
 
 // Logout is called when a user wants to log out.
@@ -140,18 +208,20 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	if service.Development.Enabled {
 		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		sess.Values["User"] = ""
-		err := sess.Save(r, w)
-		if err != nil {
+		if err := sess.Save(r, w); err != nil {
 			log.Println("Failed to logout:", err)
 		}
 	}
 
-	c := appengine.NewContext(r)
-	logout, err := user.LogoutURL(c, "/")
-	if err == nil {
-		http.Redirect(w, r, logout, http.StatusSeeOther)
-		return
+	sess, _ := service.Sessions.Get(r, "jamvote")
+	delete(sess.Values, "auth_provider")
+	delete(sess.Values, "auth_id")
+	delete(sess.Values, "auth_email")
+	delete(sess.Values, "auth_name")
+	if err := sess.Save(r, w); err != nil {
+		log.Println("Failed to save session on logout:", err)
 	}
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -190,4 +260,32 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 func developmentUserID(username string) string {
 	h := sha1.Sum([]byte(username))
 	return hex.EncodeToString(h[:])
+}
+
+// generateState creates a random state string for CSRF protection.
+func generateState() (string, error) {
+	b := make([]byte, 32)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(b), nil
+}
+
+// parseIDToken extracts claims from a JWT id_token by base64-decoding the payload segment.
+func parseIDToken(idToken string) (*idTokenClaims, error) {
+	parts := strings.Split(idToken, ".")
+	if len(parts) < 2 {
+		return nil, errors.New("invalid id_token format")
+	}
+
+	payload, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		return nil, err
+	}
+
+	claims := &idTokenClaims{}
+	if err := json.Unmarshal(payload, claims); err != nil {
+		return nil, err
+	}
+	return claims, nil
 }

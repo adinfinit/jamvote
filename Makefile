@@ -1,10 +1,10 @@
-.PHONY: deploy-live deploy-staging format check lint
+.PHONY: deploy-production deploy-staging format check lint
 
-deploy-live: format check lint
-	gcloud app deploy --project=jamvote
+deploy-production: format check lint
+	gcloud app deploy --project=jamvote app.yaml
 
 deploy-testing: format check lint
-	gcloud app deploy --project=jamvote-testing
+	gcloud app deploy --project=jamvote-testing app-testing.yaml
 
 format:
 	goimports -w .

@@ -124,6 +124,39 @@ func (repo *Users) List() ([]*user.User, error) {
 	return users, usersError(err)
 }
 
+// FindCredentialByEmail scans all credentials for a matching email and returns the associated UserID.
+func (repo *Users) FindCredentialByEmail(email string) (user.UserID, error) {
+	var mappings []credentialMapping
+	_, err := datastore.NewQuery("Credential").GetAll(repo.Context, &mappings)
+	if err != nil {
+		return 0, err
+	}
+
+	for _, m := range mappings {
+		if m.Email == email {
+			return user.UserID(m.UserKey.IntID()), nil
+		}
+	}
+
+	return 0, user.ErrNotExists
+}
+
+// CreateCredentialAlias creates a new credential mapping pointing to an existing user.
+func (repo *Users) CreateCredentialAlias(cred *auth.Credentials, existingUserID user.UserID) error {
+	userkey := datastore.NewKey(repo.Context, "User", "", int64(existingUserID), nil)
+	mappingkey := datastore.NewKey(repo.Context, "Credential", cred.ID, 0, nil)
+
+	mapping := &credentialMapping{
+		UserKey:  userkey,
+		Provider: cred.Provider,
+		Email:    cred.Email,
+		Name:     cred.Name,
+	}
+
+	_, err := datastore.Put(repo.Context, mappingkey, mapping)
+	return err
+}
+
 // Update updates a user.
 func (repo *Users) Update(u *user.User) error {
 	userkey := datastore.NewKey(repo.Context, "User", "", int64(u.ID), nil)

@@ -22,6 +22,9 @@ type Repo interface {
 
 	Create(cred *auth.Credentials, user *User) (UserID, error)
 	Update(user *User) error
+
+	FindCredentialByEmail(email string) (UserID, error)
+	CreateCredentialAlias(cred *auth.Credentials, existingUserID UserID) error
 }
 
 // ErrNotExists is returned from Repo when a user does not exist.
