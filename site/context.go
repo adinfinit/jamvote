@@ -20,10 +20,11 @@ const DefaultSessionName = "jamvote"
 
 // Server implements the root request handler.
 type Server struct {
-	Development bool
-	Start       time.Time
-	Static      http.FileSystem
-	Templates   *template.Template
+	Development  bool
+	Start        time.Time
+	Static       http.FileSystem
+	Templates    *template.Template
+	TemplatesDir string
 
 	Sessions sessions.Store
 }
@@ -41,9 +42,6 @@ func (server *Server) Register(router *mux.Router) {
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(server.Static)))
 	router.Handle("/favicon.png", http.FileServer(server.Static))
 	router.Handle("/robots.txt", http.FileServer(server.Static))
-	router.HandleFunc("/about", server.Handler(func(context *Context) {
-		context.Render("about")
-	}))
 }
 
 // Context contains all information about a single request.

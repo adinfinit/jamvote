@@ -4,8 +4,13 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
+
+	"rsc.io/markdown"
 )
 
 // APTLocation is the location where times are handled.
@@ -19,8 +24,29 @@ func init() {
 	}
 }
 
+// templatesDir extracts the base directory from a glob pattern.
+func templatesDir(glob string) string {
+	dir := glob
+	for _, ch := range []string{"*", "?", "["} {
+		if i := strings.Index(dir, ch); i >= 0 {
+			dir = dir[:i]
+		}
+	}
+	return filepath.Dir(dir)
+}
+
+// renderMarkdown converts markdown text to HTML.
+func renderMarkdown(s string) template.HTML {
+	var p markdown.Parser
+	doc := p.Parse(s)
+	return template.HTML(markdown.ToHTML(doc))
+}
+
 // initTemplates loads all templates.
 func (server *Server) initTemplates(glob string) error {
+	server.TemplatesDir = templatesDir(glob)
+	dir := server.TemplatesDir
+
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
 		"Data": func() interface{} { return nil },
@@ -82,6 +108,14 @@ func (server *Server) initTemplates(glob string) error {
 			}
 			return xs
 		},
+		"markdown": renderMarkdown,
+		"markdownFile": func(name string) (template.HTML, error) {
+			data, err := os.ReadFile(filepath.Join(dir, name))
+			if err != nil {
+				return "", err
+			}
+			return renderMarkdown(string(data)), nil
+		},
 	})
 
 	t, err := t.ParseGlob(glob)
@@ -96,6 +130,19 @@ func (context *Context) Render(name string) {
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		log.Println(err)
 	}
+}
+
+// RenderMarkdown reads a markdown file and renders it wrapped with the markdown template.
+func (context *Context) RenderMarkdown(name string) {
+	data, err := os.ReadFile(filepath.Join(context.Site.TemplatesDir, name+".md"))
+	if err != nil {
+		log.Println(err)
+		context.Error("page not found", http.StatusNotFound)
+		return
+	}
+
+	context.Data["Content"] = renderMarkdown(string(data))
+	context.Render("markdown")
 }
 
 // violinStep defines level of detail for violin plot.

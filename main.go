@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/sessions"
 	"google.golang.org/appengine/v2"
 
+	"github.com/adinfinit/jamvote/about"
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/datastoredb"
 	"github.com/adinfinit/jamvote/event"
@@ -42,6 +43,12 @@ func main() {
 		Auth: auths,
 	}
 	users.Register(router)
+
+	abouts := &about.Server{
+		Site:  sites,
+		Users: users,
+	}
+	abouts.Register(router)
 
 	events := &event.Server{
 		Site:  sites,

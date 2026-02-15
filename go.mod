@@ -11,5 +11,7 @@ require (
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
+	golang.org/x/text v0.3.8 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
+	rsc.io/markdown v0.0.0-20241212154241-6bf72452917f // indirect
 )
