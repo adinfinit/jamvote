@@ -1,0 +1,298 @@
+{{ template "head" . }}
+
+<section class="centered-text">
+	<h1>About jamvote</h1>
+
+	<p>
+		jamvote is a voting tool for game jams. It helps organizers run a
+		peer-review process where every participant gets to play and rate the
+		other entries.
+	</p>
+
+	<h2>How to jam?</h2>
+
+	<h3>Before the jam</h3>
+
+	<p>
+		Organizers should decide on target platforms for builds. Good defaults
+		are Web and Windows, though Mac and Linux builds are recommended. Set up
+		a dedicated communication channel for emergencies during voting.
+	</p>
+
+	<h3>Registering</h3>
+
+	<p>
+		At the start of the jam, every participant should sign in to jamvote and
+		register with their name so organizers can resolve issues easily. Create
+		a team and add all members. Only people on a team can vote, with the
+		exception of the judges.
+	</p>
+
+	<h3>Submitting your game</h3>
+
+	<p>
+		Make sure you can produce a working build early. Test it on a machine
+		without your development tools. Compress builds as
+		<strong><code>.zip</code></strong> since it works across all platforms.
+		Upload to a public location and verify that anyone can download it
+		without signing in.
+	</p>
+
+	<p>
+		Start uploading your final build at least 1 hour before the deadline. If
+		you cannot get a working build, upload a video so reviewers can still
+		see your game. When you push a fix, update all your links.
+	</p>
+
+	<h3>Voting</h3>
+
+	<p>
+		Once voting opens, you are randomly assigned 3 games to review. After
+		completing those, games are assigned one at a time. This ensures every
+		entry gets a balanced number of reviews as quickly as possible.
+	</p>
+
+	<p>
+		You can change your votes on the Voting page by clicking Edit next to
+		the team name, for example after a hotfix. Try to leave as much feedback
+		as possible. Votes for your own team are not counted in the totals.
+	</p>
+
+	<h3>For organizers</h3>
+
+	<p>
+		Make sure teams and users are properly linked and approved. Linked means
+		the names on the teams page match the user profiles. Approved means the
+		user is able to vote. This takes some manual oversight and reminding
+		jammers to sign in and create their team.
+	</p>
+
+	<h3>Judges</h3>
+
+	<p>
+		Events can optionally designate judges. When judges are configured, the
+		final score is a weighted blend of the jammer average and the judge
+		average, based on the judge percentage set by the organizer.
+	</p>
+
+	<h2>Scoring</h2>
+
+	<p>Games are scored on the following aspects:</p>
+
+	<dl>
+		<dt>Theme (1 &ndash; 5)</dt>
+		<dd>How well does the game interpret the jam theme?</dd>
+
+		<dt>Enjoyment (1 &ndash; 5)</dt>
+		<dd>How does the game generally feel to play?</dd>
+
+		<dt>Aesthetics (1 &ndash; 5)</dt>
+		<dd>How well is the story, art and audio executed?</dd>
+
+		<dt>Innovation (1 &ndash; 5)</dt>
+		<dd>Is there something novel in the game?</dd>
+
+		<dt>Bonus (0 &ndash; 2.5)</dt>
+		<dd>Is there anything exceptionally special about it?</dd>
+	</dl>
+
+	<p>
+		The <strong>Overall</strong> score is the weighted average of all
+		aspects: 5 * (Theme + Enjoyment + Aesthetics + Innovation + Bonus) /
+		4.5, clamped to the range 1 &ndash; 5.
+	</p>
+
+	<h3>Why have aspects?</h3>
+
+	<p>
+		The voting could be done with a single slider from 0 to 5, but having
+		multiple aspects allows for a more nuanced and comprehensive evaluation
+		of games. Each aspect provides a different perspective on the game,
+		allowing voters to consider various facets of its quality. This
+		approach also helps to ensure that the voting process is fair and
+		balanced, as it takes into account a range of factors that contribute
+		to a game's overall quality. Having people write specific feedback
+		about different aspects of the game allows jammers to improve their
+		games and learn from each other.
+	</p>
+
+	<h3>Why these aspects?</h3>
+
+	<p>
+		Many aspects were considered, but these were the most important ones
+		and seemed to cover the key qualities of a game. These scoring
+		categories act as goals for people to think about. They also try to
+		balance abilities between different groups, so that the "programmers
+		team" won't necessarily win over the "artists team".
+	</p>
+
+	<p>
+		"Theme" is a crucial aspect for game jams. It discourages people
+		from coming with premeditated games and encourages creativity.
+		Themes in general make jams more interesting, because you can see
+		how other people interpret the theme and create unique games.
+	</p>
+
+	<p>
+		"Enjoyment" is another crucial aspect. It could also have been called
+		"Fun", "Engagement", "Creativity", or "Playability". However, these
+		don't fully capture the breadth of what games can be. Games can be
+		stressful or sad and still be enjoyable. Overall, this tries to
+		capture two ideas:
+		<ul>
+			<li>Do you want to play this game again?</li>
+			<li>How much did the game change your perspective?</li>
+		</ul>
+	</p>
+
+	<p>
+		"Aesthetics" rewards games that are visually cohesive, have suitable
+		sound design, and feel like they belong together. There are many ways
+		that games can excel besides gameplay, such as visuals, audio,
+		narrative, character design, and world-building. Aesthetics tries to
+		capture all of these. It could have been called "Graphics" or
+		"Sound", but those labels can make people focus on looking "pretty".
+		Games can be simple or ugly and still suit the experience. For
+		example, a grungy and sketchy aesthetic can create a gritty and
+		oppressive atmosphere.
+	</p>
+
+	<p>
+		"Innovation" rewards people for trying something new. Coming up with
+		new things in a short time often means that the gameplay mechanics
+		cannot be balanced, hurting the enjoyment of the game. However, novel
+		games are more memorable than a remake of a classic. Innovation can
+		happen in many ways, such as new gameplay mechanics, new art styles,
+		or new sound design. It's important to remember that innovation
+		doesn't always mean creating something completely new, but also
+		improving upon existing ideas.
+	</p>
+
+	<p>
+		The "Bonus" category captures everything else, including things that
+		are not covered by the other categories. Sometimes there's a
+		<a href="https://en.wikipedia.org/wiki/The_Timeless_Way_of_Building#Summary">quality without a name</a>,
+		something that is difficult to describe but is important to the game.
+		It can be how all the pieces fit together, how the game makes you
+		feel, or some excellence in a specific area where "5" just isn't
+		enough. However, this is a very subjective category, so it is
+		weighted at 0.5 compared to the other categories.
+	</p>
+
+	<details>
+		<summary>Categories that were also considered</summary>
+
+		<h4>Comprehensive</h4>
+
+		<dl>
+			<dt>Theme</dt>
+			<dd>How well does it interpret the theme?</dd>
+
+			<dt>Enjoyment</dt>
+			<dd>How does the game generally feel?</dd>
+
+			<dt>Balance</dt>
+			<dd>How is difficulty and playability?</dd>
+
+			<dt>Story</dt>
+			<dd>What does the game tell?</dd>
+
+			<dt>Graphics</dt>
+			<dd>How does the game look?</dd>
+
+			<dt>Audio</dt>
+			<dd>How does the game sound?</dd>
+
+			<dt>Innovation</dt>
+			<dd>Something novel in the game.</dd>
+
+			<dt>Bonus</dt>
+			<dd>Anything exceptionally special.</dd>
+		</dl>
+
+		<h4>Gameplay</h4>
+
+		<dl>
+			<dt>Gameplay</dt>
+			<dd>How is the overall experience?</dd>
+
+			<dt>Game Design</dt>
+			<dd>How well do all the pieces fit together?</dd>
+
+			<dt>Overall</dt>
+			<dd>General feeling of how everything fits together.</dd>
+
+			<dt>Quality</dt>
+			<dd>Is it broken or flawless execution?</dd>
+
+			<dt>Replayability</dt>
+			<dd>Can you play it multiple times?</dd>
+
+			<dt>Market Potential</dt>
+			<dd>How well would it sell?</dd>
+		</dl>
+
+		<h4>Level &amp; Mechanics</h4>
+
+		<dl>
+			<dt>Level Design</dt>
+			<dd>Do the levels fit with the mechanics?</dd>
+
+			<dt>Mechanics</dt>
+			<dd>How do game rules and interaction feel?</dd>
+		</dl>
+
+		<h4>Alternative Wording</h4>
+
+		<dl>
+			<dt>Fun</dt>
+			<dd>Alternative wording to Enjoyment.</dd>
+
+			<dt>Humor</dt>
+			<dd>Did it make you laugh?</dd>
+		</dl>
+
+		<h4>Creativity</h4>
+
+		<dl>
+			<dt>Creativity</dt>
+			<dd>How creative are all the sound &amp; graphics?</dd>
+		</dl>
+
+		<h4>Narrative</h4>
+
+		<dl>
+			<dt>Immersion</dt>
+			<dd>How engaging was it?</dd>
+
+			<dt>Story Pacing</dt>
+			<dd>How does the story feel?</dd>
+
+			<dt>Characters</dt>
+			<dd>How interesting are the characters?</dd>
+		</dl>
+	</details>
+
+	<h3>Scoring statistics</h3>
+
+	<p>
+		The scoring tries to be as fair as possible with the number of votes
+		available. We use a simple mean to calculate the score, because it is
+		easy to understand and fair enough. A median could be a better
+		indicator of overall quality, as it is less influenced by extreme
+		values; similarly, excluding outliers could improve accuracy. However,
+		either approach would make the scoring more complicated to understand.
+	</p>
+
+	<p>
+		We use 10 as the minimum number of votes to consider a score
+		reliable. At that point a single vote can change the score by at most
+		~5%, which can still affect the ranking, but there is no easy way to
+		get better accuracy with that few votes. In practice, most games
+		receive significantly more votes than that, which makes the scoring
+		more reliable.
+	</p>
+
+</section>
+
+{{ template "foot" . }}

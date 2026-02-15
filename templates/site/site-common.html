@@ -1,85 +1,86 @@
 {{ define "head" }}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="google" value="notranslate">
-        <title>jamvote</title>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="google" value="notranslate">
+		<title>jamvote</title>
 
-        <link rel="stylesheet" href="/static/main.css?{{ServerStartTime}}">
-        <script src="/static/jam.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+		<link rel="stylesheet" href="/static/main.css?{{ServerStartTime}}">
+		<script src="/static/jam.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
-        {{ with .AutoRefresh }} <meta http-equiv="refresh" content="{{.}}" /> {{ end }}
+		{{ with .AutoRefresh }} <meta http-equiv="refresh" content="{{.}}" /> {{ end }}
 
-        <link rel="shortcut icon" type="image/png" href="/static/favicon.png"/>
-    </head>
-    <body class="dotted">
-        <div class="current-user-outer">
-            <div class="current-user center">
-                <a href="/">jamvote</a>
-                <a class="link" href="/">Events</a>
-                {{ if .CurrentUser }}
-                <a class="link" href="/users">Users</a>
-                <a class="link" href="/user">{{or .CurrentUser.Name "Profile"}}</a>
-                <a class="link" href="/user/logout">Sign out</a>
-                {{ else }}
-                <a class="link" href="/user/login">Sign in</a>
-                {{ end }}
-            </div>
-        </div>
-        {{ if .Event }}
-        <div class="header-outer">
-            <div class="header center">
-                <a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}{{with .Event.Theme}} - <span class="theme">{{ . }}</span>{{ end }}</a>
-                <a href="{{ .Event.Path "teams" }}">Teams</a>
-                <a {{if (not .Event.CanVote)}}class="disabled"{{end}} href="{{ .Event.Path "voting" }}">Voting</a>
-                <a {{if (not .Event.Voting)}}class="disabled"{{end}} href="{{ .Event.Path "progress" }}">Progress</a>
-                <a {{if (not .Event.Revealed)}}class="disabled"{{end}} href="{{ .Event.Path "results" }}">Results</a>
-            </div>
-        </div>
-        {{ if .CurrentUser.IsAdmin}}
-        <div class="admin-outer">
-            <div class="admin center">
-                <a href="{{ .Event.Path "edit" }}">Edit Event</a>
-                <a href="{{ .Event.Path "linking" }}">Linking</a>
-                <a href="{{ .Event.Path "jammers" }}">Jammers</a>
-                <a href="{{ .Event.Path "reveal" }}">Reveal</a>
-                <span>&nbsp;</span>
-            </div>
-        </div>
-        {{ end }}
-        {{ end }}
-        <div class="content-outer">
-            <div class="content center">
-                {{ if .Errors }}
-                <div class="flashes errors">
-                    {{ range .Errors }}
-                    <div class="flash">{{ . }}</div>
-                    {{ end }}
-                </div>
-                {{ end }}
-                {{ if .Flashes }}
-                <div class="flashes">
-                    {{ range .Flashes }}
-                    <div class="flash">{{ . }}</div>
-                    {{ end }}
-                </div>
-                {{ end }}
-        {{ if .FullWidth }}
-            </div>
-            <div class="full-width">
-        {{ end }}
+		<link rel="shortcut icon" type="image/png" href="/static/favicon.png"/>
+	</head>
+	<body class="dotted">
+		<div class="current-user-outer">
+			<div class="current-user center">
+				<a href="/">jamvote</a>
+				<a class="link" href="/">Events</a>
+				<a class="link" href="/about">About</a>
+				{{ if .CurrentUser }}
+				<a class="link" href="/users">Users</a>
+				<a class="link" href="/user">{{or .CurrentUser.Name "Profile"}}</a>
+				<a class="link" href="/user/logout">Sign out</a>
+				{{ else }}
+				<a class="link" href="/user/login">Sign in</a>
+				{{ end }}
+			</div>
+		</div>
+		{{ if .Event }}
+		<div class="header-outer">
+			<div class="header center">
+				<a href="{{ .Event.Path }}" class="title">{{ .Event.Name }}{{with .Event.Theme}} - <span class="theme">{{ . }}</span>{{ end }}</a>
+				<a href="{{ .Event.Path "teams" }}">Teams</a>
+				<a {{if (not .Event.CanVote)}}class="disabled"{{end}} href="{{ .Event.Path "voting" }}">Voting</a>
+				<a {{if (not .Event.Voting)}}class="disabled"{{end}} href="{{ .Event.Path "progress" }}">Progress</a>
+				<a {{if (not .Event.Revealed)}}class="disabled"{{end}} href="{{ .Event.Path "results" }}">Results</a>
+			</div>
+		</div>
+		{{ if .CurrentUser.IsAdmin}}
+		<div class="admin-outer">
+			<div class="admin center">
+				<a href="{{ .Event.Path "edit" }}">Edit Event</a>
+				<a href="{{ .Event.Path "linking" }}">Linking</a>
+				<a href="{{ .Event.Path "jammers" }}">Jammers</a>
+				<a href="{{ .Event.Path "reveal" }}">Reveal</a>
+				<span>&nbsp;</span>
+			</div>
+		</div>
+		{{ end }}
+		{{ end }}
+		<div class="content-outer">
+			<div class="content center">
+				{{ if .Errors }}
+				<div class="flashes errors">
+					{{ range .Errors }}
+					<div class="flash">{{ . }}</div>
+					{{ end }}
+				</div>
+				{{ end }}
+				{{ if .Flashes }}
+				<div class="flashes">
+					{{ range .Flashes }}
+					<div class="flash">{{ . }}</div>
+					{{ end }}
+				</div>
+				{{ end }}
+		{{ if .FullWidth }}
+			</div>
+			<div class="full-width">
+		{{ end }}
 {{ end }}
 
 {{ define "foot"}}
-            </div>
-        </div>
+			</div>
+		</div>
 
-        <div class="footer">
-            <a href="https://github.com/adinfinit/jamvote/issues/new">Report Issue</a>
-        </div>
-    </body>
+		<div class="footer">
+			<a href="https://github.com/adinfinit/jamvote/issues/new">Report Issue</a>
+		</div>
+	</body>
 </html>
 {{ end }}
