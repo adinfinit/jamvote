@@ -3,7 +3,6 @@ package site
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -128,7 +127,7 @@ func (context *Context) Render(name string) {
 	context.saveSession()
 	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() any { return context.Data }})
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
-		log.Println(err)
+		context.Site.Log.Error("failed to render template", "template", name, "error", err)
 	}
 }
 
@@ -136,7 +135,7 @@ func (context *Context) Render(name string) {
 func (context *Context) RenderMarkdown(name string) {
 	data, err := os.ReadFile(filepath.Join(context.Site.TemplatesDir, name+".md"))
 	if err != nil {
-		log.Println(err)
+		context.Site.Log.Error("failed to read markdown file", "file", name, "error", err)
 		context.Error("page not found", http.StatusNotFound)
 		return
 	}

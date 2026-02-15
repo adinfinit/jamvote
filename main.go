@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -26,12 +26,15 @@ import (
 )
 
 func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stderr, nil))
+
 	ctx := context.Background()
 
 	project := os.Getenv("GOOGLE_CLOUD_PROJECT")
 	dsClient, err := datastore.NewClient(ctx, project)
 	if err != nil {
-		log.Fatalf("Failed to create datastore client: %v", err)
+		logger.Error("failed to create datastore client", "error", err)
+		os.Exit(1)
 	}
 	defer dsClient.Close()
 
@@ -39,23 +42,24 @@ func main() {
 
 	router := mux.NewRouter()
 
-	sessionsStore := newCookieSessionStore(os.Getenv("COOKIESTORE_SECRET"))
+	sessionsStore := newCookieSessionStore(logger, os.Getenv("COOKIESTORE_SECRET"))
 
 	domain := os.Getenv("DOMAIN")
 	if domain == "" {
 		domain = "http://localhost:8080"
 	}
 
-	oauthConfig := loadOAuthConfig(domain + "/auth/callback")
+	oauthConfig := loadOAuthConfig(logger, domain+"/auth/callback")
 
-	auths := auth.NewService(domain, oauthConfig, sessionsStore)
+	auths := auth.NewService(logger, domain, oauthConfig, sessionsStore)
 	auths.LoginCompleted = "/user/logged-in"
 	auths.LoginFailed = "/user/login"
 	auths.Register(router)
 
-	sites, err := site.NewServer(sessionsStore, "./static", "templates/**/*.html")
+	sites, err := site.NewServer(logger, sessionsStore, "./static", "templates/**/*.html")
 	if err != nil {
-		log.Fatal(err)
+		logger.Error("failed to create site server", "error", err)
+		os.Exit(1)
 	}
 	sites.Register(router)
 
@@ -92,24 +96,28 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	log.Printf("Listening on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	logger.Info("listening", "port", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		logger.Error("server stopped", "error", err)
+		os.Exit(1)
+	}
 }
 
 // loadOAuthConfig loads the Google OAuth2 credentials JSON and returns an oauth2.Config.
 // It checks GOOGLE_OAUTH_CREDENTIALS env var first (JSON content), then falls back
 // to Secret Manager secret "GOOGLE_OAUTH_CREDENTIALS".
 // The redirectURL overrides whatever is in the JSON file.
-func loadOAuthConfig(redirectURL string) *oauth2.Config {
-	jsonData := getSecretData("GOOGLE_OAUTH_CREDENTIALS")
+func loadOAuthConfig(logger *slog.Logger, redirectURL string) *oauth2.Config {
+	jsonData := getSecretData(logger, "GOOGLE_OAUTH_CREDENTIALS")
 	if len(jsonData) == 0 {
-		log.Println("Warning: no Google OAuth credentials configured")
+		logger.Warn("no Google OAuth credentials configured")
 		return &oauth2.Config{RedirectURL: redirectURL}
 	}
 
 	cfg, err := google.ConfigFromJSON(jsonData, "openid", "email", "profile")
 	if err != nil {
-		log.Fatalf("Failed to parse Google OAuth credentials JSON: %v", err)
+		logger.Error("failed to parse Google OAuth credentials JSON", "error", err)
+		os.Exit(1)
 	}
 	cfg.RedirectURL = redirectURL
 	return cfg
@@ -117,7 +125,7 @@ func loadOAuthConfig(redirectURL string) *oauth2.Config {
 
 // getSecretData reads a secret value, checking the environment variable first,
 // then falling back to Google Secret Manager.
-func getSecretData(name string) []byte {
+func getSecretData(logger *slog.Logger, name string) []byte {
 	if v := os.Getenv(name); v != "" {
 		return []byte(v)
 	}
@@ -130,7 +138,7 @@ func getSecretData(name string) []byte {
 	ctx := context.Background()
 	client, err := secretmanager.NewClient(ctx)
 	if err != nil {
-		log.Printf("Failed to create Secret Manager client: %v", err)
+		logger.Error("failed to create Secret Manager client", "error", err)
 		return nil
 	}
 	defer client.Close()
@@ -139,23 +147,23 @@ func getSecretData(name string) []byte {
 		Name: fmt.Sprintf("projects/%s/secrets/%s/versions/latest", project, name),
 	})
 	if err != nil {
-		log.Printf("Failed to access secret %s: %v", name, err)
+		logger.Error("failed to access secret", "secret", name, "error", err)
 		return nil
 	}
 
 	return result.Payload.Data
 }
 
-func newCookieSessionStore(secretString string) sessions.Store {
+func newCookieSessionStore(logger *slog.Logger, secretString string) sessions.Store {
 	secret := []byte(secretString)
 	if len(secret) == 0 {
-		log.Println("Cookie Secret missing")
+		logger.Warn("cookie secret missing, generating random secret")
 		var code [64]byte
 		_, err := rand.Read(code[:])
 		if err != nil {
-			log.Println(err)
-			secret = code[:]
+			logger.Error("failed to generate random cookie secret", "error", err)
 		}
+		secret = code[:]
 	}
 
 	cookieStore := sessions.NewCookieStore(secret)

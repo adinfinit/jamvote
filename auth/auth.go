@@ -7,7 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"log"
+	"log/slog"
 	"net/http"
 	"strings"
 
@@ -30,6 +30,8 @@ const DefaultDevelopmentSession = "jamvote-development"
 
 // Service implements authentication endpoints.
 type Service struct {
+	Log *slog.Logger
+
 	Development struct {
 		Enabled  bool
 		Sessions sessions.Store
@@ -43,8 +45,9 @@ type Service struct {
 }
 
 // NewService returns new Service for the given domain.
-func NewService(domain string, oauthConfig *oauth2.Config, sess sessions.Store) *Service {
+func NewService(log *slog.Logger, domain string, oauthConfig *oauth2.Config, sess sessions.Store) *Service {
 	service := &Service{}
+	service.Log = log
 
 	service.Development.Enabled = false
 	if service.Development.Enabled {
@@ -127,7 +130,7 @@ func (service *Service) CurrentCredentials(r *http.Request) *Credentials {
 // Login initiates the OAuth2 flow.
 func (service *Service) Login(w http.ResponseWriter, r *http.Request) {
 	if service.OAuth2.ClientID == "" {
-		log.Println("OAuth2 not configured: missing client ID")
+		service.Log.Warn("OAuth2 not configured: missing client ID")
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
 		return
 	}
@@ -171,7 +174,7 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	// Exchange code for token.
 	token, err := service.OAuth2.Exchange(r.Context(), r.FormValue("code"))
 	if err != nil {
-		log.Println("OAuth2 exchange error:", err)
+		service.Log.Error("OAuth2 exchange error", "error", err)
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
 		return
 	}
@@ -179,14 +182,14 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	// Parse the id_token from the token response.
 	idToken, ok := token.Extra("id_token").(string)
 	if !ok {
-		log.Println("No id_token in OAuth2 response")
+		service.Log.Error("no id_token in OAuth2 response")
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
 		return
 	}
 
 	claims, err := parseIDToken(idToken)
 	if err != nil {
-		log.Println("Failed to parse id_token:", err)
+		service.Log.Error("failed to parse id_token", "error", err)
 		http.Redirect(w, r, service.LoginFailed, http.StatusSeeOther)
 		return
 	}
@@ -197,7 +200,7 @@ func (service *Service) Callback(w http.ResponseWriter, r *http.Request) {
 	sess.Values["auth_email"] = claims.Email
 	sess.Values["auth_name"] = claims.Name
 	if err := sess.Save(r, w); err != nil {
-		log.Println("Failed to save session:", err)
+		service.Log.Error("failed to save session", "error", err)
 	}
 
 	http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
@@ -209,7 +212,7 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 		sess, _ := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 		sess.Values["User"] = ""
 		if err := sess.Save(r, w); err != nil {
-			log.Println("Failed to logout:", err)
+			service.Log.Error("failed to save session on logout", "error", err)
 		}
 	}
 
@@ -219,7 +222,7 @@ func (service *Service) Logout(w http.ResponseWriter, r *http.Request) {
 	delete(sess.Values, "auth_email")
 	delete(sess.Values, "auth_name")
 	if err := sess.Save(r, w); err != nil {
-		log.Println("Failed to save session on logout:", err)
+		service.Log.Error("failed to clear session on logout", "error", err)
 	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -237,7 +240,7 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 
 	sess, err := service.Development.Sessions.New(r, DefaultDevelopmentSession)
 	if err != nil {
-		log.Println("Unable to create development session:", err)
+		service.Log.Error("unable to create development session", "error", err)
 		http.Error(w, "unable to create development session", http.StatusInternalServerError)
 		return
 	}
@@ -248,7 +251,7 @@ func (service *Service) DevelopmentLogin(w http.ResponseWriter, r *http.Request)
 		sess.Values["User"] = username
 		err := sess.Save(r, w)
 		if err != nil {
-			log.Println("Unable to save development session:", err)
+			service.Log.Error("unable to save development session", "error", err)
 		}
 		http.Redirect(w, r, service.LoginCompleted, http.StatusSeeOther)
 	} else {

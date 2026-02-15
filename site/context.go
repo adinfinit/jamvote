@@ -3,7 +3,7 @@ package site
 import (
 	"context"
 	"html/template"
-	"log"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"strings"
@@ -18,6 +18,8 @@ const DefaultSessionName = "jamvote"
 
 // Server implements the root request handler.
 type Server struct {
+	Log *slog.Logger
+
 	Development  bool
 	Start        time.Time
 	Static       http.FileSystem
@@ -28,8 +30,9 @@ type Server struct {
 }
 
 // NewServer creates a new server with the specified templates.
-func NewServer(sess sessions.Store, staticdir string, templatesglob string) (*Server, error) {
+func NewServer(log *slog.Logger, sess sessions.Store, staticdir string, templatesglob string) (*Server, error) {
 	server := &Server{}
+	server.Log = log
 	server.Sessions = sess
 	server.Static = http.Dir(staticdir)
 	server.Start = time.Now()
@@ -58,7 +61,7 @@ type Context struct {
 func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 	sess, err := server.Sessions.New(r, DefaultSessionName)
 	if err != nil {
-		log.Println("Failed to get session:", err)
+		server.Log.Error("failed to get session", "error", err)
 	}
 
 	data := map[string]any{}
@@ -85,7 +88,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 func (context *Context) saveSession() {
 	err := context.Session.Save(context.Request, context.Response)
 	if err != nil {
-		log.Println("Failed to save session:", err)
+		context.Site.Log.Error("failed to save session", "error", err)
 	}
 }
 
