@@ -1,6 +1,6 @@
 runtime: go125
 env_variables:
-  DOMAIN: "https://jamvote.appspot.com"
+  DOMAIN: "https://vote.aptgg.ee"
 
 automatic_scaling:
   max_instances: 1

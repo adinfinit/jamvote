@@ -300,11 +300,11 @@ func seedBallots(events event.Repo, ev *event.Event, teams []*event.Team, voters
 	for _, team := range teams {
 		// Derive per-team mean scores from team+game name hash.
 		trng := teamRNG(team.Name, team.Game.Name)
-		themeMean := 1.5 + trng.Float64()*3.0     // [1.5, 4.5]
-		enjoyMean := 1.5 + trng.Float64()*3.0     // [1.5, 4.5]
-		aesthetMean := 1.5 + trng.Float64()*3.0   // [1.5, 4.5]
-		innovMean := 1.5 + trng.Float64()*3.0     // [1.5, 4.5]
-		bonusMean := trng.Float64() * 1.5          // [0, 1.5]
+		themeMean := 1.5 + trng.Float64()*3.0   // [1.5, 4.5]
+		enjoyMean := 1.5 + trng.Float64()*3.0   // [1.5, 4.5]
+		aesthetMean := 1.5 + trng.Float64()*3.0 // [1.5, 4.5]
+		innovMean := 1.5 + trng.Float64()*3.0   // [1.5, 4.5]
+		bonusMean := trng.Float64() * 1.5       // [0, 1.5]
 
 		for _, voterID := range voters {
 			if team.HasMemberID(voterID) {

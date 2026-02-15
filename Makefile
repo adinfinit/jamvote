@@ -1,7 +1,7 @@
 .PHONY: deploy-production deploy-staging format check lint run emulator
 
 deploy-production: format check lint
-	gcloud app deploy --project=jamvote app.yaml
+	gcloud app deploy --project=apt-vote app.yaml
 
 deploy-testing: format check lint
 	gcloud app deploy --project=jamvote-testing app-testing.yaml
