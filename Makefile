@@ -16,7 +16,10 @@ lint:
 	staticcheck ./...
 
 emulator:
-	trap 'kill 0' EXIT; gcloud beta emulators datastore start --project=local-dev --host-port=localhost:8081 --no-store-on-disk
-
+	@bash -c ' \
+		trap "echo \"\nCaught Ctrl-C. Killing Datastore emulator...\"; lsof -ti:8081 | xargs kill -9 2>/dev/null; exit 0" SIGINT SIGTERM EXIT; \
+		gcloud beta emulators datastore start --project=local-dev --host-port=localhost:8081 --no-store-on-disk & \
+		wait $$! \
+	'
 run:
 	DEVELOPMENT=1 GOOGLE_CLOUD_PROJECT=local-dev DATASTORE_EMULATOR_HOST=localhost:8081 go run main.go
