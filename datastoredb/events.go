@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"sort"
 
-	netcontext "golang.org/x/net/context"
-	"google.golang.org/appengine/datastore"
-	"google.golang.org/appengine/memcache"
+	"google.golang.org/appengine/v2/datastore"
+	"google.golang.org/appengine/v2/memcache"
 
 	"github.com/adinfinit/jamvote/event"
 	"github.com/adinfinit/jamvote/user"
@@ -57,7 +56,7 @@ func (repo *Events) List() ([]*event.Event, error) {
 
 // Create creates a new event.
 func (repo *Events) Create(ev *event.Event) error {
-	err := datastore.RunInTransaction(repo.Context, func(ctx netcontext.Context) error {
+	err := datastore.RunInTransaction(repo.Context, func(ctx context.Context) error {
 		eventkey := newEventKey(ctx, ev.ID)
 
 		existing := &event.Event{}
@@ -327,7 +326,7 @@ func (repo *Events) CreateIncompleteBallots(eventid event.EventID, userid user.U
 	const FirstBatchCount = 3
 
 	//TODO: extract tranaction from here
-	err = datastore.RunInTransaction(repo.Context, func(ctx netcontext.Context) error {
+	err = datastore.RunInTransaction(repo.Context, func(ctx context.Context) error {
 		eventkey := newEventKey(ctx, eventid)
 
 		ballots, err := allBallots(ctx, eventkey)

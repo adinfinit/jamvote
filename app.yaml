@@ -1,9 +1,13 @@
-runtime: go111
+runtime: go125
+app_engine_apis: true
+
+automatic_scaling:
+  max_instances: 1
 
 handlers:
-- url: /robots.txt
-  static_files: static/robots.txt
-  upload: static/robots.txt
-- url: /.*
-  script: auto
-  secure: always
+  - url: /robots.txt
+    static_files: static/robots.txt
+    upload: static/robots.txt
+  - url: /.*
+    script: auto
+    secure: always

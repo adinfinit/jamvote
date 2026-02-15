@@ -3,7 +3,7 @@ package event
 import (
 	"fmt"
 
-	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/v2/datastore"
 
 	"github.com/adinfinit/jamvote/user"
 )

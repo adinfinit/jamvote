@@ -11,8 +11,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/user"
+	"google.golang.org/appengine/v2"
+	"google.golang.org/appengine/v2/user"
 )
 
 // Credentials represents users authentication method.

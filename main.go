@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	"google.golang.org/appengine"
+	"google.golang.org/appengine/v2"
 
 	"github.com/adinfinit/jamvote/auth"
 	"github.com/adinfinit/jamvote/datastoredb"
@@ -59,7 +59,14 @@ func main() {
 
 	http.Handle("/", router)
 
-	appengine.Main()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Listening on port %s", port)
+		log.Fatal(http.ListenAndServe(":"+port, nil))
+	} else {
+		appengine.Main()
+	}
 }
 
 func newCookieSessionStore(secretString string) sessions.Store {

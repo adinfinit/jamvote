@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 
-	"google.golang.org/appengine"
+	"google.golang.org/appengine/v2"
 )
 
 // DefaultSessionName is the name of default session store.
