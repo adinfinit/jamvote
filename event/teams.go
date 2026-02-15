@@ -35,7 +35,7 @@ func (server *Server) parseTeamForm(context *Context, users []*user.User) *Team 
 	team.Name = context.FormValue("Team.Name")
 
 	memberNames := []string{}
-	for i := 0; i < MaxTeamMembers; i++ {
+	for i := range MaxTeamMembers {
 		memberName := context.FormValue(fmt.Sprintf("Team.Member[%v]", i))
 		if memberName != "" {
 			memberNames = append(memberNames, memberName)

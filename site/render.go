@@ -49,7 +49,7 @@ func (server *Server) initTemplates(glob string) error {
 
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
-		"Data": func() interface{} { return nil },
+		"Data": func() any { return nil },
 		"formatDateTime": func(t *time.Time) string {
 			// TODO: use event location
 			return t.In(APTLocation).Format("2006-01-02 15:04:05 MST")
@@ -70,7 +70,7 @@ func (server *Server) initTemplates(glob string) error {
 		"violinLeft":  violinLeft,
 		"violinRight": violinRight,
 
-		"averageViolinScore": func(min, max float64, xs interface{}) float64 {
+		"averageViolinScore": func(min, max float64, xs any) float64 {
 			if x, ok := xs.(float64); ok {
 				return 100 - 100*(x-min)/(max-min)
 			}
@@ -89,16 +89,16 @@ func (server *Server) initTemplates(glob string) error {
 			return -100
 		},
 
-		"add": func(a, b interface{}) float64 {
+		"add": func(a, b any) float64 {
 			return toFloat(a) + toFloat(b)
 		},
-		"sub": func(a, b interface{}) float64 {
+		"sub": func(a, b any) float64 {
 			return toFloat(a) - toFloat(b)
 		},
-		"mul": func(a, b interface{}) float64 {
+		"mul": func(a, b any) float64 {
 			return toFloat(a) * toFloat(b)
 		},
-		"div": func(a, b interface{}) float64 {
+		"div": func(a, b any) float64 {
 			return toFloat(a) / toFloat(b)
 		},
 		"sequence1": func(count int) []int {
@@ -126,7 +126,7 @@ func (server *Server) initTemplates(glob string) error {
 // Render renders a template.
 func (context *Context) Render(name string) {
 	context.saveSession()
-	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() interface{} { return context.Data }})
+	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() any { return context.Data }})
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		log.Println(err)
 	}
@@ -175,27 +175,29 @@ func violin(min, max float64, scores []float64) []float64 {
 // violinLeft creates left side path of a violin plot.
 func violinLeft(min, max float64, scores []float64) string {
 	points := violin(min, max, scores)
-	s := "50,100 "
+	var s strings.Builder
+	s.WriteString("50,100 ")
 	i := 0
 	for p := min; p <= max; p += violinStep {
-		s += fmt.Sprintf("%.0f,%.0f ", 50-points[i]*50, 100-100*(p-min)/(max-min))
+		s.WriteString(fmt.Sprintf("%.0f,%.0f ", 50-points[i]*50, 100-100*(p-min)/(max-min)))
 		i++
 	}
-	s += "50,0"
-	return s
+	s.WriteString("50,0")
+	return s.String()
 }
 
 // violinRight creates right side path of a violin plot.
 func violinRight(min, max float64, scores []float64) string {
 	points := violin(min, max, scores)
-	s := "50,100 "
+	var s strings.Builder
+	s.WriteString("50,100 ")
 	i := 0
 	for p := min; p <= max; p += violinStep {
-		s += fmt.Sprintf("%.0f,%.0f ", 50+points[i]*50, 100-100*(p-min)/(max-min))
+		s.WriteString(fmt.Sprintf("%.0f,%.0f ", 50+points[i]*50, 100-100*(p-min)/(max-min)))
 		i++
 	}
-	s += "50,0"
-	return s
+	s.WriteString("50,0")
+	return s.String()
 }
 
 // cubicPulse calculates a smooth distance from a value.
@@ -212,7 +214,7 @@ func cubicPulse(center, radius, at float64) float64 {
 }
 
 // toFloat tries to convert a to a floating point value.
-func toFloat(a interface{}) float64 {
+func toFloat(a any) float64 {
 	switch v := a.(type) {
 	case int:
 		return float64(v)

@@ -47,7 +47,7 @@ func (server *Server) Register(router *mux.Router) {
 }
 
 // Path returns a proper route for an event.
-func (event *Event) Path(subroutes ...interface{}) string {
+func (event *Event) Path(subroutes ...any) string {
 	route := []string{"/event", string(event.ID)}
 	for _, r := range subroutes {
 		switch x := r.(type) {

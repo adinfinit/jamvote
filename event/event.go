@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/gob"
 	"errors"
+	"slices"
 	"time"
 
 	"github.com/adinfinit/jamvote/user"
@@ -118,12 +119,7 @@ func (event *Event) HasJammer(u *user.User) bool {
 
 // containsUser checks whether userids contains userid.
 func containsUser(userids []user.UserID, userid user.UserID) bool {
-	for _, jammer := range userids {
-		if jammer == userid {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(userids, userid)
 }
 
 // AddRemoveJammers adds and removes jammers from the event.

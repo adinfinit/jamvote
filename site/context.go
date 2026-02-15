@@ -48,7 +48,7 @@ type Context struct {
 
 	Request  *http.Request
 	Response http.ResponseWriter
-	Data     map[string]interface{}
+	Data     map[string]any
 	Session  *sessions.Session
 
 	context.Context
@@ -61,7 +61,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 		log.Println("Failed to get session:", err)
 	}
 
-	data := map[string]interface{}{}
+	data := map[string]any{}
 	if flashes := sess.Flashes("_error"); len(flashes) > 0 {
 		data["Errors"] = flashes
 	}
