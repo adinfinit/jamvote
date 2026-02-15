@@ -40,3 +40,5 @@ Events can optionally have designated judges. When judges are configured,
 the final score is a weighted blend of the jammer average and the judge
 average, based on the judge percentage set by the organizer. As a
 jammer, you don't need to do anything different — just vote normally.
+
+<a class="button" href="/about">&larr; Back to About</a>

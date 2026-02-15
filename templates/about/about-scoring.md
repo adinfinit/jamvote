@@ -20,7 +20,7 @@ Games are scored on the following aspects:
 </dl>
 
 The **Overall** score is the weighted average of all
-aspects: 5 \* (Theme + Enjoyment + Aesthetics + Innovation + Bonus) /
+aspects: 5 × (Theme + Enjoyment + Aesthetics + Innovation + Bonus) /
 4.5, clamped to the range 1 – 5.
 
 ## Why have aspects?
@@ -28,7 +28,7 @@ aspects: 5 \* (Theme + Enjoyment + Aesthetics + Innovation + Bonus) /
 Having multiple aspects encourages voters to think about games from
 different angles and write more specific feedback. This helps jammers
 learn what worked and what didn't. A single score would be simpler, but
-it wouldn't tell you *why* a game scored the way it did and
+it wouldn't tell you _why_ a game scored the way it did and
 the outcomes would be more subjective.
 
 ## Why these aspects?
@@ -74,3 +74,5 @@ A score becomes meaningful after **10 votes** — at that point a single
 vote can shift the result by at most ~5%. After **30 votes**, which is
 the standard threshold for a large sample, the result is quite stable.
 In practice, most games receive significantly more votes than that.
+
+<a class="button" href="/about">&larr; Back to About</a>

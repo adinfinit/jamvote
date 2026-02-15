@@ -3,7 +3,7 @@
 deploy-live: format check lint
 	gcloud app deploy --project=jamvote
 
-deploy-staging: format check lint
+deploy-testing: format check lint
 	gcloud app deploy --project=jamvote-testing
 
 format:

@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="field">
-			<label for="judgePercentage">Percentage of judge votes</label>
+			<label for="judgePercentage">Percentage of judge votes (leave 0 for no judges)</label>
 			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
 		</div>
 
@@ -40,7 +40,7 @@
 				<label for="EndTime">End Time</label>
 				<input type="datetime-local" id="EndTime" name="EndTime">
 			</div>
-		</fieldset>	
+		</fieldset>
 
 		<input type="submit" value="Create">
 	</form>

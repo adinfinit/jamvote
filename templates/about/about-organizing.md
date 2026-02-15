@@ -81,3 +81,5 @@ still ways for people to show off what they completed:
   from voting
 - Skip voting on the entry and let the team do a live presentation
   instead
+
+<a class="button" href="/about">&larr; Back to About</a>
