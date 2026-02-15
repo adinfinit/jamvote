@@ -41,10 +41,9 @@ func renderMarkdown(s string) template.HTML {
 	return template.HTML(markdown.ToHTML(doc))
 }
 
-// initTemplates loads all templates.
-func (server *Server) initTemplates(glob string) error {
-	server.TemplatesDir = templatesDir(glob)
-	dir := server.TemplatesDir
+// parseTemplates parses all templates matching the glob pattern.
+func (server *Server) parseTemplates(glob string) (*template.Template, error) {
+	dir := templatesDir(glob)
 
 	t := template.New("")
 	t = t.Funcs(template.FuncMap{
@@ -117,15 +116,23 @@ func (server *Server) initTemplates(glob string) error {
 		},
 	})
 
-	t, err := t.ParseGlob(glob)
-	server.Templates = t
-	return err
+	return t.ParseGlob(glob)
 }
 
 // Render renders a template.
 func (context *Context) Render(name string) {
 	context.saveSession()
-	t := context.Site.Templates.Funcs(template.FuncMap{"Data": func() any { return context.Data }})
+
+	t := context.Site.Templates
+	if context.Site.Development {
+		var err error
+		t, err = context.Site.parseTemplates(context.Site.TemplatesGlob)
+		if err != nil {
+			context.Site.Log.Error("failed to reload templates", "error", err)
+		}
+	}
+
+	t = t.Funcs(template.FuncMap{"Data": func() any { return context.Data }})
 	if err := t.ExecuteTemplate(context.Response, name+".html", context.Data); err != nil {
 		context.Site.Log.Error("failed to render template", "template", name, "error", err)
 	}

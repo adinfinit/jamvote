@@ -20,11 +20,12 @@ const DefaultSessionName = "jamvote"
 type Server struct {
 	Log *slog.Logger
 
-	Development  bool
-	Start        time.Time
-	Static       http.FileSystem
-	Templates    *template.Template
-	TemplatesDir string
+	Development   bool
+	Start         time.Time
+	Static        http.FileSystem
+	Templates     *template.Template
+	TemplatesDir  string
+	TemplatesGlob string
 
 	Sessions sessions.Store
 }
@@ -36,7 +37,12 @@ func NewServer(log *slog.Logger, sess sessions.Store, staticdir string, template
 	server.Sessions = sess
 	server.Static = http.Dir(staticdir)
 	server.Start = time.Now()
-	return server, server.initTemplates(templatesglob)
+	server.TemplatesGlob = templatesglob
+	server.TemplatesDir = templatesDir(templatesglob)
+
+	var err error
+	server.Templates, err = server.parseTemplates(templatesglob)
+	return server, err
 }
 
 func (server *Server) Register(router *mux.Router) {
