@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">JamVote</a>
+    <div style="display:flex;align-items:center;gap:0.5rem">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+      <button class="nav-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="event.html" class="active">Events</a>
+      <a href="results.html">Results</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="banner" style="background:var(--gradient-pink-purple)">
+    <h1>Ludum Dare 57</h1>
+    <p>Theme: Tiny Worlds</p>
+    <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+      <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff">24 Teams</span>
+      <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff">87 Jammers</span>
+      <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff">Feb 28 - Mar 2</span>
+    </div>
+  </div>
+
+  <!-- Sub Nav -->
+  <div class="subnav">
+    <a href="event.html" class="active">Dashboard</a>
+    <a href="team.html">Teams</a>
+    <a href="voting.html">Voting</a>
+    <a href="results.html">Results</a>
+  </div>
+
+  <div class="container">
+
+    <!-- Countdown -->
+    <h2 class="section-title text-center">Voting Closes In</h2>
+    <div class="countdown" id="countdown">
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-days">03</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-hours">14</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-mins">27</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-block">
+        <div class="countdown-number" id="cd-secs">52</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+
+    <div class="text-center mt-3 mb-3">
+      <a href="voting.html" class="btn btn--gradient btn--lg">Start Voting</a>
+    </div>
+
+    <!-- Event Info -->
+    <div class="card mb-3" style="border-color:var(--border)">
+      <div class="card-body">
+        <h3 style="font-weight:800;margin-bottom:0.5rem">About This Jam</h3>
+        <p style="color:var(--text-muted);font-size:0.95rem">Create a game that explores the concept of "Tiny Worlds." Think miniature ecosystems, microscopic adventures, or small-scale simulations. You have 48 hours to build something amazing!</p>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-top:0.5rem">Judges will account for 30% of the final score. Voting is open to all approved jammers.</p>
+      </div>
+    </div>
+
+    <!-- Teams -->
+    <h2 class="section-title">Participating Teams</h2>
+    <div class="team-grid">
+
+      <div class="card card--pink">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Pixel Pioneers</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Pocket Universe</div>
+            </div>
+            <span class="pill pill--pink">3 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--pink" title="Alice">A</div>
+            <div class="avatar avatar--purple" title="Bob">B</div>
+            <div class="avatar avatar--blue" title="Carol">C</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--blue">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Byte Busters</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Ant Farm Simulator</div>
+            </div>
+            <span class="pill pill--blue">4 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--blue" title="Dave">D</div>
+            <div class="avatar avatar--green" title="Eve">E</div>
+            <div class="avatar avatar--orange" title="Frank">F</div>
+            <div class="avatar avatar--pink" title="Grace">G</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--green">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Code Crushers</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Micro Kingdom</div>
+            </div>
+            <span class="pill pill--green">2 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--green" title="Hank">H</div>
+            <div class="avatar avatar--purple" title="Ivy">I</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--orange">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Neon Ninjas</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Bonsai World</div>
+            </div>
+            <span class="pill pill--orange">3 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--orange" title="Jack">J</div>
+            <div class="avatar avatar--pink" title="Kim">K</div>
+            <div class="avatar avatar--blue" title="Leo">L</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--purple">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Glitch Gang</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Spore Story</div>
+            </div>
+            <span class="pill pill--purple">2 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--purple" title="Mia">M</div>
+            <div class="avatar avatar--green" title="Nate">N</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:var(--cyan)">
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div style="font-weight:800;font-size:1.1rem">Turbo Turtles</div>
+              <div style="color:var(--text-muted);font-size:0.9rem">Droplet Quest</div>
+            </div>
+            <span class="pill pill--cyan">3 members</span>
+          </div>
+          <div class="team-card-members">
+            <div class="avatar avatar--blue" title="Olga">O</div>
+            <div class="avatar avatar--orange" title="Pete">P</div>
+            <div class="avatar avatar--pink" title="Quinn">Q</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    JamVote &mdash; Making game jams more fun since 2020
+  </footer>
+
+  <script>
+    // Countdown: 3 days, 14 hours, 27 minutes, 52 seconds from now
+    (function() {
+      let target = Date.now() + (3*86400 + 14*3600 + 27*60 + 52) * 1000;
+
+      function update() {
+        let diff = Math.max(0, Math.floor((target - Date.now()) / 1000));
+        let d = Math.floor(diff / 86400);
+        diff %= 86400;
+        let h = Math.floor(diff / 3600);
+        diff %= 3600;
+        let m = Math.floor(diff / 60);
+        let s = diff % 60;
+
+        document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      function applyTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '\u2600' : '\u263E';
+        localStorage.setItem('jamvote-theme', dark ? 'dark' : 'light');
+      }
+      var saved = localStorage.getItem('jamvote-theme');
+      applyTheme(saved === 'dark');
+      toggle.addEventListener('click', function() {
+        applyTheme(html.getAttribute('data-theme') !== 'dark');
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🎮</span> JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="btn-login">Alex P.</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Event sub-nav -->
+    <div class="subnav">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+
+    <!-- Voting Header -->
+    <div class="text-center" style="margin: 32px 0 16px;">
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">Now Voting On</div>
+      <h1 class="page-title" style="font-size: 2.2rem;">Pocket Universe <span style="font-size: 1.6rem;">🌌</span></h1>
+      <p class="page-subtitle" style="margin-bottom: 8px;">by <strong>Pixel Pioneers</strong> &middot; Game 2 of 5 in your queue</p>
+    </div>
+
+    <!-- Voting Form -->
+    <form id="vote-form" style="max-width: 640px; margin: 0 auto;">
+
+      <!-- Theme -->
+      <div class="vote-aspect slider-teal">
+        <div class="aspect-header">
+          <div class="aspect-label"><span>🌍</span> Theme</div>
+          <div class="aspect-value" id="val-theme">3</div>
+        </div>
+        <input type="range" id="slider-theme" min="1" max="5" step="0.5" value="3"
+          oninput="document.getElementById('val-theme').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+          <span>Off-topic</span><span>Perfect fit</span>
+        </div>
+        <div class="vote-comment">
+          <textarea placeholder="Comment on theme relevance (optional)..."></textarea>
+        </div>
+      </div>
+
+      <!-- Enjoyment -->
+      <div class="vote-aspect slider-coral">
+        <div class="aspect-header">
+          <div class="aspect-label"><span>😄</span> Enjoyment</div>
+          <div class="aspect-value" id="val-enjoy">3</div>
+        </div>
+        <input type="range" id="slider-enjoy" min="1" max="5" step="0.5" value="3"
+          oninput="document.getElementById('val-enjoy').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+          <span>Not fun</span><span>Super fun!</span>
+        </div>
+        <div class="vote-comment">
+          <textarea placeholder="What did you enjoy? (optional)..."></textarea>
+        </div>
+      </div>
+
+      <!-- Aesthetics -->
+      <div class="vote-aspect slider-purple">
+        <div class="aspect-header">
+          <div class="aspect-label"><span>🎨</span> Aesthetics</div>
+          <div class="aspect-value" id="val-aes">3</div>
+        </div>
+        <input type="range" id="slider-aes" min="1" max="5" step="0.5" value="3"
+          oninput="document.getElementById('val-aes').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+          <span>Plain</span><span>Beautiful</span>
+        </div>
+        <div class="vote-comment">
+          <textarea placeholder="Thoughts on art, sound, style? (optional)..."></textarea>
+        </div>
+      </div>
+
+      <!-- Innovation -->
+      <div class="vote-aspect slider-golden">
+        <div class="aspect-header">
+          <div class="aspect-label"><span>💡</span> Innovation</div>
+          <div class="aspect-value" id="val-inno">3</div>
+        </div>
+        <input type="range" id="slider-inno" min="1" max="5" step="0.5" value="3"
+          oninput="document.getElementById('val-inno').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+          <span>Familiar</span><span>Groundbreaking</span>
+        </div>
+        <div class="vote-comment">
+          <textarea placeholder="Was there a fresh idea? (optional)..."></textarea>
+        </div>
+      </div>
+
+      <!-- Bonus -->
+      <div class="vote-aspect slider-special">
+        <div class="aspect-header">
+          <div class="aspect-label"><span>⭐</span> Bonus</div>
+          <div class="aspect-value" id="val-bonus">1</div>
+        </div>
+        <input type="range" id="slider-bonus" min="0" max="2.5" step="0.5" value="1"
+          oninput="document.getElementById('val-bonus').textContent=this.value">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+          <span>0</span><span>2.5 max</span>
+        </div>
+        <div class="vote-comment">
+          <textarea placeholder="Extra credit for something special? (optional)..."></textarea>
+        </div>
+      </div>
+
+      <!-- Overall Preview -->
+      <div class="card-flat text-center" style="background: var(--golden-light); border-color: var(--golden); margin: 28px 0;">
+        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em;">Overall Score</div>
+        <div id="overall-score" style="font-size: 3rem; font-weight: 800; color: var(--coral);">2.89</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center" style="margin: 32px 0;">
+        <button type="submit" class="btn btn-coral btn-lg" id="submit-btn">
+          <span id="submit-label">🎉 Submit Vote</span>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <footer class="footer">
+    <p>🎮 JamVote &mdash; Made with love for game jammers everywhere</p>
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      var stored = localStorage.getItem('jamvote-theme');
+      if (stored === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      }
+      function updateIcon() {
+        toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+      }
+      updateIcon();
+      toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('jamvote-theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('jamvote-theme', 'dark');
+        }
+        updateIcon();
+      });
+    })();
+  </script>
+
+  <script>
+    // Calculate overall score
+    function calcOverall() {
+      var theme  = parseFloat(document.getElementById('slider-theme').value);
+      var enjoy  = parseFloat(document.getElementById('slider-enjoy').value);
+      var aes    = parseFloat(document.getElementById('slider-aes').value);
+      var inno   = parseFloat(document.getElementById('slider-inno').value);
+      var bonus  = parseFloat(document.getElementById('slider-bonus').value);
+      var overall = (theme + enjoy + aes + inno + bonus) / 4.5;
+      overall = Math.min(5, Math.max(1, overall));
+      document.getElementById('overall-score').textContent = overall.toFixed(2);
+    }
+
+    // Attach listeners to all sliders
+    document.querySelectorAll('input[type="range"]').forEach(function(slider) {
+      slider.addEventListener('input', calcOverall);
+    });
+    calcOverall();
+
+    // Colorize slider tracks based on value
+    function colorizeSlider(slider, color) {
+      var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      slider.style.background = 'linear-gradient(90deg, ' + color + ' 0%, ' + color + ' ' + pct + '%, var(--border) ' + pct + '%, var(--border) 100%)';
+    }
+    function updateAllSliders() {
+      colorizeSlider(document.getElementById('slider-theme'), '#14b8a6');
+      colorizeSlider(document.getElementById('slider-enjoy'), '#ff6b6b');
+      colorizeSlider(document.getElementById('slider-aes'),   '#a78bfa');
+      colorizeSlider(document.getElementById('slider-inno'),  '#fbbf24');
+      colorizeSlider(document.getElementById('slider-bonus'), '#ec4899');
+    }
+    document.querySelectorAll('input[type="range"]').forEach(function(s) {
+      s.addEventListener('input', updateAllSliders);
+    });
+    updateAllSliders();
+
+    // Submit handler
+    document.getElementById('vote-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submit-btn');
+      var label = document.getElementById('submit-label');
+      label.textContent = '✅ Vote Submitted!';
+      btn.classList.remove('btn-coral');
+      btn.classList.add('btn-teal');
+      btn.style.pointerEvents = 'none';
+      setTimeout(function() {
+        label.textContent = '🎉 Submit Vote';
+        btn.classList.remove('btn-teal');
+        btn.classList.add('btn-coral');
+        btn.style.pointerEvents = '';
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

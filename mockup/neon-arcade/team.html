@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - Pocket Universe - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    .team-hero {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+    }
+    .team-hero h1 {
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      margin-bottom: 0.25rem;
+      font-size: 2.2rem;
+    }
+    .team-hero .team-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--magenta);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .team-hero .game-desc {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 1.25rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .team-links {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+    .members-list {
+      list-style: none;
+    }
+    .members-list li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .members-list li:last-child {
+      border-bottom: none;
+    }
+    .score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .score-row:last-child {
+      border-bottom: none;
+    }
+    .score-aspect-name {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      min-width: 100px;
+    }
+    .score-bar-container {
+      flex: 1;
+      margin: 0 1rem;
+    }
+    .score-number {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      min-width: 40px;
+      text-align: right;
+    }
+    .comments-section {
+      margin-top: 1.5rem;
+    }
+    .comment-item {
+      background: var(--bg-input);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      border-left: 3px solid var(--purple);
+    }
+    .comment-item .comment-aspect {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .comment-item .comment-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .overall-big {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.06), rgba(255, 0, 170, 0.04));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      margin-bottom: 1.5rem;
+    }
+    .overall-big .score-value {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      line-height: 1;
+    }
+    .overall-big .score-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .overall-big .rank-info {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
+      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <ul class="navbar-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">&#9728;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="container">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-content">
+    <div class="container" style="max-width: 800px;">
+
+      <!-- Team Hero -->
+      <div class="team-hero">
+        <h1>Pocket Universe</h1>
+        <div class="team-name">Pixel Pioneers</div>
+        <p class="game-desc">
+          Explore a procedurally generated world that fits in your pocket. Build tiny ecosystems,
+          discover microscopic creatures, and watch your miniature civilization grow. Every playthrough
+          creates a unique pocket-sized adventure.
+        </p>
+        <div class="team-links">
+          <a href="#" class="btn btn-cyan">&#9654; Play on itch.io</a>
+          <a href="#" class="btn btn-purple">&#8595; Download</a>
+          <a href="#" class="btn btn-magenta">Jam Page</a>
+        </div>
+      </div>
+
+      <hr class="neon-divider">
+
+      <!-- Info Grid -->
+      <div class="info-grid mb-4">
+
+        <!-- Members -->
+        <div class="card">
+          <h3 class="mb-2" style="font-size:1rem;">
+            <span class="text-cyan">&#9654;</span> Team Members
+          </h3>
+          <ul class="members-list">
+            <li>
+              <div class="avatar">AC</div>
+              <div>
+                <div class="member-name">Alex Chen</div>
+                <div class="member-role">Lead Programmer</div>
+              </div>
+            </li>
+            <li>
+              <div class="avatar" style="background: linear-gradient(135deg, var(--magenta), var(--purple));">MT</div>
+              <div>
+                <div class="member-name">Maya Torres</div>
+                <div class="member-role">Artist &amp; Designer</div>
+              </div>
+            </li>
+            <li>
+              <div class="avatar" style="background: linear-gradient(135deg, var(--lime), var(--cyan));">RS</div>
+              <div>
+                <div class="member-name">Riku Sato</div>
+                <div class="member-role">Sound &amp; Music</div>
+              </div>
+            </li>
+            <li>
+              <div class="avatar" style="background: linear-gradient(135deg, var(--gold), var(--orange));">EV</div>
+              <div>
+                <div class="member-name">Elena Volkov</div>
+                <div class="member-role">Game Design &amp; QA</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Scores -->
+        <div class="card">
+          <h3 class="mb-2" style="font-size:1rem;">
+            <span class="text-gold">&#9654;</span> Voting Results
+          </h3>
+
+          <div class="overall-big">
+            <div class="score-label">Overall Score</div>
+            <div class="score-value">4.38</div>
+            <div class="rank-info">#1 Overall</div>
+          </div>
+
+          <div class="score-row">
+            <span class="score-aspect-name text-cyan">Theme</span>
+            <div class="score-bar-container">
+              <div class="score-bar">
+                <div class="score-bar-fill cyan" style="width: 90%;"></div>
+              </div>
+            </div>
+            <span class="score-number text-cyan">4.5</span>
+          </div>
+
+          <div class="score-row">
+            <span class="score-aspect-name text-magenta">Enjoyment</span>
+            <div class="score-bar-container">
+              <div class="score-bar">
+                <div class="score-bar-fill magenta" style="width: 96%;"></div>
+              </div>
+            </div>
+            <span class="score-number text-magenta">4.8</span>
+          </div>
+
+          <div class="score-row">
+            <span class="score-aspect-name text-purple">Aesthetics</span>
+            <div class="score-bar-container">
+              <div class="score-bar">
+                <div class="score-bar-fill purple" style="width: 84%;"></div>
+              </div>
+            </div>
+            <span class="score-number text-purple">4.2</span>
+          </div>
+
+          <div class="score-row">
+            <span class="score-aspect-name text-lime">Innovation</span>
+            <div class="score-bar-container">
+              <div class="score-bar">
+                <div class="score-bar-fill lime" style="width: 80%;"></div>
+              </div>
+            </div>
+            <span class="score-number text-lime">4.0</span>
+          </div>
+
+          <div class="score-row">
+            <span class="score-aspect-name text-gold">Bonus</span>
+            <div class="score-bar-container">
+              <div class="score-bar">
+                <div class="score-bar-fill gold" style="width: 88%;"></div>
+              </div>
+            </div>
+            <span class="score-number text-gold">2.2</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Voter Comments -->
+      <hr class="neon-divider">
+      <h2 class="section-title"><span class="text-purple">&#9654;</span> Voter Comments</h2>
+
+      <div class="comments-section">
+        <div class="comment-item" style="border-left-color: var(--cyan);">
+          <div class="comment-aspect">Theme</div>
+          <div class="comment-text">Perfect interpretation of "Tiny Worlds" -- the procedural generation creates genuinely unique micro-ecosystems every time.</div>
+        </div>
+        <div class="comment-item" style="border-left-color: var(--magenta);">
+          <div class="comment-aspect">Enjoyment</div>
+          <div class="comment-text">I lost track of time playing this. The discovery loop is incredibly satisfying and the progression feels great.</div>
+        </div>
+        <div class="comment-item" style="border-left-color: var(--purple);">
+          <div class="comment-aspect">Aesthetics</div>
+          <div class="comment-text">Beautiful pixel art with great attention to detail. The soundtrack is chill and fits the vibe perfectly.</div>
+        </div>
+        <div class="comment-item" style="border-left-color: var(--lime);">
+          <div class="comment-aspect">Innovation</div>
+          <div class="comment-text">The pocket ecosystem mechanic is fresh. Haven't seen this approach to the genre before.</div>
+        </div>
+        <div class="comment-item" style="border-left-color: var(--magenta);">
+          <div class="comment-aspect">Enjoyment</div>
+          <div class="comment-text">Really fun gameplay. Would love to see this expanded into a full release!</div>
+        </div>
+        <div class="comment-item" style="border-left-color: var(--gold);">
+          <div class="comment-aspect">Bonus</div>
+          <div class="comment-text">The fact that this was built in 48 hours is impressive. Polish level is way above average for a jam game.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>JamVote &mdash; Built with neon and caffeine. <a href="#">About</a> &bull; <a href="#">GitHub</a></p>
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+</body>
+</html>

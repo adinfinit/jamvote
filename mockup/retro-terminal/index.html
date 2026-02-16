@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamVote Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+<div class="crt-screen">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="brand glow">JAMVOTE</a>
+        <a href="index.html" class="active">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <span class="spacer"></span>
+        <button class="theme-toggle" onclick="toggleTheme()">[PAPER]</button>
+        <span class="user-info">user@jamvote ~</span>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <!-- Header -->
+    <h1 class="cursor">JamVote Terminal v2.4.1</h1>
+
+    <div class="output">
+        <div class="line"><span class="text-dim">Welcome to JamVote -- Game Jam Voting System</span></div>
+        <div class="line"><span class="text-dim">Type a command or browse events below.</span></div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Active Events -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote list --active</span></div>
+    </div>
+
+    <h2>Active Events</h2>
+
+    <div class="ascii-box" data-title="EVENT #1">
+        <div class="line"><span class="label">Name:</span> <span class="value"><a href="event.html">Ludum Dare 57</a></span></div>
+        <div class="line"><span class="label">Theme:</span> <span class="value">Tiny Worlds</span></div>
+        <div class="line"><span class="label">Status:</span> <span class="value status-active">VOTING OPEN</span></div>
+        <div class="line"><span class="label">Voting Closes:</span> <span class="value">2026-02-22 23:59 UTC</span></div>
+        <div class="line"><span class="label">Teams:</span> <span class="value">24</span></div>
+        <div class="line"><span class="label">Votes Cast:</span> <span class="value">187</span></div>
+        <div class="line mt-1">
+            <a href="voting.html" class="btn">[ VOTE NOW ]</a>
+        </div>
+    </div>
+
+    <div class="ascii-box" data-title="EVENT #2">
+        <div class="line"><span class="label">Name:</span> <span class="value"><a href="event.html">Weekend Wizardry #12</a></span></div>
+        <div class="line"><span class="label">Theme:</span> <span class="value">---</span></div>
+        <div class="line"><span class="label">Status:</span> <span class="value status-warning">REGISTRATION OPEN</span></div>
+        <div class="line"><span class="label">Starts:</span> <span class="value">2026-03-06 18:00 UTC</span></div>
+        <div class="line"><span class="label">Teams:</span> <span class="value">9</span></div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Archived Events -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote list --archive</span></div>
+    </div>
+
+    <h2>Archived Events</h2>
+
+    <!-- 2025 -->
+    <h3>── 2025 ──</h3>
+
+    <table class="ascii-table">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Theme</th>
+                <th>Teams</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="event.html">Ludum Dare 56</a></td>
+                <td>Shapeshifter</td>
+                <td>31</td>
+                <td class="status-closed">REVEALED</td>
+            </tr>
+            <tr>
+                <td><a href="event.html">Weekend Wizardry #11</a></td>
+                <td>One Button</td>
+                <td>14</td>
+                <td class="status-closed">REVEALED</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 2024 -->
+    <h3>── 2024 ──</h3>
+
+    <table class="ascii-table">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Theme</th>
+                <th>Teams</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="event.html">Ludum Dare 55</a></td>
+                <td>Summoning</td>
+                <td>28</td>
+                <td class="status-closed">REVEALED</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <div class="output">
+        <div class="line text-dim">Showing 5 events total. 2 active, 3 archived.</div>
+        <div class="line text-dim">Run <span class="text-cyan">jamvote help</span> for more commands.</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>JamVote v2.4.1 | <a href="#">About</a> | <a href="#">Scoring Guide</a> | <a href="#">Source</a></div>
+        <div class="mt-1">Connection established. Session active.</div>
+    </footer>
+
+</div>
+</body>
+</html>

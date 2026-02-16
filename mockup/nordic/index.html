@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-dot"></span>
+        jamvote
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">events</a></li>
+        <li><a href="login.html">log in</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span class="icon-moon">&#9789;</span><span class="icon-sun">&#9788;</span></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="mb-3">
+        <h1>game jam events</h1>
+        <p class="text-muted">Vote on game jam entries, discover tiny worlds, and celebrate creativity.</p>
+      </div>
+
+      <!-- Active Events -->
+      <section class="section">
+        <div class="section-title">active events</div>
+        <div class="grid grid-2">
+
+          <a href="event.html" class="card event-card event-card-active" style="text-decoration:none; color:inherit;">
+            <div class="card-header">
+              <div class="flex items-center justify-between">
+                <div class="card-title">Ludum Dare 57</div>
+                <span class="badge badge-active">voting open</span>
+              </div>
+              <div class="card-meta">Theme: Tiny Worlds</div>
+            </div>
+            <div class="card-body">
+              <p class="text-secondary" style="font-size:0.875rem; margin-bottom:0.75rem;">Create a game about tiny worlds in 48 hours. Solo or team entries welcome.</p>
+              <div class="flex items-center gap-1">
+                <span class="badge badge-frost">12 teams</span>
+                <span class="badge badge-fjord">3 days left</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="event.html" class="card event-card event-card-active" style="text-decoration:none; color:inherit;">
+            <div class="card-header">
+              <div class="flex items-center justify-between">
+                <div class="card-title">Nordic Game Jam 2026</div>
+                <span class="badge badge-amber">registration</span>
+              </div>
+              <div class="card-meta">Theme: Revealed at start</div>
+            </div>
+            <div class="card-body">
+              <p class="text-secondary" style="font-size:0.875rem; margin-bottom:0.75rem;">Copenhagen's annual game jam. 48-hour on-site event with online participation.</p>
+              <div class="flex items-center gap-1">
+                <span class="badge badge-frost">8 teams</span>
+                <span class="badge badge-fjord">starts in 5 days</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider"><span class="divider-dot"></span></div>
+
+      <!-- Past Events -->
+      <section class="section">
+        <div class="section-title">past events</div>
+
+        <div class="year-header">2025</div>
+
+        <div class="grid grid-3" style="margin-bottom:1.5rem;">
+          <a href="results.html" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-title" style="font-size:1rem;">Ludum Dare 56</div>
+            <div class="card-meta">Theme: Build to Scale</div>
+            <div class="mt-1">
+              <span class="badge badge-frost">15 teams</span>
+            </div>
+          </a>
+
+          <a href="results.html" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-title" style="font-size:1rem;">Global Game Jam 2025</div>
+            <div class="card-meta">Theme: Bubble</div>
+            <div class="mt-1">
+              <span class="badge badge-frost">22 teams</span>
+            </div>
+          </a>
+
+          <a href="results.html" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-title" style="font-size:1rem;">Mini Jam 180</div>
+            <div class="card-meta">Theme: Underground</div>
+            <div class="mt-1">
+              <span class="badge badge-frost">9 teams</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="year-header">2024</div>
+
+        <div class="grid grid-3">
+          <a href="results.html" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-title" style="font-size:1rem;">Ludum Dare 55</div>
+            <div class="card-meta">Theme: Summoning</div>
+            <div class="mt-1">
+              <span class="badge badge-frost">18 teams</span>
+            </div>
+          </a>
+
+          <a href="results.html" class="card" style="text-decoration:none; color:inherit;">
+            <div class="card-title" style="font-size:1rem;">Nordic Game Jam 2024</div>
+            <div class="card-meta">Theme: Echoes</div>
+            <div class="mt-1">
+              <span class="badge badge-frost">14 teams</span>
+            </div>
+          </a>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>jamvote &middot; <a href="index.html">home</a> &middot; <a href="login.html">log in</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

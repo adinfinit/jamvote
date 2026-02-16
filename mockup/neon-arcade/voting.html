@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    .vote-header {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+    }
+    .vote-header h1 {
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      margin-bottom: 0.25rem;
+    }
+    .vote-header .team-label {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .aspect-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .aspect-card:hover {
+      border-color: rgba(0, 240, 255, 0.2);
+    }
+    .aspect-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .aspect-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .aspect-value {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      min-width: 48px;
+      text-align: right;
+    }
+    .aspect-range {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.35rem;
+    }
+    .slider-container {
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
+    .aspect-comment textarea {
+      margin-top: 0.5rem;
+      min-height: 60px;
+      font-size: 0.85rem;
+    }
+    .submit-section {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .overall-preview {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(255, 0, 170, 0.06));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .overall-score {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      line-height: 1;
+    }
+    .overall-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .game-links {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
+      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <ul class="navbar-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Logout</a></li>
+        <li><button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">&#9728;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="container">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="page-content">
+    <div class="container" style="max-width: 700px;">
+
+      <!-- Vote Header -->
+      <div class="vote-header">
+        <h1>Pocket Universe</h1>
+        <p class="team-label">by <strong class="text-magenta">Pixel Pioneers</strong></p>
+        <div class="game-links">
+          <a href="#" class="btn btn-sm btn-cyan">&#9654; Play Game</a>
+          <a href="#" class="btn btn-sm btn-purple">&#8595; Download</a>
+        </div>
+      </div>
+
+      <hr class="neon-divider">
+
+      <!-- Aspect: Theme -->
+      <div class="aspect-card" data-aspect="theme">
+        <div class="aspect-header">
+          <span class="aspect-name text-cyan">Theme</span>
+          <span class="aspect-value text-cyan" id="val-theme">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="1" max="5" step="0.5" value="3"
+                 class="neon-slider" id="slider-theme"
+                 oninput="updateSlider('theme', this.value)">
+          <div class="aspect-range">
+            <span>1 - Off Theme</span>
+            <span>5 - Perfect Fit</span>
+          </div>
+        </div>
+        <div class="aspect-comment">
+          <textarea placeholder="Optional comment about theme adherence..."></textarea>
+        </div>
+      </div>
+
+      <!-- Aspect: Enjoyment -->
+      <div class="aspect-card" data-aspect="enjoyment">
+        <div class="aspect-header">
+          <span class="aspect-name text-magenta">Enjoyment</span>
+          <span class="aspect-value text-magenta" id="val-enjoyment">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="1" max="5" step="0.5" value="3"
+                 class="neon-slider magenta" id="slider-enjoyment"
+                 oninput="updateSlider('enjoyment', this.value)">
+          <div class="aspect-range">
+            <span>1 - Not Fun</span>
+            <span>5 - Amazing</span>
+          </div>
+        </div>
+        <div class="aspect-comment">
+          <textarea placeholder="Optional comment about fun factor..."></textarea>
+        </div>
+      </div>
+
+      <!-- Aspect: Aesthetics -->
+      <div class="aspect-card" data-aspect="aesthetics">
+        <div class="aspect-header">
+          <span class="aspect-name text-purple">Aesthetics</span>
+          <span class="aspect-value text-purple" id="val-aesthetics">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="1" max="5" step="0.5" value="3"
+                 class="neon-slider purple" id="slider-aesthetics"
+                 oninput="updateSlider('aesthetics', this.value)">
+          <div class="aspect-range">
+            <span>1 - Rough</span>
+            <span>5 - Beautiful</span>
+          </div>
+        </div>
+        <div class="aspect-comment">
+          <textarea placeholder="Optional comment about art, sound, and polish..."></textarea>
+        </div>
+      </div>
+
+      <!-- Aspect: Innovation -->
+      <div class="aspect-card" data-aspect="innovation">
+        <div class="aspect-header">
+          <span class="aspect-name text-lime">Innovation</span>
+          <span class="aspect-value text-lime" id="val-innovation">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="1" max="5" step="0.5" value="3"
+                 class="neon-slider lime" id="slider-innovation"
+                 oninput="updateSlider('innovation', this.value)">
+          <div class="aspect-range">
+            <span>1 - Standard</span>
+            <span>5 - Groundbreaking</span>
+          </div>
+        </div>
+        <div class="aspect-comment">
+          <textarea placeholder="Optional comment about originality..."></textarea>
+        </div>
+      </div>
+
+      <!-- Aspect: Bonus -->
+      <div class="aspect-card" data-aspect="bonus">
+        <div class="aspect-header">
+          <span class="aspect-name text-gold">Bonus</span>
+          <span class="aspect-value text-gold" id="val-bonus">0.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="0" max="2.5" step="0.5" value="0"
+                 class="neon-slider gold" id="slider-bonus"
+                 oninput="updateSlider('bonus', this.value)">
+          <div class="aspect-range">
+            <span>0 - No Bonus</span>
+            <span>2.5 - Exceptional</span>
+          </div>
+        </div>
+        <div class="aspect-comment">
+          <textarea placeholder="Optional comment about what stood out..."></textarea>
+        </div>
+      </div>
+
+      <hr class="neon-divider">
+
+      <!-- Overall Preview -->
+      <div class="overall-preview">
+        <div class="overall-label">Overall Score</div>
+        <div class="overall-score" id="overall-score">2.67</div>
+        <div class="text-muted mt-1" style="font-size:0.75rem;">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-section">
+        <button class="btn btn-filled-magenta btn-lg" id="submit-btn" onclick="submitVote()">Submit Vote</button>
+        <p class="text-muted mt-2" style="font-size:0.8rem;">You can edit your vote until voting closes</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>JamVote &mdash; Built with neon and caffeine. <a href="#">About</a> &bull; <a href="#">GitHub</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function updateSlider(aspect, val) {
+      var value = parseFloat(val);
+      document.getElementById('val-' + aspect).textContent = value.toFixed(1);
+      updateOverall();
+    }
+
+    function updateOverall() {
+      var theme = parseFloat(document.getElementById('slider-theme').value);
+      var enjoyment = parseFloat(document.getElementById('slider-enjoyment').value);
+      var aesthetics = parseFloat(document.getElementById('slider-aesthetics').value);
+      var innovation = parseFloat(document.getElementById('slider-innovation').value);
+      var bonus = parseFloat(document.getElementById('slider-bonus').value);
+
+      var overall = (theme + enjoyment + aesthetics + innovation + bonus) / 4.5;
+      overall = Math.max(1, Math.min(5, overall));
+
+      document.getElementById('overall-score').textContent = overall.toFixed(2);
+    }
+
+    function submitVote() {
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Vote Saved!';
+      btn.style.background = 'var(--lime)';
+      btn.style.borderColor = 'var(--lime)';
+      btn.style.color = 'var(--bg-primary)';
+      btn.style.boxShadow = '0 0 20px rgba(57, 255, 20, 0.5)';
+
+      setTimeout(function() {
+        btn.textContent = 'Submit Vote';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.style.boxShadow = '';
+      }, 2000);
+    }
+
+    // Initialize overall on load
+    updateOverall();
+  </script>
+
+  <script src="theme.js"></script>
+</body>
+</html>

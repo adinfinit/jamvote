@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Event Header -->
+      <div class="flex items-center gap-12 mb-8" style="flex-wrap:wrap;">
+        <span class="badge badge-green">Voting Open</span>
+        <span class="text-small text-muted">Organized by Sarah Rivera</span>
+      </div>
+
+      <h1 style="margin-bottom:8px;">Ludum Dare 57</h1>
+      <p style="font-size:1.125rem; margin-bottom:32px;">
+        Theme: <strong style="color:var(--amber); font-size:1.25rem;">Tiny Worlds</strong>
+      </p>
+
+      <!-- Countdown & CTA -->
+      <div class="grid-2 mb-32">
+        <div class="card">
+          <h3 class="mb-16" style="color:var(--gray-500); font-weight:500; font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em;">Voting Ends In</h3>
+          <div class="countdown" id="countdown">
+            <div class="countdown-item">
+              <div class="countdown-number" id="cd-days">02</div>
+              <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-number" id="cd-hours">14</div>
+              <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-number" id="cd-mins">37</div>
+              <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-number" id="cd-secs">52</div>
+              <div class="countdown-label">Seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+          <p style="margin-bottom:16px; font-size:0.9375rem;">You have <strong style="color:var(--blue);">3 games</strong> left to vote on</p>
+          <a href="voting.html" class="btn btn-primary btn-lg">
+            &#9654; Start Voting
+          </a>
+        </div>
+      </div>
+
+      <!-- Event Info -->
+      <div class="card mb-32">
+        <h3 class="mb-16">About This Jam</h3>
+        <p style="margin-bottom:12px;">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
+        <p>Voting is open to all registered jammers. Play each game, rate it on five aspects, and leave constructive feedback. Judge scores account for 30% of the final score.</p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="card mb-32">
+        <h3 class="mb-16">Schedule</h3>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:20px;">
+          <div>
+            <div class="text-small text-muted mb-8">Jam Start</div>
+            <div style="font-weight:500;">Feb 7, 2026 &middot; 6:00 PM</div>
+            <span class="badge badge-gray mt-8">Completed</span>
+          </div>
+          <div>
+            <div class="text-small text-muted mb-8">Jam End</div>
+            <div style="font-weight:500;">Feb 10, 2026 &middot; 6:00 PM</div>
+            <span class="badge badge-gray mt-8">Completed</span>
+          </div>
+          <div>
+            <div class="text-small text-muted mb-8">Voting Opens</div>
+            <div style="font-weight:500;">Feb 11, 2026 &middot; 12:00 PM</div>
+            <span class="badge badge-green mt-8">Active</span>
+          </div>
+          <div>
+            <div class="text-small text-muted mb-8">Voting Closes</div>
+            <div style="font-weight:500;">Feb 18, 2026 &middot; 11:59 PM</div>
+            <span class="badge badge-blue mt-8">Upcoming</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teams -->
+      <div class="section-header">
+        <h2>Teams</h2>
+        <span class="text-small text-muted">6 teams registered</span>
+      </div>
+
+      <div class="grid-3">
+
+        <a href="team.html" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar">PP</span>
+            <span class="badge badge-blue">4 members</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Pixel Pioneers</h3>
+          <p class="text-small" style="margin-bottom:12px;">Pocket Universe</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm">AJ</span>
+            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">MK</span>
+            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">SR</span>
+            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">LW</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar" style="background:#fef3c7;color:#d97706;">NB</span>
+            <span class="badge badge-blue">3 members</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Neon Bytes</h3>
+          <p class="text-small" style="margin-bottom:12px;">Circuit Bloom</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">JD</span>
+            <span class="avatar avatar-sm">TW</span>
+            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">PL</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar" style="background:#ecfdf5;color:#059669;">CC</span>
+            <span class="badge badge-blue">2 members</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Code Cats</h3>
+          <p class="text-small" style="margin-bottom:12px;">Ant Colony</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">RB</span>
+            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">EM</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar" style="background:#fee2e2;color:#dc2626;">IG</span>
+            <span class="badge badge-blue">3 members</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Indie Gnomes</h3>
+          <p class="text-small" style="margin-bottom:12px;">Terrarium Tactics</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">NK</span>
+            <span class="avatar avatar-sm">OT</span>
+            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">QS</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar" style="background:#ede9fe;color:#7c3aed;">GZ</span>
+            <span class="badge badge-blue">2 members</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Glitch Zone</h3>
+          <p class="text-small" style="margin-bottom:12px;">Microverse</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm" style="background:#ede9fe;color:#7c3aed;">DM</span>
+            <span class="avatar avatar-sm">HS</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-8">
+            <span class="avatar" style="background:#fce7f3;color:#db2777;">SW</span>
+            <span class="badge badge-blue">1 member</span>
+          </div>
+          <h3 style="margin-bottom:4px;">Solo Wolf</h3>
+          <p class="text-small" style="margin-bottom:12px;">Dust Mote</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm" style="background:#fce7f3;color:#db2777;">KR</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Countdown Timer
+    (function() {
+      const target = new Date();
+      target.setDate(target.getDate() + 2);
+      target.setHours(target.getHours() + 14);
+      target.setMinutes(target.getMinutes() + 37);
+
+      function update() {
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now) / 1000));
+
+        const days = Math.floor(diff / 86400); diff %= 86400;
+        const hours = Math.floor(diff / 3600); diff %= 3600;
+        const mins = Math.floor(diff / 60);
+        const secs = diff % 60;
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+
+</body>
+</html>

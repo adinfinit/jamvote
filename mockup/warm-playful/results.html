@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results: Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🎮</span> JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html" class="btn-login">Log In</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Event sub-nav -->
+    <div class="subnav">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html" class="active">Results</a>
+    </div>
+
+    <!-- Header -->
+    <div class="text-center" style="margin: 32px 0 16px;">
+      <h1 class="page-title">Results 🎉</h1>
+      <p class="page-subtitle">Ludum Dare 57 &mdash; "Tiny Worlds"</p>
+    </div>
+
+    <!-- Podium -->
+    <div class="podium">
+      <!-- 2nd Place -->
+      <div class="podium-place podium-2nd pop-in" style="animation-delay: 0.2s;">
+        <div class="podium-medal">🥈</div>
+        <div class="podium-team">Code Wizards</div>
+        <div class="podium-game">Spellcraft Micro</div>
+        <div class="podium-score" style="color: #64748b;">4.12</div>
+      </div>
+      <!-- 1st Place -->
+      <div class="podium-place podium-1st pop-in" style="animation-delay: 0.4s;">
+        <div class="podium-medal">🥇</div>
+        <div class="podium-team">Pixel Pioneers</div>
+        <div class="podium-game">Pocket Universe</div>
+        <div class="podium-score" style="color: #b45309;">4.52</div>
+      </div>
+      <!-- 3rd Place -->
+      <div class="podium-place podium-3rd pop-in" style="animation-delay: 0.1s;">
+        <div class="podium-medal">🥉</div>
+        <div class="podium-team">Tiny Titans</div>
+        <div class="podium-game">Ant Kingdom</div>
+        <div class="podium-score" style="color: #d97706;">3.89</div>
+      </div>
+    </div>
+
+    <!-- Full Results Table -->
+    <div class="section">
+      <h2 class="section-title"><span class="icon">📊</span> Overall Rankings</h2>
+
+      <div style="overflow-x: auto;">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th style="width:50px;">#</th>
+              <th>Team</th>
+              <th>Game</th>
+              <th>Theme</th>
+              <th>Enjoy</th>
+              <th>Aesth.</th>
+              <th>Innov.</th>
+              <th>Bonus</th>
+              <th>Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rank rank-1">🥇</td>
+              <td><strong>Pixel Pioneers</strong></td>
+              <td>Pocket Universe</td>
+              <td>4.6</td>
+              <td>4.8</td>
+              <td>4.3</td>
+              <td>4.2</td>
+              <td>2.4</td>
+              <td><strong style="color:var(--coral);">4.52</strong></td>
+            </tr>
+            <tr>
+              <td class="rank rank-2">🥈</td>
+              <td><strong>Code Wizards</strong></td>
+              <td>Spellcraft Micro</td>
+              <td>4.2</td>
+              <td>4.5</td>
+              <td>3.9</td>
+              <td>4.0</td>
+              <td>2.0</td>
+              <td><strong style="color:var(--coral);">4.12</strong></td>
+            </tr>
+            <tr>
+              <td class="rank rank-3">🥉</td>
+              <td><strong>Tiny Titans</strong></td>
+              <td>Ant Kingdom</td>
+              <td>4.0</td>
+              <td>4.1</td>
+              <td>3.7</td>
+              <td>3.8</td>
+              <td>1.9</td>
+              <td><strong style="color:var(--coral);">3.89</strong></td>
+            </tr>
+            <tr>
+              <td class="rank">4</td>
+              <td><strong>Neon Dreams</strong></td>
+              <td>Miniverse</td>
+              <td>3.8</td>
+              <td>3.9</td>
+              <td>4.1</td>
+              <td>3.5</td>
+              <td>1.5</td>
+              <td><strong>3.73</strong></td>
+            </tr>
+            <tr>
+              <td class="rank">5</td>
+              <td><strong>Bug Hunters</strong></td>
+              <td>Microbe Quest</td>
+              <td>3.6</td>
+              <td>3.7</td>
+              <td>3.5</td>
+              <td>3.9</td>
+              <td>1.8</td>
+              <td><strong>3.67</strong></td>
+            </tr>
+            <tr>
+              <td class="rank">6</td>
+              <td><strong>Retro Rockets</strong></td>
+              <td>Nano Cosmos</td>
+              <td>3.5</td>
+              <td>3.4</td>
+              <td>3.8</td>
+              <td>3.3</td>
+              <td>1.4</td>
+              <td><strong>3.42</strong></td>
+            </tr>
+            <tr>
+              <td class="rank">7</td>
+              <td><strong>Quantum Quackers</strong></td>
+              <td>Duck Dimension</td>
+              <td>3.2</td>
+              <td>3.6</td>
+              <td>3.1</td>
+              <td>3.0</td>
+              <td>1.2</td>
+              <td><strong>3.11</strong></td>
+            </tr>
+            <tr>
+              <td class="rank">8</td>
+              <td><strong>Byte Brigade</strong></td>
+              <td>Data Droplets</td>
+              <td>3.0</td>
+              <td>3.1</td>
+              <td>2.9</td>
+              <td>3.2</td>
+              <td>1.0</td>
+              <td><strong>2.93</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Score Visualization -->
+    <div class="section">
+      <h2 class="section-title"><span class="icon">📈</span> Score Breakdown &mdash; Top 3</h2>
+      <div class="grid-3">
+
+        <div class="card" style="border-top: 4px solid var(--golden);">
+          <div style="font-weight:800; margin-bottom:12px;">🥇 Pixel Pioneers</div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Theme</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:92%;background:var(--teal);"></div></div>
+            <span class="score-bar-num text-teal">4.6</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Enjoyment</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:96%;background:var(--coral);"></div></div>
+            <span class="score-bar-num text-coral">4.8</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Aesthetics</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:86%;background:var(--purple);"></div></div>
+            <span class="score-bar-num text-purple">4.3</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Innovation</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:84%;background:var(--golden);"></div></div>
+            <span class="score-bar-num text-golden">4.2</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Bonus</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:96%;background:#ec4899;"></div></div>
+            <span class="score-bar-num" style="color:#ec4899;">2.4</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #94a3b8;">
+          <div style="font-weight:800; margin-bottom:12px;">🥈 Code Wizards</div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Theme</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:84%;background:var(--teal);"></div></div>
+            <span class="score-bar-num text-teal">4.2</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Enjoyment</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:90%;background:var(--coral);"></div></div>
+            <span class="score-bar-num text-coral">4.5</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Aesthetics</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:78%;background:var(--purple);"></div></div>
+            <span class="score-bar-num text-purple">3.9</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Innovation</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--golden);"></div></div>
+            <span class="score-bar-num text-golden">4.0</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Bonus</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:#ec4899;"></div></div>
+            <span class="score-bar-num" style="color:#ec4899;">2.0</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #d97706;">
+          <div style="font-weight:800; margin-bottom:12px;">🥉 Tiny Titans</div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Theme</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:80%;background:var(--teal);"></div></div>
+            <span class="score-bar-num text-teal">4.0</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Enjoyment</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:82%;background:var(--coral);"></div></div>
+            <span class="score-bar-num text-coral">4.1</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Aesthetics</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:74%;background:var(--purple);"></div></div>
+            <span class="score-bar-num text-purple">3.7</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Innovation</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:76%;background:var(--golden);"></div></div>
+            <span class="score-bar-num text-golden">3.8</span>
+          </div>
+          <div class="score-bar-wrap">
+            <span class="score-bar-label">Bonus</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:76%;background:#ec4899;"></div></div>
+            <span class="score-bar-num" style="color:#ec4899;">1.9</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🎮 JamVote &mdash; Made with love for game jammers everywhere</p>
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      var stored = localStorage.getItem('jamvote-theme');
+      if (stored === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      }
+      function updateIcon() {
+        toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+      }
+      updateIcon();
+      toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('jamvote-theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('jamvote-theme', 'dark');
+        }
+        updateIcon();
+      });
+    })();
+  </script>
+
+</body>
+</html>

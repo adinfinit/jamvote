@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .vote-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 36px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .game-header {
+      text-align: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--gray-100);
+      margin-bottom: 32px;
+    }
+
+    .game-header h1 {
+      margin-bottom: 4px;
+    }
+
+    .game-header .team-name {
+      font-size: 0.9375rem;
+      color: var(--gray-500);
+    }
+
+    .game-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .slider-track-bg {
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2px;
+    }
+
+    .slider-ticks span {
+      font-size: 0.6875rem;
+      color: var(--gray-300);
+      font-family: var(--font-mono);
+    }
+
+    .comment-toggle {
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color var(--transition);
+    }
+
+    .comment-toggle:hover {
+      color: var(--blue);
+    }
+
+    .comment-area {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .comment-area.open {
+      display: block;
+    }
+
+    .vote-footer {
+      padding-top: 28px;
+      border-top: 1px solid var(--gray-100);
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .progress-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gray-200);
+    }
+
+    .progress-dots .dot.active {
+      background: var(--blue);
+    }
+
+    .progress-dots .dot.done {
+      background: var(--gray-400);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="mb-24" style="font-size:0.8125rem;">
+        <a href="event.html" style="color:var(--gray-400);">Ludum Dare 57</a>
+        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
+        <a href="voting.html" style="color:var(--gray-400);">Voting</a>
+        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
+        <span style="color:var(--gray-600);">Pocket Universe</span>
+      </div>
+
+      <!-- Vote Card -->
+      <div class="vote-card">
+
+        <div class="game-header">
+          <h1>Pocket Universe</h1>
+          <div class="team-name">by Pixel Pioneers</div>
+          <div class="game-links">
+            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:6px 14px;">
+              &#8599; Play Game
+            </a>
+            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:6px 14px;">
+              &#8615; Download
+            </a>
+          </div>
+        </div>
+
+        <!-- Sliders -->
+        <form id="vote-form">
+
+          <!-- Theme -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="theme">Theme</label>
+              <span class="slider-value" id="theme-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="theme" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="How well does it fit the theme?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Enjoyment -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="enjoyment">Enjoyment</label>
+              <span class="slider-value" id="enjoyment-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="enjoyment" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="How fun was it to play?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Aesthetics -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="aesthetics">Aesthetics</label>
+              <span class="slider-value" id="aesthetics-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="aesthetics" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Art, sound, and overall polish?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Innovation -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="innovation">Innovation</label>
+              <span class="slider-value" id="innovation-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="innovation" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Anything creative or original?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Bonus -->
+          <div class="slider-group" style="background:var(--amber-light); margin:0 -36px; padding:24px 36px; border-radius:var(--radius);">
+            <div class="slider-header">
+              <label class="slider-label" for="bonus">
+                Bonus <span style="font-weight:400; color:var(--gray-400); font-size:0.8125rem;">0 &ndash; 2.5</span>
+              </label>
+              <span class="slider-value" id="bonus-val" style="color:var(--amber-hover);">0.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="bonus" min="0" max="2.5" step="0.5" value="0" style="--thumb-color:var(--amber);">
+            </div>
+            <div class="slider-ticks">
+              <span>0</span><span>0.5</span><span>1</span><span>1.5</span><span>2</span><span>2.5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Extra credit for going above and beyond?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Overall Score Preview -->
+          <div class="mt-24 mb-24" style="text-align:center;">
+            <div class="text-small text-muted mb-8">Overall Score</div>
+            <div style="font-size:2.5rem; font-weight:700; color:var(--blue); font-family:var(--font-mono);" id="overall-val">2.67</div>
+            <div class="text-small text-muted">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="vote-footer">
+            <div class="progress-dots">
+              <span class="dot done"></span>
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="flex gap-12">
+              <a href="voting.html" class="btn btn-secondary">Skip</a>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Vote</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Slider interactions
+    const sliders = ['theme', 'enjoyment', 'aesthetics', 'innovation', 'bonus'];
+
+    function updateSliders() {
+      sliders.forEach(name => {
+        const slider = document.getElementById(name);
+        const display = document.getElementById(name + '-val');
+        display.textContent = parseFloat(slider.value).toFixed(1);
+
+        // Update slider background gradient
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const pct = ((slider.value - min) / (max - min)) * 100;
+        const color = name === 'bonus' ? '#f59e0b' : '#2563eb';
+        slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${pct}%, #e5e7eb ${pct}%, #e5e7eb 100%)`;
+      });
+
+      // Calculate overall
+      const theme = parseFloat(document.getElementById('theme').value);
+      const enjoyment = parseFloat(document.getElementById('enjoyment').value);
+      const aesthetics = parseFloat(document.getElementById('aesthetics').value);
+      const innovation = parseFloat(document.getElementById('innovation').value);
+      const bonus = parseFloat(document.getElementById('bonus').value);
+      let overall = (theme + enjoyment + aesthetics + innovation + bonus) / 4.5;
+      overall = Math.min(5, Math.max(1, overall));
+      document.getElementById('overall-val').textContent = overall.toFixed(2);
+    }
+
+    sliders.forEach(name => {
+      const slider = document.getElementById(name);
+      slider.addEventListener('input', updateSliders);
+    });
+
+    // Initial update
+    updateSliders();
+
+    // Comment toggle
+    function toggleComment(btn) {
+      const area = btn.nextElementSibling;
+      area.classList.toggle('open');
+      btn.textContent = area.classList.contains('open') ? '- Hide comment' : '+ Add comment';
+    }
+
+    // Form submit
+    document.getElementById('vote-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('[type="submit"]');
+      btn.textContent = 'Saved!';
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+      btn.style.pointerEvents = 'none';
+      setTimeout(() => {
+        btn.textContent = 'Submit Vote';
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-secondary');
+        btn.style.pointerEvents = '';
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

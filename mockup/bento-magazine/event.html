@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring Game Jam 2026 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Log in</a></li>
+        <li><button id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- Event Subnav -->
+    <div class="subnav">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+
+    <div class="bento-event">
+
+      <!-- Theme — Giant text tile spanning full width -->
+      <div class="tile tile-black ge-theme" style="min-height: 180px; padding: 28px 32px;">
+        <div class="tile-flex">
+          <div class="tile-label" style="color: rgba(255,255,255,0.4);">Spring Game Jam 2026 &middot; Theme</div>
+          <div class="text-giant" style="color: #fff; margin-top: 8px;">Tiny Worlds</div>
+          <div class="dot-pattern">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Tile -->
+      <div class="tile tile-warm ge-info" style="min-height: 180px;">
+        <div class="tile-flex">
+          <div class="tile-label">About This Jam</div>
+          <div class="text-body" style="margin-top: 8px;">
+            Create a game around the theme "Tiny Worlds." Think microscopic universes, miniature civilizations, or pocket dimensions. You have 48 hours to design, build, and submit your game.
+          </div>
+          <div style="margin-top: 16px; display: flex; gap: 16px;">
+            <div>
+              <div class="text-tiny" style="opacity:0.5;">Start</div>
+              <div class="text-small" style="font-weight:600;">Feb 14, 6PM</div>
+            </div>
+            <div>
+              <div class="text-tiny" style="opacity:0.5;">End</div>
+              <div class="text-small" style="font-weight:600;">Feb 16, 6PM</div>
+            </div>
+            <div>
+              <div class="text-tiny" style="opacity:0.5;">Judge Weight</div>
+              <div class="text-small" style="font-weight:600;">30%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOTE CTA — Big tile -->
+      <div class="tile tile-accent ge-vote" style="min-height: 180px;">
+        <a href="voting.html" class="tile-link">
+          <div class="tile-center">
+            <div class="text-giant">VOTE</div>
+            <div class="text-small" style="opacity:0.8; margin-top: 12px;">3 games in your queue</div>
+            <div style="margin-top: 16px; font-size: 13px; font-weight: 600; opacity: 0.7;">Start voting &rarr;</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Countdown — Tall tile -->
+      <div class="tile tile-red ge-count" style="min-height: 300px;">
+        <div class="tile-center">
+          <div class="tile-label" style="color: rgba(255,255,255,0.7);">Voting Closes In</div>
+          <div id="countdown" style="margin-top: 16px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat tiles -->
+      <div class="tile tile-green ge-stat1">
+        <div class="tile-center" style="min-height: 80px;">
+          <div class="tile-value">12</div>
+          <div class="text-tiny" style="opacity: 0.7; margin-top: 4px;">Teams</div>
+        </div>
+      </div>
+
+      <div class="tile tile-purple ge-stat2">
+        <div class="tile-center" style="min-height: 80px;">
+          <div class="tile-value">47</div>
+          <div class="text-tiny" style="opacity: 0.7; margin-top: 4px;">Jammers</div>
+        </div>
+      </div>
+
+      <!-- Team Grid — 12 small team tiles -->
+      <div class="tile tile-white ge-team1">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.4;">#1</div>
+            <div class="text-small" style="font-weight:700;">Pixel Pioneers</div>
+            <div class="text-tiny" style="opacity:0.5;">MicroVerse</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-warm ge-team2">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.4;">#2</div>
+            <div class="text-small" style="font-weight:700;">Code Monkeys</div>
+            <div class="text-tiny" style="opacity:0.5;">Ant Farm</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-black ge-team3">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.4;">#3</div>
+            <div class="text-small" style="font-weight:700; color:#fff;">Byte Squad</div>
+            <div class="text-tiny" style="opacity:0.4;">Shrinkage</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-accent ge-team4">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.5;">#4</div>
+            <div class="text-small" style="font-weight:700;">NullPointers</div>
+            <div class="text-tiny" style="opacity:0.5;">Pocket Realm</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-warm ge-team5">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.4;">#5</div>
+            <div class="text-small" style="font-weight:700;">Bug Fixers</div>
+            <div class="text-tiny" style="opacity:0.5;">Spore Quest</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-green ge-team6">
+        <a href="team.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 72px;">
+            <div class="text-tiny" style="opacity:0.5;">#6</div>
+            <div class="text-small" style="font-weight:700;">Dream Team</div>
+            <div class="text-tiny" style="opacity:0.5;">Dust Mote</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-white ge-team7">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.4;">#7</div>
+          <div class="text-small" style="font-weight:700;">Syntax Error</div>
+          <div class="text-tiny" style="opacity:0.5;">Diorama</div>
+        </div>
+      </div>
+
+      <div class="tile tile-purple ge-team8">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.5;">#8</div>
+          <div class="text-small" style="font-weight:700;">Overflow</div>
+          <div class="text-tiny" style="opacity:0.5;">Terrarium</div>
+        </div>
+      </div>
+
+      <div class="tile tile-warm ge-team9">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.4;">#9</div>
+          <div class="text-small" style="font-weight:700;">Ctrl+Z</div>
+          <div class="text-tiny" style="opacity:0.5;">Lilliput</div>
+        </div>
+      </div>
+
+      <div class="tile tile-amber ge-team10">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.4;">#10</div>
+          <div class="text-small" style="font-weight:700;">Stack Trace</div>
+          <div class="text-tiny" style="opacity:0.5;">Nano Town</div>
+        </div>
+      </div>
+
+      <div class="tile tile-black ge-team11">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.4;">#11</div>
+          <div class="text-small" style="font-weight:700; color:#fff;">Kernel Panic</div>
+          <div class="text-tiny" style="opacity:0.4;">Bonsai World</div>
+        </div>
+      </div>
+
+      <div class="tile tile-sky ge-team12">
+        <div class="tile-flex" style="min-height: 72px;">
+          <div class="text-tiny" style="opacity:0.5;">#12</div>
+          <div class="text-small" style="font-weight:700;">Runtime</div>
+          <div class="text-tiny" style="opacity:0.5;">Snow Globe</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

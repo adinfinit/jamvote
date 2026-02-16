@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | JamVote Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+<div class="crt-screen">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="brand glow">JAMVOTE</a>
+        <a href="index.html">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <span class="spacer"></span>
+        <button class="theme-toggle" onclick="toggleTheme()">[PAPER]</button>
+        <a href="login.html" class="active">Login</a>
+    </nav>
+
+    <!-- Command -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote auth --login</span></div>
+    </div>
+
+    <h1 class="cursor">System Authentication</h1>
+
+    <div class="output mb-2">
+        <div class="line text-dim">┌──────────────────────────────────────────────────┐</div>
+        <div class="line text-dim">│                                                  │</div>
+        <div class="line text-dim">│  <span class="text-amber">WARNING: Authentication required to continue.</span>  │</div>
+        <div class="line text-dim">│  <span class="text-amber">Unauthorized access is prohibited.</span>              │</div>
+        <div class="line text-dim">│                                                  │</div>
+        <div class="line text-dim">└──────────────────────────────────────────────────┘</div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Google OAuth -->
+    <h2>OAuth2 Authentication</h2>
+
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">&gt; </span>Authenticate using your Google account:</div>
+    </div>
+
+    <div class="mb-3">
+        <a href="index.html" class="btn btn-cyan">[ AUTHENTICATE VIA GOOGLE ]</a>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Dev Login -->
+    <h2>Development Mode</h2>
+
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">dev-login --user</span></div>
+        <div class="line text-dim">&gt; Dev mode enabled. Enter username to create a session.</div>
+    </div>
+
+    <div class="ascii-box" data-title="DEV LOGIN">
+        <form id="dev-login-form" onsubmit="devLogin(event)">
+            <div class="form-group">
+                <label>login: <span class="cursor"></span></label>
+                <input type="text" id="dev-username" placeholder="enter username" autofocus>
+            </div>
+
+            <div class="mt-2">
+                <button type="submit" class="btn">[ LOGIN ]</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Login Log -->
+    <div class="output">
+        <div class="line text-dim">&gt; Session: none</div>
+        <div class="line text-dim">&gt; Last login: never</div>
+        <div class="line text-dim">&gt; Auth providers: google, dev-mode</div>
+        <div class="line text-dim">&gt; Protocol: OAuth2 / OpenID Connect</div>
+    </div>
+
+    <div class="output mt-2">
+        <div class="line text-dim">
+            <pre style="color: var(--green-dark); font-size: 0.75rem; line-height: 1.2;">
+     ██╗ █████╗ ███╗   ███╗██╗   ██╗ ██████╗ ████████╗███████╗
+     ██║██╔══██╗████╗ ████║██║   ██║██╔═══██╗╚══██╔══╝██╔════╝
+     ██║███████║██╔████╔██║██║   ██║██║   ██║   ██║   █████╗
+██   ██║██╔══██║██║╚██╔╝██║╚██╗ ██╔╝██║   ██║   ██║   ██╔══╝
+╚█████╔╝██║  ██║██║ ╚═╝ ██║ ╚████╔╝ ╚██████╔╝   ██║   ███████╗
+ ╚════╝ ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═══╝   ╚═════╝    ╚═╝   ╚══════╝</pre>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>JamVote v2.4.1 | <a href="index.html">Home</a> | <a href="#">About</a></div>
+        <div class="mt-1">Awaiting authentication...</div>
+    </footer>
+
+</div>
+
+<script>
+function devLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('dev-username').value.trim();
+    if (!username) {
+        alert('ERROR: Username required.');
+        return;
+    }
+    alert('SESSION CREATED\n\nLogged in as: ' + username + '\nMode: development\nRedirecting to home...');
+    window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>

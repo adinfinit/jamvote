@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote: Pocket Universe - JamVote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">///</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">[&#9728;]</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="subnav">
+        <div class="subnav-inner">
+            <a href="event.html">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html" class="active">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html">Results</a>
+        </div>
+    </div>
+
+    <div class="container" style="max-width: 800px;">
+        <div class="page-header">
+            <div class="label">Ludum Dare 57 &mdash; Voting</div>
+            <h1>Pocket Universe</h1>
+            <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--gray-mid);">
+                by Pixel Pioneers &middot; <a href="team.html">View Team</a>
+            </p>
+        </div>
+
+        <!-- Download link -->
+        <div class="block" style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <div class="label">Play the game first</div>
+                <a href="#" style="font-weight: 900; font-size: 1.1rem;">Download Pocket Universe</a>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-mid);">Game 3 of 8</span>
+        </div>
+
+        <!-- Voting Form -->
+        <form id="vote-form">
+            <div class="vote-section">
+
+                <!-- Theme -->
+                <div class="vote-aspect">
+                    <div class="vote-aspect-header">
+                        <span class="vote-aspect-name">Theme</span>
+                        <span class="vote-aspect-score" id="score-theme">3.0</span>
+                    </div>
+                    <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           data-score="score-theme" oninput="updateScore(this)">
+                    <div class="vote-comment">
+                        <textarea placeholder="Comment on theme interpretation..." rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- Enjoyment -->
+                <div class="vote-aspect">
+                    <div class="vote-aspect-header">
+                        <span class="vote-aspect-name">Enjoyment</span>
+                        <span class="vote-aspect-score" id="score-enjoyment">3.0</span>
+                    </div>
+                    <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           data-score="score-enjoyment" oninput="updateScore(this)">
+                    <div class="vote-comment">
+                        <textarea placeholder="How fun was it to play?" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- Aesthetics -->
+                <div class="vote-aspect">
+                    <div class="vote-aspect-header">
+                        <span class="vote-aspect-name">Aesthetics</span>
+                        <span class="vote-aspect-score" id="score-aesthetics">3.0</span>
+                    </div>
+                    <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           data-score="score-aesthetics" oninput="updateScore(this)">
+                    <div class="vote-comment">
+                        <textarea placeholder="Art, sound, visual polish..." rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- Innovation -->
+                <div class="vote-aspect">
+                    <div class="vote-aspect-header">
+                        <span class="vote-aspect-name">Innovation</span>
+                        <span class="vote-aspect-score" id="score-innovation">3.0</span>
+                    </div>
+                    <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           data-score="score-innovation" oninput="updateScore(this)">
+                    <div class="vote-comment">
+                        <textarea placeholder="Originality and creative ideas..." rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- Bonus -->
+                <div class="vote-aspect">
+                    <div class="vote-aspect-header">
+                        <span class="vote-aspect-name">Bonus</span>
+                        <span class="vote-aspect-score" id="score-bonus">0.0</span>
+                    </div>
+                    <input type="range" class="slider-track" min="0" max="2.5" step="0.5" value="0"
+                           data-score="score-bonus" oninput="updateScore(this)">
+                    <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--gray-mid); margin-top: 0.25rem;">
+                        0 &ndash; 2.5 range &middot; Extra credit for going above and beyond
+                    </div>
+                    <div class="vote-comment">
+                        <textarea placeholder="What earned the bonus?" rows="2"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Overall Score -->
+            <div class="block" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-width: 4px;">
+                <div>
+                    <div class="label">Calculated Overall</div>
+                    <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-mid);">
+                        (Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5
+                    </div>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900;" id="score-overall">2.67</span>
+            </div>
+
+            <button type="button" class="btn btn-accent btn-large" style="width: 100%; text-align: center;" onclick="submitVote()">
+                Submit Vote
+            </button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 JamVote</span>
+            <span>Built for game jammers</span>
+        </div>
+    </footer>
+
+    <script>
+        function updateScore(slider) {
+            const target = slider.getAttribute('data-score');
+            const val = parseFloat(slider.value);
+            document.getElementById(target).textContent = val.toFixed(1);
+            calculateOverall();
+        }
+
+        function calculateOverall() {
+            const theme = parseFloat(document.getElementById('score-theme').textContent);
+            const enjoyment = parseFloat(document.getElementById('score-enjoyment').textContent);
+            const aesthetics = parseFloat(document.getElementById('score-aesthetics').textContent);
+            const innovation = parseFloat(document.getElementById('score-innovation').textContent);
+            const bonus = parseFloat(document.getElementById('score-bonus').textContent);
+
+            let overall = (theme + enjoyment + aesthetics + innovation + bonus) / 4.5;
+            overall = Math.min(5, Math.max(1, overall));
+            document.getElementById('score-overall').textContent = overall.toFixed(2);
+        }
+
+        function submitVote() {
+            const btn = document.querySelector('#vote-form .btn');
+            btn.textContent = 'VOTE SUBMITTED';
+            btn.style.background = '#000';
+            btn.style.borderColor = '#000';
+            setTimeout(() => {
+                btn.textContent = 'SUBMIT VOTE';
+                btn.style.background = '';
+                btn.style.borderColor = '';
+            }, 2000);
+        }
+
+        // Initialize
+        calculateOverall();
+    </script>
+    <script>
+    (function(){
+        var html = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+        function update() {
+            btn.textContent = html.getAttribute('data-theme') === 'dark' ? '[\u263E]' : '[\u2600]';
+        }
+        update();
+        btn.addEventListener('click', function() {
+            var isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', ''); }
+            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            update();
+        });
+    })();
+    </script>
+</body>
+</html>

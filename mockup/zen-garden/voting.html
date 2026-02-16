@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe — JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__brand">JamVote</a>
+      <button class="nav__toggle" onclick="document.querySelector('.nav__links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Logout</a></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="subnav__inner">
+      <a href="event.html">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Voting Header -->
+  <header class="page-header">
+    <div class="container container--narrow">
+      <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-xs);">Voting on</p>
+      <h1>Pocket Universe</h1>
+      <p>by Pixel Pioneers &middot; <a href="team.html" style="font-size: 0.85rem;">View team</a></p>
+    </div>
+  </header>
+
+  <!-- Voting Sliders -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container container--narrow">
+
+      <!-- Theme -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label"><span class="dot"></span> Theme</span>
+          <span class="slider-value" id="val-theme">3.0</span>
+        </div>
+        <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3" id="slider-theme" oninput="updateSlider('theme')">
+        <div class="form-group" style="margin-top: var(--space-xs);">
+          <textarea class="form-textarea" placeholder="Comment on theme interpretation..." rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Enjoyment -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label"><span class="dot"></span> Enjoyment</span>
+          <span class="slider-value" id="val-enjoyment">3.0</span>
+        </div>
+        <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3" id="slider-enjoyment" oninput="updateSlider('enjoyment')">
+        <div class="form-group" style="margin-top: var(--space-xs);">
+          <textarea class="form-textarea" placeholder="How fun was it to play?" rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Aesthetics -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label"><span class="dot dot--clay"></span> Aesthetics</span>
+          <span class="slider-value" id="val-aesthetics" style="color: var(--clay);">3.0</span>
+        </div>
+        <input type="range" class="slider-track slider-track--clay" min="1" max="5" step="0.5" value="3" id="slider-aesthetics" oninput="updateSlider('aesthetics')">
+        <div class="form-group" style="margin-top: var(--space-xs);">
+          <textarea class="form-textarea" placeholder="Visual and audio quality..." rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Innovation -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label"><span class="dot"></span> Innovation</span>
+          <span class="slider-value" id="val-innovation">3.0</span>
+        </div>
+        <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3" id="slider-innovation" oninput="updateSlider('innovation')">
+        <div class="form-group" style="margin-top: var(--space-xs);">
+          <textarea class="form-textarea" placeholder="Any creative or novel ideas?" rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Bonus -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label"><span class="dot dot--clay"></span> Bonus</span>
+          <span class="slider-value" id="val-bonus" style="color: var(--clay);">1.0</span>
+        </div>
+        <input type="range" class="slider-track slider-track--clay" min="0" max="2.5" step="0.5" value="1" id="slider-bonus" oninput="updateSlider('bonus')">
+        <div class="form-group" style="margin-top: var(--space-xs);">
+          <textarea class="form-textarea" placeholder="Extra polish, humor, or wow factor..." rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Overall calculated -->
+      <div style="border-top: 1px solid var(--border); padding-top: var(--space-md); margin-top: var(--space-md); display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.85rem; font-weight: 300; letter-spacing: 0.06em; color: var(--text-muted);">Overall</span>
+        <span style="font-size: 2rem; font-weight: 200; color: var(--sage); letter-spacing: 0.04em;" id="val-overall">2.9</span>
+      </div>
+
+      <!-- Submit -->
+      <div style="text-align: center; margin-top: var(--space-lg);">
+        <button class="btn btn--sage" onclick="handleSubmit()">Submit Vote</button>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: var(--space-sm);">You can edit your vote until voting closes.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Decorative -->
+  <div class="rake">
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+  </div>
+
+  <!-- Voting Queue -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="section-marker"></div>
+      <h2>Your Queue</h2>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <span class="list-item__title" style="color: var(--sage);">Pocket Universe</span>
+        <span class="list-item__meta">Voting now</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot dot--mist"></span>
+        <a href="#" class="list-item__title">Grain of Infinity</a>
+        <span class="list-item__meta">Up next</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot dot--mist"></span>
+        <a href="#" class="list-item__title">Snow Globe Society</a>
+        <span class="list-item__meta">Pending</span>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-light); margin-top: var(--space-md); padding-top: var(--space-md);">
+        <h3 style="color: var(--text-muted); font-size: 0.85rem;">Completed</h3>
+        <div class="list-item">
+          <span class="dot dot--clay"></span>
+          <span class="list-item__title" style="color: var(--text-muted);">Terrarium Dreams</span>
+          <span class="list-item__meta">3.8</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="enso enso--small"></div>
+      <p>JamVote &middot; Made with stillness</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    function updateSlider(name) {
+      const slider = document.getElementById('slider-' + name);
+      const display = document.getElementById('val-' + name);
+      display.textContent = parseFloat(slider.value).toFixed(1);
+      updateOverall();
+    }
+
+    function updateOverall() {
+      const theme = parseFloat(document.getElementById('slider-theme').value);
+      const enjoyment = parseFloat(document.getElementById('slider-enjoyment').value);
+      const aesthetics = parseFloat(document.getElementById('slider-aesthetics').value);
+      const innovation = parseFloat(document.getElementById('slider-innovation').value);
+      const bonus = parseFloat(document.getElementById('slider-bonus').value);
+
+      let overall = (theme + enjoyment + aesthetics + innovation + bonus) / 4.5;
+      overall = Math.min(5, Math.max(1, overall));
+      document.getElementById('val-overall').textContent = overall.toFixed(1);
+    }
+
+    function handleSubmit() {
+      const btn = event.target;
+      btn.textContent = 'Saved';
+      btn.style.borderColor = 'var(--sage)';
+      btn.style.color = 'var(--sage)';
+      setTimeout(() => {
+        btn.textContent = 'Submit Vote';
+      }, 2000);
+    }
+
+    // Initialize overall
+    updateOverall();
+  </script>
+</body>
+</html>

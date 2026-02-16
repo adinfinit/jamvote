@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote - Game Jam Voting</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Jam<span>Vote</span></a>
+      <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Events</a></li>
+        <li><a href="event.html">Dashboard</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">Light</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-left"></div>
+      <div class="hero-bg-right"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Game Jam<br><span class="accent">Voting</span> Platform</h1>
+      <p>Organize jams, submit games, vote fairly, and celebrate creativity. Built for jammers, by jammers.</p>
+      <div class="mt-3">
+        <a href="event.html" class="btn btn-gold"><span>Browse Events</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVE EVENTS -->
+  <section class="section-diagonal">
+    <div class="section-content">
+      <h2 class="mb-3">Active Events</h2>
+      <div class="grid-2">
+
+        <a href="event.html" class="card card-rotate-pos" style="text-decoration:none;color:inherit;">
+          <span class="badge badge-active mb-2">Voting Open</span>
+          <h3 class="card-title">Ludum Dare 57</h3>
+          <p class="card-subtitle">Theme: Pocket Universe</p>
+          <div class="card-body">
+            <p>48-hour game jam. 23 teams competing. Voting closes in 3 days.</p>
+          </div>
+          <div class="mt-2">
+            <span class="badge badge-gold">23 Teams</span>
+          </div>
+        </a>
+
+        <a href="event.html" class="card card-rotate-neg" style="text-decoration:none;color:inherit;">
+          <span class="badge badge-active mb-2">Registration Open</span>
+          <h3 class="card-title">Nordic Game Jam 2026</h3>
+          <p class="card-subtitle">Theme: To Be Announced</p>
+          <div class="card-body">
+            <p>Annual Nordic jam event. Register your team now. Starts Feb 28.</p>
+          </div>
+          <div class="mt-2">
+            <span class="badge badge-coral">12 Teams</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGONAL DIVIDER -->
+  <div class="diagonal-divider"></div>
+
+  <!-- FINISHED EVENTS -->
+  <section class="section-flat">
+    <div class="section-content">
+      <h2 class="mb-3">Past Events</h2>
+
+      <h4 class="text-violet mb-2">2025</h4>
+      <div class="grid-3 mb-4">
+
+        <a href="results.html" class="card card-rotate-neg" style="text-decoration:none;color:inherit;">
+          <span class="badge badge-finished">Finished</span>
+          <h3 class="card-title mt-1">Ludum Dare 56</h3>
+          <p class="card-subtitle">Theme: Tiny Worlds</p>
+          <p>Winner: Starfield Drifters by Team Nebula</p>
+        </a>
+
+        <a href="results.html" class="card card-rotate-pos" style="text-decoration:none;color:inherit;">
+          <span class="badge badge-finished">Finished</span>
+          <h3 class="card-title mt-1">Global Game Jam 2025</h3>
+          <p class="card-subtitle">Theme: Bubbles</p>
+          <p>Winner: Bubble Quest by Foam Factory</p>
+        </a>
+
+        <a href="results.html" class="card card-rotate-neg" style="text-decoration:none;color:inherit;">
+          <span class="badge badge-finished">Finished</span>
+          <h3 class="card-title mt-1">Mini Jam 180</h3>
+          <p class="card-subtitle">Theme: Reflection</p>
+          <p>Winner: Mirror Lake by Glass Collective</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>JamVote &mdash; Game Jam Voting Platform &mdash; <a href="index.html">Home</a> &middot; <a href="login.html">Login</a> &middot; <a href="event.html">Events</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="index.html" class="brand">JAMVOTE</a>
+    <button class="nav-hamburger" onclick="toggleNav()">=</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="event.html" class="active">EVENTS</a></li>
+      <li><a href="login.html">LOGIN</a></li>
+      <li><button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">[DAY]</button></li>
+    </ul>
+  </nav>
+
+  <!-- Sub-nav -->
+  <div class="subnav">
+    <a href="event.html" class="active">DASHBOARD</a>
+    <a href="event.html">TEAMS</a>
+    <a href="voting.html">VOTING</a>
+    <a href="results.html">RESULTS</a>
+  </div>
+
+  <div class="container">
+
+    <!-- Event Header -->
+    <div class="text-center mt-24 mb-16">
+      <h1 class="text-gold">LUDUM DARE 57</h1>
+      <p>Theme: <span class="text-orange" style="font-size:14px;">TINY WORLDS</span></p>
+      <div class="mt-8">
+        <span class="badge badge-green">VOTING OPEN</span>
+        <span class="badge badge-blue">12 TEAMS</span>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="pixel-card card-teal mb-24">
+      <div class="card-header">
+        <span class="card-title">VOTING CLOSES IN</span>
+      </div>
+      <div class="card-body">
+        <div class="countdown-row" id="countdown-voting">
+          <div class="countdown-block">
+            <span class="cd-value cd-days">12</span>
+            <span class="cd-label">DAYS</span>
+          </div>
+          <div class="countdown-block">
+            <span class="cd-value cd-hrs">08</span>
+            <span class="cd-label">HRS</span>
+          </div>
+          <div class="countdown-block">
+            <span class="cd-value cd-min">45</span>
+            <span class="cd-label">MIN</span>
+          </div>
+          <div class="countdown-block">
+            <span class="cd-value cd-sec">30</span>
+            <span class="cd-label">SEC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vote CTA -->
+    <div class="text-center mb-24">
+      <a href="voting.html" class="btn btn-primary btn-large">START VOTING</a>
+    </div>
+
+    <!-- Event Info -->
+    <div class="pixel-card mb-24">
+      <div class="card-header">
+        <span class="card-title">EVENT INFO</span>
+      </div>
+      <div class="card-body">
+        <p>Welcome to Ludum Dare 57! Create a game around the theme "Tiny Worlds" in 48 hours (Jam) or 72 hours (Compo).</p>
+        <p>All games will be rated on Theme, Enjoyment, Aesthetics, Innovation, and a Bonus category. Judge scores count for 30% of the final result.</p>
+        <p class="text-muted" style="font-size:8px;">Judge weight: 30% | Started: Feb 14, 2026 | Ends: Feb 16, 2026</p>
+      </div>
+    </div>
+
+    <!-- Teams Grid -->
+    <h2 class="text-green mb-16">> TEAMS</h2>
+
+    <div class="grid-3">
+      <!-- Team 1 -->
+      <a href="team.html" style="text-decoration:none;color:inherit;">
+        <div class="pixel-card card-purple">
+          <div class="card-header">
+            <span class="card-title">PIXEL PIONEERS</span>
+          </div>
+          <div class="card-body">
+            <p class="text-gold" style="font-size:9px;">Pocket Universe</p>
+            <p class="text-muted" style="font-size:7px;">Alice, Bob, Carol</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Team 2 -->
+      <div class="pixel-card card-blue">
+        <div class="card-header">
+          <span class="card-title">BIT BASHERS</span>
+        </div>
+        <div class="card-body">
+          <p class="text-gold" style="font-size:9px;">Micro Kingdom</p>
+          <p class="text-muted" style="font-size:7px;">Dave, Eve</p>
+        </div>
+      </div>
+
+      <!-- Team 3 -->
+      <div class="pixel-card card-red">
+        <div class="card-header">
+          <span class="card-title">RETRO REBELS</span>
+        </div>
+        <div class="card-body">
+          <p class="text-gold" style="font-size:9px;">Ant Farm</p>
+          <p class="text-muted" style="font-size:7px;">Frank, Grace, Heidi</p>
+        </div>
+      </div>
+
+      <!-- Team 4 -->
+      <div class="pixel-card card-green">
+        <div class="card-header">
+          <span class="card-title">SPRITE SQUAD</span>
+        </div>
+        <div class="card-body">
+          <p class="text-gold" style="font-size:9px;">Terrarium</p>
+          <p class="text-muted" style="font-size:7px;">Ivan, Judy</p>
+        </div>
+      </div>
+
+      <!-- Team 5 -->
+      <div class="pixel-card card-orange">
+        <div class="card-header">
+          <span class="card-title">VOXEL VIPERS</span>
+        </div>
+        <div class="card-body">
+          <p class="text-gold" style="font-size:9px;">Snow Globe</p>
+          <p class="text-muted" style="font-size:7px;">Karl, Liam, Mia</p>
+        </div>
+      </div>
+
+      <!-- Team 6 -->
+      <div class="pixel-card card-teal">
+        <div class="card-header">
+          <span class="card-title">JOYSTICK JOCKEYS</span>
+        </div>
+        <div class="card-body">
+          <p class="text-gold" style="font-size:9px;">Bonsai World</p>
+          <p class="text-muted" style="font-size:7px;">Nina, Oscar</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>JAMVOTE &copy; 2026 &mdash; <a href="index.html">HOME</a> | <a href="login.html">LOGIN</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Countdown: voting closes Feb 28, 2026
+    initCountdown('countdown-voting', '2026-02-28T23:59:59');
+  </script>
+</body>
+</html>

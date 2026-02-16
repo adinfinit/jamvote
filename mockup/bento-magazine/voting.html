@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: MicroVerse - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Log in</a></li>
+        <li><button id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- Event Subnav -->
+    <div class="subnav">
+      <a href="event.html">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+
+    <div class="bento-voting">
+
+      <!-- Game Info — Large tile -->
+      <div class="tile tile-black gv-game" style="min-height: 240px; padding: 28px;">
+        <div class="tile-flex">
+          <div>
+            <div class="tile-label" style="color: rgba(255,255,255,0.4);">Now Voting &middot; Game 1 of 3</div>
+            <div class="text-huge" style="color: #fff; margin-top: 12px;">MicroVerse</div>
+            <div class="text-body" style="color: rgba(255,255,255,0.7); margin-top: 12px;">
+              by <strong>Pixel Pioneers</strong>
+            </div>
+          </div>
+          <div>
+            <p class="text-body" style="color: rgba(255,255,255,0.6); margin-top: 16px;">
+              Explore a universe that fits in the palm of your hand. Navigate through microscopic biomes, build tiny settlements, and discover the secrets hidden in every grain of sand.
+            </p>
+            <div style="margin-top: 16px; display: flex; gap: 12px;">
+              <a href="#" style="font-size:12px; font-weight:600; padding:6px 14px; background:rgba(255,255,255,0.1); border-radius:4px; color:#fff;">Download</a>
+              <a href="#" style="font-size:12px; font-weight:600; padding:6px 14px; background:rgba(255,255,255,0.1); border-radius:4px; color:#fff;">Jam Page</a>
+            </div>
+          </div>
+          <div class="dot-pattern">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall Score — Giant number tile -->
+      <div class="tile tile-accent gv-score" style="min-height: 240px;">
+        <div class="tile-center">
+          <div class="tile-label" style="color: rgba(255,255,255,0.6);">Overall Score</div>
+          <div id="overall-score" style="font-size: clamp(64px, 12vw, 120px); font-weight: 900; line-height: 1; letter-spacing: -0.04em; margin-top: 8px;">3.56</div>
+          <div class="text-tiny" style="opacity:0.6; margin-top: 8px;">out of 5.00</div>
+          <div class="text-tiny" style="opacity:0.4; margin-top: 4px;">(Theme + Enjoy + Aesth + Innov + Bonus) / 4.5</div>
+        </div>
+      </div>
+
+      <!-- Aspect Sliders — Each in its own tile -->
+      <!-- Theme -->
+      <div class="tile tile-green gv-s1" style="min-height: 130px;">
+        <div class="tile-flex">
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <span class="slider-name">Theme</span>
+              <span class="slider-value" id="val-theme">4.0</span>
+            </div>
+            <input type="range" class="aspect-slider" min="1" max="5" step="0.5" value="4" data-display="val-theme">
+            <textarea class="comment-area" placeholder="Comment on theme fit..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enjoyment -->
+      <div class="tile tile-purple gv-s2" style="min-height: 130px;">
+        <div class="tile-flex">
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <span class="slider-name">Enjoyment</span>
+              <span class="slider-value" id="val-enjoyment">3.5</span>
+            </div>
+            <input type="range" class="aspect-slider" min="1" max="5" step="0.5" value="3.5" data-display="val-enjoyment">
+            <textarea class="comment-area" placeholder="How fun was it..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aesthetics -->
+      <div class="tile tile-red gv-s3" style="min-height: 130px;">
+        <div class="tile-flex">
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <span class="slider-name">Aesthetics</span>
+              <span class="slider-value" id="val-aesthetics">4.5</span>
+            </div>
+            <input type="range" class="aspect-slider" min="1" max="5" step="0.5" value="4.5" data-display="val-aesthetics">
+            <textarea class="comment-area" placeholder="Visuals, audio, style..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Innovation -->
+      <div class="tile tile-amber gv-s4" style="min-height: 130px;">
+        <div class="tile-flex">
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <span class="slider-name">Innovation</span>
+              <span class="slider-value" id="val-innovation">3.0</span>
+            </div>
+            <input type="range" class="aspect-slider" min="1" max="5" step="0.5" value="3" data-display="val-innovation">
+            <textarea class="comment-area" placeholder="Originality and creativity..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus -->
+      <div class="tile tile-warm gv-s5" style="min-height: 130px;">
+        <div class="tile-flex">
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <span class="slider-name">Bonus</span>
+              <span class="slider-value" id="val-bonus">1.0</span>
+            </div>
+            <input type="range" class="aspect-slider" min="0" max="2.5" step="0.5" value="1" data-display="val-bonus">
+            <div class="text-tiny" style="opacity:0.5; margin-top:4px;">0 &ndash; 2.5 range</div>
+            <textarea class="comment-area" placeholder="Bonus points reason..." rows="2" style="margin-top:8px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments — Wide tile -->
+      <div class="tile tile-white gv-comment" style="min-height: 160px;">
+        <div class="tile-flex">
+          <div class="tile-label">Your Completed Votes</div>
+          <div style="margin-top: 8px;">
+            <div style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06);">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span class="text-small" style="font-weight:700;">Ant Farm</span>
+                <span class="text-medium" style="color:var(--tile-accent);">4.11</span>
+              </div>
+              <div class="text-tiny" style="opacity:0.4;">Code Monkeys</div>
+            </div>
+            <div style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06);">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span class="text-small" style="font-weight:700;">Shrinkage</span>
+                <span class="text-medium" style="color:var(--tile-green);">3.67</span>
+              </div>
+              <div class="text-tiny" style="opacity:0.4;">Byte Squad</div>
+            </div>
+          </div>
+          <div class="text-tiny" style="opacity:0.4; margin-top:12px;">2 of 3 completed</div>
+        </div>
+      </div>
+
+      <!-- Submit Button Tile -->
+      <div class="tile tile-black gv-submit" style="min-height: 80px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; height:100%;">
+          <div>
+            <div class="text-medium" style="color:#fff;">Submit Vote</div>
+            <div class="text-tiny" style="opacity:0.4; margin-top:4px;">You can edit until voting closes</div>
+          </div>
+          <button class="btn btn-primary btn-large" onclick="alert('Vote submitted!')">Submit &rarr;</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 — JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__brand">JamVote</a>
+      <button class="nav__toggle" onclick="document.querySelector('.nav__links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="subnav__inner">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Event Header -->
+  <header class="page-header">
+    <div class="container container--narrow">
+      <h1>Ludum Dare 57</h1>
+      <div style="margin: var(--space-md) 0;">
+        <div class="rake" style="margin: var(--space-sm) 0;">
+          <div class="rake__line" style="height: 20px;"></div>
+          <div class="rake__line" style="height: 20px;"></div>
+          <div class="rake__line" style="height: 20px;"></div>
+        </div>
+      </div>
+      <p style="font-size: 1.3rem; font-weight: 300; letter-spacing: 0.06em; color: var(--text);">Tiny Worlds</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--space-xs);">The theme for this jam</p>
+    </div>
+  </header>
+
+  <!-- Countdown -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container container--narrow">
+      <div class="countdown">
+        <div class="countdown__label">Voting closes in</div>
+        <div class="countdown__time" id="countdown">
+          <div class="countdown__unit">
+            <div class="countdown__number" id="cd-days">02</div>
+            <div class="countdown__text">Days</div>
+          </div>
+          <div class="countdown__unit">
+            <div class="countdown__number" id="cd-hours">14</div>
+            <div class="countdown__text">Hours</div>
+          </div>
+          <div class="countdown__unit">
+            <div class="countdown__number" id="cd-mins">37</div>
+            <div class="countdown__text">Minutes</div>
+          </div>
+          <div class="countdown__unit">
+            <div class="countdown__number" id="cd-secs">51</div>
+            <div class="countdown__text">Seconds</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Info -->
+  <section class="section section--bordered">
+    <div class="container container--narrow">
+      <p>Create the tiniest, most detailed miniature world you can imagine. Think macro photography, snow globes, terrariums, atoms, or entire civilizations on a grain of sand.</p>
+      <p>Submissions close before voting begins. All registered jammers will receive games in their voting queue.</p>
+    </div>
+  </section>
+
+  <!-- Begin Voting CTA -->
+  <section class="section" style="text-align: center;">
+    <div class="container container--narrow">
+      <a href="voting.html" class="btn btn--sage">Begin Voting</a>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: var(--space-sm);">3 games in your queue</p>
+    </div>
+  </section>
+
+  <!-- Team Entries -->
+  <section class="section section--bordered">
+    <div class="container">
+      <div class="section-marker"></div>
+      <h2>Entries</h2>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="team.html" class="list-item__title">Pixel Pioneers</a>
+        <span class="list-item__meta">Pocket Universe</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="#" class="list-item__title">Bit Busters</a>
+        <span class="list-item__meta">Grain of Infinity</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="#" class="list-item__title">Cosmic Turtles</a>
+        <span class="list-item__meta">Terrarium Dreams</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="#" class="list-item__title">Null Pointers</a>
+        <span class="list-item__meta">Atom City</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="#" class="list-item__title">Dream Weavers</a>
+        <span class="list-item__meta">Snow Globe Society</span>
+      </div>
+
+      <div class="list-item">
+        <span class="dot"></span>
+        <a href="#" class="list-item__title">Kernel Panic</a>
+        <span class="list-item__meta">Microbe Metropolis</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="enso enso--small"></div>
+      <p>JamVote &middot; Made with stillness</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Countdown timer
+    (function() {
+      const target = new Date();
+      target.setDate(target.getDate() + 2);
+      target.setHours(target.getHours() + 14);
+      target.setMinutes(target.getMinutes() + 37);
+
+      function update() {
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now) / 1000));
+
+        const days = Math.floor(diff / 86400); diff %= 86400;
+        const hours = Math.floor(diff / 3600); diff %= 3600;
+        const mins = Math.floor(diff / 60);
+        const secs = diff % 60;
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+</body>
+</html>

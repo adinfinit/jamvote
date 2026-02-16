@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote: Pocket Universe &mdash; JamVote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span>&#9728;</span></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="event.html">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html" class="active">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html">Results</a>
+        </div>
+    </div>
+
+    <div class="container" style="max-width:700px;">
+        <div class="page-header">
+            <p class="subtitle">Now Voting On</p>
+            <h1>Pocket Universe</h1>
+            <p class="subtitle" style="margin-top:0.25rem;">by Pixel Pioneers</p>
+            <div class="deco-line" style="max-width:160px;margin:0.75rem auto 0;"></div>
+        </div>
+
+        <div style="text-align:center;margin-bottom:2rem;">
+            <a href="#" class="btn btn-outline" style="font-size:0.7rem;padding:0.5rem 1.5rem;">Download Game</a>
+        </div>
+
+        <!-- Voting Form -->
+        <form onsubmit="event.preventDefault(); alert('Vote submitted!');">
+
+            <!-- Theme -->
+            <div class="vote-aspect">
+                <div class="vote-aspect-header">
+                    <span class="vote-aspect-label">Theme</span>
+                    <span class="vote-aspect-value" id="val-theme">3.0</span>
+                </div>
+                <input type="range" class="vote-slider" id="slider-theme" min="1" max="5" step="0.5" value="3" data-display="val-theme">
+                <textarea class="vote-comment" placeholder="Comment on theme interpretation..." rows="2"></textarea>
+            </div>
+
+            <!-- Enjoyment -->
+            <div class="vote-aspect">
+                <div class="vote-aspect-header">
+                    <span class="vote-aspect-label">Enjoyment</span>
+                    <span class="vote-aspect-value" id="val-enjoyment">3.0</span>
+                </div>
+                <input type="range" class="vote-slider" id="slider-enjoyment" min="1" max="5" step="0.5" value="3" data-display="val-enjoyment">
+                <textarea class="vote-comment" placeholder="Comment on enjoyment..." rows="2"></textarea>
+            </div>
+
+            <!-- Aesthetics -->
+            <div class="vote-aspect">
+                <div class="vote-aspect-header">
+                    <span class="vote-aspect-label">Aesthetics</span>
+                    <span class="vote-aspect-value" id="val-aesthetics">3.0</span>
+                </div>
+                <input type="range" class="vote-slider" id="slider-aesthetics" min="1" max="5" step="0.5" value="3" data-display="val-aesthetics">
+                <textarea class="vote-comment" placeholder="Comment on aesthetics..." rows="2"></textarea>
+            </div>
+
+            <!-- Innovation -->
+            <div class="vote-aspect">
+                <div class="vote-aspect-header">
+                    <span class="vote-aspect-label">Innovation</span>
+                    <span class="vote-aspect-value" id="val-innovation">3.0</span>
+                </div>
+                <input type="range" class="vote-slider" id="slider-innovation" min="1" max="5" step="0.5" value="3" data-display="val-innovation">
+                <textarea class="vote-comment" placeholder="Comment on innovation..." rows="2"></textarea>
+            </div>
+
+            <!-- Bonus -->
+            <div class="vote-aspect">
+                <div class="vote-aspect-header">
+                    <span class="vote-aspect-label">Bonus</span>
+                    <span class="vote-aspect-value" id="val-bonus">0.0</span>
+                </div>
+                <input type="range" class="vote-slider" id="slider-bonus" min="0" max="2.5" step="0.5" value="0" data-display="val-bonus">
+                <textarea class="vote-comment" placeholder="Comment on bonus points..." rows="2"></textarea>
+            </div>
+
+            <div class="deco-line"></div>
+
+            <!-- Overall Score -->
+            <div class="overall-score" style="margin-bottom:2rem;">
+                <div class="label">Overall Score</div>
+                <div class="value" id="overall-value">2.67</div>
+            </div>
+
+            <button type="submit" class="btn btn-gold btn-large btn-block">Submit Vote</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="deco-line" style="max-width:200px;margin:0 auto 0.75rem;"></div>
+        JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

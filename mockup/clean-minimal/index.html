@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote - Game Jam Voting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html" class="btn btn-primary" style="color:#fff;padding:6px 16px;">Log in</a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="section-header">
+        <div>
+          <h1>Game Jams</h1>
+          <p class="section-subtitle">Vote on games, celebrate creativity</p>
+        </div>
+      </div>
+
+      <!-- Active Events -->
+      <h2 class="mb-16" style="font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--gray-400); font-weight:600;">Active Events</h2>
+
+      <div class="grid-2 mb-32">
+
+        <!-- Event Card 1 -->
+        <a href="event.html" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-16">
+            <span class="badge badge-green">Voting Open</span>
+            <span class="text-small text-muted">12 teams</span>
+          </div>
+          <h2 style="margin-bottom:8px;">Ludum Dare 57</h2>
+          <p style="font-size:0.9375rem; margin-bottom:16px;">Theme: <strong style="color:var(--amber);">Tiny Worlds</strong></p>
+          <div class="flex items-center gap-12">
+            <div class="avatar-group">
+              <span class="avatar avatar-sm">AL</span>
+              <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">MK</span>
+              <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">SR</span>
+              <span class="avatar avatar-sm">+9</span>
+            </div>
+            <span class="text-small text-muted">Voting ends in 2 days</span>
+          </div>
+        </a>
+
+        <!-- Event Card 2 -->
+        <a href="#" class="card card-clickable" style="text-decoration:none;">
+          <div class="flex items-center justify-between mb-16">
+            <span class="badge badge-blue">Registration Open</span>
+            <span class="text-small text-muted">4 teams</span>
+          </div>
+          <h2 style="margin-bottom:8px;">Mini Jam 189</h2>
+          <p style="font-size:0.9375rem; margin-bottom:16px;">Theme: <strong style="color:var(--amber);">One Button</strong></p>
+          <div class="flex items-center gap-12">
+            <div class="avatar-group">
+              <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">JD</span>
+              <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">TW</span>
+              <span class="avatar avatar-sm">KL</span>
+            </div>
+            <span class="text-small text-muted">Starts Mar 8, 2026</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Past Events -->
+      <div class="divider"></div>
+
+      <h2 class="mb-24" style="font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--gray-400); font-weight:600;">Past Events</h2>
+
+      <!-- 2025 -->
+      <h3 class="mb-16" style="color:var(--gray-500); font-weight:500;">2025</h3>
+      <div class="table-wrap mb-24">
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Theme</th>
+              <th>Teams</th>
+              <th>Winner</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ludum Dare 56</strong></td>
+              <td style="color:var(--gray-500);">Shapeshifter</td>
+              <td>18</td>
+              <td>
+                <span class="flex items-center gap-12">
+                  <span style="color:var(--amber);">&#9733;</span>
+                  <span>Morphic Dreams</span>
+                </span>
+              </td>
+              <td><a href="results.html" class="text-small">Results &#8594;</a></td>
+            </tr>
+            <tr>
+              <td><strong>Mini Jam 185</strong></td>
+              <td style="color:var(--gray-500);">Underwater</td>
+              <td>9</td>
+              <td>
+                <span class="flex items-center gap-12">
+                  <span style="color:var(--amber);">&#9733;</span>
+                  <span>Deep Blue</span>
+                </span>
+              </td>
+              <td><a href="results.html" class="text-small">Results &#8594;</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2024 -->
+      <h3 class="mb-16" style="color:var(--gray-500); font-weight:500;">2024</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Theme</th>
+              <th>Teams</th>
+              <th>Winner</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ludum Dare 55</strong></td>
+              <td style="color:var(--gray-500);">Summoning</td>
+              <td>15</td>
+              <td>
+                <span class="flex items-center gap-12">
+                  <span style="color:var(--amber);">&#9733;</span>
+                  <span>Ritual Craft</span>
+                </span>
+              </td>
+              <td><a href="results.html" class="text-small">Results &#8594;</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+</body>
+</html>

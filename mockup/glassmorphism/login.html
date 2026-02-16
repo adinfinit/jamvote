@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .login-card .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .login-card .logo span {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-card .tagline {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border-bright);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .google-btn:hover {
+      background: var(--glass-bg-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .google-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .divider-with-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .divider-with-text::before,
+    .divider-with-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--glass-border);
+    }
+
+    .divider-with-text span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .dev-form {
+      text-align: left;
+    }
+
+    .dev-form .dev-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dev-form .dev-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+    }
+
+    .login-footer {
+      margin-top: 32px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .login-footer a {
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 36px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo"><span>Jam</span>Vote</a>
+    <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Events</a></li>
+      <li><a href="event.html">Dashboard</a></li>
+      <li><a href="voting.html">Voting</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="login.html" class="active">Login</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode"></button>
+  </nav>
+
+  <div class="login-page">
+    <div class="glass login-card">
+      <div class="logo"><span>Jam</span>Vote</div>
+      <div class="tagline">Sign in to vote, submit games, and join jams.</div>
+
+      <button class="google-btn" onclick="alert('Would redirect to Google OAuth2')">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Sign in with Google
+      </button>
+
+      <div class="divider-with-text">
+        <span>Development mode</span>
+      </div>
+
+      <form class="dev-form" onsubmit="event.preventDefault(); alert('Dev login as: ' + this.username.value);">
+        <div class="dev-label"><span class="dot"></span> Dev login only</div>
+        <div class="form-group">
+          <input type="text" name="username" class="form-input" placeholder="Enter username" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-full">Sign In</button>
+      </form>
+
+      <div class="login-footer">
+        <a href="index.html">&larr; Back to events</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const toggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      const saved = localStorage.getItem('jamvote-theme');
+      if (saved === 'light') html.setAttribute('data-theme', 'light');
+      function update() {
+        const isLight = html.getAttribute('data-theme') === 'light';
+        toggle.textContent = isLight ? '\u263E' : '\u2600';
+      }
+      update();
+      toggle.addEventListener('click', function() {
+        const isLight = html.getAttribute('data-theme') === 'light';
+        if (isLight) {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('jamvote-theme', 'dark');
+        } else {
+          html.setAttribute('data-theme', 'light');
+          localStorage.setItem('jamvote-theme', 'light');
+        }
+        update();
+      });
+    })();
+  </script>
+</body>
+</html>

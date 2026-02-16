@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">JamVote</a>
+      <button class="nav-hamburger" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li>
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <span class="icon-moon">&#9790;</span>
+            <span class="icon-sun">&#9788;</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="sub-nav">
+    <div class="sub-nav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="event.html">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <div class="container" style="max-width: 750px;">
+
+    <!-- Voting Header -->
+    <div class="mb-3">
+      <p style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">Ludum Dare 57 &mdash; Vote</p>
+      <h1 class="text-gradient">Pocket Universe</h1>
+      <p style="color: var(--text-secondary);">by <a href="team.html">Pixel Pioneers</a></p>
+    </div>
+
+    <!-- Game info -->
+    <div class="info-panel mb-3">
+      <p style="color: var(--text-secondary); line-height: 1.6;">
+        Explore a universe that fits in your pocket! Navigate tiny galaxies, terraform miniature planets, and discover life forms smaller than atoms.
+        A relaxing exploration game with procedural generation and a chill synthwave soundtrack.
+      </p>
+      <div class="flex gap-2 mt-2">
+        <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Play Game</a>
+        <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Jam Page</a>
+      </div>
+    </div>
+
+    <!-- Overall Score Display -->
+    <div class="info-panel mb-3" style="text-align: center;">
+      <div style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Overall Score</div>
+      <div class="overall-score" id="overall-score">3.33</div>
+    </div>
+
+    <!-- Voting Sliders -->
+    <form>
+
+      <!-- Theme -->
+      <div class="vote-aspect">
+        <div class="vote-aspect-header">
+          <span class="vote-aspect-label">Theme</span>
+          <span class="vote-aspect-score">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="vote-slider" id="slider-theme" min="1" max="5" step="0.5" value="3">
+        </div>
+        <textarea class="vote-comment" placeholder="Comment on theme interpretation..." rows="2"></textarea>
+      </div>
+
+      <!-- Enjoyment -->
+      <div class="vote-aspect">
+        <div class="vote-aspect-header">
+          <span class="vote-aspect-label">Enjoyment</span>
+          <span class="vote-aspect-score">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="vote-slider" id="slider-enjoyment" min="1" max="5" step="0.5" value="3">
+        </div>
+        <textarea class="vote-comment" placeholder="How fun was the game?" rows="2"></textarea>
+      </div>
+
+      <!-- Aesthetics -->
+      <div class="vote-aspect">
+        <div class="vote-aspect-header">
+          <span class="vote-aspect-label">Aesthetics</span>
+          <span class="vote-aspect-score">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="vote-slider" id="slider-aesthetics" min="1" max="5" step="0.5" value="3">
+        </div>
+        <textarea class="vote-comment" placeholder="Visuals, audio, overall polish..." rows="2"></textarea>
+      </div>
+
+      <!-- Innovation -->
+      <div class="vote-aspect">
+        <div class="vote-aspect-header">
+          <span class="vote-aspect-label">Innovation</span>
+          <span class="vote-aspect-score">3.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="vote-slider" id="slider-innovation" min="1" max="5" step="0.5" value="3">
+        </div>
+        <textarea class="vote-comment" placeholder="Creative or unique ideas..." rows="2"></textarea>
+      </div>
+
+      <!-- Bonus -->
+      <div class="vote-aspect">
+        <div class="vote-aspect-header">
+          <span class="vote-aspect-label">Bonus</span>
+          <span class="vote-aspect-score">1.0</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="vote-slider" id="slider-bonus" min="0" max="2.5" step="0.5" value="1">
+        </div>
+        <textarea class="vote-comment" placeholder="Extra credit for going above and beyond..." rows="2"></textarea>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-between items-center mt-3">
+        <a href="event.html" style="color: var(--text-muted); font-size: 0.9rem;">Back to queue</a>
+        <button type="button" class="btn btn-primary" onclick="alert('Vote submitted!')">Submit Vote</button>
+      </div>
+
+    </form>
+
+    <!-- Already voted table -->
+    <div class="mt-4">
+      <h3 class="mb-2">Completed Votes</h3>
+      <table class="votes-done-table">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Team</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#">Microverse</a></td>
+            <td style="color: var(--text-secondary);">Neon Dreamers</td>
+            <td style="color: var(--neon-pink); font-weight: 600;">4.11</td>
+          </tr>
+          <tr>
+            <td><a href="#">Ant Colony</a></td>
+            <td style="color: var(--text-secondary);">Bug Fixers</td>
+            <td style="color: var(--neon-pink); font-weight: 600;">3.56</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="grid-perspective"></div>
+    <div class="footer-content">
+      <div class="synthwave-sun mb-2"></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="#">About</a>
+        <a href="#">Scoring Guide</a>
+      </div>
+      <p class="footer-text">JamVote &mdash; Game Jam Voting Platform</p>
+    </div>
+  </footer>
+
+</body>
+</html>

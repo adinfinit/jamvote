@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-dot"></span>
+        jamvote
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">events</a></li>
+        <li><a href="login.html" class="active">log in</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span class="icon-moon">&#9789;</span><span class="icon-sun">&#9788;</span></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container-narrow" style="padding-top:4rem;">
+
+      <div class="card">
+        <div class="text-center mb-3">
+          <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+            <span class="nav-brand-dot" style="width:12px; height:12px;"></span>
+          </div>
+          <h1 style="font-size:1.5rem;">welcome to jamvote</h1>
+          <p class="text-muted" style="font-size:0.9rem;">Sign in to vote on game jam entries and submit your games.</p>
+        </div>
+
+        <!-- Google Login -->
+        <div class="mb-3">
+          <button class="btn btn-google w-full" style="justify-content:center; gap:0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+              <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+              <path d="M3.964 10.706A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.038l3.007-2.332z" fill="#FBBC05"/>
+              <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.962L3.964 7.294C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
+            </svg>
+            Sign in with Google
+          </button>
+        </div>
+
+        <div class="divider"><span class="divider-dot"></span></div>
+
+        <!-- Dev Login -->
+        <div>
+          <p class="text-muted text-center mb-2" style="font-size:0.8rem;">development mode</p>
+          <form id="dev-login-form">
+            <div class="form-group">
+              <label class="form-label" for="dev-username">username</label>
+              <input type="text" id="dev-username" class="form-input" placeholder="Enter a username" required>
+            </div>
+            <button type="submit" class="btn btn-secondary w-full" style="justify-content:center;">Sign in as dev user</button>
+          </form>
+        </div>
+      </div>
+
+      <p class="text-center text-muted mt-3" style="font-size:0.8rem;">
+        By signing in, you agree to play fair and vote honestly.
+      </p>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>jamvote &middot; <a href="index.html">home</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('dev-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('dev-username').value;
+      if (username.trim()) {
+        window.location.href = 'event.html';
+      }
+    });
+  </script>
+</body>
+</html>

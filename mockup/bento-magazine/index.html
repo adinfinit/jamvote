@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote - Game Jam Voting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Log in</a></li>
+        <li><button id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="bento-index">
+
+      <!-- Brand Tile — Giant "JAMVOTE" text -->
+      <div class="tile tile-black gi-brand" style="min-height: 260px;">
+        <div class="tile-flex">
+          <div class="tile-label" style="color: rgba(255,255,255,0.4);">Game Jam Platform</div>
+          <div>
+            <div class="text-giant" style="color: #fff;">JAM<br>VOTE</div>
+          </div>
+          <div class="text-tiny" style="opacity: 0.4; margin-top: 12px;">Vote on games. Celebrate creativity.</div>
+          <div class="dot-pattern">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Event — Large Tile -->
+      <div class="tile tile-accent gi-active" style="min-height: 260px;">
+        <a href="event.html" class="tile-link">
+          <div class="tile-flex">
+            <div>
+              <div class="tile-label" style="color: rgba(255,255,255,0.7);">Active Now</div>
+              <div class="text-huge" style="margin-top: 8px;">Tiny Worlds</div>
+              <div class="text-body" style="opacity: 0.85; margin-top: 12px;">Spring Game Jam 2026</div>
+            </div>
+            <div style="margin-top: 24px;">
+              <div style="display: flex; gap: 20px; align-items: baseline;">
+                <div>
+                  <div class="text-large">12</div>
+                  <div class="text-tiny" style="opacity:0.6">Teams</div>
+                </div>
+                <div>
+                  <div class="text-large">47</div>
+                  <div class="text-tiny" style="opacity:0.6">Jammers</div>
+                </div>
+                <div>
+                  <div class="text-large">3d</div>
+                  <div class="text-tiny" style="opacity:0.6">Left</div>
+                </div>
+              </div>
+              <div style="margin-top: 16px; font-size: 13px; font-weight: 600; opacity: 0.8;">Voting is open &rarr;</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Side Tile 1 — Stats -->
+      <div class="tile tile-warm gi-side1" style="min-height: 120px;">
+        <div class="tile-center">
+          <div class="tile-value" style="color: var(--tile-accent);">156</div>
+          <div class="text-tiny" style="margin-top: 4px; opacity: 0.5;">Total Votes Cast</div>
+        </div>
+      </div>
+
+      <!-- Side Tile 2 — Quick CTA -->
+      <div class="tile tile-green gi-side2" style="min-height: 120px;">
+        <a href="voting.html" class="tile-link">
+          <div class="tile-center">
+            <div class="text-large">VOTE</div>
+            <div class="text-tiny" style="margin-top: 4px; opacity: 0.7;">Cast your ballot now</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Past Events Row 1 -->
+      <div class="tile tile-white gi-past1">
+        <a href="results.html" class="tile-link">
+          <div class="tile-flex" style="min-height: 100px;">
+            <div class="tile-label">Winter 2025</div>
+            <div>
+              <div class="text-medium">Neon Dreams</div>
+              <div class="text-tiny" style="opacity:0.5; margin-top:4px;">8 teams &middot; Results</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="tile tile-black gi-past2">
+        <div class="tile-flex" style="min-height: 100px;">
+          <div class="tile-label" style="color:rgba(255,255,255,0.4);">Fall 2025</div>
+          <div>
+            <div class="text-medium" style="color:#fff;">Broken Things</div>
+            <div class="text-tiny" style="opacity:0.4; margin-top:4px;">11 teams &middot; Results</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile tile-warm gi-past3">
+        <div class="tile-flex" style="min-height: 100px;">
+          <div class="tile-label">Summer 2025</div>
+          <div>
+            <div class="text-medium">Deep Below</div>
+            <div class="text-tiny" style="opacity:0.5; margin-top:4px;">14 teams &middot; Results</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile tile-purple gi-past4">
+        <div class="tile-flex" style="min-height: 100px;">
+          <div class="tile-label" style="color:rgba(255,255,255,0.6);">Spring 2025</div>
+          <div>
+            <div class="text-medium">Time Loop</div>
+            <div class="text-tiny" style="opacity:0.5; margin-top:4px;">9 teams &middot; Results</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Past Events Row 2 -->
+      <div class="tile tile-slate gi-past5">
+        <div class="tile-center" style="min-height: 80px;">
+          <div class="text-large" style="opacity:0.7;">2024</div>
+          <div class="text-tiny" style="opacity:0.4;">4 events</div>
+        </div>
+      </div>
+
+      <div class="tile tile-warm gi-past6">
+        <div class="tile-flex" style="min-height: 80px;">
+          <div class="tile-label">Winter 2024</div>
+          <div class="text-medium">One Button</div>
+        </div>
+      </div>
+
+      <div class="tile tile-white gi-past7">
+        <div class="tile-flex" style="min-height: 80px;">
+          <div class="tile-label">Fall 2024</div>
+          <div class="text-medium">Parallel</div>
+        </div>
+      </div>
+
+      <div class="tile tile-amber gi-past8">
+        <div class="tile-center" style="min-height: 80px;">
+          <div class="text-tiny">View all events</div>
+          <div style="font-size: 24px; margin-top: 4px;">&rarr;</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

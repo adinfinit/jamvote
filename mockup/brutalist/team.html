@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Pioneers - JamVote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">///</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">[&#9728;]</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="subnav">
+        <div class="subnav-inner">
+            <a href="event.html">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html">Results</a>
+        </div>
+    </div>
+
+    <div class="container" style="max-width: 900px;">
+        <div class="team-header">
+            <div class="label">Ludum Dare 57 &mdash; Team</div>
+            <h1>Pixel Pioneers</h1>
+            <div style="font-family: var(--font-mono); font-size: 1.2rem; margin-top: 0.5rem;">
+                Game: <strong>Pocket Universe</strong>
+            </div>
+        </div>
+
+        <!-- Game Info -->
+        <div class="team-section">
+            <h2>About the Game</h2>
+            <p style="max-width: 700px; line-height: 1.7; margin-bottom: 1rem;">
+                Pocket Universe is a tiny simulation game where you nurture an entire civilization inside a snow globe.
+                Manage resources, guide evolution, and watch your micro-world flourish or collapse. Built in 48 hours
+                with Godot Engine.
+            </p>
+        </div>
+
+        <!-- Members -->
+        <div class="team-section">
+            <h2>Members</h2>
+            <ul class="member-list">
+                <li><a href="#">Alice Chen</a></li>
+                <li><a href="#">Bob Martinez</a></li>
+                <li><a href="#">Charlie Park</a></li>
+            </ul>
+        </div>
+
+        <!-- Links -->
+        <div class="team-section">
+            <h2>Links</h2>
+            <ul class="link-list">
+                <li><a href="#">Download Game</a> &mdash; itch.io</li>
+                <li><a href="#">Jam Page</a> &mdash; Ludum Dare submission</li>
+                <li><a href="#">GitHub Repository</a> &mdash; Source code</li>
+            </ul>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Scores -->
+        <div class="team-section">
+            <h2>Scores</h2>
+            <p class="label" style="margin-bottom: 1.5rem;">Based on 17 votes</p>
+
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Theme</span>
+                    <span class="score-bar-value">4.6 / 5.0</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill accent" style="width: 92%;"></div>
+                </div>
+            </div>
+
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Enjoyment</span>
+                    <span class="score-bar-value">4.8 / 5.0</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill accent" style="width: 96%;"></div>
+                </div>
+            </div>
+
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Aesthetics</span>
+                    <span class="score-bar-value">4.3 / 5.0</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill" style="width: 86%;"></div>
+                </div>
+            </div>
+
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Innovation</span>
+                    <span class="score-bar-value">4.5 / 5.0</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <div class="score-bar-container">
+                <div class="score-bar-label">
+                    <span>Bonus</span>
+                    <span class="score-bar-value">2.0 / 2.5</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-bar-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+
+            <div class="block block-accent" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div class="label">Overall Score</div>
+                    <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-mid);">Rank #1 of 12</div>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 3rem; font-weight: 900; color: var(--accent);">4.49</span>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Comments -->
+        <div class="team-section">
+            <h2>Voter Comments</h2>
+
+            <div class="block" style="margin-bottom: 0;">
+                <div class="label" style="margin-bottom: 0.5rem;">Theme</div>
+                <p style="font-style: italic; line-height: 1.6;">"The snow globe concept perfectly captures 'Tiny Worlds'. Really creative interpretation."</p>
+            </div>
+            <div class="block" style="margin-bottom: 0;">
+                <div class="label" style="margin-bottom: 0.5rem;">Enjoyment</div>
+                <p style="font-style: italic; line-height: 1.6;">"I played this for way longer than I expected. The resource management loop is addictive."</p>
+            </div>
+            <div class="block" style="margin-bottom: 0;">
+                <div class="label" style="margin-bottom: 0.5rem;">Aesthetics</div>
+                <p style="font-style: italic; line-height: 1.6;">"Pixel art is charming and the particle effects really sell the snow globe feel."</p>
+            </div>
+            <div class="block">
+                <div class="label" style="margin-bottom: 0.5rem;">Innovation</div>
+                <p style="font-style: italic; line-height: 1.6;">"Never seen a civilization sim at this scale before. The evolution mechanic is clever."</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 JamVote</span>
+            <span>Built for game jammers</span>
+        </div>
+    </footer>
+    <script>
+    (function(){
+        var html = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+        function update() {
+            btn.textContent = html.getAttribute('data-theme') === 'dark' ? '[\u263E]' : '[\u2600]';
+        }
+        update();
+        btn.addEventListener('click', function() {
+            var isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', ''); }
+            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            update();
+        });
+    })();
+    </script>
+</body>
+</html>

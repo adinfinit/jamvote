@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-dot"></span>
+        jamvote
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">events</a></li>
+        <li><a href="login.html">egon</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span class="icon-moon">&#9789;</span><span class="icon-sun">&#9788;</span></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">dashboard</a>
+      <a href="event.html">teams</a>
+      <a href="voting.html" class="active">voting</a>
+      <a href="results.html">results</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+
+      <!-- Voting header -->
+      <div class="mb-3">
+        <p class="text-muted mb-1" style="font-size:0.85rem;">Ludum Dare 57 &middot; voting 2 of 6</p>
+        <h1>Pocket Universe</h1>
+        <p class="text-secondary">by <a href="team.html">Pixel Pioneers</a> &mdash; A tiny sandbox where you build and nurture microscopic planets.</p>
+        <div class="flex gap-2 mt-2">
+          <a href="#" class="btn btn-sm btn-secondary">Play game</a>
+          <a href="#" class="btn btn-sm btn-secondary">Jam page</a>
+        </div>
+      </div>
+
+      <div class="divider"><span class="divider-dot"></span></div>
+
+      <!-- Overall Score Display -->
+      <div class="card mb-3" style="text-align:center;">
+        <p class="text-muted" style="font-size:0.8rem; margin-bottom:0.25rem;">overall score</p>
+        <div class="score-inline">
+          <span class="score-inline-value" id="overall-score">3.00</span>
+          <span class="score-inline-max">/ 5</span>
+        </div>
+      </div>
+
+      <!-- Sliders -->
+      <form id="voting-form">
+
+        <!-- Theme -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">theme</span>
+            <span class="slider-value" id="display-theme">3.0</span>
+          </div>
+          <input type="range" id="slider-theme" class="voting-slider" data-display="display-theme"
+                 min="1" max="5" step="0.5" value="3">
+          <div class="form-group mt-1">
+            <textarea class="form-textarea" placeholder="How well does it fit the theme?" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Enjoyment -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">enjoyment</span>
+            <span class="slider-value" id="display-enjoyment">3.0</span>
+          </div>
+          <input type="range" id="slider-enjoyment" class="voting-slider" data-display="display-enjoyment"
+                 min="1" max="5" step="0.5" value="3">
+          <div class="form-group mt-1">
+            <textarea class="form-textarea" placeholder="How fun was it to play?" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Aesthetics -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">aesthetics</span>
+            <span class="slider-value" id="display-aesthetics">3.0</span>
+          </div>
+          <input type="range" id="slider-aesthetics" class="voting-slider" data-display="display-aesthetics"
+                 min="1" max="5" step="0.5" value="3">
+          <div class="form-group mt-1">
+            <textarea class="form-textarea" placeholder="How does it look and sound?" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Innovation -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">innovation</span>
+            <span class="slider-value" id="display-innovation">3.0</span>
+          </div>
+          <input type="range" id="slider-innovation" class="voting-slider" data-display="display-innovation"
+                 min="1" max="5" step="0.5" value="3">
+          <div class="form-group mt-1">
+            <textarea class="form-textarea" placeholder="How original or creative is the concept?" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Bonus -->
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">bonus</span>
+            <span class="slider-value" id="display-bonus">0.0</span>
+          </div>
+          <input type="range" id="slider-bonus" class="voting-slider" data-display="display-bonus"
+                 min="0" max="2.5" step="0.5" value="0">
+          <div class="form-group mt-1">
+            <textarea class="form-textarea" placeholder="Extra credit for going above and beyond." rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex items-center justify-between mt-3" style="flex-wrap:wrap; gap:1rem;">
+          <a href="voting.html" class="btn btn-secondary">Skip for now</a>
+          <button type="submit" class="btn btn-primary btn-lg">Submit vote</button>
+        </div>
+
+      </form>
+
+      <div class="divider"><span class="divider-dot"></span></div>
+
+      <!-- Completed votes -->
+      <section class="section">
+        <div class="section-title">your completed votes</div>
+        <ul class="vote-completed">
+          <li>
+            <span><a href="team.html">Snowglobe</a> <span class="text-muted">by Nordic Nerds</span></span>
+            <span class="badge badge-frost">3.78</span>
+          </li>
+        </ul>
+        <p class="text-muted mt-2" style="font-size:0.85rem;">3 more games waiting in your queue.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>jamvote &middot; <a href="index.html">home</a> &middot; Ludum Dare 57</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initSliders();
+
+      document.getElementById('voting-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('[type="submit"]');
+        btn.textContent = 'Submitted!';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        setTimeout(() => {
+          btn.textContent = 'Submit vote';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .team-hero {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .team-info {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .team-scores {
+      width: 340px;
+      flex-shrink: 0;
+    }
+
+    .member-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+    }
+
+    .member-card + .member-card {
+      border-top: 1px solid var(--gray-50);
+    }
+
+    .member-name {
+      font-weight: 500;
+      color: var(--gray-800);
+    }
+
+    .member-handle {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .score-row + .score-row {
+      border-top: 1px solid var(--gray-50);
+    }
+
+    .score-row-label {
+      width: 90px;
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      flex-shrink: 0;
+    }
+
+    .score-row-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-100);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .score-row-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 800ms ease;
+    }
+
+    .score-row-num {
+      width: 40px;
+      text-align: right;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--gray-800);
+    }
+
+    .overall-display {
+      text-align: center;
+      padding: 24px;
+      background: var(--blue-light);
+      border-radius: var(--radius);
+      margin-top: 16px;
+    }
+
+    .overall-display .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--blue);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .overall-display .label {
+      font-size: 0.8125rem;
+      color: var(--blue);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .link-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .comment-card {
+      padding: 16px 0;
+    }
+
+    .comment-card + .comment-card {
+      border-top: 1px solid var(--gray-50);
+    }
+
+    .comment-author {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      margin-bottom: 4px;
+    }
+
+    .comment-text {
+      font-size: 0.9375rem;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .team-scores {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">J</span>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="mb-24" style="font-size:0.8125rem;">
+        <a href="event.html" style="color:var(--gray-400);">Ludum Dare 57</a>
+        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
+        <a href="#" style="color:var(--gray-400);">Teams</a>
+        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
+        <span style="color:var(--gray-600);">Pixel Pioneers</span>
+      </div>
+
+      <!-- Team Header -->
+      <div class="team-hero mb-32">
+
+        <div class="team-info">
+          <div class="flex items-center gap-12 mb-8">
+            <span class="badge badge-amber">&#9733; 1st Place</span>
+          </div>
+
+          <h1 style="margin-bottom:4px;">Pixel Pioneers</h1>
+          <p style="font-size:1.125rem; color:var(--gray-500); margin-bottom:20px;">Pocket Universe</p>
+
+          <div class="card" style="margin-bottom:20px;">
+            <h3 class="mb-8" style="font-size:0.9375rem;">About the Game</h3>
+            <p style="font-size:0.9375rem; margin-bottom:8px;">
+              Explore a universe that fits in your pocket. Shrink down to discover entire civilizations living on grains of sand. Navigate through microscopic landscapes, solve environmental puzzles, and help tiny creatures thrive in their minuscule habitats.
+            </p>
+            <p style="font-size:0.9375rem;">
+              Built with Godot 4.3 in 72 hours. Features procedurally generated micro-worlds, a custom particle system, and an original chiptune soundtrack.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div class="link-list">
+            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#8599; Jam Page</a>
+            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#8615; Download</a>
+            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#9825; Facebook</a>
+          </div>
+
+          <!-- Members -->
+          <div class="mt-32">
+            <h3 class="mb-8">Members</h3>
+            <div class="card">
+              <div class="member-card">
+                <span class="avatar">AJ</span>
+                <div>
+                  <div class="member-name">Alex Johnson</div>
+                  <div class="member-handle">Programming, Game Design</div>
+                </div>
+              </div>
+              <div class="member-card">
+                <span class="avatar" style="background:#fef3c7;color:#d97706;">MK</span>
+                <div>
+                  <div class="member-name">Maya Kim</div>
+                  <div class="member-handle">Art, Animation</div>
+                </div>
+              </div>
+              <div class="member-card">
+                <span class="avatar" style="background:#ecfdf5;color:#059669;">SR</span>
+                <div>
+                  <div class="member-name">Sarah Rivera</div>
+                  <div class="member-handle">Music, Sound Design</div>
+                </div>
+              </div>
+              <div class="member-card">
+                <span class="avatar" style="background:#fee2e2;color:#dc2626;">LW</span>
+                <div>
+                  <div class="member-name">Liam Walsh</div>
+                  <div class="member-handle">Level Design, QA</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Score Breakdown -->
+        <div class="team-scores">
+          <div class="card">
+            <h3 class="mb-16">Score Breakdown</h3>
+
+            <div class="score-row">
+              <span class="score-row-label">Theme</span>
+              <div class="score-row-bar">
+                <div class="score-row-fill" style="width:92%; background:var(--blue);"></div>
+              </div>
+              <span class="score-row-num">4.6</span>
+            </div>
+
+            <div class="score-row">
+              <span class="score-row-label">Enjoyment</span>
+              <div class="score-row-bar">
+                <div class="score-row-fill" style="width:86%; background:var(--blue);"></div>
+              </div>
+              <span class="score-row-num">4.3</span>
+            </div>
+
+            <div class="score-row">
+              <span class="score-row-label">Aesthetics</span>
+              <div class="score-row-bar">
+                <div class="score-row-fill" style="width:90%; background:var(--blue);"></div>
+              </div>
+              <span class="score-row-num">4.5</span>
+            </div>
+
+            <div class="score-row">
+              <span class="score-row-label">Innovation</span>
+              <div class="score-row-bar">
+                <div class="score-row-fill" style="width:82%; background:var(--blue);"></div>
+              </div>
+              <span class="score-row-num">4.1</span>
+            </div>
+
+            <div class="score-row">
+              <span class="score-row-label">Bonus</span>
+              <div class="score-row-bar">
+                <div class="score-row-fill" style="width:80%; background:var(--amber);"></div>
+              </div>
+              <span class="score-row-num" style="color:var(--amber-hover);">2.0</span>
+            </div>
+
+            <div class="overall-display">
+              <div class="number">4.33</div>
+              <div class="label">Overall Score</div>
+            </div>
+
+            <!-- Vote count -->
+            <div class="mt-16 text-center" style="font-size:0.8125rem; color:var(--gray-400);">
+              Based on 9 votes (7 jammers, 2 judges)
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comments -->
+      <div class="divider"></div>
+
+      <div class="section-header">
+        <h2>Voter Comments</h2>
+        <span class="text-small text-muted">6 comments</span>
+      </div>
+
+      <div class="card">
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Theme</div>
+          <div class="comment-text">Perfect interpretation of "Tiny Worlds" - the zoom-in mechanic where you discover civilizations on sand grains is brilliant.</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Aesthetics</div>
+          <div class="comment-text">The pixel art is gorgeous. Love the color palette choices for each micro-biome. The particle effects when transitioning between scales are a nice touch.</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Enjoyment</div>
+          <div class="comment-text">Really fun to explore. I wish there were a few more levels though - I finished it in about 15 minutes and wanted more!</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Innovation</div>
+          <div class="comment-text">The scale-shifting mechanic feels fresh. Haven't seen it done quite like this in a jam game before.</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Enjoyment</div>
+          <div class="comment-text">Controls are tight and responsive. The tutorial does a good job of teaching the mechanics without being intrusive.</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-author">Anonymous voter &middot; Bonus</div>
+          <div class="comment-text">Extra credit for the original soundtrack - it really ties the whole experience together. Incredible for 72 hours of work.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+</body>
+</html>

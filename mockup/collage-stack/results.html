@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Spring Jam 2026 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">JamVote</a>
+    <div class="nav-right">
+      <button class="nav-hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790;</button>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Events</a></li>
+      <li><a href="event.html">Dashboard</a></li>
+      <li><a href="voting.html">Vote</a></li>
+      <li><a href="results.html" class="active">Results</a></li>
+      <li><a href="login.html">Alice (logout)</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+    <!-- Subnav -->
+    <div class="subnav">
+      <a href="event.html">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html" class="active">Results</a>
+    </div>
+
+    <h1 class="page-title">Results: Spring Jam 2026</h1>
+    <p class="info-text mb-2" style="font-style: italic;">Theme: "Parallel Worlds" &middot; 12 teams &middot; 28 jammers &middot; Judge weight: 30%</p>
+
+    <!-- Top 3 pinned prominently -->
+    <div class="results-podium" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; margin-bottom: 2rem;">
+      <!-- 2nd place -->
+      <div class="card result-card rank-2 rot-7" style="margin-top: 2rem;" onclick="location.href='team.html'">
+        <div class="tape tape-2 washi"></div>
+        <div class="result-header">
+          <span class="rank-badge">2</span>
+          <div>
+            <div class="result-game">Quantum Leap</div>
+            <div class="result-team">Byte Busters</div>
+          </div>
+        </div>
+        <div class="result-score" style="margin-top: 0.5rem;">4.12</div>
+        <div class="score-breakdown">
+          <span class="score-chip">Theme 4.2</span>
+          <span class="score-chip">Enjoy 4.0</span>
+          <span class="score-chip">Art 4.3</span>
+          <span class="score-chip">Innov 3.8</span>
+          <span class="score-chip">Bonus 1.5</span>
+        </div>
+      </div>
+
+      <!-- 1st place -->
+      <div class="card result-card rank-1 rot-1" onclick="location.href='team.html'">
+        <div class="pin" style="background: var(--mustard);"></div>
+        <div style="text-align: center; margin-bottom: 0.5rem;">
+          <span style="font-family: 'Georgia', serif; font-size: 0.85rem; color: var(--mustard); text-transform: uppercase; letter-spacing: 2px;">Winner</span>
+        </div>
+        <div class="result-header" style="justify-content: center;">
+          <span class="rank-badge">1</span>
+          <div>
+            <div class="result-game" style="font-size: 1.4rem;">Mirror Mirror</div>
+            <div class="result-team">Code Wizards</div>
+          </div>
+        </div>
+        <div class="result-score" style="text-align: center; font-size: 2.5rem; margin-top: 0.8rem;">4.38</div>
+        <div class="score-breakdown" style="justify-content: center;">
+          <span class="score-chip">Theme 4.5</span>
+          <span class="score-chip">Enjoy 4.3</span>
+          <span class="score-chip">Art 4.5</span>
+          <span class="score-chip">Innov 4.2</span>
+          <span class="score-chip">Bonus 2.0</span>
+        </div>
+      </div>
+
+      <!-- 3rd place -->
+      <div class="card result-card rank-3 rot-4" style="margin-top: 2rem;" onclick="location.href='team.html'">
+        <div class="tape tape-3 washi"></div>
+        <div class="result-header">
+          <span class="rank-badge">3</span>
+          <div>
+            <div class="result-game">Rift Runners</div>
+            <div class="result-team">Pixel Pirates</div>
+          </div>
+        </div>
+        <div class="result-score" style="margin-top: 0.5rem;">3.94</div>
+        <div class="score-breakdown">
+          <span class="score-chip">Theme 4.0</span>
+          <span class="score-chip">Enjoy 4.1</span>
+          <span class="score-chip">Art 3.7</span>
+          <span class="score-chip">Innov 3.9</span>
+          <span class="score-chip">Bonus 1.5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky notes with stats -->
+    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem;">
+      <div class="sticky sticky-yellow rot-3" style="min-width: 120px;">
+        <div style="font-size: 0.75rem; font-weight: bold;">Total Votes</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--tomato);">156</div>
+      </div>
+      <div class="sticky sticky-blue rot-6" style="min-width: 120px;">
+        <div style="font-size: 0.75rem; font-weight: bold;">Avg per Game</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--forest);">13</div>
+      </div>
+      <div class="sticky sticky-pink rot-2" style="min-width: 120px;">
+        <div style="font-size: 0.75rem; font-weight: bold;">Judge Votes</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--navy);">36</div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Full rankings -->
+    <h2 style="font-family: 'Georgia', serif; font-style: italic; color: var(--navy); margin-bottom: 1rem;">Overall Rankings</h2>
+
+    <div class="results-fan collage-results">
+      <!-- Already showed top 3 above, repeat in list for completeness -->
+      <div class="card result-card rank-1 rot-1" onclick="location.href='team.html'" style="padding: 1.2rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">1</span>
+          <div style="flex: 1;">
+            <div class="result-game">Mirror Mirror</div>
+            <div class="result-team">Code Wizards &mdash; Diana, Eve</div>
+          </div>
+          <div class="result-score">4.38</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-2 rot-3" onclick="location.href='team.html'" style="padding: 1.2rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">2</span>
+          <div style="flex: 1;">
+            <div class="result-game">Quantum Leap</div>
+            <div class="result-team">Byte Busters &mdash; Frank, Grace, Heidi</div>
+          </div>
+          <div class="result-score">4.12</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-3 rot-5" onclick="location.href='team.html'" style="padding: 1.2rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">3</span>
+          <div style="flex: 1;">
+            <div class="result-game">Rift Runners</div>
+            <div class="result-team">Pixel Pirates &mdash; Alice, Bob, Charlie</div>
+          </div>
+          <div class="result-score">3.94</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-2" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">4</span>
+          <div style="flex: 1;">
+            <div class="result-game">Duality</div>
+            <div class="result-team">Neon Dreamers &mdash; Ivan, Judy</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.78</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-6" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">5</span>
+          <div style="flex: 1;">
+            <div class="result-game">Fold Space</div>
+            <div class="result-team">Glitch Gang &mdash; Karl, Liam, Mia, Noah</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.65</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-8" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">6</span>
+          <div style="flex: 1;">
+            <div class="result-game">Two Sides</div>
+            <div class="result-team">Solo Sage &mdash; Oscar</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.51</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-4" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">7</span>
+          <div style="flex: 1;">
+            <div class="result-game">Phase Shift</div>
+            <div class="result-team">Ctrl+Z &mdash; Pat, Quinn</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.33</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-1" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">8</span>
+          <div style="flex: 1;">
+            <div class="result-game">Parallax</div>
+            <div class="result-team">Frame Drop &mdash; Rosa, Sam, Tina</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.20</div>
+        </div>
+      </div>
+
+      <div class="card result-card rank-other rot-7" onclick="location.href='team.html'" style="padding: 1rem 1.8rem;">
+        <div class="result-header">
+          <span class="rank-badge">9</span>
+          <div style="flex: 1;">
+            <div class="result-game">Bifrost Bridge</div>
+            <div class="result-team">Nordic Nerds &mdash; Ulf, Vera</div>
+          </div>
+          <div class="result-score" style="font-size: 1.5rem;">3.05</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Non-competing -->
+    <div class="sticky sticky-green rot-2" style="display: inline-block; margin-bottom: 1rem;">
+      <strong>Non-Competing</strong>
+    </div>
+
+    <div class="card rot-3" style="padding: 1.2rem 1.8rem; opacity: 0.7;">
+      <div class="result-header">
+        <span class="rank-badge" style="background: var(--text-muted); font-size: 0.8rem;">NC</span>
+        <div style="flex: 1;">
+          <div class="result-game">Organizer's Demo</div>
+          <div class="result-team">Admin Team &mdash; Wendy, Xavier</div>
+        </div>
+        <div class="result-score" style="font-size: 1.5rem; color: var(--text-muted);">4.10</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    JamVote &mdash; Game Jam Voting Platform &middot; Built with care
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

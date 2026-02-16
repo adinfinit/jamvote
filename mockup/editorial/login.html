@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In &mdash; JAMVOTE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="masthead-subtitle">The Definitive Record of Game Jam Excellence</div>
+        <h1 class="masthead-title"><a href="index.html">JAMVOTE</a></h1>
+        <div class="masthead-dateline">
+            <span>Sunday, February 16, 2026</span>
+            <span>Vol. VIII &middot; No. 42</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <a href="#">Jamming Guide</a>
+        <a href="login.html" class="active">Sign In</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+    </nav>
+
+    <!-- Login Panel -->
+    <div class="login-panel">
+        <hr class="thick" style="margin-top: 2rem;">
+
+        <h2 style="font-size: 1.8rem; margin-top: 1.5rem; margin-bottom: 0.2rem;">Subscribe &amp; Sign In</h2>
+        <p style="color: var(--ink-light); font-size: 0.95rem; margin-bottom: 2rem;">
+            Join the community to create teams, submit games, and vote on entries.
+        </p>
+
+        <!-- Google Sign In -->
+        <a href="#" class="btn-google" style="width: 100%; justify-content: center;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Sign in with Google
+        </a>
+
+        <!-- Divider -->
+        <div class="login-divider">
+            <span>or sign in for development</span>
+        </div>
+
+        <!-- Dev Login Form -->
+        <form id="dev-login-form">
+            <div class="form-group">
+                <label class="form-label" for="dev-username">Username</label>
+                <input type="text" id="dev-username" class="form-input" placeholder="Enter your display name" required>
+            </div>
+            <button type="submit" class="btn" style="width: 100%;">Enter as Developer</button>
+        </form>
+
+        <hr style="margin-top: 2rem;">
+
+        <p style="font-family: var(--sans); font-size: 0.72rem; color: var(--ink-muted); margin-top: 1rem; line-height: 1.6;">
+            By signing in, you agree to participate in good faith. Rate games honestly and provide constructive feedback to your fellow jammers.
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a> &middot; <a href="#">Organizing Guide</a></p>
+    </footer>
+</div>
+
+<script>
+// Theme toggle — persists in localStorage
+(function() {
+    var toggle = document.getElementById('theme-toggle');
+    var html = document.documentElement;
+    var saved = localStorage.getItem('jamvote-theme');
+    if (saved === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        toggle.textContent = '\u2600';
+    }
+    toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            toggle.textContent = '\u263E';
+            localStorage.setItem('jamvote-theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            toggle.textContent = '\u2600';
+            localStorage.setItem('jamvote-theme', 'dark');
+        }
+    });
+})();
+
+document.getElementById('dev-login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('dev-username').value;
+    alert('Logged in as "' + name + '" (mockup)');
+});
+</script>
+
+</body>
+</html>

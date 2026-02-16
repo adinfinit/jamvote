@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Ludum Dare 57 - JamVote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">///</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">[&#9728;]</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="subnav">
+        <div class="subnav-inner">
+            <a href="event.html">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html" class="active">Results</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="label">Ludum Dare 57 &mdash; Tiny Worlds</div>
+            <h1>Results</h1>
+        </div>
+
+        <!-- Overall Results -->
+        <section style="margin-bottom: 3rem;">
+            <h2>Overall Rankings</h2>
+            <div style="overflow-x: auto;">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Team / Game</th>
+                            <th style="text-align:right">Theme</th>
+                            <th style="text-align:right">Enjoy</th>
+                            <th style="text-align:right">Aesth</th>
+                            <th style="text-align:right">Innov</th>
+                            <th style="text-align:right">Bonus</th>
+                            <th style="text-align:right">Overall</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="top-1">
+                            <td class="rank">1</td>
+                            <td class="team-name-cell"><a href="team.html">Pixel Pioneers</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 400;">Pocket Universe</span></td>
+                            <td class="score-cell">4.6</td>
+                            <td class="score-cell">4.8</td>
+                            <td class="score-cell">4.3</td>
+                            <td class="score-cell">4.5</td>
+                            <td class="score-cell">2.0</td>
+                            <td class="score-cell" style="font-size: 1.1rem;">4.49</td>
+                        </tr>
+                        <tr class="top-2">
+                            <td class="rank">2</td>
+                            <td class="team-name-cell"><a href="#">Code Wizards</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 400;">Ant Farm Simulator</span></td>
+                            <td class="score-cell">4.2</td>
+                            <td class="score-cell">4.5</td>
+                            <td class="score-cell">4.0</td>
+                            <td class="score-cell">4.8</td>
+                            <td class="score-cell">1.5</td>
+                            <td class="score-cell" style="font-size: 1.1rem;">4.22</td>
+                        </tr>
+                        <tr class="top-3">
+                            <td class="rank">3</td>
+                            <td class="team-name-cell"><a href="#">Neon Dreamers</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 400;">Terrarium</span></td>
+                            <td class="score-cell">4.0</td>
+                            <td class="score-cell">4.2</td>
+                            <td class="score-cell">4.5</td>
+                            <td class="score-cell">3.8</td>
+                            <td class="score-cell">1.5</td>
+                            <td class="score-cell" style="font-size: 1.1rem;">4.00</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">4</td>
+                            <td class="team-name-cell"><a href="#">Byte Busters</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem;">Micro Cosmos</span></td>
+                            <td class="score-cell">3.8</td>
+                            <td class="score-cell">4.0</td>
+                            <td class="score-cell">3.5</td>
+                            <td class="score-cell">4.2</td>
+                            <td class="score-cell">1.0</td>
+                            <td class="score-cell">3.67</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">5</td>
+                            <td class="team-name-cell"><a href="#">Debug Squad</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem;">Lilliput Wars</span></td>
+                            <td class="score-cell">3.5</td>
+                            <td class="score-cell">3.8</td>
+                            <td class="score-cell">3.2</td>
+                            <td class="score-cell">3.5</td>
+                            <td class="score-cell">1.0</td>
+                            <td class="score-cell">3.33</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">6</td>
+                            <td class="team-name-cell"><a href="#">Sprite Club</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem;">Snow Globe</span></td>
+                            <td class="score-cell">3.0</td>
+                            <td class="score-cell">3.5</td>
+                            <td class="score-cell">3.8</td>
+                            <td class="score-cell">3.0</td>
+                            <td class="score-cell">0.5</td>
+                            <td class="score-cell">3.07</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">7</td>
+                            <td class="team-name-cell"><a href="#">Lone Wolves</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem;">Miniverse</span></td>
+                            <td class="score-cell">3.2</td>
+                            <td class="score-cell">2.8</td>
+                            <td class="score-cell">3.0</td>
+                            <td class="score-cell">3.5</td>
+                            <td class="score-cell">0.5</td>
+                            <td class="score-cell">2.89</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">8</td>
+                            <td class="team-name-cell"><a href="#">Ctrl+Z</a><br><span style="font-family: var(--font-mono); font-size: 0.8rem;">Grain of Sand</span></td>
+                            <td class="score-cell">2.5</td>
+                            <td class="score-cell">2.8</td>
+                            <td class="score-cell">3.0</td>
+                            <td class="score-cell">2.5</td>
+                            <td class="score-cell">0.5</td>
+                            <td class="score-cell">2.51</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Jammer Average -->
+        <section style="margin-bottom: 3rem;">
+            <h2>Jammer Average</h2>
+            <div style="overflow-x: auto;">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Team</th>
+                            <th style="text-align:right">Overall</th>
+                            <th style="text-align:right">Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="top-1">
+                            <td class="rank">1</td>
+                            <td class="team-name-cell"><a href="team.html">Pixel Pioneers</a></td>
+                            <td class="score-cell">4.52</td>
+                            <td class="score-cell">14</td>
+                        </tr>
+                        <tr class="top-2">
+                            <td class="rank">2</td>
+                            <td class="team-name-cell"><a href="#">Code Wizards</a></td>
+                            <td class="score-cell">4.18</td>
+                            <td class="score-cell">13</td>
+                        </tr>
+                        <tr class="top-3">
+                            <td class="rank">3</td>
+                            <td class="team-name-cell"><a href="#">Neon Dreamers</a></td>
+                            <td class="score-cell">3.95</td>
+                            <td class="score-cell">15</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">4</td>
+                            <td class="team-name-cell"><a href="#">Byte Busters</a></td>
+                            <td class="score-cell">3.60</td>
+                            <td class="score-cell">12</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">5</td>
+                            <td class="team-name-cell"><a href="#">Debug Squad</a></td>
+                            <td class="score-cell">3.28</td>
+                            <td class="score-cell">14</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Judge Average -->
+        <section>
+            <h2>Judge Average</h2>
+            <p class="label" style="margin-bottom: 1rem;">Judge weight: 30%</p>
+            <div style="overflow-x: auto;">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Team</th>
+                            <th style="text-align:right">Overall</th>
+                            <th style="text-align:right">Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="top-1">
+                            <td class="rank">1</td>
+                            <td class="team-name-cell"><a href="team.html">Pixel Pioneers</a></td>
+                            <td class="score-cell">4.40</td>
+                            <td class="score-cell">3</td>
+                        </tr>
+                        <tr class="top-2">
+                            <td class="rank">2</td>
+                            <td class="team-name-cell"><a href="#">Neon Dreamers</a></td>
+                            <td class="score-cell">4.10</td>
+                            <td class="score-cell">3</td>
+                        </tr>
+                        <tr class="top-3">
+                            <td class="rank">3</td>
+                            <td class="team-name-cell"><a href="#">Code Wizards</a></td>
+                            <td class="score-cell">4.30</td>
+                            <td class="score-cell">3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 JamVote</span>
+            <span>Built for game jammers</span>
+        </div>
+    </footer>
+    <script>
+    (function(){
+        var html = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+        function update() {
+            btn.textContent = html.getAttribute('data-theme') === 'dark' ? '[\u263E]' : '[\u2600]';
+        }
+        update();
+        btn.addEventListener('click', function() {
+            var isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', ''); }
+            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            update();
+        });
+    })();
+    </script>
+</body>
+</html>

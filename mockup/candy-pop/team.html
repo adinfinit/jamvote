@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">JamVote</a>
+    <div style="display:flex;align-items:center;gap:0.5rem">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+      <button class="nav-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="event.html">Events</a>
+      <a href="results.html">Results</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="banner" style="background:var(--gradient-purple-blue)">
+    <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:0.75rem">
+      <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff">Ludum Dare 57</span>
+      <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff">Rank #1</span>
+    </div>
+    <h1>Pixel Pioneers</h1>
+    <p style="font-size:1.35rem;font-weight:800;margin-top:0.25rem">Pocket Universe</p>
+    <p style="opacity:0.9;margin-top:0.5rem;max-width:600px;margin-left:auto;margin-right:auto">
+      A miniature sandbox where you grow galaxies from tiny seeds. Explore, nurture, and watch your pocket universe evolve!
+    </p>
+  </div>
+
+  <!-- Sub Nav -->
+  <div class="subnav">
+    <a href="event.html">Dashboard</a>
+    <a href="team.html" class="active">Teams</a>
+    <a href="voting.html">Voting</a>
+    <a href="results.html">Results</a>
+  </div>
+
+  <div class="container">
+
+    <!-- Members -->
+    <h2 class="section-title">Team Members</h2>
+    <div class="members-row mb-3">
+      <div class="member-card">
+        <div class="avatar avatar--lg avatar--pink">A</div>
+        <div>
+          <div class="member-info">Alice Chen</div>
+          <div class="member-role">Lead Developer</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <div class="avatar avatar--lg avatar--purple">B</div>
+        <div>
+          <div class="member-info">Bob Martinez</div>
+          <div class="member-role">Artist / Designer</div>
+        </div>
+      </div>
+      <div class="member-card">
+        <div class="avatar avatar--lg avatar--blue">C</div>
+        <div>
+          <div class="member-info">Carol Zhang</div>
+          <div class="member-role">Audio / Music</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <h2 class="section-title">Links</h2>
+    <div class="link-pills mb-3">
+      <a href="#" class="link-pill link-pill--pink">Play on itch.io</a>
+      <a href="#" class="link-pill link-pill--blue">Download (Win/Mac)</a>
+      <a href="#" class="link-pill link-pill--purple">Jam Page</a>
+    </div>
+
+    <!-- Overall Score -->
+    <h2 class="section-title">Overall Score</h2>
+    <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-bottom:2rem">
+      <div class="score-circle" style="background:var(--gradient-pink-purple);flex-shrink:0">
+        <div class="score-circle-number">4.67</div>
+        <div class="score-circle-label">Overall</div>
+      </div>
+      <div style="flex:1;min-width:280px">
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span style="color:var(--pink)">Theme</span><span>4.8 / 5</span></div>
+          <div class="score-bar"><div class="score-bar-fill score-bar-fill--pink" style="width:96%"></div></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span style="color:var(--blue)">Enjoyment</span><span>4.5 / 5</span></div>
+          <div class="score-bar"><div class="score-bar-fill score-bar-fill--blue" style="width:90%"></div></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span style="color:#65a30d">Aesthetics</span><span>4.7 / 5</span></div>
+          <div class="score-bar"><div class="score-bar-fill score-bar-fill--green" style="width:94%"></div></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span style="color:var(--orange)">Innovation</span><span>4.6 / 5</span></div>
+          <div class="score-bar"><div class="score-bar-fill score-bar-fill--orange" style="width:92%"></div></div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label"><span style="color:var(--purple)">Bonus</span><span>2.4 / 2.5</span></div>
+          <div class="score-bar"><div class="score-bar-fill score-bar-fill--purple" style="width:96%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voter Comments -->
+    <h2 class="section-title">Voter Comments</h2>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+
+      <div class="card" style="border-color:var(--pink)">
+        <div class="card-body" style="padding:1.25rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div class="avatar avatar--orange" style="width:36px;height:36px;font-size:0.85rem">J</div>
+            <span style="font-weight:700;font-size:0.9rem">Anonymous Voter</span>
+            <span class="pill pill--pink" style="margin-left:auto">4.8 / 5</span>
+          </div>
+          <p style="color:var(--text-muted);font-size:0.9rem">Amazing interpretation of the theme! The galaxy-growing mechanic is incredibly satisfying. The tiny planets with their own ecosystems are pure joy.</p>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:var(--blue)">
+        <div class="card-body" style="padding:1.25rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div class="avatar avatar--green" style="width:36px;height:36px;font-size:0.85rem">N</div>
+            <span style="font-weight:700;font-size:0.9rem">Anonymous Voter</span>
+            <span class="pill pill--blue" style="margin-left:auto">4.5 / 5</span>
+          </div>
+          <p style="color:var(--text-muted);font-size:0.9rem">Beautiful art style and great audio. The procedural generation creates really unique worlds each time. Could use a bit more gameplay depth but wonderful for a jam game!</p>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:var(--purple)">
+        <div class="card-body" style="padding:1.25rem">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div class="avatar avatar--purple" style="width:36px;height:36px;font-size:0.85rem">M</div>
+            <span style="font-weight:700;font-size:0.9rem">Anonymous Voter</span>
+            <span class="pill pill--purple" style="margin-left:auto">4.9 / 5</span>
+          </div>
+          <p style="color:var(--text-muted);font-size:0.9rem">One of the most polished jam entries I've seen! The concept of nurturing a universe from a seed is genuinely innovative. Sound design really ties it together.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    JamVote &mdash; Making game jams more fun since 2020
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      function applyTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '\u2600' : '\u263E';
+        localStorage.setItem('jamvote-theme', dark ? 'dark' : 'light');
+      }
+      var saved = localStorage.getItem('jamvote-theme');
+      applyTheme(saved === 'dark');
+      toggle.addEventListener('click', function() {
+        applyTheme(html.getAttribute('data-theme') !== 'dark');
+      });
+    })();
+  </script>
+
+</body>
+</html>

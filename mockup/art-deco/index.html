@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamVote &mdash; Events</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span>&#9728;</span></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Events</h1>
+            <div class="deco-line"></div>
+        </div>
+
+        <!-- Active Events -->
+        <div class="section-header">
+            <div class="deco-diamond"></div>
+            <h2>Active Now</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="event-card card-ornate">
+            <span class="event-status voting">Voting Open</span>
+            <h2><a href="event.html">Ludum Dare 57</a></h2>
+            <div class="event-meta">
+                Theme: Tiny Worlds &middot; 12 Teams &middot; Voting closes in 2d 14h
+            </div>
+        </div>
+
+        <div class="event-card card-ornate">
+            <span class="event-status active">Registration</span>
+            <h2><a href="#">Global Game Jam 2026</a></h2>
+            <div class="event-meta">
+                Theme: TBA &middot; Registration open &middot; Starts Feb 28
+            </div>
+        </div>
+
+        <!-- 2025 -->
+        <div class="year-header">2025</div>
+
+        <div class="event-card">
+            <span class="event-status finished">Finished</span>
+            <h2><a href="results.html">Ludum Dare 56</a></h2>
+            <div class="event-meta">
+                Theme: Build to Scale &middot; 10 Teams &middot; Winner: Cosmic Architects
+            </div>
+        </div>
+
+        <div class="event-card">
+            <span class="event-status finished">Finished</span>
+            <h2><a href="#">Global Game Jam 2025</a></h2>
+            <div class="event-meta">
+                Theme: Bubble &middot; 8 Teams &middot; Winner: Foam Fighters
+            </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="year-header">2024</div>
+
+        <div class="event-card">
+            <span class="event-status finished">Finished</span>
+            <h2><a href="#">Ludum Dare 55</a></h2>
+            <div class="event-meta">
+                Theme: Summoning &middot; 15 Teams &middot; Winner: Ritual Circuit
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="deco-line" style="max-width:200px;margin:0 auto 0.75rem;"></div>
+        JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

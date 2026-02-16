@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">JamVote</a>
+      <button class="nav-hamburger" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li>
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <span class="icon-moon">&#9790;</span>
+            <span class="icon-sun">&#9788;</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="sub-nav">
+    <div class="sub-nav-inner">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="event.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Event Header -->
+    <div class="mb-4">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="event-card-badge badge-active">Registration Open</span>
+      </div>
+      <h1 class="text-gradient">Ludum Dare 57</h1>
+      <p style="color: var(--neon-pink); font-size: 1.2rem; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.08em;">
+        Theme: Tiny Worlds
+      </p>
+    </div>
+
+    <!-- Countdown -->
+    <div class="info-panel mb-3">
+      <h3 class="mb-2" style="color: var(--text-secondary);">Voting Opens In</h3>
+      <div id="countdown" class="countdown"></div>
+    </div>
+
+    <!-- Event Info -->
+    <div class="info-panel mb-3">
+      <h3 class="mb-2" style="color: var(--text-secondary);">About This Event</h3>
+      <p style="color: var(--text-secondary); line-height: 1.7;">
+        Ludum Dare 57 is a 48-hour game jam where participants create games from scratch based on the theme "Tiny Worlds".
+        All entries will be voted on by fellow jammers across five categories: Theme, Enjoyment, Aesthetics, Innovation, and Bonus.
+        Judges contribute 30% of the final score.
+      </p>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="flex gap-2 flex-wrap mb-4">
+      <a href="voting.html" class="btn btn-primary">Start Voting</a>
+      <a href="#" class="btn btn-secondary">Create Team</a>
+    </div>
+
+    <!-- Teams -->
+    <div class="section-title">
+      <h2>Teams</h2>
+    </div>
+    <div class="team-grid">
+
+      <a href="team.html" class="card" style="text-decoration:none; color:inherit;">
+        <div class="team-card-header">
+          <h3>Pixel Pioneers</h3>
+          <div class="team-card-game">Pocket Universe</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Alice Chen</span>
+          <span class="member-tag">Bob Martinez</span>
+          <span class="member-tag">Carla Singh</span>
+        </div>
+      </a>
+
+      <div class="card">
+        <div class="team-card-header">
+          <h3>Neon Dreamers</h3>
+          <div class="team-card-game">Microverse</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Dan Kim</span>
+          <span class="member-tag">Eva Rossi</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="team-card-header">
+          <h3>Bug Fixers</h3>
+          <div class="team-card-game">Ant Colony</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Frank Wu</span>
+          <span class="member-tag">Grace Lee</span>
+          <span class="member-tag">Hiro Tanaka</span>
+          <span class="member-tag">Ivy Moore</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="team-card-header">
+          <h3>Cosmic Coders</h3>
+          <div class="team-card-game">Terrarium</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Jake Bell</span>
+          <span class="member-tag">Kira Odom</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="team-card-header">
+          <h3>Retro Rebels</h3>
+          <div class="team-card-game">Tiny Town Tycoon</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Leo Park</span>
+          <span class="member-tag">Mia Costa</span>
+          <span class="member-tag">Noah Sato</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="team-card-header">
+          <h3>Syntax Error</h3>
+          <div class="team-card-game">Speck of Dust</div>
+        </div>
+        <div class="team-card-members">
+          <span class="member-tag">Olga Petrov</span>
+          <span class="member-tag">Prem Agarwal</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="grid-perspective"></div>
+    <div class="footer-content">
+      <div class="synthwave-sun mb-2"></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="#">About</a>
+        <a href="#">Scoring Guide</a>
+      </div>
+      <p class="footer-text">JamVote &mdash; Game Jam Voting Platform</p>
+    </div>
+  </footer>
+
+  <script>
+    // Countdown: set target ~3 days from now
+    var target = new Date();
+    target.setDate(target.getDate() + 3);
+    target.setHours(target.getHours() + 7);
+    initCountdown('countdown', target.getTime());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludum Dare 57 - JamVote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">///</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">[&#9728;]</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="subnav">
+        <div class="subnav-inner">
+            <a href="event.html" class="active">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html">Results</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <span class="theme-tag">Theme: Tiny Worlds</span>
+            <h1>Ludum Dare 57</h1>
+            <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--gray-mid);">
+                Organized by Alice Chen &middot; 12 Teams &middot; 38 Jammers
+            </p>
+        </div>
+
+        <!-- Countdown -->
+        <section style="margin-bottom: 3rem;">
+            <div class="label">Voting Closes In</div>
+            <div class="countdown-grid" id="countdown">
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-days">02</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-hours">14</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-mins">37</span>
+                    <span class="countdown-label">Mins</span>
+                </div>
+                <div class="countdown-unit">
+                    <span class="countdown-number" id="cd-secs">52</span>
+                    <span class="countdown-label">Secs</span>
+                </div>
+            </div>
+
+            <a href="voting.html" class="btn btn-accent btn-large">Vote Now</a>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Info -->
+        <section style="margin-bottom: 3rem;">
+            <h2>About This Jam</h2>
+            <p style="max-width: 700px; line-height: 1.7;">
+                Create a game around the theme "Tiny Worlds". You have 48 hours to build something from scratch.
+                All engines and tools are allowed. Teams of up to 4 people. After the jam, all participants
+                vote on each other's games across five categories.
+            </p>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Teams Grid -->
+        <section>
+            <h2>Teams</h2>
+            <div class="team-grid">
+                <a href="team.html" class="team-card" style="text-decoration: none;">
+                    <h3>Pixel Pioneers</h3>
+                    <div class="game-name">Pocket Universe</div>
+                    <div class="members">Alice, Bob, Charlie</div>
+                </a>
+                <a href="#" class="team-card" style="text-decoration: none;">
+                    <h3>Byte Busters</h3>
+                    <div class="game-name">Micro Cosmos</div>
+                    <div class="members">Dana, Eli</div>
+                </a>
+                <a href="#" class="team-card" style="text-decoration: none;">
+                    <h3>Code Wizards</h3>
+                    <div class="game-name">Ant Farm Simulator</div>
+                    <div class="members">Fay, Greg, Hana, Ivan</div>
+                </a>
+                <a href="#" class="team-card" style="text-decoration: none;">
+                    <h3>Neon Dreamers</h3>
+                    <div class="game-name">Terrarium</div>
+                    <div class="members">Jill, Kyle</div>
+                </a>
+                <a href="#" class="team-card" style="text-decoration: none;">
+                    <h3>Debug Squad</h3>
+                    <div class="game-name">Lilliput Wars</div>
+                    <div class="members">Lena, Max, Nina</div>
+                </a>
+                <a href="#" class="team-card" style="text-decoration: none;">
+                    <h3>Sprite Club</h3>
+                    <div class="game-name">Snow Globe</div>
+                    <div class="members">Omar, Pat</div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 JamVote</span>
+            <span>Built for game jammers</span>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown timer
+        (function () {
+            // Set target to ~2 days, 14 hours, 37 minutes from now
+            const now = new Date();
+            const target = new Date(now.getTime() + (2 * 24 + 14) * 3600000 + 37 * 60000 + 52 * 1000);
+
+            function pad(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            function update() {
+                const diff = Math.max(0, target - Date.now());
+                const secs = Math.floor(diff / 1000);
+                const mins = Math.floor(secs / 60);
+                const hours = Math.floor(mins / 60);
+                const days = Math.floor(hours / 24);
+
+                document.getElementById('cd-days').textContent = pad(days);
+                document.getElementById('cd-hours').textContent = pad(hours % 24);
+                document.getElementById('cd-mins').textContent = pad(mins % 60);
+                document.getElementById('cd-secs').textContent = pad(secs % 60);
+            }
+
+            update();
+            setInterval(update, 1000);
+        })();
+    </script>
+    <script>
+    (function(){
+        var html = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+        function update() {
+            btn.textContent = html.getAttribute('data-theme') === 'dark' ? '[\u263E]' : '[\u2600]';
+        }
+        update();
+        btn.addEventListener('click', function() {
+            var isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', ''); }
+            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            update();
+        });
+    })();
+    </script>
+</body>
+</html>

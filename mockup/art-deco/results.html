@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results &mdash; Ludum Dare 57 &mdash; JamVote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span>&#9728;</span></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="event.html">Dashboard</a>
+            <a href="#">Teams</a>
+            <a href="voting.html">Voting</a>
+            <a href="#">Progress</a>
+            <a href="results.html" class="active">Results</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Ludum Dare 57</h1>
+            <p class="subtitle">Final Results</p>
+            <div class="deco-line" style="max-width:160px;margin:0.75rem auto 0;"></div>
+        </div>
+
+        <!-- Podium Highlight -->
+        <div style="text-align:center;margin-bottom:2.5rem;">
+            <div class="deco-fan"></div>
+            <div style="font-family:var(--font-heading);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:0.5rem;">Grand Champion</div>
+            <div style="font-family:var(--font-heading);font-size:1.8rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">Pixel Pioneers</div>
+            <div style="color:var(--fg-muted);font-size:0.9rem;margin-top:0.25rem;">Pocket Universe &mdash; 4.38</div>
+            <div class="deco-fan"></div>
+        </div>
+
+        <!-- Overall Results -->
+        <div class="section-header">
+            <div class="deco-diamond"></div>
+            <h2>Overall Rankings</h2>
+            <div class="line"></div>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">Rank</th>
+                        <th>Team</th>
+                        <th>Game</th>
+                        <th>Theme</th>
+                        <th>Enjoy</th>
+                        <th>Aesth</th>
+                        <th>Innov</th>
+                        <th>Bonus</th>
+                        <th>Overall</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="rank-1">
+                        <td><div class="rank-badge"><span>1</span></div></td>
+                        <td><a href="team.html">Pixel Pioneers</a></td>
+                        <td>Pocket Universe</td>
+                        <td>4.5</td>
+                        <td>4.8</td>
+                        <td>4.2</td>
+                        <td>4.0</td>
+                        <td>2.2</td>
+                        <td><strong>4.38</strong></td>
+                    </tr>
+                    <tr class="rank-2">
+                        <td><div class="rank-badge"><span>2</span></div></td>
+                        <td><a href="#">Cosmic Architects</a></td>
+                        <td>Terrarium Tactics</td>
+                        <td>4.2</td>
+                        <td>4.5</td>
+                        <td>4.0</td>
+                        <td>4.3</td>
+                        <td>1.8</td>
+                        <td><strong>4.18</strong></td>
+                    </tr>
+                    <tr class="rank-3">
+                        <td><div class="rank-badge"><span>3</span></div></td>
+                        <td><a href="#">Neon Nomads</a></td>
+                        <td>Lilliput Online</td>
+                        <td>3.8</td>
+                        <td>4.2</td>
+                        <td>4.5</td>
+                        <td>3.5</td>
+                        <td>2.0</td>
+                        <td><strong>4.00</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:var(--fg-muted);">4</td>
+                        <td><a href="#">Bit Benders</a></td>
+                        <td>Atom City</td>
+                        <td>3.5</td>
+                        <td>3.8</td>
+                        <td>4.0</td>
+                        <td>3.8</td>
+                        <td>1.5</td>
+                        <td>3.69</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:var(--fg-muted);">5</td>
+                        <td><a href="#">The Void Collective</a></td>
+                        <td>Micro Mythos</td>
+                        <td>4.0</td>
+                        <td>3.2</td>
+                        <td>3.5</td>
+                        <td>3.8</td>
+                        <td>1.2</td>
+                        <td>3.49</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:var(--fg-muted);">6</td>
+                        <td><a href="#">Starlight Studios</a></td>
+                        <td>Bonsai Worlds</td>
+                        <td>3.2</td>
+                        <td>3.5</td>
+                        <td>3.0</td>
+                        <td>3.5</td>
+                        <td>1.0</td>
+                        <td>3.16</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:var(--fg-muted);">7</td>
+                        <td><a href="#">Quantum Quokkas</a></td>
+                        <td>Grain of Sand</td>
+                        <td>3.0</td>
+                        <td>3.0</td>
+                        <td>3.2</td>
+                        <td>3.0</td>
+                        <td>0.8</td>
+                        <td>2.89</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;color:var(--fg-muted);">8</td>
+                        <td><a href="#">Solo Voyager</a></td>
+                        <td>Droplet</td>
+                        <td>2.8</td>
+                        <td>2.5</td>
+                        <td>3.0</td>
+                        <td>2.8</td>
+                        <td>0.5</td>
+                        <td>2.58</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="deco-line" style="margin:2.5rem 0;"></div>
+
+        <!-- Score Visualization -->
+        <div class="section-header">
+            <div class="deco-diamond"></div>
+            <h2>Score Overview</h2>
+            <div class="line"></div>
+        </div>
+
+        <div style="max-width:600px;">
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Pixel Pioneers</span>
+                    <span class="val">4.38</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:87.6%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Cosmic Architects</span>
+                    <span class="val">4.18</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:83.6%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Neon Nomads</span>
+                    <span class="val">4.00</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:80%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Bit Benders</span>
+                    <span class="val">3.69</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:73.8%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">The Void Collective</span>
+                    <span class="val">3.49</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:69.8%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Starlight Studios</span>
+                    <span class="val">3.16</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:63.2%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Quantum Quokkas</span>
+                    <span class="val">2.89</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:57.8%;"></div></div>
+            </div>
+            <div class="score-detail">
+                <div class="score-detail-label">
+                    <span class="name">Solo Voyager</span>
+                    <span class="val">2.58</span>
+                </div>
+                <div class="score-bar"><div class="score-bar-fill" style="width:51.6%;"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="deco-line" style="max-width:200px;margin:0 auto 0.75rem;"></div>
+        JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

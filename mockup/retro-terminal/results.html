@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | JamVote Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+<div class="crt-screen">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="brand glow">JAMVOTE</a>
+        <a href="index.html">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <span class="spacer"></span>
+        <button class="theme-toggle" onclick="toggleTheme()">[PAPER]</button>
+        <span class="user-info">jammer@ludum-dare-57 ~</span>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <div class="sub-nav">
+        <a href="event.html">Dashboard</a>
+        <a href="#">Teams</a>
+        <a href="voting.html">Voting</a>
+        <a href="#">Progress</a>
+        <a href="results.html" class="active">Results</a>
+    </div>
+
+    <!-- Command -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote results ludum-dare-57 --format table</span></div>
+    </div>
+
+    <h1 class="cursor">Results: Ludum Dare 57</h1>
+
+    <div class="output mb-2">
+        <div class="line"><span class="text-dim">&gt; Theme: Tiny Worlds | Judge Weight: 30% | 24 Teams | 312 Ballots</span></div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Overall Results -->
+    <h2>Overall Rankings</h2>
+
+    <div class="output mb-1">
+        <div class="line text-dim">┌────┬──────────────────────┬────────┬────────┬────────┬────────┬───────┬─────────┐</div>
+        <div class="line text-dim">│ <span class="text-amber">RK</span> │ <span class="text-amber">TEAM</span>                 │ <span class="text-amber">THEME</span>  │ <span class="text-amber">ENJOY</span>  │ <span class="text-amber">AESTH</span>  │ <span class="text-amber">INNOV</span>  │ <span class="text-amber">BONUS</span> │ <span class="text-amber">OVERALL</span> │</div>
+        <div class="line text-dim">├────┼──────────────────────┼────────┼────────┼────────┼────────┼───────┼─────────┤</div>
+        <div class="line"><span class="rank-gold">│ *1 │ Pixel Pioneers        │  4.52  │  4.71  │  4.38  │  4.65  │  2.10 │  4.52   │</span></div>
+        <div class="line"><span class="rank-silver">│ *2 │ Byte Club             │  4.31  │  4.45  │  4.52  │  4.12  │  1.80 │  4.27   │</span></div>
+        <div class="line"><span class="rank-bronze">│ *3 │ Glitch Wizards        │  4.18  │  4.22  │  3.95  │  4.38  │  1.90 │  4.14   │</span></div>
+        <div class="line text-dim">├────┼──────────────────────┼────────┼────────┼────────┼────────┼───────┼─────────┤</div>
+        <div class="line">│  4 │ Stack Overflow        │  3.95  │  4.05  │  3.78  │  4.12  │  1.50 │  3.87   │</div>
+        <div class="line">│  5 │ Null Pointers         │  3.82  │  3.91  │  4.05  │  3.68  │  1.40 │  3.75   │</div>
+        <div class="line">│  6 │ Debug Dragons         │  3.65  │  3.72  │  3.55  │  3.88  │  1.20 │  3.56   │</div>
+        <div class="line">│  7 │ Rogue Renders         │  3.52  │  3.48  │  3.82  │  3.25  │  1.00 │  3.35   │</div>
+        <div class="line">│  8 │ Kernel Panic          │  3.38  │  3.15  │  3.42  │  3.55  │  0.80 │  3.18   │</div>
+        <div class="line text-dim">└────┴──────────────────────┴────────┴────────┴────────┴────────┴───────┴─────────┘</div>
+    </div>
+
+    <div class="output mb-2">
+        <div class="line text-dim">&gt; * denotes top 3 placement</div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Score Bars -->
+    <h2>Score Visualization</h2>
+
+    <div class="output mb-2">
+        <div class="line"><span class="rank-gold"> 1. Pixel Pioneers    4.52 </span> <span class="score-bar amber">████████████████████████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"><span class="rank-silver"> 2. Byte Club         4.27 </span> <span class="score-bar amber">█████████████████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"><span class="rank-bronze"> 3. Glitch Wizards    4.14 </span> <span class="score-bar amber">████████████████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"> 4. Stack Overflow    3.87  <span class="score-bar">███████████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"> 5. Null Pointers     3.75  <span class="score-bar">████████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"> 6. Debug Dragons     3.56  <span class="score-bar">██████████████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"> 7. Rogue Renders     3.35  <span class="score-bar">███████████████████████████████████████████████████████████████████</span></div>
+        <div class="line"> 8. Kernel Panic      3.18  <span class="score-bar">████████████████████████████████████████████████████████████████</span></div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Jammer Average -->
+    <h2>Jammer Average Rankings</h2>
+
+    <div class="output mb-1">
+        <div class="line text-dim">┌────┬──────────────────────┬─────────┬────────┐</div>
+        <div class="line text-dim">│ <span class="text-amber">RK</span> │ <span class="text-amber">TEAM</span>                 │ <span class="text-amber">OVERALL</span> │ <span class="text-amber">VOTES</span>  │</div>
+        <div class="line text-dim">├────┼──────────────────────┼─────────┼────────┤</div>
+        <div class="line"><span class="rank-gold">│ *1 │ Pixel Pioneers        │  4.48   │   18   │</span></div>
+        <div class="line"><span class="rank-silver">│ *2 │ Glitch Wizards        │  4.22   │   16   │</span></div>
+        <div class="line"><span class="rank-bronze">│ *3 │ Byte Club             │  4.15   │   19   │</span></div>
+        <div class="line">│  4 │ Stack Overflow        │  3.92   │   17   │</div>
+        <div class="line">│  5 │ Null Pointers         │  3.78   │   15   │</div>
+        <div class="line">│  6 │ Debug Dragons         │  3.61   │   16   │</div>
+        <div class="line">│  7 │ Rogue Renders         │  3.42   │   14   │</div>
+        <div class="line">│  8 │ Kernel Panic          │  3.25   │   13   │</div>
+        <div class="line text-dim">└────┴──────────────────────┴─────────┴────────┘</div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Judge Average -->
+    <h2>Judge Average Rankings</h2>
+
+    <div class="output mb-1">
+        <div class="line text-dim">┌────┬──────────────────────┬─────────┬────────┐</div>
+        <div class="line text-dim">│ <span class="text-amber">RK</span> │ <span class="text-amber">TEAM</span>                 │ <span class="text-amber">OVERALL</span> │ <span class="text-amber">VOTES</span>  │</div>
+        <div class="line text-dim">├────┼──────────────────────┼─────────┼────────┤</div>
+        <div class="line"><span class="rank-gold">│ *1 │ Pixel Pioneers        │  4.62   │    4   │</span></div>
+        <div class="line"><span class="rank-silver">│ *2 │ Byte Club             │  4.55   │    4   │</span></div>
+        <div class="line"><span class="rank-bronze">│ *3 │ Stack Overflow        │  4.08   │    3   │</span></div>
+        <div class="line">│  4 │ Glitch Wizards        │  3.95   │    4   │</div>
+        <div class="line">│  5 │ Null Pointers         │  3.68   │    3   │</div>
+        <div class="line">│  6 │ Debug Dragons         │  3.45   │    3   │</div>
+        <div class="line">│  7 │ Kernel Panic          │  3.02   │    3   │</div>
+        <div class="line">│  8 │ Rogue Renders         │  2.98   │    2   │</div>
+        <div class="line text-dim">└────┴──────────────────────┴─────────┴────────┘</div>
+    </div>
+
+    <div class="output mt-2 text-dim">
+        <div class="line">&gt; Final Score = Jammer Avg * 0.70 + Judge Avg * 0.30</div>
+        <div class="line">&gt; Results generated at 2026-02-23 02:15 UTC</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>JamVote v2.4.1 | <a href="index.html">Home</a> | <a href="#">Scoring Guide</a></div>
+        <div class="mt-1">Connection established. Session active.</div>
+    </footer>
+
+</div>
+</body>
+</html>

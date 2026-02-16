@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="index.html" class="brand">JAMVOTE</a>
+    <button class="nav-hamburger" onclick="toggleNav()">=</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="event.html">EVENTS</a></li>
+      <li><a href="login.html">LOGIN</a></li>
+      <li><button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">[DAY]</button></li>
+    </ul>
+  </nav>
+
+  <!-- Sub-nav -->
+  <div class="subnav">
+    <a href="event.html">DASHBOARD</a>
+    <a href="event.html">TEAMS</a>
+    <a href="voting.html">VOTING</a>
+    <a href="results.html">RESULTS</a>
+  </div>
+
+  <div class="container">
+
+    <!-- Team Header -->
+    <div class="text-center mt-24 mb-16">
+      <p class="text-muted" style="font-size:7px;">LUDUM DARE 57</p>
+      <h1 class="text-gold">PIXEL PIONEERS</h1>
+      <p>Game: <span class="text-orange" style="font-size:14px;">POCKET UNIVERSE</span></p>
+      <div class="mt-8">
+        <span class="badge badge-green">COMPETING</span>
+        <span class="badge badge-gold">#1 OVERALL</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+
+      <!-- Game Info -->
+      <div class="pixel-card card-purple mb-24">
+        <div class="card-header">
+          <span class="card-title">GAME INFO</span>
+        </div>
+        <div class="card-body">
+          <p>Explore a universe that fits in your pocket! Shrink down to discover tiny civilizations living in everyday objects. A micro-scale adventure with macro fun.</p>
+          <hr class="pixel-divider">
+          <div class="form-group mb-0">
+            <label>LINKS</label>
+            <p><a href="#">Jam Page</a></p>
+            <p><a href="#">Download (itch.io)</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Members -->
+      <div class="pixel-card card-teal mb-24">
+        <div class="card-header">
+          <span class="card-title">MEMBERS</span>
+          <span style="font-size:8px;">3 / 9</span>
+        </div>
+        <div class="card-body">
+          <ul class="member-list">
+            <li><a href="#">Alice</a> <span class="text-muted" style="font-size:6px;">- Programmer</span></li>
+            <li><a href="#">Bob</a> <span class="text-muted" style="font-size:6px;">- Artist</span></li>
+            <li><a href="#">Carol</a> <span class="text-muted" style="font-size:6px;">- Sound & Design</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scores -->
+    <div class="pixel-card card-gold mb-24">
+      <div class="card-header">
+        <span class="card-title">SCORES</span>
+        <span style="font-size:14px;">4.56</span>
+      </div>
+      <div class="card-body">
+
+        <!-- Theme -->
+        <div class="mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <span style="font-size:8px;">THEME</span>
+            <span class="text-gold" style="font-size:10px;">4.8</span>
+          </div>
+          <div class="score-bar bar-green">
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+          </div>
+        </div>
+
+        <!-- Enjoyment -->
+        <div class="mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <span style="font-size:8px;">ENJOYMENT</span>
+            <span class="text-gold" style="font-size:10px;">4.5</span>
+          </div>
+          <div class="score-bar bar-red">
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment"></div>
+          </div>
+        </div>
+
+        <!-- Aesthetics -->
+        <div class="mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <span style="font-size:8px;">AESTHETICS</span>
+            <span class="text-gold" style="font-size:10px;">4.6</span>
+          </div>
+          <div class="score-bar bar-blue">
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment"></div>
+          </div>
+        </div>
+
+        <!-- Innovation -->
+        <div class="mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <span style="font-size:8px;">INNOVATION</span>
+            <span class="text-gold" style="font-size:10px;">4.3</span>
+          </div>
+          <div class="score-bar bar-teal">
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment"></div>
+          </div>
+        </div>
+
+        <!-- Bonus -->
+        <div class="mb-16">
+          <div class="flex justify-between items-center mb-8">
+            <span style="font-size:8px;">BONUS</span>
+            <span class="text-gold" style="font-size:10px;">2.3</span>
+          </div>
+          <div class="score-bar bar-orange">
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment filled"></div>
+            <div class="segment"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Voter Comments -->
+    <div class="pixel-card mb-24">
+      <div class="card-header">
+        <span class="card-title">VOTER COMMENTS</span>
+        <span style="font-size:8px;">6 VOTES</span>
+      </div>
+      <div class="card-body">
+
+        <div class="mb-16" style="border-bottom: 3px solid var(--border); padding-bottom: 12px;">
+          <p class="text-muted" style="font-size:7px;">VOTER #1</p>
+          <p style="font-size:8px;">"Amazing concept! The tiny worlds inside a teacup were so creative. Loved the art style."</p>
+        </div>
+
+        <div class="mb-16" style="border-bottom: 3px solid var(--border); padding-bottom: 12px;">
+          <p class="text-muted" style="font-size:7px;">VOTER #2</p>
+          <p style="font-size:8px;">"Great execution on the theme. Controls felt a bit floaty but the visuals more than made up for it."</p>
+        </div>
+
+        <div class="mb-16" style="border-bottom: 3px solid var(--border); padding-bottom: 12px;">
+          <p class="text-muted" style="font-size:7px;">VOTER #3</p>
+          <p style="font-size:8px;">"One of the best games this jam! The music was perfect. Would love to see this expanded."</p>
+        </div>
+
+        <div class="mb-16">
+          <p class="text-muted" style="font-size:7px;">VOTER #4</p>
+          <p style="font-size:8px;">"Solid entry. The pocket dimension mechanic was clever. Nice work!"</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-center mb-24">
+      <a href="voting.html" class="btn btn-primary">VOTE ON THIS GAME</a>
+      <a href="event.html" class="btn btn-secondary" style="margin-left:8px;">BACK TO EVENT</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>JAMVOTE &copy; 2026 &mdash; <a href="index.html">HOME</a> | <a href="login.html">LOGIN</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

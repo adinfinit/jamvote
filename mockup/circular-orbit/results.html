@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results: Spring Jam 2026 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">JamVote</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Events</a></li>
+      <li><a href="event.html">Spring Jam</a></li>
+      <li><a href="login.html">Profile</a></li>
+      <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"></button></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+    <div class="page-container">
+
+      <!-- Event Sub-Navigation -->
+      <div class="event-subnav mb-3">
+        <a href="event.html">Dashboard</a>
+        <a href="event.html">Teams</a>
+        <a href="voting.html">Vote</a>
+        <a href="results.html" class="active">Results</a>
+      </div>
+
+      <h2 class="section-title" style="margin-top:1rem;">Spring Jam 2026 Results</h2>
+
+      <!-- #1 Central Winner Circle -->
+      <div style="text-align:center;margin:2rem 0;">
+        <!-- Decorative orbit SVG behind winner -->
+        <svg width="300" height="300" viewBox="0 0 300 300" style="position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;opacity:0.3;">
+          <circle cx="150" cy="150" r="120" fill="none" stroke="var(--orbit-line)" stroke-width="1"/>
+          <circle cx="150" cy="150" r="145" fill="none" stroke="var(--orbit-line)" stroke-width="1" stroke-dasharray="4 8"/>
+        </svg>
+
+        <a href="team.html" class="circle-card circle-card--lg float-delay-1" style="width:220px;height:220px;margin:0 auto;border-color:var(--solar-orange);box-shadow:0 0 40px var(--glow-orange);">
+          <span class="rank-badge rank-1" style="margin-bottom:0.5rem;">#1</span>
+          <span class="card-title" style="font-size:1.1rem;">Pixel Pirates</span>
+          <span class="card-sub" style="font-size:0.8rem;">Dimensional Drift</span>
+          <span style="font-size:1.5rem;font-weight:800;color:var(--solar-orange);margin-top:0.25rem;">4.52</span>
+        </a>
+      </div>
+
+      <!-- #2 and #3 flanking -->
+      <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin:1rem 0 2rem;">
+        <a href="team.html" class="circle-card circle-card--md float-delay-2" style="border-color:var(--moon-silver);">
+          <span class="rank-badge rank-2" style="margin-bottom:0.25rem;">#2</span>
+          <span class="card-title">Code Wizards</span>
+          <span class="card-sub">Mirror Realms</span>
+          <span style="font-size:1.2rem;font-weight:800;color:var(--moon-silver);margin-top:0.15rem;">4.31</span>
+        </a>
+        <a href="team.html" class="circle-card circle-card--md float-delay-3" style="border-color:#92400e;">
+          <span class="rank-badge rank-3" style="margin-bottom:0.25rem;">#3</span>
+          <span class="card-title">Dream Team</span>
+          <span class="card-sub">Echoes</span>
+          <span style="font-size:1.2rem;font-weight:800;color:#fbbf24;margin-top:0.15rem;">4.18</span>
+        </a>
+      </div>
+
+      <!-- Winner Score Breakdown: Nested Ring Charts -->
+      <h2 class="section-title">Score Breakdown: Pixel Pirates</h2>
+      <div class="score-rings">
+        <div data-ring data-value="4.5" data-max="5" data-size="90" data-stroke="7" data-color="#ec4899" data-label="Theme"></div>
+        <div data-ring data-value="4.8" data-max="5" data-size="90" data-stroke="7" data-color="#60a5fa" data-label="Enjoy"></div>
+        <div data-ring data-value="4.2" data-max="5" data-size="90" data-stroke="7" data-color="#6d28d9" data-label="Aesthet."></div>
+        <div data-ring data-value="4.6" data-max="5" data-size="90" data-stroke="7" data-color="#f97316" data-label="Innov."></div>
+        <div data-ring data-value="2.0" data-max="2.5" data-size="90" data-stroke="7" data-color="#cbd5e1" data-label="Bonus"></div>
+      </div>
+
+      <!-- Full Rankings: Overall -->
+      <h2 class="section-title mt-4">Overall Rankings</h2>
+      <div class="linear-list">
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-1">#1</span></span>
+          <div class="lc-info">
+            <h3>Pixel Pirates</h3>
+            <p>Dimensional Drift &mdash; 8 votes</p>
+          </div>
+          <span class="lc-score">4.52</span>
+        </a>
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-2">#2</span></span>
+          <div class="lc-info">
+            <h3>Code Wizards</h3>
+            <p>Mirror Realms &mdash; 9 votes</p>
+          </div>
+          <span class="lc-score">4.31</span>
+        </a>
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-3">#3</span></span>
+          <div class="lc-info">
+            <h3>Dream Team</h3>
+            <p>Echoes &mdash; 7 votes</p>
+          </div>
+          <span class="lc-score">4.18</span>
+        </a>
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge" style="background:var(--card-bg);color:var(--text-muted);border:1px solid var(--card-border);">#4</span></span>
+          <div class="lc-info">
+            <h3>Nova Squad</h3>
+            <p>Dual Reality &mdash; 8 votes</p>
+          </div>
+          <span class="lc-score">3.94</span>
+        </a>
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge" style="background:var(--card-bg);color:var(--text-muted);border:1px solid var(--card-border);">#5</span></span>
+          <div class="lc-info">
+            <h3>Byte Busters</h3>
+            <p>Split World &mdash; 7 votes</p>
+          </div>
+          <span class="lc-score">3.76</span>
+        </a>
+        <a href="team.html" class="linear-card">
+          <span class="lc-rank"><span class="rank-badge" style="background:var(--card-bg);color:var(--text-muted);border:1px solid var(--card-border);">#6</span></span>
+          <div class="lc-info">
+            <h3>Indie Sparks</h3>
+            <p>Phase Shift &mdash; 6 votes</p>
+          </div>
+          <span class="lc-score">3.51</span>
+        </a>
+      </div>
+
+      <!-- Jammer Average -->
+      <h2 class="section-title mt-4">Jammer Average</h2>
+      <div class="linear-list">
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-1">#1</span></span>
+          <div class="lc-info"><h3>Pixel Pirates</h3></div>
+          <span class="lc-score">4.48</span>
+        </div>
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-2">#2</span></span>
+          <div class="lc-info"><h3>Code Wizards</h3></div>
+          <span class="lc-score">4.25</span>
+        </div>
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-3">#3</span></span>
+          <div class="lc-info"><h3>Dream Team</h3></div>
+          <span class="lc-score">4.12</span>
+        </div>
+      </div>
+
+      <!-- Judge Average -->
+      <h2 class="section-title mt-4">Judge Average</h2>
+      <div class="linear-list mb-3">
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-1">#1</span></span>
+          <div class="lc-info"><h3>Pixel Pirates</h3></div>
+          <span class="lc-score">4.61</span>
+        </div>
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-2">#2</span></span>
+          <div class="lc-info"><h3>Dream Team</h3></div>
+          <span class="lc-score">4.33</span>
+        </div>
+        <div class="linear-card">
+          <span class="lc-rank"><span class="rank-badge rank-3">#3</span></span>
+          <div class="lc-info"><h3>Code Wizards</h3></div>
+          <span class="lc-score">4.30</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    JamVote &mdash; Circular Orbit Theme &mdash; 2026
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

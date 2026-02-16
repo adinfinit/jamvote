@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote // Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">JAM<span>VOTE</span></a>
+      <button class="nav-hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button class="theme-toggle">[SYS:LITE]</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="page-content">
+    <div class="container">
+
+      <!-- Active Events -->
+      <div class="section-title">
+        <h2>Active Events</h2>
+      </div>
+
+      <div class="grid-2 mb-3">
+        <!-- Event 1 -->
+        <a href="event.html" class="card event-card card-accent-yellow" style="text-decoration:none;color:inherit;">
+          <div class="flex-between mb-1">
+            <span class="badge badge-solid-yellow">Live</span>
+            <span class="badge badge-cyan">Voting Open</span>
+          </div>
+          <h3 class="event-name">Ludum Dare 57</h3>
+          <div class="event-theme">// Theme: "Tiny Worlds"</div>
+          <div class="event-meta">
+            <span>12 teams</span>
+            <span>48 jammers</span>
+            <span>Ends Feb 22, 2026</span>
+          </div>
+        </a>
+
+        <!-- Event 2 -->
+        <div class="card event-card card-accent-cyan">
+          <div class="flex-between mb-1">
+            <span class="badge badge-cyan">Registration</span>
+          </div>
+          <h3 class="event-name">Global Game Jam 2026</h3>
+          <div class="event-theme">// Theme: TBA</div>
+          <div class="event-meta">
+            <span>5 teams</span>
+            <span>22 jammers</span>
+            <span>Starts Mar 5, 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finished Events: 2025 -->
+      <div class="section-title mt-4">
+        <h2>2025</h2>
+      </div>
+
+      <div class="grid-3 mb-3">
+        <div class="card card-sm event-card">
+          <h3 class="event-name" style="font-size:0.95rem;">Ludum Dare 56</h3>
+          <div class="event-theme">// "Shapeshifter"</div>
+          <div class="event-meta">
+            <span>18 teams</span>
+            <span class="badge badge-magenta" style="font-size:0.6rem;">Results</span>
+          </div>
+        </div>
+        <div class="card card-sm event-card">
+          <h3 class="event-name" style="font-size:0.95rem;">Nordic Game Jam 2025</h3>
+          <div class="event-theme">// "Echoes"</div>
+          <div class="event-meta">
+            <span>14 teams</span>
+            <span class="badge badge-magenta" style="font-size:0.6rem;">Results</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finished Events: 2024 -->
+      <div class="section-title mt-4">
+        <h2>2024</h2>
+      </div>
+
+      <div class="grid-3 mb-3">
+        <div class="card card-sm event-card">
+          <h3 class="event-name" style="font-size:0.95rem;">Ludum Dare 55</h3>
+          <div class="event-theme">// "Summoning"</div>
+          <div class="event-meta">
+            <span>21 teams</span>
+            <span class="badge badge-magenta" style="font-size:0.6rem;">Results</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&lt;JamVote v2.0&gt; // Built for game jammers // <a href="#">GitHub</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🎮</span> JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html" class="btn-login">Log In</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Event sub-nav -->
+    <div class="subnav">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+
+    <!-- Theme Banner -->
+    <div class="theme-banner">
+      <span class="deco-left">🌍</span>
+      <span class="deco-right">🔬</span>
+      <div class="theme-label">Theme</div>
+      <div class="theme-text">Tiny Worlds</div>
+    </div>
+
+    <!-- Event Title -->
+    <div class="text-center mb-24">
+      <h1 class="page-title">Ludum Dare 57 <span style="font-size: 1.4rem;">🎮</span></h1>
+      <p class="page-subtitle">April 11 &ndash; 14, 2026 &middot; 24 teams registered</p>
+    </div>
+
+    <!-- Countdown Timers -->
+    <div class="countdown-row">
+      <div class="countdown-item">
+        <div class="cd-label">Jam Starts</div>
+        <div class="cd-value" id="cd-start">--:--:--</div>
+        <div class="cd-unit" id="cd-start-unit">loading...</div>
+      </div>
+      <div class="countdown-item">
+        <div class="cd-label">Jam Ends</div>
+        <div class="cd-value" id="cd-end">--:--:--</div>
+        <div class="cd-unit" id="cd-end-unit">loading...</div>
+      </div>
+      <div class="countdown-item">
+        <div class="cd-label">Voting Opens</div>
+        <div class="cd-value" id="cd-voteopen">--:--:--</div>
+        <div class="cd-unit" id="cd-voteopen-unit">loading...</div>
+      </div>
+      <div class="countdown-item">
+        <div class="cd-label">Voting Closes</div>
+        <div class="cd-value" id="cd-voteclose">--:--:--</div>
+        <div class="cd-unit" id="cd-voteclose-unit">loading...</div>
+      </div>
+    </div>
+
+    <!-- Start Voting Button -->
+    <div class="text-center" style="margin: 36px 0;">
+      <a href="voting.html" class="btn btn-coral btn-lg float-anim">
+        🗳️ Start Voting!
+      </a>
+    </div>
+
+    <!-- Teams -->
+    <div class="section">
+      <h2 class="section-title"><span class="icon">👥</span> Registered Teams</h2>
+      <div class="grid-3">
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Pixel Pioneers</div>
+          <div class="game-name">🎮 Pocket Universe</div>
+          <div class="members">
+            <span class="avatar" style="background: var(--coral);">AP</span>
+            <span class="avatar" style="background: var(--teal);">MK</span>
+            <span class="avatar" style="background: var(--purple);">JS</span>
+          </div>
+        </a>
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Code Wizards</div>
+          <div class="game-name">🧙 Spellcraft Micro</div>
+          <div class="members">
+            <span class="avatar" style="background: var(--golden);">DL</span>
+            <span class="avatar" style="background: #60a5fa;">RN</span>
+          </div>
+        </a>
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Tiny Titans</div>
+          <div class="game-name">🐜 Ant Kingdom</div>
+          <div class="members">
+            <span class="avatar" style="background: #f472b6;">EF</span>
+            <span class="avatar" style="background: var(--teal);">GH</span>
+            <span class="avatar" style="background: var(--coral);">IJ</span>
+            <span class="avatar" style="background: var(--golden);">KL</span>
+          </div>
+        </a>
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Neon Dreams</div>
+          <div class="game-name">💫 Miniverse</div>
+          <div class="members">
+            <span class="avatar" style="background: var(--purple);">ST</span>
+            <span class="avatar" style="background: var(--coral);">UV</span>
+          </div>
+        </a>
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Bug Hunters</div>
+          <div class="game-name">🐛 Microbe Quest</div>
+          <div class="members">
+            <span class="avatar" style="background: var(--teal);">AB</span>
+            <span class="avatar" style="background: #60a5fa;">CD</span>
+            <span class="avatar" style="background: var(--golden);">EF</span>
+          </div>
+        </a>
+
+        <a href="team.html" class="card team-card" style="text-decoration:none;color:inherit;">
+          <div class="team-name">Retro Rockets</div>
+          <div class="game-name">🚀 Nano Cosmos</div>
+          <div class="members">
+            <span class="avatar" style="background: #f472b6;">WX</span>
+            <span class="avatar" style="background: var(--purple);">YZ</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Event Info -->
+    <div class="section">
+      <div class="card-flat" style="background: var(--golden-light); border-color: var(--golden);">
+        <h3 style="font-weight: 700; margin-bottom: 8px;">📋 Event Info</h3>
+        <p style="color: var(--text-light); line-height: 1.7;">
+          Create a game in 72 hours! This jam uses the Compo rules: you may work solo or in a team.
+          All assets must be created during the jam period. Voting is open to all registered jammers.
+          Judge scores count for 30% of the final result. Have fun and make something tiny but wonderful!
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🎮 JamVote &mdash; Made with love for game jammers everywhere</p>
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      var stored = localStorage.getItem('jamvote-theme');
+      if (stored === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      }
+      function updateIcon() {
+        toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+      }
+      updateIcon();
+      toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('jamvote-theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('jamvote-theme', 'dark');
+        }
+        updateIcon();
+      });
+    })();
+  </script>
+
+  <script>
+    // Countdown timers
+    const targets = {
+      'cd-start':     new Date('2026-04-11T18:00:00Z'),
+      'cd-end':       new Date('2026-04-14T18:00:00Z'),
+      'cd-voteopen':  new Date('2026-04-14T20:00:00Z'),
+      'cd-voteclose': new Date('2026-04-18T20:00:00Z'),
+    };
+
+    function updateCountdowns() {
+      const now = new Date();
+      for (const [id, target] of Object.entries(targets)) {
+        const diff = target - now;
+        const el = document.getElementById(id);
+        const unitEl = document.getElementById(id + '-unit');
+        if (diff <= 0) {
+          el.textContent = 'Now!';
+          unitEl.textContent = 'started';
+          el.style.color = 'var(--teal)';
+          continue;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hrs  = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        if (days > 0) {
+          el.textContent = days + 'd ' + hrs + 'h';
+          unitEl.textContent = days + ' days, ' + hrs + ' hours';
+        } else {
+          el.textContent = String(hrs).padStart(2,'0') + ':' + String(mins).padStart(2,'0') + ':' + String(secs).padStart(2,'0');
+          unitEl.textContent = 'hours : minutes : seconds';
+        }
+      }
+    }
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+  </script>
+
+</body>
+</html>

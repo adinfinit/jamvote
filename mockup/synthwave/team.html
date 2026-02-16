@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">JamVote</a>
+      <button class="nav-hamburger" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li>
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <span class="icon-moon">&#9790;</span>
+            <span class="icon-sun">&#9788;</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="sub-nav">
+    <div class="sub-nav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="event.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Team Header -->
+    <div class="team-header mb-3">
+      <p style="opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">Ludum Dare 57</p>
+      <h1>Pixel Pioneers</h1>
+      <div class="team-game-name">Pocket Universe</div>
+    </div>
+
+    <!-- Members & Links -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+      <div class="info-panel">
+        <h3 class="mb-2" style="color: var(--text-secondary);">Members</h3>
+        <div class="flex flex-wrap gap-1">
+          <span class="member-tag">Alice Chen</span>
+          <span class="member-tag">Bob Martinez</span>
+          <span class="member-tag">Carla Singh</span>
+        </div>
+      </div>
+      <div class="info-panel">
+        <h3 class="mb-2" style="color: var(--text-secondary);">Links</h3>
+        <div class="flex flex-wrap gap-2">
+          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Play Game</a>
+          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Jam Page</a>
+          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Description -->
+    <div class="info-panel mb-3">
+      <h3 class="mb-2" style="color: var(--text-secondary);">About the Game</h3>
+      <p style="color: var(--text-secondary); line-height: 1.7;">
+        Explore a universe that fits in your pocket! Navigate tiny galaxies, terraform miniature planets, and discover life forms smaller than atoms.
+        A relaxing exploration game with procedural generation and a chill synthwave soundtrack. Built in 48 hours with Godot Engine.
+      </p>
+    </div>
+
+    <!-- Scores -->
+    <div class="section-title">
+      <h2>Scores</h2>
+    </div>
+
+    <div class="info-panel mb-3" style="text-align: center;">
+      <div style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Overall Score</div>
+      <div class="overall-score">4.52</div>
+      <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Rank #1 of 8</div>
+    </div>
+
+    <div class="team-scores mb-3">
+      <div class="info-panel">
+        <div class="score-row mb-2">
+          <span class="score-row-label">Theme</span>
+          <div class="score-row-bar">
+            <div class="score-bar-bg" style="max-width:none;">
+              <div class="score-bar-fill" style="width:86%"></div>
+            </div>
+          </div>
+          <span class="score-value">4.3</span>
+        </div>
+        <div class="score-row mb-2">
+          <span class="score-row-label">Enjoyment</span>
+          <div class="score-row-bar">
+            <div class="score-bar-bg" style="max-width:none;">
+              <div class="score-bar-fill" style="width:94%"></div>
+            </div>
+          </div>
+          <span class="score-value">4.7</span>
+        </div>
+        <div class="score-row mb-2">
+          <span class="score-row-label">Aesthetics</span>
+          <div class="score-row-bar">
+            <div class="score-bar-bg" style="max-width:none;">
+              <div class="score-bar-fill" style="width:90%"></div>
+            </div>
+          </div>
+          <span class="score-value">4.5</span>
+        </div>
+        <div class="score-row mb-2">
+          <span class="score-row-label">Innovation</span>
+          <div class="score-row-bar">
+            <div class="score-bar-bg" style="max-width:none;">
+              <div class="score-bar-fill" style="width:96%"></div>
+            </div>
+          </div>
+          <span class="score-value">4.8</span>
+        </div>
+        <div class="score-row">
+          <span class="score-row-label">Bonus</span>
+          <div class="score-row-bar">
+            <div class="score-bar-bg" style="max-width:none;">
+              <div class="score-bar-fill" style="width:84%"></div>
+            </div>
+          </div>
+          <span class="score-value">2.1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voter Comments -->
+    <div class="section-title">
+      <h2>Comments</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+      <div class="card">
+        <div class="flex justify-between items-center mb-1">
+          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
+          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.78</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+          <strong style="color: var(--text-primary);">Theme:</strong> Perfect interpretation! The tiny worlds concept is everywhere in this game.
+        </p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+          <strong style="color: var(--text-primary);">Enjoyment:</strong> I played this for way longer than I expected. The exploration loop is addictive.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="flex justify-between items-center mb-1">
+          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
+          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.33</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+          <strong style="color: var(--text-primary);">Aesthetics:</strong> The synthwave art style is gorgeous. Great shader work on the planets.
+        </p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+          <strong style="color: var(--text-primary);">Innovation:</strong> Procedural generation at this scale in a jam game is impressive.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="flex justify-between items-center mb-1">
+          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
+          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.00</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+          <strong style="color: var(--text-primary);">Enjoyment:</strong> Fun concept, controls felt a bit floaty though. Would love to see this expanded!
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="grid-perspective"></div>
+    <div class="footer-content">
+      <div class="synthwave-sun mb-2"></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="#">About</a>
+        <a href="#">Scoring Guide</a>
+      </div>
+      <p class="footer-text">JamVote &mdash; Game Jam Voting Platform</p>
+    </div>
+  </footer>
+
+</body>
+</html>

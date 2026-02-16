@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JamVote - Game Jam Voting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🎮</span> JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html" class="btn-login">Log In</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="text-center" style="margin-bottom: 48px;">
+      <h1 class="page-title" style="font-size: 2.6rem;">Welcome to JamVote <span style="font-size: 2rem;">🎉</span></h1>
+      <p class="page-subtitle">Where game jam magic gets the votes it deserves</p>
+    </div>
+
+    <!-- Active Events -->
+    <div class="section">
+      <h2 class="section-title"><span class="icon">🔥</span> Active Events</h2>
+      <div class="grid-2">
+
+        <a href="event.html" class="card event-card event-card-active" style="text-decoration:none; color:inherit;">
+          <span class="deco">🌍</span>
+          <span class="event-badge badge-active">Registration Open</span>
+          <div class="event-name">Ludum Dare 57</div>
+          <div class="event-theme">"Tiny Worlds"</div>
+          <div class="event-meta">
+            <span>📅 Apr 11 - 14, 2026</span>
+            <span>👥 24 teams</span>
+          </div>
+        </a>
+
+        <a href="event.html" class="card event-card event-card-active" style="text-decoration:none; color:inherit;">
+          <span class="deco">🕹️</span>
+          <span class="event-badge badge-voting">Voting Open</span>
+          <div class="event-name">Global Game Jam 2026</div>
+          <div class="event-theme">"Bubble"</div>
+          <div class="event-meta">
+            <span>📅 Jan 23 - 25, 2026</span>
+            <span>👥 18 teams</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Finished Events -->
+    <div class="section">
+      <h2 class="section-title"><span class="icon">🏆</span> Finished Events</h2>
+
+      <!-- 2025 -->
+      <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 14px; margin-top: 8px;">2025</h3>
+      <div class="grid-3" style="margin-bottom: 28px;">
+
+        <a href="results.html" class="card event-card" style="text-decoration:none; color:inherit;">
+          <span class="deco">🏆</span>
+          <span class="event-badge badge-finished">Results</span>
+          <div class="event-name">Ludum Dare 56</div>
+          <div class="event-theme">"Shapeshifter"</div>
+          <div class="event-meta">
+            <span>📅 Oct 4 - 7, 2025</span>
+            <span>🥇 Team Morpheus</span>
+          </div>
+        </a>
+
+        <a href="results.html" class="card event-card" style="text-decoration:none; color:inherit;">
+          <span class="deco">🎵</span>
+          <span class="event-badge badge-finished">Results</span>
+          <div class="event-name">Autumn Jam 2025</div>
+          <div class="event-theme">"Echo"</div>
+          <div class="event-meta">
+            <span>📅 Sep 12 - 14, 2025</span>
+            <span>🥇 Sound Surfers</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- 2024 -->
+      <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 14px;">2024</h3>
+      <div class="grid-3">
+
+        <a href="results.html" class="card event-card" style="text-decoration:none; color:inherit;">
+          <span class="deco">⚡</span>
+          <span class="event-badge badge-finished">Results</span>
+          <div class="event-name">Ludum Dare 55</div>
+          <div class="event-theme">"Summoning"</div>
+          <div class="event-meta">
+            <span>📅 Apr 12 - 15, 2024</span>
+            <span>🥇 Ritual Coders</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🎮 JamVote &mdash; Made with love for game jammers everywhere</p>
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      var stored = localStorage.getItem('jamvote-theme');
+      if (stored === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      }
+      function updateIcon() {
+        toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+      }
+      updateIcon();
+      toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          localStorage.setItem('jamvote-theme', 'light');
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          localStorage.setItem('jamvote-theme', 'dark');
+        }
+        updateIcon();
+      });
+    })();
+  </script>
+
+</body>
+</html>

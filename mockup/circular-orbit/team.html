@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pirates - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">JamVote</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Events</a></li>
+      <li><a href="event.html">Spring Jam</a></li>
+      <li><a href="login.html">Profile</a></li>
+      <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"></button></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+    <div class="page-container">
+
+      <!-- Event Sub-Navigation -->
+      <div class="event-subnav mb-3">
+        <a href="event.html">Dashboard</a>
+        <a href="event.html">Teams</a>
+        <a href="voting.html">Vote</a>
+        <a href="results.html">Results</a>
+      </div>
+
+      <!-- Central: Team Name -->
+      <div class="central-circle central-circle--large" style="margin-bottom:1rem;">
+        <h1 style="font-size:1.3rem;">Pixel Pirates</h1>
+        <span class="subtitle">Dimensional Drift</span>
+      </div>
+
+      <!-- Overall Score Ring -->
+      <div class="text-center mb-2">
+        <div data-ring data-value="4.52" data-max="5" data-size="130" data-stroke="10" data-color="#f97316" data-label="Overall"></div>
+      </div>
+
+      <!-- Game Links -->
+      <div class="text-center mb-3" style="display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap;">
+        <a href="#" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1.25rem;">Play on Jam Page</a>
+        <a href="#" class="btn btn-outline" style="font-size:0.8rem;padding:0.5rem 1.25rem;">Download</a>
+      </div>
+
+      <!-- Member Satellites -->
+      <h2 class="section-title">Team Members</h2>
+      <div class="member-orbit">
+        <div class="member-circle float-delay-1" style="border-color:var(--cosmic-pink);">
+          <span>Alex<br><small style="font-size:0.6rem;color:var(--text-muted);">Lead</small></span>
+        </div>
+        <div class="member-circle float-delay-2" style="border-color:var(--star-blue);">
+          <span>Jordan</span>
+        </div>
+        <div class="member-circle float-delay-3" style="border-color:var(--solar-orange);">
+          <span>Sam</span>
+        </div>
+        <div class="member-circle float-delay-4" style="border-color:var(--nebula-light);">
+          <span>Riley</span>
+        </div>
+      </div>
+
+      <!-- Decorative orbit SVG connecting members -->
+      <div class="text-center" style="margin:-1rem 0 1rem;">
+        <svg width="300" height="20" viewBox="0 0 300 20" style="opacity:0.3;">
+          <ellipse cx="150" cy="10" rx="140" ry="8" fill="none" stroke="var(--orbit-line)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- Score Breakdown: Concentric Rings -->
+      <h2 class="section-title">Score Breakdown</h2>
+      <div class="score-rings">
+        <div data-ring data-value="4.5" data-max="5" data-size="90" data-stroke="7" data-color="#ec4899" data-label="Theme"></div>
+        <div data-ring data-value="4.8" data-max="5" data-size="90" data-stroke="7" data-color="#60a5fa" data-label="Enjoy"></div>
+        <div data-ring data-value="4.2" data-max="5" data-size="90" data-stroke="7" data-color="#6d28d9" data-label="Aesthet."></div>
+        <div data-ring data-value="4.6" data-max="5" data-size="90" data-stroke="7" data-color="#f97316" data-label="Innov."></div>
+        <div data-ring data-value="2.0" data-max="2.5" data-size="90" data-stroke="7" data-color="#cbd5e1" data-label="Bonus"></div>
+      </div>
+
+      <!-- Stats Satellites -->
+      <div class="satellite-row mt-3">
+        <div class="satellite float-delay-1">
+          <span class="sat-value">8</span>
+          <span class="sat-label">Votes</span>
+        </div>
+        <div class="satellite float-delay-2">
+          <span class="sat-value" style="color:var(--solar-orange);">#1</span>
+          <span class="sat-label">Rank</span>
+        </div>
+        <div class="satellite float-delay-3">
+          <span class="sat-value">4.48</span>
+          <span class="sat-label">Jammer Avg</span>
+        </div>
+        <div class="satellite float-delay-4">
+          <span class="sat-value">4.61</span>
+          <span class="sat-label">Judge Avg</span>
+        </div>
+      </div>
+
+      <!-- Game Info -->
+      <div style="max-width:600px;margin:2rem auto 0;">
+        <div class="pill-card" style="display:block;border-radius:24px;padding:1.5rem 2rem;">
+          <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;">About Dimensional Drift</h3>
+          <p style="color:var(--text-secondary);font-size:0.85rem;line-height:1.7;">
+            Navigate between two parallel dimensions to solve puzzles and avoid obstacles.
+            Each dimension has different physics and visual styles. Switch between them in
+            real-time to progress through increasingly challenging levels.
+          </p>
+        </div>
+      </div>
+
+      <!-- Voter Comments -->
+      <h2 class="section-title mt-4">Voter Comments</h2>
+      <div class="comment-list">
+        <div class="comment-item">
+          <span class="comment-author">Jammer42</span>
+          <span>Great concept! The dimension-switching mechanic feels really polished.</span>
+        </div>
+        <div class="comment-item">
+          <span class="comment-author">DevGuru</span>
+          <span>Love the art style contrast between dimensions. Very creative!</span>
+        </div>
+        <div class="comment-item">
+          <span class="comment-author">PixelFan</span>
+          <span>Theme integration is on point. Could use more levels though.</span>
+        </div>
+        <div class="comment-item">
+          <span class="comment-author">Judge_A</span>
+          <span>Excellent use of the parallel worlds theme. Audio design is fantastic.</span>
+        </div>
+        <div class="comment-item">
+          <span class="comment-author">CodeNinja</span>
+          <span>Fun gameplay loop. The bonus puzzle was a nice touch.</span>
+        </div>
+      </div>
+
+      <!-- Back link -->
+      <div class="text-center mt-4 mb-3">
+        <a href="results.html" class="btn btn-outline">Back to Results</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    JamVote &mdash; Circular Orbit Theme &mdash; 2026
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

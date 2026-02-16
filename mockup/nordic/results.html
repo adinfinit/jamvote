@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-dot"></span>
+        jamvote
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">events</a></li>
+        <li><a href="login.html">egon</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"><span class="icon-moon">&#9789;</span><span class="icon-sun">&#9788;</span></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">dashboard</a>
+      <a href="event.html">teams</a>
+      <a href="voting.html">voting</a>
+      <a href="results.html" class="active">results</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+
+      <div class="mb-3">
+        <h1>results</h1>
+        <p class="text-muted">Ludum Dare 57 &middot; Theme: Tiny Worlds &middot; 12 teams &middot; 47 votes</p>
+      </div>
+
+      <!-- Overall Results -->
+      <section class="section">
+        <div class="section-title">overall ranking</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:3rem;">#</th>
+                <th>team</th>
+                <th>game</th>
+                <th style="width:5rem;">theme</th>
+                <th style="width:5rem;">enjoy</th>
+                <th style="width:5rem;">aesthet.</th>
+                <th style="width:5rem;">innov.</th>
+                <th style="width:5rem;">bonus</th>
+                <th style="width:7rem;">overall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="rank-highlight">
+                <td><strong>1</strong></td>
+                <td><a href="team.html">Pixel Pioneers</a></td>
+                <td>Pocket Universe</td>
+                <td>4.3</td>
+                <td>4.5</td>
+                <td>4.1</td>
+                <td>4.6</td>
+                <td>2.0</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-fjord" style="width:87%;"></div></div>
+                    <span class="score-bar-value">4.33</span>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rank-highlight">
+                <td><strong>2</strong></td>
+                <td><a href="team.html">Byte Benders</a></td>
+                <td>Atom City</td>
+                <td>4.0</td>
+                <td>4.2</td>
+                <td>4.4</td>
+                <td>4.0</td>
+                <td>1.5</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-fjord" style="width:81%;"></div></div>
+                    <span class="score-bar-value">4.02</span>
+                  </div>
+                </td>
+              </tr>
+              <tr class="rank-highlight">
+                <td><strong>3</strong></td>
+                <td><a href="team.html">The Sprites</a></td>
+                <td>Tiny Titans</td>
+                <td>4.2</td>
+                <td>3.8</td>
+                <td>4.0</td>
+                <td>3.9</td>
+                <td>1.5</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:77%;"></div></div>
+                    <span class="score-bar-value">3.87</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><a href="team.html">Nordic Nerds</a></td>
+                <td>Snowglobe</td>
+                <td>3.8</td>
+                <td>3.9</td>
+                <td>3.5</td>
+                <td>3.7</td>
+                <td>1.0</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:71%;"></div></div>
+                    <span class="score-bar-value">3.53</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><a href="team.html">Fjord Coders</a></td>
+                <td>Miniature Archipelago</td>
+                <td>3.5</td>
+                <td>3.6</td>
+                <td>3.8</td>
+                <td>3.4</td>
+                <td>1.0</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:68%;"></div></div>
+                    <span class="score-bar-value">3.40</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><a href="team.html">Solo Saga</a></td>
+                <td>Grain of Sand</td>
+                <td>3.2</td>
+                <td>3.4</td>
+                <td>3.1</td>
+                <td>3.8</td>
+                <td>1.0</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:64%;"></div></div>
+                    <span class="score-bar-value">3.22</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Midnight Oil</td>
+                <td>Speck</td>
+                <td>3.0</td>
+                <td>3.1</td>
+                <td>2.9</td>
+                <td>3.2</td>
+                <td>0.5</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:57%;"></div></div>
+                    <span class="score-bar-value">2.84</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Late Joiners</td>
+                <td>Micro Mania</td>
+                <td>2.8</td>
+                <td>2.9</td>
+                <td>2.7</td>
+                <td>3.0</td>
+                <td>0.5</td>
+                <td>
+                  <div class="score-bar">
+                    <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:53%;"></div></div>
+                    <span class="score-bar-value">2.64</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Jammer / Judge split -->
+      <div class="grid grid-2">
+
+        <section class="section">
+          <div class="section-title">jammer average (top 5)</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>team</th>
+                  <th style="width:6rem;">score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Pixel Pioneers</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:84%;"></div></div>
+                      <span class="score-bar-value">4.20</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Byte Benders</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:79%;"></div></div>
+                      <span class="score-bar-value">3.95</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>The Sprites</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:75%;"></div></div>
+                      <span class="score-bar-value">3.76</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Nordic Nerds</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:70%;"></div></div>
+                      <span class="score-bar-value">3.48</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Fjord Coders</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-frost" style="width:66%;"></div></div>
+                      <span class="score-bar-value">3.32</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">judge average (top 5)</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>team</th>
+                  <th style="width:6rem;">score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Pixel Pioneers</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-amber" style="width:90%;"></div></div>
+                      <span class="score-bar-value">4.50</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>The Sprites</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-amber" style="width:82%;"></div></div>
+                      <span class="score-bar-value">4.10</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Byte Benders</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-amber" style="width:83%;"></div></div>
+                      <span class="score-bar-value">4.15</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Fjord Coders</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-amber" style="width:72%;"></div></div>
+                      <span class="score-bar-value">3.60</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Nordic Nerds</td>
+                  <td>
+                    <div class="score-bar">
+                      <div class="score-bar-track"><div class="score-bar-fill score-bar-fill-amber" style="width:73%;"></div></div>
+                      <span class="score-bar-value">3.65</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>jamvote &middot; <a href="index.html">home</a> &middot; Ludum Dare 57</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

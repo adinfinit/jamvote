@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamVote</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">Jam<span class="accent">Vote</span></a>
+            <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">///</button>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Events</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">[&#9728;]</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Events</h1>
+        </div>
+
+        <!-- Active Events -->
+        <section style="margin-bottom: 3rem;">
+            <div class="label" style="margin-bottom: 1rem;">Active Now</div>
+
+            <div class="event-card">
+                <span class="event-status voting">Voting Open</span>
+                <h2><a href="event.html">Ludum Dare 57</a></h2>
+                <div class="event-meta">
+                    Theme: Tiny Worlds &middot; 12 Teams &middot; Voting closes in 2d 14h
+                </div>
+            </div>
+
+            <div class="event-card">
+                <span class="event-status active">Registration</span>
+                <h2><a href="#">Global Game Jam 2026</a></h2>
+                <div class="event-meta">
+                    Theme: TBA &middot; Registration open &middot; Starts Feb 28
+                </div>
+            </div>
+        </section>
+
+        <!-- Past Events -->
+        <section>
+            <div class="label" style="margin-bottom: 1.5rem;">Past Events</div>
+
+            <div class="year-group">
+                <h3>2025</h3>
+                <div class="past-event">
+                    <a href="results.html" class="past-event-name">Ludum Dare 56</a>
+                    <span class="past-event-meta">Shapeshifter &middot; 18 Teams</span>
+                </div>
+                <div class="past-event">
+                    <a href="#" class="past-event-name">Global Game Jam 2025</a>
+                    <span class="past-event-meta">Bubble &middot; 15 Teams</span>
+                </div>
+            </div>
+
+            <div class="year-group">
+                <h3>2024</h3>
+                <div class="past-event">
+                    <a href="#" class="past-event-name">Ludum Dare 55</a>
+                    <span class="past-event-meta">Summoning &middot; 22 Teams</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 JamVote</span>
+            <span>Built for game jammers</span>
+        </div>
+    </footer>
+    <script>
+    (function(){
+        var html = document.documentElement;
+        var btn = document.getElementById('theme-toggle');
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+        function update() {
+            btn.textContent = html.getAttribute('data-theme') === 'dark' ? '[\u263E]' : '[\u2600]';
+        }
+        update();
+        btn.addEventListener('click', function() {
+            var isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) { html.removeAttribute('data-theme'); localStorage.setItem('theme', ''); }
+            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            update();
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Pioneers - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">J A M V O T E</a>
+      <button class="nav-hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="event.html">Dashboard</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li>
+          <span class="flex items-center gap-1">
+            <span class="theme-toggle-label">Theme</span>
+            <div class="theme-toggle" onclick="toggleTheme()" role="button" tabindex="0" aria-label="Toggle dark mode"></div>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="sub-nav">
+    <div class="sub-nav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="team.html" class="active">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <div class="container" style="max-width:860px;">
+
+    <!-- Team Header -->
+    <div class="window-card mb-3 fade-in">
+      <div class="window-title-bar">
+        <div class="window-dots">
+          <span class="window-dot red"></span>
+          <span class="window-dot yellow"></span>
+          <span class="window-dot green"></span>
+        </div>
+        <span class="window-title-text">team://pixel-pioneers</span>
+      </div>
+      <div class="window-body">
+        <div class="flex justify-between items-center flex-wrap gap-2">
+          <div>
+            <h1 style="font-size:1.6rem;font-weight:700;" class="gradient-text">Pixel Pioneers</h1>
+            <p class="text-muted text-small">Ludum Dare 57 &mdash; &ldquo;Tiny Worlds&rdquo;</p>
+          </div>
+          <div>
+            <span class="badge badge-rank gold" style="width:auto;height:auto;padding:0.3rem 0.8rem;border-radius:8px;font-size:0.85rem;">
+              #1 Overall
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Info -->
+    <div class="window-card mb-3 fade-in" style="animation-delay:0.1s;">
+      <div class="window-title-bar">
+        <div class="window-dots">
+          <span class="window-dot red"></span>
+          <span class="window-dot yellow"></span>
+          <span class="window-dot green"></span>
+        </div>
+        <span class="window-title-text">game://pocket-universe.info</span>
+      </div>
+      <div class="window-body">
+        <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:0.5rem;">Pocket Universe</h2>
+        <p class="mb-2">A tiny sandbox where you grow miniature planets inside snow globes. Shake to create storms, tap to plant life, and watch ecosystems evolve in the palm of your hand. Features procedurally generated terrain, day/night cycles, and a chill ambient soundtrack.</p>
+
+        <div class="flex gap-1 flex-wrap">
+          <a href="#" class="btn btn-primary btn-small">Play on Jam Page</a>
+          <a href="#" class="btn btn-secondary btn-small">Download</a>
+          <a href="#" class="btn btn-outline btn-small">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Members -->
+    <div class="window-card mb-3 fade-in" style="animation-delay:0.15s;">
+      <div class="window-title-bar">
+        <div class="window-dots">
+          <span class="window-dot red"></span>
+          <span class="window-dot yellow"></span>
+          <span class="window-dot green"></span>
+        </div>
+        <span class="window-title-text">team://members.list</span>
+      </div>
+      <div class="window-body">
+        <h3 class="text-small fullwidth-text text-muted mb-2">Team Members</h3>
+        <div class="members-list" style="gap:0.75rem;">
+          <div class="member-chip" style="padding:0.5rem 1rem;">
+            <span class="member-avatar" style="width:30px;height:30px;font-size:0.8rem;">A</span>
+            <div>
+              <div style="font-weight:600;">Alice Chen</div>
+              <div class="text-muted" style="font-size:0.75rem;">Programming, Design</div>
+            </div>
+          </div>
+          <div class="member-chip" style="padding:0.5rem 1rem;">
+            <span class="member-avatar" style="width:30px;height:30px;font-size:0.8rem;background:linear-gradient(135deg, var(--baby-blue), var(--mint));">B</span>
+            <div>
+              <div style="font-weight:600;">Bob Martinez</div>
+              <div class="text-muted" style="font-size:0.75rem;">Art, Animation</div>
+            </div>
+          </div>
+          <div class="member-chip" style="padding:0.5rem 1rem;">
+            <span class="member-avatar" style="width:30px;height:30px;font-size:0.8rem;background:linear-gradient(135deg, var(--peach), var(--pink));">C</span>
+            <div>
+              <div style="font-weight:600;">Charlie Okafor</div>
+              <div class="text-muted" style="font-size:0.75rem;">Music, SFX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scores -->
+    <div class="window-card mb-3 fade-in" style="animation-delay:0.2s;">
+      <div class="window-title-bar">
+        <div class="window-dots">
+          <span class="window-dot red"></span>
+          <span class="window-dot yellow"></span>
+          <span class="window-dot green"></span>
+        </div>
+        <span class="window-title-text">scores://pocket-universe.dat</span>
+      </div>
+      <div class="window-body">
+        <h3 class="text-small fullwidth-text text-muted mb-2">Voting Results</h3>
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="color:var(--lavender);">Theme</span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:14px;">
+              <div class="score-bar theme-bar" style="width:90%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value" style="color:var(--lavender);">4.5</span>
+        </div>
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="color:var(--pink);">Enjoyment</span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:14px;">
+              <div class="score-bar enjoyment-bar" style="width:96%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value" style="color:var(--pink);">4.8</span>
+        </div>
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="color:var(--baby-blue);">Aesthetics</span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:14px;">
+              <div class="score-bar aesthetics-bar" style="width:86%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value" style="color:var(--baby-blue);">4.3</span>
+        </div>
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="color:var(--mint);">Innovation</span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:14px;">
+              <div class="score-bar innovation-bar" style="width:92%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value" style="color:var(--mint);">4.6</span>
+        </div>
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="color:#e0b030;">Bonus</span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:14px;">
+              <div class="score-bar bonus-bar" style="width:80%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value" style="color:#e0b030;">2.0</span>
+        </div>
+
+        <hr style="border:none;border-top:1px solid var(--card-border);margin:1rem 0;">
+
+        <div class="score-detail">
+          <span class="score-detail-label" style="font-size:1rem;"><strong>Overall</strong></span>
+          <div class="score-detail-bar">
+            <div class="score-bar-container" style="height:18px;">
+              <div class="score-bar overall-bar" style="width:89.8%;"></div>
+            </div>
+          </div>
+          <span class="score-detail-value gradient-text" style="font-size:1.2rem;">4.49</span>
+        </div>
+
+        <p class="text-muted text-small mt-2">Based on 18 jammer votes and 4 judge votes.</p>
+      </div>
+    </div>
+
+    <!-- Voter Comments -->
+    <div class="window-card mb-3 fade-in" style="animation-delay:0.25s;">
+      <div class="window-title-bar">
+        <div class="window-dots">
+          <span class="window-dot red"></span>
+          <span class="window-dot yellow"></span>
+          <span class="window-dot green"></span>
+        </div>
+        <span class="window-title-text">comments://voter-feedback.log</span>
+      </div>
+      <div class="window-body">
+        <h3 class="text-small fullwidth-text text-muted mb-2">Voter Comments</h3>
+
+        <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--card-border);">
+          <div class="flex items-center gap-1 mb-1">
+            <span class="tag" style="background:linear-gradient(90deg,rgba(185,103,255,0.2),rgba(255,113,206,0.2));">Theme</span>
+          </div>
+          <p class="text-small">&ldquo;Love how the snow globe concept ties into tiny worlds. Very creative interpretation!&rdquo;</p>
+        </div>
+
+        <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--card-border);">
+          <div class="flex items-center gap-1 mb-1">
+            <span class="tag" style="background:linear-gradient(90deg,rgba(255,113,206,0.2),rgba(255,113,206,0.15));">Enjoyment</span>
+          </div>
+          <p class="text-small">&ldquo;Incredibly relaxing. I played for way longer than I expected. The shake mechanic is genius.&rdquo;</p>
+        </div>
+
+        <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--card-border);">
+          <div class="flex items-center gap-1 mb-1">
+            <span class="tag" style="background:linear-gradient(90deg,rgba(1,205,254,0.2),rgba(1,205,254,0.15));">Aesthetics</span>
+          </div>
+          <p class="text-small">&ldquo;Beautiful pixel art. The day/night cycle is gorgeous and the ambient music fits perfectly.&rdquo;</p>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-1 mb-1">
+            <span class="tag" style="background:linear-gradient(90deg,rgba(5,255,161,0.2),rgba(5,255,161,0.15));">Innovation</span>
+          </div>
+          <p class="text-small">&ldquo;The procedural generation in 48 hours is impressive. Each globe feels unique.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Vaporwave Grid Footer -->
+  <div class="vaporwave-grid">
+    <svg class="grid-svg" viewBox="0 0 1200 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="footer-text">J A M V O T E &nbsp;&nbsp;&bull;&nbsp;&nbsp; V A P O R W A V E &nbsp;&nbsp;&bull;&nbsp;&nbsp; 2 0 2 6</div>
+  </div>
+
+</body>
+</html>

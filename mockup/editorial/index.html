@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMVOTE &mdash; Game Jam Voting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="masthead-subtitle">The Definitive Record of Game Jam Excellence</div>
+        <h1 class="masthead-title"><a href="index.html">JAMVOTE</a></h1>
+        <div class="masthead-dateline">
+            <span>Sunday, February 16, 2026</span>
+            <span>Vol. VIII &middot; No. 42</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="active">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <a href="#">Jamming Guide</a>
+        <a href="login.html">Sign In</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+    </nav>
+
+    <hr class="thick" style="margin-top:0;">
+
+    <!-- Main content: 2-column newspaper layout -->
+    <div class="grid-2col" style="margin-top: 1.5rem;">
+
+        <!-- Main Column -->
+        <main>
+            <div class="section-heading">Active Events</div>
+
+            <!-- Lead headline story -->
+            <article class="headline-story">
+                <span class="dateline">Voting Open &middot; Feb 14 &ndash; Feb 21, 2026</span>
+                <h2><a href="event.html">Ludum Dare 57</a></h2>
+                <p class="theme-line">Theme: &ldquo;Tiny Worlds&rdquo;</p>
+                <p>Forty-two teams have submitted entries in the latest Ludum Dare competition. Voting is underway and the community is hard at work reviewing and rating an impressive crop of games exploring miniature universes, microscopic adventures, and pocket-sized civilizations. Results will be revealed on Saturday, February 21.</p>
+                <a href="event.html" class="btn" style="margin-top: 0.5rem;">Read More</a>
+            </article>
+
+            <hr>
+
+            <!-- Secondary story -->
+            <article class="headline-story">
+                <span class="dateline">Registration Open &middot; Mar 6 &ndash; Mar 8, 2026</span>
+                <h2><a href="#">Global Game Jam 2026</a></h2>
+                <p class="theme-line">Theme: To Be Announced</p>
+                <p>Registration is now open for the upcoming Global Game Jam. Teams of up to five are invited to sign up and prepare for a weekend of intense creativity. The theme will be revealed at the opening ceremony on Friday, March 6.</p>
+                <a href="#" class="btn" style="margin-top: 0.5rem;">Register Now</a>
+            </article>
+
+            <hr>
+
+            <!-- Third story -->
+            <article class="headline-story">
+                <span class="dateline">Registration Open &middot; Apr 10 &ndash; Apr 12, 2026</span>
+                <h2><a href="#">Mini Jam 200: Celebration</a></h2>
+                <p class="theme-line">Theme: &ldquo;Celebration&rdquo;</p>
+                <p>The 200th Mini Jam marks a milestone for the community. To celebrate, the organizers have lifted the usual constraints, inviting jammers to interpret the theme in any genre or style they wish.</p>
+            </article>
+        </main>
+
+        <!-- Sidebar -->
+        <aside>
+            <div class="section-heading">Archive</div>
+
+            <!-- 2025 -->
+            <h4 style="font-family: var(--sans); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); margin-bottom: 0.5rem; margin-top: 0.5rem;">2025</h4>
+
+            <div class="sidebar-item">
+                <h4><a href="results.html">Ludum Dare 56</a></h4>
+                <span class="dateline">Oct 2025 &middot; &ldquo;Shapeshifter&rdquo; &middot; 38 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Nordic Game Jam 2025</a></h4>
+                <span class="dateline">Sep 2025 &middot; &ldquo;Bridges&rdquo; &middot; 25 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Mini Jam 195</a></h4>
+                <span class="dateline">Jul 2025 &middot; &ldquo;Gravity&rdquo; &middot; 31 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Ludum Dare 55</a></h4>
+                <span class="dateline">Apr 2025 &middot; &ldquo;Summoning&rdquo; &middot; 45 teams</span>
+            </div>
+
+            <hr>
+
+            <!-- 2024 -->
+            <h4 style="font-family: var(--sans); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); margin-bottom: 0.5rem;">2024</h4>
+
+            <div class="sidebar-item">
+                <h4><a href="#">Ludum Dare 54</a></h4>
+                <span class="dateline">Oct 2024 &middot; &ldquo;Limited Space&rdquo; &middot; 40 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Global Game Jam 2024</a></h4>
+                <span class="dateline">Jan 2024 &middot; &ldquo;Make Me Laugh&rdquo; &middot; 29 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Mini Jam 180</a></h4>
+                <span class="dateline">Mar 2024 &middot; &ldquo;Alchemy&rdquo; &middot; 22 teams</span>
+            </div>
+
+            <hr>
+
+            <!-- 2023 -->
+            <h4 style="font-family: var(--sans); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); margin-bottom: 0.5rem;">2023</h4>
+
+            <div class="sidebar-item">
+                <h4><a href="#">Ludum Dare 53</a></h4>
+                <span class="dateline">Apr 2023 &middot; &ldquo;Delivery&rdquo; &middot; 36 teams</span>
+            </div>
+            <div class="sidebar-item">
+                <h4><a href="#">Nordic Game Jam 2023</a></h4>
+                <span class="dateline">Sep 2023 &middot; &ldquo;Roots&rdquo; &middot; 18 teams</span>
+            </div>
+
+            <hr>
+
+            <p style="text-align: center; margin-top: 1rem;">
+                <a href="#" class="btn" style="font-size: 0.7rem; padding: 0.4rem 1rem;">Full Archive</a>
+            </p>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a> &middot; <a href="#">Organizing Guide</a></p>
+    </footer>
+</div>
+
+<script>
+// Theme toggle — persists in localStorage
+(function() {
+    var toggle = document.getElementById('theme-toggle');
+    var html = document.documentElement;
+    var saved = localStorage.getItem('jamvote-theme');
+    if (saved === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        toggle.textContent = '\u2600';
+    }
+    toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            toggle.textContent = '\u263E';
+            localStorage.setItem('jamvote-theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            toggle.textContent = '\u2600';
+            localStorage.setItem('jamvote-theme', 'dark');
+        }
+    });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Ludum Dare 57 - JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">JamVote</a>
+    <div style="display:flex;align-items:center;gap:0.5rem">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+      <button class="nav-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+    </div>
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="event.html">Events</a>
+      <a href="results.html" class="active">Results</a>
+      <a href="login.html">Login</a>
+    </div>
+  </nav>
+
+  <!-- Sub Nav -->
+  <div class="subnav">
+    <a href="event.html">Dashboard</a>
+    <a href="team.html">Teams</a>
+    <a href="voting.html">Voting</a>
+    <a href="results.html" class="active">Results</a>
+  </div>
+
+  <div class="container">
+
+    <h1 class="page-title">Ludum Dare 57 Results</h1>
+    <p class="text-center text-muted mb-3" style="font-weight:600;margin-top:-1rem">Theme: Tiny Worlds &middot; 24 Teams &middot; 87 Jammers</p>
+
+    <!-- Podium -->
+    <div class="podium">
+      <div class="podium-item podium-item--2">
+        <div class="podium-rank">#2</div>
+        <div class="podium-team">Byte Busters</div>
+        <div class="podium-game">Ant Farm Simulator</div>
+        <div class="podium-score">4.32</div>
+      </div>
+      <div class="podium-item podium-item--1">
+        <div class="podium-rank">#1</div>
+        <div class="podium-team">Pixel Pioneers</div>
+        <div class="podium-game">Pocket Universe</div>
+        <div class="podium-score">4.67</div>
+      </div>
+      <div class="podium-item podium-item--3">
+        <div class="podium-rank">#3</div>
+        <div class="podium-team">Neon Ninjas</div>
+        <div class="podium-game">Bonsai World</div>
+        <div class="podium-score">4.11</div>
+      </div>
+    </div>
+
+    <!-- Full Results Table -->
+    <h2 class="section-title mt-4">Overall Rankings</h2>
+
+    <div style="overflow-x:auto">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Game</th>
+            <th>Theme</th>
+            <th>Enjoy</th>
+            <th>Aesth</th>
+            <th>Innov</th>
+            <th>Bonus</th>
+            <th>Overall</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-badge" style="background:var(--gradient-pink-purple)">1</span></td>
+            <td style="font-weight:800"><a href="team.html">Pixel Pioneers</a></td>
+            <td>Pocket Universe</td>
+            <td><span class="pill pill--pink">4.8</span></td>
+            <td><span class="pill pill--blue">4.5</span></td>
+            <td><span class="pill pill--green">4.7</span></td>
+            <td><span class="pill pill--orange">4.6</span></td>
+            <td><span class="pill pill--purple">2.4</span></td>
+            <td style="font-weight:900;color:var(--pink);font-size:1.15rem">4.67</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:var(--gradient-blue-cyan)">2</span></td>
+            <td style="font-weight:800"><a href="team.html">Byte Busters</a></td>
+            <td>Ant Farm Simulator</td>
+            <td><span class="pill pill--pink">4.2</span></td>
+            <td><span class="pill pill--blue">4.6</span></td>
+            <td><span class="pill pill--green">4.3</span></td>
+            <td><span class="pill pill--orange">4.1</span></td>
+            <td><span class="pill pill--purple">2.3</span></td>
+            <td style="font-weight:900;color:var(--blue);font-size:1.15rem">4.32</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:var(--gradient-green-cyan)">3</span></td>
+            <td style="font-weight:800"><a href="team.html">Neon Ninjas</a></td>
+            <td>Bonsai World</td>
+            <td><span class="pill pill--pink">4.0</span></td>
+            <td><span class="pill pill--blue">4.3</span></td>
+            <td><span class="pill pill--green">4.1</span></td>
+            <td><span class="pill pill--orange">3.9</span></td>
+            <td><span class="pill pill--purple">2.2</span></td>
+            <td style="font-weight:900;color:var(--green);font-size:1.15rem">4.11</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:#94a3b8">4</span></td>
+            <td style="font-weight:800"><a href="team.html">Glitch Gang</a></td>
+            <td>Spore Story</td>
+            <td><span class="pill pill--pink">3.8</span></td>
+            <td><span class="pill pill--blue">4.0</span></td>
+            <td><span class="pill pill--green">3.9</span></td>
+            <td><span class="pill pill--orange">4.2</span></td>
+            <td><span class="pill pill--purple">1.8</span></td>
+            <td style="font-weight:900;font-size:1.15rem">3.93</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:#94a3b8">5</span></td>
+            <td style="font-weight:800"><a href="team.html">Code Crushers</a></td>
+            <td>Micro Kingdom</td>
+            <td><span class="pill pill--pink">3.5</span></td>
+            <td><span class="pill pill--blue">3.8</span></td>
+            <td><span class="pill pill--green">4.0</span></td>
+            <td><span class="pill pill--orange">3.7</span></td>
+            <td><span class="pill pill--purple">1.9</span></td>
+            <td style="font-weight:900;font-size:1.15rem">3.76</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:#94a3b8">6</span></td>
+            <td style="font-weight:800"><a href="team.html">Turbo Turtles</a></td>
+            <td>Droplet Quest</td>
+            <td><span class="pill pill--pink">3.4</span></td>
+            <td><span class="pill pill--blue">3.6</span></td>
+            <td><span class="pill pill--green">3.5</span></td>
+            <td><span class="pill pill--orange">3.8</span></td>
+            <td><span class="pill pill--purple">1.5</span></td>
+            <td style="font-weight:900;font-size:1.15rem">3.51</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:#94a3b8">7</span></td>
+            <td style="font-weight:800">Retro Rockets</td>
+            <td>Snow Globe</td>
+            <td><span class="pill pill--pink">3.2</span></td>
+            <td><span class="pill pill--blue">3.4</span></td>
+            <td><span class="pill pill--green">3.1</span></td>
+            <td><span class="pill pill--orange">3.5</span></td>
+            <td><span class="pill pill--purple">1.6</span></td>
+            <td style="font-weight:900;font-size:1.15rem">3.29</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge" style="background:#94a3b8">8</span></td>
+            <td style="font-weight:800">Bug Bashers</td>
+            <td>Terrarium Tactics</td>
+            <td><span class="pill pill--pink">3.0</span></td>
+            <td><span class="pill pill--blue">3.2</span></td>
+            <td><span class="pill pill--green">2.9</span></td>
+            <td><span class="pill pill--orange">3.3</span></td>
+            <td><span class="pill pill--purple">1.4</span></td>
+            <td style="font-weight:900;font-size:1.15rem">3.07</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Score Breakdown Visual -->
+    <h2 class="section-title mt-4">Top 3 Score Breakdown</h2>
+    <div class="grid-3">
+
+      <div class="card card--pink">
+        <div class="card-header card-header--pink-purple">
+          <div style="font-size:1.1rem">#1 Pixel Pioneers</div>
+        </div>
+        <div class="card-body">
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Theme</span><span>4.8</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--pink" style="width:96%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Enjoyment</span><span>4.5</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--blue" style="width:90%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Aesthetics</span><span>4.7</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--green" style="width:94%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Innovation</span><span>4.6</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--orange" style="width:92%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Bonus</span><span>2.4</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--purple" style="width:96%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--blue">
+        <div class="card-header card-header--blue-cyan">
+          <div style="font-size:1.1rem">#2 Byte Busters</div>
+        </div>
+        <div class="card-body">
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Theme</span><span>4.2</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--pink" style="width:84%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Enjoyment</span><span>4.6</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--blue" style="width:92%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Aesthetics</span><span>4.3</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--green" style="width:86%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Innovation</span><span>4.1</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--orange" style="width:82%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Bonus</span><span>2.3</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--purple" style="width:92%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--green">
+        <div class="card-header card-header--green-cyan">
+          <div style="font-size:1.1rem">#3 Neon Ninjas</div>
+        </div>
+        <div class="card-body">
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Theme</span><span>4.0</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--pink" style="width:80%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Enjoyment</span><span>4.3</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--blue" style="width:86%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Aesthetics</span><span>4.1</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--green" style="width:82%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Innovation</span><span>3.9</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--orange" style="width:78%"></div></div>
+          </div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-label"><span>Bonus</span><span>2.2</span></div>
+            <div class="score-bar"><div class="score-bar-fill score-bar-fill--purple" style="width:88%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    JamVote &mdash; Making game jams more fun since 2020
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+      function applyTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        toggle.textContent = dark ? '\u2600' : '\u263E';
+        localStorage.setItem('jamvote-theme', dark ? 'dark' : 'light');
+      }
+      var saved = localStorage.getItem('jamvote-theme');
+      applyTheme(saved === 'dark');
+      toggle.addEventListener('click', function() {
+        applyTheme(html.getAttribute('data-theme') !== 'dark');
+      });
+    })();
+  </script>
+
+</body>
+</html>

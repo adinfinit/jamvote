@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Pioneers | JamVote Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+<div class="crt-screen">
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="brand glow">JAMVOTE</a>
+        <a href="index.html">Home</a>
+        <a href="event.html">Events</a>
+        <a href="#">About</a>
+        <span class="spacer"></span>
+        <button class="theme-toggle" onclick="toggleTheme()">[PAPER]</button>
+        <span class="user-info">jammer@ludum-dare-57 ~</span>
+        <a href="login.html">Logout</a>
+    </nav>
+
+    <!-- Sub Navigation -->
+    <div class="sub-nav">
+        <a href="event.html">Dashboard</a>
+        <a href="#">Teams</a>
+        <a href="voting.html">Voting</a>
+        <a href="#">Progress</a>
+        <a href="results.html">Results</a>
+    </div>
+
+    <!-- Command -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote team show pixel-pioneers</span></div>
+    </div>
+
+    <h1 class="cursor">Team: Pixel Pioneers</h1>
+
+    <!-- Team Info -->
+    <div class="ascii-box" data-title="TEAM INFO">
+        <div class="line"><span class="label">Team Name:</span> <span class="value">Pixel Pioneers</span></div>
+        <div class="line"><span class="label">Event:</span> <span class="value"><a href="event.html">Ludum Dare 57</a></span></div>
+        <div class="line"><span class="label">Competing:</span> <span class="value status-active">YES</span></div>
+    </div>
+
+    <!-- Game Info -->
+    <div class="ascii-box" data-title="GAME">
+        <div class="line"><span class="label">Game Name:</span> <span class="value glow">Microverse Explorer</span></div>
+        <div class="line"><span class="label">Description:</span></div>
+        <div class="line mt-1" style="padding-left: 16px;">
+            A procedurally generated world that fits on a single screen.
+        </div>
+        <div class="line" style="padding-left: 16px;">
+            Explore tiny biomes, discover micro-civilizations, and uncover
+        </div>
+        <div class="line" style="padding-left: 16px;">
+            the secrets hidden in the smallest corners of the universe.
+        </div>
+        <div class="line" style="padding-left: 16px;">
+            Built with Godot 4.3 in 48 hours.
+        </div>
+        <div class="line mt-1"><span class="label">Download:</span> <span class="value"><a href="#">https://itch.io/microverse-explorer</a></span></div>
+        <div class="line"><span class="label">Jam Page:</span> <span class="value"><a href="#">https://ldjam.com/events/ld57/microverse</a></span></div>
+        <div class="line"><span class="label">Facebook:</span> <span class="value"><a href="#">https://fb.com/pixelpioneers/ld57</a></span></div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Members -->
+    <h2>Members</h2>
+
+    <div class="output mb-2">
+        <ul class="member-list">
+            <li><a href="#">Alice Chen</a> <span class="text-dim">-- programmer, team lead</span></li>
+            <li><a href="#">Bob Martinez</a> <span class="text-dim">-- artist, sound design</span></li>
+            <li><a href="#">Charlie Kim</a> <span class="text-dim">-- level design, QA</span></li>
+        </ul>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Scores -->
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">$ </span><span class="prompt-cmd">jamvote team scores pixel-pioneers</span></div>
+    </div>
+
+    <h2>Scores</h2>
+
+    <div class="ascii-box" data-title="OVERALL RANKING: #1">
+        <div class="overall-score" style="border: none; margin: 0; padding: 8px 0;">
+            <div class="overall-label">Final Score</div>
+            4.52
+        </div>
+    </div>
+
+    <div class="output mb-2">
+        <div class="line">
+            <span class="label">Theme:</span>
+            <span class="slider-value">4.52</span>
+            <span class="score-bar amber"> ████████████████████████████████████████████████████████████████████████████████████████████</span>
+        </div>
+        <div class="line">
+            <span class="label">Enjoyment:</span>
+            <span class="slider-value">4.71</span>
+            <span class="score-bar amber"> ██████████████████████████████████████████████████████████████████████████████████████████████</span>
+        </div>
+        <div class="line">
+            <span class="label">Aesthetics:</span>
+            <span class="slider-value">4.38</span>
+            <span class="score-bar amber"> ████████████████████████████████████████████████████████████████████████████████████████</span>
+        </div>
+        <div class="line">
+            <span class="label">Innovation:</span>
+            <span class="slider-value">4.65</span>
+            <span class="score-bar amber"> █████████████████████████████████████████████████████████████████████████████████████████████</span>
+        </div>
+        <div class="line">
+            <span class="label">Bonus:</span>
+            <span class="slider-value">2.10</span>
+            <span class="score-bar"> ████████████████████████████████████████████████████████████████████████████████████████</span>
+        </div>
+    </div>
+
+    <div class="output text-dim mb-2">
+        <div class="line">&gt; Based on 22 ballots (18 jammer, 4 judge)</div>
+        <div class="line">&gt; Jammer Avg: 4.48 | Judge Avg: 4.62 | Final: 4.52</div>
+    </div>
+
+    <div class="divider">────────────────────────────────────────────────────────────────</div>
+
+    <!-- Comments -->
+    <h2>Voter Comments</h2>
+
+    <div class="output mb-2">
+        <div class="line"><span class="prompt">&gt; </span><span class="text-dim">Showing 5 of 14 comments</span></div>
+    </div>
+
+    <div class="comment-block">
+        <div class="author">anonymous voter #3 -- Theme: 5.0</div>
+        <div>Perfect interpretation of the theme. The micro-biomes are incredibly detailed for a jam game.</div>
+    </div>
+
+    <div class="comment-block">
+        <div class="author">anonymous voter #7 -- Enjoyment: 5.0</div>
+        <div>Couldn't stop playing! The exploration loop is addictive. Found 12 of 15 secrets.</div>
+    </div>
+
+    <div class="comment-block">
+        <div class="author">anonymous voter #12 -- Aesthetics: 4.0</div>
+        <div>Charming pixel art. The color palette really sells the tiny world vibe. Music is a bit repetitive.</div>
+    </div>
+
+    <div class="comment-block">
+        <div class="author">anonymous voter #1 -- Innovation: 5.0</div>
+        <div>The zoom-in mechanic where each pixel becomes its own world is brilliant. Never seen that before.</div>
+    </div>
+
+    <div class="comment-block">
+        <div class="author">anonymous voter #15 -- Overall</div>
+        <div>Great entry. Well polished for 48 hours. Would love to see this expanded into a full game.</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>JamVote v2.4.1 | <a href="index.html">Home</a> | <a href="event.html">Event</a> | <a href="results.html">Results</a></div>
+        <div class="mt-1">Connection established. Session active.</div>
+    </footer>
+
+</div>
+</body>
+</html>

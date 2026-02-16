@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamVote — Design Mockups</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --accent: #2563eb;
+            --accent-light: #eff6ff;
+        }
+
+        [data-theme="dark"] {
+            --bg: #111118;
+            --surface: #1c1c26;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: #2d2d3a;
+            --accent: #60a5fa;
+            --accent-light: #1e293b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .header {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+        h1 span { color: var(--accent); }
+
+        .subtitle { color: var(--text-muted); margin-top: 0.25rem; font-size: 0.95rem; }
+
+        .theme-toggle {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+            margin-top: 0.5rem;
+        }
+        .theme-toggle:hover { background: var(--accent-light); }
+
+        .section { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.5rem 0; }
+
+        .section-title {
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem; margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: block;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        [data-theme="dark"] .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+
+        .card-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 26px; height: 26px; border-radius: 50%;
+            background: var(--accent-light); color: var(--accent);
+            font-size: 0.75rem; font-weight: 700; margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem;
+        }
+        .card-title a {
+            color: var(--text); text-decoration: none;
+        }
+        .card-title a:hover { color: var(--accent); }
+
+        .card-desc {
+            font-size: 0.85rem; color: var(--text-muted);
+            line-height: 1.5; margin-bottom: 0.75rem;
+        }
+
+        .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+        .tag {
+            font-size: 0.7rem; padding: 0.2rem 0.5rem;
+            border-radius: 50px; background: var(--accent-light);
+            color: var(--accent); font-weight: 500;
+        }
+
+        .card-pages {
+            font-size: 0.75rem; color: var(--text-muted);
+            margin-top: 0.75rem; padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 0.5rem; flex-wrap: wrap;
+        }
+        .card-pages a { color: var(--accent); text-decoration: none; }
+        .card-pages a:hover { text-decoration: underline; }
+
+        .footer {
+            max-width: 960px; margin: 0 auto;
+            padding: 2rem 1.5rem; text-align: center;
+            color: var(--text-muted); font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 640px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>Jam<span>Vote</span> Mockups</h1>
+            <p class="subtitle">20 design directions for the JamVote redesign. Each has 6 pages with dark/light mode.</p>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode"></button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Standard Themes — 1 to 8</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-num">1</div>
+                <div class="card-title"><a href="neon-arcade/index.html">Neon Arcade</a></div>
+                <div class="card-desc">Dark background with glowing neon accents in cyan, magenta, and lime. Scanline overlays and monospace headings channel a retro arcade cabinet feel.</div>
+                <div class="card-tags">
+                    <span class="tag">dark base</span>
+                    <span class="tag">glow effects</span>
+                    <span class="tag">retro gaming</span>
+                </div>
+                <div class="card-pages">
+                    <a href="neon-arcade/index.html">Home</a>
+                    <a href="neon-arcade/event.html">Event</a>
+                    <a href="neon-arcade/voting.html">Voting</a>
+                    <a href="neon-arcade/results.html">Results</a>
+                    <a href="neon-arcade/team.html">Team</a>
+                    <a href="neon-arcade/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">2</div>
+                <div class="card-title"><a href="clean-minimal/index.html">Clean Minimal</a></div>
+                <div class="card-desc">Light and airy with generous whitespace. Cards defined by subtle shadows instead of borders. Blue primary, amber secondary. Inspired by Stripe and Linear.</div>
+                <div class="card-tags">
+                    <span class="tag">light base</span>
+                    <span class="tag">shadow cards</span>
+                    <span class="tag">SaaS-like</span>
+                </div>
+                <div class="card-pages">
+                    <a href="clean-minimal/index.html">Home</a>
+                    <a href="clean-minimal/event.html">Event</a>
+                    <a href="clean-minimal/voting.html">Voting</a>
+                    <a href="clean-minimal/results.html">Results</a>
+                    <a href="clean-minimal/team.html">Team</a>
+                    <a href="clean-minimal/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">3</div>
+                <div class="card-title"><a href="brutalist/index.html">Brutalist</a></div>
+                <div class="card-desc">High contrast black and white with thick 3-4px borders. Bold, oversized typography. No rounded corners, no shadows. Red accent for impact. Bloomberg meets Swiss design.</div>
+                <div class="card-tags">
+                    <span class="tag">high contrast</span>
+                    <span class="tag">thick borders</span>
+                    <span class="tag">monospace data</span>
+                </div>
+                <div class="card-pages">
+                    <a href="brutalist/index.html">Home</a>
+                    <a href="brutalist/event.html">Event</a>
+                    <a href="brutalist/voting.html">Voting</a>
+                    <a href="brutalist/results.html">Results</a>
+                    <a href="brutalist/team.html">Team</a>
+                    <a href="brutalist/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">4</div>
+                <div class="card-title"><a href="warm-playful/index.html">Warm Playful</a></div>
+                <div class="card-desc">Cream background with coral, teal, and purple accents. Large border-radius, pill buttons, bouncy hover animations. Friendly and approachable like a game jam should feel.</div>
+                <div class="card-tags">
+                    <span class="tag">warm tones</span>
+                    <span class="tag">rounded shapes</span>
+                    <span class="tag">bouncy</span>
+                </div>
+                <div class="card-pages">
+                    <a href="warm-playful/index.html">Home</a>
+                    <a href="warm-playful/event.html">Event</a>
+                    <a href="warm-playful/voting.html">Voting</a>
+                    <a href="warm-playful/results.html">Results</a>
+                    <a href="warm-playful/team.html">Team</a>
+                    <a href="warm-playful/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">5</div>
+                <div class="card-title"><a href="glassmorphism/index.html">Glassmorphism</a></div>
+                <div class="card-desc">Frosted glass cards over a rich mesh gradient background. Backdrop-filter blur, semi-transparent panels, colored glowing shadows. Layered depth with light reflections.</div>
+                <div class="card-tags">
+                    <span class="tag">frosted glass</span>
+                    <span class="tag">mesh gradient</span>
+                    <span class="tag">blur effects</span>
+                </div>
+                <div class="card-pages">
+                    <a href="glassmorphism/index.html">Home</a>
+                    <a href="glassmorphism/event.html">Event</a>
+                    <a href="glassmorphism/voting.html">Voting</a>
+                    <a href="glassmorphism/results.html">Results</a>
+                    <a href="glassmorphism/team.html">Team</a>
+                    <a href="glassmorphism/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">6</div>
+                <div class="card-title"><a href="retro-terminal/index.html">Retro Terminal</a></div>
+                <div class="card-desc">Green phosphor text on pure black. CRT scanline overlay, monospace everything, ASCII box-drawing borders. Content presented as terminal command output. Blinking cursor.</div>
+                <div class="card-tags">
+                    <span class="tag">CRT aesthetic</span>
+                    <span class="tag">ASCII borders</span>
+                    <span class="tag">green-on-black</span>
+                </div>
+                <div class="card-pages">
+                    <a href="retro-terminal/index.html">Home</a>
+                    <a href="retro-terminal/event.html">Event</a>
+                    <a href="retro-terminal/voting.html">Voting</a>
+                    <a href="retro-terminal/results.html">Results</a>
+                    <a href="retro-terminal/team.html">Team</a>
+                    <a href="retro-terminal/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">7</div>
+                <div class="card-title"><a href="editorial/index.html">Editorial</a></div>
+                <div class="card-desc">Newspaper layout with cream paper background, rich serif typography, and column-based grids. Drop caps, datelines, pull quotes. Horizontal rules as elegant dividers.</div>
+                <div class="card-tags">
+                    <span class="tag">serif type</span>
+                    <span class="tag">newspaper layout</span>
+                    <span class="tag">print-inspired</span>
+                </div>
+                <div class="card-pages">
+                    <a href="editorial/index.html">Home</a>
+                    <a href="editorial/event.html">Event</a>
+                    <a href="editorial/voting.html">Voting</a>
+                    <a href="editorial/results.html">Results</a>
+                    <a href="editorial/team.html">Team</a>
+                    <a href="editorial/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">8</div>
+                <div class="card-title"><a href="candy-pop/index.html">Candy Pop</a></div>
+                <div class="card-desc">Vibrant, saturated colors — hot pink, electric blue, lime, orange, purple. Chunky 3px borders, large radius, gradient fills, colored drop-shadows. Bold and energetic.</div>
+                <div class="card-tags">
+                    <span class="tag">vibrant colors</span>
+                    <span class="tag">chunky UI</span>
+                    <span class="tag">gradients</span>
+                </div>
+                <div class="card-pages">
+                    <a href="candy-pop/index.html">Home</a>
+                    <a href="candy-pop/event.html">Event</a>
+                    <a href="candy-pop/voting.html">Voting</a>
+                    <a href="candy-pop/results.html">Results</a>
+                    <a href="candy-pop/team.html">Team</a>
+                    <a href="candy-pop/login.html">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Themed Styles — 9 to 16</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-num">9</div>
+                <div class="card-title"><a href="cyberpunk/index.html">Cyberpunk</a></div>
+                <div class="card-desc">Near-black base with electric yellow, hot magenta, and cyan. Angular clip-path cards with slashed corners. Glitch text-shadow animations. Scanline overlay. Watch Dogs meets Blade Runner.</div>
+                <div class="card-tags">
+                    <span class="tag">angular cuts</span>
+                    <span class="tag">glitch effects</span>
+                    <span class="tag">yellow/magenta</span>
+                </div>
+                <div class="card-pages">
+                    <a href="cyberpunk/index.html">Home</a>
+                    <a href="cyberpunk/event.html">Event</a>
+                    <a href="cyberpunk/voting.html">Voting</a>
+                    <a href="cyberpunk/results.html">Results</a>
+                    <a href="cyberpunk/team.html">Team</a>
+                    <a href="cyberpunk/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">10</div>
+                <div class="card-title"><a href="zen-garden/index.html">Zen Garden</a></div>
+                <div class="card-desc">Muted earth tones — warm stone, sage green, clay. Extreme whitespace, asymmetric balance. Thin borders, no shadows, no gradients. Enso circles and rake-line decorations. Wabi-sabi.</div>
+                <div class="card-tags">
+                    <span class="tag">minimalism</span>
+                    <span class="tag">earth tones</span>
+                    <span class="tag">Japanese-inspired</span>
+                </div>
+                <div class="card-pages">
+                    <a href="zen-garden/index.html">Home</a>
+                    <a href="zen-garden/event.html">Event</a>
+                    <a href="zen-garden/voting.html">Voting</a>
+                    <a href="zen-garden/results.html">Results</a>
+                    <a href="zen-garden/team.html">Team</a>
+                    <a href="zen-garden/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">11</div>
+                <div class="card-title"><a href="synthwave/index.html">Synthwave</a></div>
+                <div class="card-desc">Deep purple-blue base with sunset gradients (orange to pink to purple). Neon pink and cyan accents. CSS perspective grid, chrome text effects, and the classic synthwave sun motif.</div>
+                <div class="card-tags">
+                    <span class="tag">80s retro</span>
+                    <span class="tag">sunset gradients</span>
+                    <span class="tag">perspective grid</span>
+                </div>
+                <div class="card-pages">
+                    <a href="synthwave/index.html">Home</a>
+                    <a href="synthwave/event.html">Event</a>
+                    <a href="synthwave/voting.html">Voting</a>
+                    <a href="synthwave/results.html">Results</a>
+                    <a href="synthwave/team.html">Team</a>
+                    <a href="synthwave/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">12</div>
+                <div class="card-title"><a href="nordic/index.html">Nordic</a></div>
+                <div class="card-desc">Cool blues and grays — snow white, ice blue, fjord blue, frost accent. Warm amber as secondary. Clean, functional Scandinavian design. Generous spacing, muted interactions. Hygge aesthetic.</div>
+                <div class="card-tags">
+                    <span class="tag">cool blues</span>
+                    <span class="tag">Scandinavian</span>
+                    <span class="tag">functional</span>
+                </div>
+                <div class="card-pages">
+                    <a href="nordic/index.html">Home</a>
+                    <a href="nordic/event.html">Event</a>
+                    <a href="nordic/voting.html">Voting</a>
+                    <a href="nordic/results.html">Results</a>
+                    <a href="nordic/team.html">Team</a>
+                    <a href="nordic/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">13</div>
+                <div class="card-title"><a href="art-deco/index.html">Art Deco</a></div>
+                <div class="card-desc">Rich black and gold. Geometric patterns — chevrons, sunbursts, fan shapes. Serif typography with wide letter-spacing. Double-line borders, stepped card edges. 1920s Gatsby glamour.</div>
+                <div class="card-tags">
+                    <span class="tag">gold accent</span>
+                    <span class="tag">geometric</span>
+                    <span class="tag">luxurious</span>
+                </div>
+                <div class="card-pages">
+                    <a href="art-deco/index.html">Home</a>
+                    <a href="art-deco/event.html">Event</a>
+                    <a href="art-deco/voting.html">Voting</a>
+                    <a href="art-deco/results.html">Results</a>
+                    <a href="art-deco/team.html">Team</a>
+                    <a href="art-deco/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">14</div>
+                <div class="card-title"><a href="vaporwave/index.html">Vaporwave</a></div>
+                <div class="card-desc">Pastel pink, lavender, mint, and baby blue. Cards styled as retro OS windows with title bars and colored dots. Perspective grid footer. Text gradients. 90s internet nostalgia meets pastel dreams.</div>
+                <div class="card-tags">
+                    <span class="tag">pastel palette</span>
+                    <span class="tag">window cards</span>
+                    <span class="tag">90s aesthetic</span>
+                </div>
+                <div class="card-pages">
+                    <a href="vaporwave/index.html">Home</a>
+                    <a href="vaporwave/event.html">Event</a>
+                    <a href="vaporwave/voting.html">Voting</a>
+                    <a href="vaporwave/results.html">Results</a>
+                    <a href="vaporwave/team.html">Team</a>
+                    <a href="vaporwave/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">15</div>
+                <div class="card-title"><a href="steampunk/index.html">Steampunk</a></div>
+                <div class="card-desc">Dark leather base with copper, brass, and parchment. Riveted card corners, ornamental gear dividers, gauge-style score displays. Embossed brass buttons. Victorian industrial meets Jules Verne.</div>
+                <div class="card-tags">
+                    <span class="tag">copper/brass</span>
+                    <span class="tag">riveted edges</span>
+                    <span class="tag">Victorian</span>
+                </div>
+                <div class="card-pages">
+                    <a href="steampunk/index.html">Home</a>
+                    <a href="steampunk/event.html">Event</a>
+                    <a href="steampunk/voting.html">Voting</a>
+                    <a href="steampunk/results.html">Results</a>
+                    <a href="steampunk/team.html">Team</a>
+                    <a href="steampunk/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">16</div>
+                <div class="card-title"><a href="pixel-art/index.html">Pixel Art</a></div>
+                <div class="card-desc">8-bit aesthetic with a 15-color retro palette. Press Start 2P pixel font, zero border-radius, 4px pixel borders and crisp drop-shadows. Health-bar score displays. NES dialog boxes.</div>
+                <div class="card-tags">
+                    <span class="tag">8-bit</span>
+                    <span class="tag">pixel borders</span>
+                    <span class="tag">health bars</span>
+                </div>
+                <div class="card-pages">
+                    <a href="pixel-art/index.html">Home</a>
+                    <a href="pixel-art/event.html">Event</a>
+                    <a href="pixel-art/voting.html">Voting</a>
+                    <a href="pixel-art/results.html">Results</a>
+                    <a href="pixel-art/team.html">Team</a>
+                    <a href="pixel-art/login.html">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Experimental Layouts — 17 to 20</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-num">17</div>
+                <div class="card-title"><a href="diagonal-split/index.html">Diagonal Split</a></div>
+                <div class="card-desc">Everything split diagonally. Sections use skewY transforms and clip-path polygons for angled boundaries. Cards rotate and straighten on hover. Slanted score bars, angled nav. Dynamic and off-kilter.</div>
+                <div class="card-tags">
+                    <span class="tag">angled sections</span>
+                    <span class="tag">clip-path</span>
+                    <span class="tag">skew transforms</span>
+                    <span class="tag">experimental</span>
+                </div>
+                <div class="card-pages">
+                    <a href="diagonal-split/index.html">Home</a>
+                    <a href="diagonal-split/event.html">Event</a>
+                    <a href="diagonal-split/voting.html">Voting</a>
+                    <a href="diagonal-split/results.html">Results</a>
+                    <a href="diagonal-split/team.html">Team</a>
+                    <a href="diagonal-split/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">18</div>
+                <div class="card-title"><a href="bento-magazine/index.html">Bento Magazine</a></div>
+                <div class="card-desc">Asymmetric bento-box grids where tiles vary dramatically in size. One element per page is oversized (giant numbers, massive headings). Dense packing, no borders — tiles defined by color. Typography from 12px to 120px.</div>
+                <div class="card-tags">
+                    <span class="tag">asymmetric grid</span>
+                    <span class="tag">mixed tile sizes</span>
+                    <span class="tag">magazine spread</span>
+                    <span class="tag">experimental</span>
+                </div>
+                <div class="card-pages">
+                    <a href="bento-magazine/index.html">Home</a>
+                    <a href="bento-magazine/event.html">Event</a>
+                    <a href="bento-magazine/voting.html">Voting</a>
+                    <a href="bento-magazine/results.html">Results</a>
+                    <a href="bento-magazine/team.html">Team</a>
+                    <a href="bento-magazine/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">19</div>
+                <div class="card-title"><a href="collage-stack/index.html">Collage Stack</a></div>
+                <div class="card-desc">Overlapping cards at scattered angles, like papers on a desk. Stacked-paper shadows, washi tape strips, push-pin accents. Cork board background. Hover pops cards above neighbors. Controlled chaos.</div>
+                <div class="card-tags">
+                    <span class="tag">overlapping cards</span>
+                    <span class="tag">tape &amp; pins</span>
+                    <span class="tag">scattered angles</span>
+                    <span class="tag">experimental</span>
+                </div>
+                <div class="card-pages">
+                    <a href="collage-stack/index.html">Home</a>
+                    <a href="collage-stack/event.html">Event</a>
+                    <a href="collage-stack/voting.html">Voting</a>
+                    <a href="collage-stack/results.html">Results</a>
+                    <a href="collage-stack/team.html">Team</a>
+                    <a href="collage-stack/login.html">Login</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-num">20</div>
+                <div class="card-title"><a href="circular-orbit/index.html">Circular Orbit</a></div>
+                <div class="card-desc">Radial layouts with elements orbiting central focal points. Circular cards, SVG ring/donut score charts, orbital trail lines. Floating zero-gravity animations. Cosmic color scheme. Planetary and sci-fi.</div>
+                <div class="card-tags">
+                    <span class="tag">radial layout</span>
+                    <span class="tag">SVG ring charts</span>
+                    <span class="tag">orbital paths</span>
+                    <span class="tag">experimental</span>
+                </div>
+                <div class="card-pages">
+                    <a href="circular-orbit/index.html">Home</a>
+                    <a href="circular-orbit/event.html">Event</a>
+                    <a href="circular-orbit/voting.html">Voting</a>
+                    <a href="circular-orbit/results.html">Results</a>
+                    <a href="circular-orbit/team.html">Team</a>
+                    <a href="circular-orbit/login.html">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        JamVote Design Mockups — 20 themes, 120 pages, all with dark/light mode
+    </div>
+
+    <script>
+        (function() {
+            var html = document.documentElement;
+            var btn = document.getElementById('theme-toggle');
+            var saved = localStorage.getItem('mockup-index-theme');
+            if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+            function update() {
+                var isDark = html.getAttribute('data-theme') === 'dark';
+                btn.textContent = isDark ? '\u2600' : '\u263E';
+            }
+
+            btn.addEventListener('click', function() {
+                var isDark = html.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('mockup-index-theme', 'light');
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('mockup-index-theme', 'dark');
+                }
+                update();
+            });
+
+            update();
+        })();
+    </script>
+</body>
+</html>

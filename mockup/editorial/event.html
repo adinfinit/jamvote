@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludum Dare 57 &mdash; JAMVOTE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="masthead-subtitle">The Definitive Record of Game Jam Excellence</div>
+        <h1 class="masthead-title"><a href="index.html">JAMVOTE</a></h1>
+        <div class="masthead-dateline">
+            <span>Sunday, February 16, 2026</span>
+            <span>Vol. VIII &middot; No. 42</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="event.html" class="active">Events</a>
+        <a href="#">About</a>
+        <a href="#">Jamming Guide</a>
+        <a href="login.html">Sign In</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">&#9790;</button>
+    </nav>
+
+    <!-- Sub-navigation for event -->
+    <nav class="sub-nav">
+        <a href="event.html" class="active">Dashboard</a>
+        <a href="#">Teams</a>
+        <a href="voting.html">Voting</a>
+        <a href="#">Progress</a>
+        <a href="results.html">Results</a>
+    </nav>
+
+    <!-- Event Header -->
+    <div class="feature-header" style="text-align: center; margin-bottom: 1rem;">
+        <div class="overline">Event &middot; Voting Open</div>
+        <h1 style="font-size: 3.2rem; margin-bottom: 0.15rem;">Ludum Dare 57</h1>
+        <p class="dateline" style="margin-bottom: 0;">February 14 &ndash; February 21, 2026 &middot; 42 Teams &middot; Judge Weight: 30%</p>
+    </div>
+
+    <hr class="double">
+
+    <!-- Theme pull quote -->
+    <div class="pull-quote" style="text-align: center; border-left: none; border-top: 3px solid var(--red); border-bottom: 3px solid var(--red); padding: 1.2rem; max-width: 500px; margin: 1.5rem auto;">
+        <span class="dateline" style="display: block; margin-bottom: 0.3rem;">The Theme</span>
+        <span style="font-size: 2rem; font-weight: 700; font-style: normal; color: var(--ink);">&ldquo;Tiny Worlds&rdquo;</span>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown-section">
+        <p class="countdown-label">Voting Closes In</p>
+        <div class="countdown-segments">
+            <div class="countdown-segment">
+                <span class="countdown-number" id="cd-days">05</span>
+                <span class="unit">Days</span>
+            </div>
+            <div class="countdown-segment">
+                <span class="countdown-number" id="cd-hours">14</span>
+                <span class="unit">Hours</span>
+            </div>
+            <div class="countdown-segment">
+                <span class="countdown-number" id="cd-mins">32</span>
+                <span class="unit">Minutes</span>
+            </div>
+            <div class="countdown-segment">
+                <span class="countdown-number" id="cd-secs">08</span>
+                <span class="unit">Seconds</span>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Voting CTA -->
+    <div style="text-align: center; margin: 1.5rem 0;">
+        <a href="voting.html" class="btn btn-primary btn-large">Cast Your Vote</a>
+    </div>
+
+    <hr>
+
+    <!-- Event description -->
+    <div class="grid-2col" style="margin-top: 2rem;">
+        <div>
+            <div class="section-heading">About This Event</div>
+            <p class="drop-cap">Welcome to the fifty-seventh edition of Ludum Dare, the world's longest-running online game jam. This weekend, developers from around the globe are building games inspired by the theme "Tiny Worlds." Whether you are crafting a microscopic adventure, a miniature city builder, or a pocket-sized platformer, we want to see your interpretation.</p>
+            <p>All entries will be judged by both fellow jammers and a panel of invited judges. The jammer and judge scores are blended at a 70/30 ratio. Each game is rated on five aspects: Theme, Enjoyment, Aesthetics, Innovation, and a Bonus category.</p>
+            <p>Remember: play and rate as many games as you can. The more votes each game receives, the more accurate and fair the final standings will be. Voting closes on Saturday, February 21 at midnight UTC.</p>
+
+            <hr>
+
+            <div class="section-heading" style="margin-top: 2rem;">Participating Teams</div>
+            <div class="grid-teams">
+                <div class="team-card">
+                    <h4><a href="team.html">Pixel Pioneers</a></h4>
+                    <p class="game-name">Pocket Universe</p>
+                    <p class="members">Alice, Bob, Charlie</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Syntax Sorcerers</a></h4>
+                    <p class="game-name">Ant Colony</p>
+                    <p class="members">Diana, Ethan</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Bug Bashers</a></h4>
+                    <p class="game-name">Terrarium Tactics</p>
+                    <p class="members">Fiona, George, Hannah</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Ctrl+Create</a></h4>
+                    <p class="game-name">Microverse</p>
+                    <p class="members">Ivan, Julia</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Neon Nomads</a></h4>
+                    <p class="game-name">Little Planet</p>
+                    <p class="members">Karen, Leo, Mia</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Stack Overflow</a></h4>
+                    <p class="game-name">Grain of Sand</p>
+                    <p class="members">Nathan, Olivia</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Bit Crushers</a></h4>
+                    <p class="game-name">Miniature Mayhem</p>
+                    <p class="members">Priya, Quincy, Rosa</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Dream Weavers</a></h4>
+                    <p class="game-name">Snow Globe</p>
+                    <p class="members">Sam, Tina</p>
+                </div>
+                <div class="team-card">
+                    <h4><a href="#">Code Monkeys</a></h4>
+                    <p class="game-name">Bonsai World</p>
+                    <p class="members">Uma, Viktor, Wendy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside>
+            <div class="section-heading">Event Details</div>
+
+            <div style="margin-bottom: 1.2rem;">
+                <p class="dateline" style="margin-bottom: 0.2rem;">Start</p>
+                <p style="margin-bottom: 0.4rem;">Sat, Feb 14, 2026 &mdash; 6:00 PM UTC</p>
+
+                <p class="dateline" style="margin-bottom: 0.2rem;">End</p>
+                <p style="margin-bottom: 0.4rem;">Mon, Feb 16, 2026 &mdash; 6:00 PM UTC</p>
+
+                <p class="dateline" style="margin-bottom: 0.2rem;">Voting Opens</p>
+                <p style="margin-bottom: 0.4rem;">Mon, Feb 16, 2026 &mdash; 8:00 PM UTC</p>
+
+                <p class="dateline" style="margin-bottom: 0.2rem;">Voting Closes</p>
+                <p style="margin-bottom: 0.4rem;">Sat, Feb 21, 2026 &mdash; 11:59 PM UTC</p>
+            </div>
+
+            <hr>
+
+            <div class="section-heading">Statistics</div>
+            <div style="font-family: var(--sans); font-size: 0.85rem; line-height: 2;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Registered Teams</span> <strong>42</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Jammers</span> <strong>98</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Judges</span> <strong>6</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Votes Cast</span> <strong>287</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Completion</span> <strong>68%</strong>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-heading">Organizers</div>
+            <p style="font-size: 0.95rem;">Sarah Mitchell, James Chen</p>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>JamVote &copy; 2026 &middot; <a href="#">About</a> &middot; <a href="#">Scoring Guide</a> &middot; <a href="#">Organizing Guide</a></p>
+    </footer>
+</div>
+
+<script>
+// Theme toggle — persists in localStorage
+(function() {
+    var toggle = document.getElementById('theme-toggle');
+    var html = document.documentElement;
+    var saved = localStorage.getItem('jamvote-theme');
+    if (saved === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        toggle.textContent = '\u2600';
+    }
+    toggle.addEventListener('click', function() {
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            toggle.textContent = '\u263E';
+            localStorage.setItem('jamvote-theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            toggle.textContent = '\u2600';
+            localStorage.setItem('jamvote-theme', 'dark');
+        }
+    });
+})();
+
+// Countdown timer
+(function() {
+    const target = new Date('2026-02-21T23:59:59Z');
+
+    function update() {
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now) / 1000));
+
+        const days = Math.floor(diff / 86400); diff %= 86400;
+        const hours = Math.floor(diff / 3600); diff %= 3600;
+        const mins = Math.floor(diff / 60);
+        const secs = diff % 60;
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+    }
+
+    update();
+    setInterval(update, 1000);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results — Ludum Dare 57 — JamVote</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__brand">JamVote</a>
+      <button class="nav__toggle" onclick="document.querySelector('.nav__links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn"></button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub Navigation -->
+  <div class="subnav">
+    <div class="subnav__inner">
+      <a href="event.html">Dashboard</a>
+      <a href="team.html">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="results.html" class="active">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container container--narrow">
+      <h1>Results</h1>
+      <p>Ludum Dare 57 &middot; Tiny Worlds</p>
+    </div>
+  </header>
+
+  <!-- Overall Results -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-marker"></div>
+      <h2>Overall Ranking</h2>
+
+      <div class="table-wrap mt-md">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px;">#</th>
+              <th>Team</th>
+              <th>Game</th>
+              <th style="text-align: right;">Theme</th>
+              <th style="text-align: right;">Enjoy</th>
+              <th style="text-align: right;">Aesth</th>
+              <th style="text-align: right;">Innov</th>
+              <th style="text-align: right;">Bonus</th>
+              <th style="text-align: right;">Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);"><a href="team.html">Pixel Pioneers</a></td>
+              <td>Pocket Universe</td>
+              <td style="text-align: right;">4.3</td>
+              <td style="text-align: right;">4.5</td>
+              <td style="text-align: right;">4.1</td>
+              <td style="text-align: right;">4.0</td>
+              <td style="text-align: right;">2.0</td>
+              <td style="text-align: right; color: var(--sage); font-weight: 300; font-size: 1rem;">4.2</td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);"><a href="#">Cosmic Turtles</a></td>
+              <td>Terrarium Dreams</td>
+              <td style="text-align: right;">4.0</td>
+              <td style="text-align: right;">4.2</td>
+              <td style="text-align: right;">4.4</td>
+              <td style="text-align: right;">3.8</td>
+              <td style="text-align: right;">1.5</td>
+              <td style="text-align: right; color: var(--sage); font-weight: 300; font-size: 1rem;">4.0</td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);"><a href="#">Bit Busters</a></td>
+              <td>Grain of Infinity</td>
+              <td style="text-align: right;">3.8</td>
+              <td style="text-align: right;">4.0</td>
+              <td style="text-align: right;">3.9</td>
+              <td style="text-align: right;">4.2</td>
+              <td style="text-align: right;">1.5</td>
+              <td style="text-align: right; color: var(--sage); font-weight: 300; font-size: 1rem;">3.9</td>
+            </tr>
+            <tr>
+              <td><span class="rank">4</span></td>
+              <td><a href="#">Dream Weavers</a></td>
+              <td>Snow Globe Society</td>
+              <td style="text-align: right;">3.5</td>
+              <td style="text-align: right;">3.8</td>
+              <td style="text-align: right;">4.0</td>
+              <td style="text-align: right;">3.5</td>
+              <td style="text-align: right;">1.0</td>
+              <td style="text-align: right; font-weight: 300;">3.5</td>
+            </tr>
+            <tr>
+              <td><span class="rank">5</span></td>
+              <td><a href="#">Null Pointers</a></td>
+              <td>Atom City</td>
+              <td style="text-align: right;">3.2</td>
+              <td style="text-align: right;">3.5</td>
+              <td style="text-align: right;">3.3</td>
+              <td style="text-align: right;">3.8</td>
+              <td style="text-align: right;">1.0</td>
+              <td style="text-align: right; font-weight: 300;">3.3</td>
+            </tr>
+            <tr>
+              <td><span class="rank">6</span></td>
+              <td><a href="#">Kernel Panic</a></td>
+              <td>Microbe Metropolis</td>
+              <td style="text-align: right;">3.0</td>
+              <td style="text-align: right;">3.2</td>
+              <td style="text-align: right;">3.5</td>
+              <td style="text-align: right;">3.0</td>
+              <td style="text-align: right;">0.5</td>
+              <td style="text-align: right; font-weight: 300;">2.9</td>
+            </tr>
+            <tr>
+              <td><span class="rank">7</span></td>
+              <td><a href="#">Void Collective</a></td>
+              <td>Dust Kingdoms</td>
+              <td style="text-align: right;">2.8</td>
+              <td style="text-align: right;">3.0</td>
+              <td style="text-align: right;">3.2</td>
+              <td style="text-align: right;">2.5</td>
+              <td style="text-align: right;">0.5</td>
+              <td style="text-align: right; font-weight: 300;">2.7</td>
+            </tr>
+            <tr>
+              <td><span class="rank">8</span></td>
+              <td><a href="#">Solo Wanderer</a></td>
+              <td>Pebble World</td>
+              <td style="text-align: right;">2.5</td>
+              <td style="text-align: right;">2.8</td>
+              <td style="text-align: right;">2.5</td>
+              <td style="text-align: right;">3.0</td>
+              <td style="text-align: right;">0.5</td>
+              <td style="text-align: right; font-weight: 300;">2.5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Decorative -->
+  <div class="rake">
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+    <div class="rake__line"></div>
+  </div>
+
+  <!-- Jammer Average -->
+  <section class="section">
+    <div class="container">
+      <div class="section-marker" style="background: var(--clay);"></div>
+      <h2>Jammer Average</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Scores from fellow jammers only</p>
+
+      <div class="table-wrap mt-md">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px;">#</th>
+              <th>Team</th>
+              <th style="text-align: right;">Overall</th>
+              <th style="width: 40%;">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);">Pixel Pioneers</td>
+              <td style="text-align: right;">4.1</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill" style="width: 82%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);">Cosmic Turtles</td>
+              <td style="text-align: right;">3.9</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill" style="width: 78%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot"></span></span></td>
+              <td style="color: var(--text);">Bit Busters</td>
+              <td style="text-align: right;">3.8</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill" style="width: 76%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank">4</span></td>
+              <td>Dream Weavers</td>
+              <td style="text-align: right;">3.4</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill" style="width: 68%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank">5</span></td>
+              <td>Null Pointers</td>
+              <td style="text-align: right;">3.2</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill" style="width: 64%;"></div></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Judge Average -->
+  <section class="section section--bordered">
+    <div class="container">
+      <div class="section-marker" style="background: var(--clay);"></div>
+      <h2>Judge Average</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Judge scores weighted at 30%</p>
+
+      <div class="table-wrap mt-md">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px;">#</th>
+              <th>Team</th>
+              <th style="text-align: right;">Overall</th>
+              <th style="width: 40%;">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot dot--clay"></span></span></td>
+              <td style="color: var(--text);">Cosmic Turtles</td>
+              <td style="text-align: right;">4.3</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill score-bar__fill--clay" style="width: 86%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot dot--clay"></span></span></td>
+              <td style="color: var(--text);">Pixel Pioneers</td>
+              <td style="text-align: right;">4.2</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill score-bar__fill--clay" style="width: 84%;"></div></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="rank rank--top"><span class="dot dot--clay"></span></span></td>
+              <td style="color: var(--text);">Bit Busters</td>
+              <td style="text-align: right;">4.0</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar__track"><div class="score-bar__fill score-bar__fill--clay" style="width: 80%;"></div></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="enso enso--small"></div>
+      <p>JamVote &middot; Made with stillness</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
