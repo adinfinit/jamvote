@@ -7,7 +7,7 @@ import (
 	"cloud.google.com/go/datastore"
 
 	"github.com/adinfinit/jamvote/auth"
-	"github.com/adinfinit/jamvote/internal/natural"
+	"github.com/adinfinit/jamvote/internal/natsort"
 	"github.com/adinfinit/jamvote/user"
 )
 
@@ -108,7 +108,7 @@ func (repo *Users) List() ([]*user.User, error) {
 	}
 
 	sort.Slice(users, func(i, k int) bool {
-		return natural.Less(users[i].Name, users[k].Name)
+		return natsort.Less(users[i].Name, users[k].Name)
 	})
 	return users, usersError(err)
 }
