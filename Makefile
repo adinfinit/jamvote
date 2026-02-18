@@ -4,7 +4,7 @@ deploy-production: format check lint
 	gcloud app deploy --project=apt-vote app.yaml
 
 deploy-testing: format check lint
-	gcloud app deploy --project=jamvote-testing app-testing.yaml
+	gcloud app deploy --project=apt-vote app.test.yaml
 
 format:
 	goimports -w .

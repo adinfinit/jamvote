@@ -1,0 +1,8 @@
+dispatch:
+  - url: "test.jamvote.ee/*"
+    service: test
+
+  - url: "jamvote.ee/*"
+    service: default
+  - url: "www.jamvote.ee/*"
+    service: default

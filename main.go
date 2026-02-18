@@ -31,7 +31,9 @@ func main() {
 	ctx := context.Background()
 
 	project := os.Getenv("GOOGLE_CLOUD_PROJECT")
-	dsClient, err := datastore.NewClient(ctx, project)
+	datastoreName := os.Getenv("GOOGLE_CLOUD_DATASTORE_NAME")
+
+	dsClient, err := datastore.NewClientWithDatabase(ctx, project, datastoreName)
 	if err != nil {
 		logger.Error("failed to create datastore client", "error", err)
 		os.Exit(1)
