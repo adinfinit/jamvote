@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ludum Dare 57 - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -41,78 +43,55 @@
     <div class="container">
 
       <!-- Event Header -->
-      <div class="flex items-center gap-12 mb-8 flex-wrap">
-        <span class="badge badge-green">Voting Open</span>
-        <span class="text-small text-muted">Organized by Sarah Rivera</span>
-      </div>
-
-      <h1 class="mb-4">Ludum Dare 57</h1>
-      <p class="mb-32" style="font-size:1.25rem;">
-        Theme: <strong class="theme-accent" style="font-size:1.5rem;">Tiny Worlds</strong>
-      </p>
-
-      <!-- Countdown & CTA -->
-      <div class="grid-2 mb-48">
-        <div class="card">
-          <h3 class="section-label mb-16">Voting Ends In</h3>
-          <div class="countdown" id="countdown">
-            <div class="countdown-item">
-              <div class="countdown-number" id="cd-days">02</div>
-              <div class="countdown-label">Days</div>
-            </div>
-            <div class="countdown-item">
-              <div class="countdown-number" id="cd-hours">14</div>
-              <div class="countdown-label">Hours</div>
-            </div>
-            <div class="countdown-item">
-              <div class="countdown-number" id="cd-mins">37</div>
-              <div class="countdown-label">Minutes</div>
-            </div>
-            <div class="countdown-item">
-              <div class="countdown-number" id="cd-secs">52</div>
-              <div class="countdown-label">Seconds</div>
-            </div>
-          </div>
+      <div class="mb-32" style="padding-left:29px;">
+        <div class="flex items-center gap-12 mb-8 flex-wrap">
+          <span class="badge badge-green">Voting Open</span>
+          <span class="text-small text-muted">Organized by Sarah Rivera</span>
         </div>
-
-        <div class="card cta-card">
-          <p>You have <strong class="text-blue">3 games</strong> left to vote on</p>
+        <h1 class="mb-4">Ludum Dare 57</h1>
+        <p class="mb-20" style="font-size:1.25rem;">
+          Theme: <strong class="theme-accent" style="font-size:1.5rem;">Tiny Worlds</strong>
+        </p>
+        <div class="event-action-bar">
+          <span class="event-countdown-inline" id="countdown">
+            <span class="text-small text-muted">Voting ends in</span>
+            <span class="countdown-inline-value" id="cd-days">02</span><span class="countdown-inline-sep">d</span>
+            <span class="countdown-inline-value" id="cd-hours">14</span><span class="countdown-inline-sep">h</span>
+            <span class="countdown-inline-value" id="cd-mins">37</span><span class="countdown-inline-sep">m</span>
+            <span class="countdown-inline-value" id="cd-secs">52</span><span class="countdown-inline-sep">s</span>
+          </span>
           <a href="voting.html" class="btn btn-primary btn-lg">
             &#9654; Start Voting
           </a>
         </div>
       </div>
 
-      <!-- Event Info -->
-      <div class="card mb-48">
-        <h3 class="mb-16">About This Jam</h3>
-        <p class="mb-12">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
-        <p>Voting is open to all registered jammers. Play each game, rate it on five aspects, and leave constructive feedback. Judge scores account for 30% of the final score.</p>
-      </div>
-
-      <!-- Timeline -->
-      <div class="card mb-48">
-        <h3 class="mb-20">Schedule</h3>
-        <div class="schedule-grid">
-          <div>
-            <div class="schedule-item-label">Jam Start</div>
-            <div class="schedule-item-date">Feb 7, 2026 &middot; 6:00 PM</div>
-            <span class="badge badge-gray mt-8">Completed</span>
-          </div>
-          <div>
-            <div class="schedule-item-label">Jam End</div>
-            <div class="schedule-item-date">Feb 10, 2026 &middot; 6:00 PM</div>
-            <span class="badge badge-gray mt-8">Completed</span>
-          </div>
-          <div>
-            <div class="schedule-item-label">Voting Opens</div>
-            <div class="schedule-item-date">Feb 11, 2026 &middot; 12:00 PM</div>
-            <span class="badge badge-green mt-8">Active</span>
-          </div>
-          <div>
-            <div class="schedule-item-label">Voting Closes</div>
-            <div class="schedule-item-date">Feb 18, 2026 &middot; 11:59 PM</div>
-            <span class="badge badge-blue mt-8">Upcoming</span>
+      <!-- About & Schedule -->
+      <div class="event-info-grid mb-48">
+        <div class="card">
+          <h3 class="mb-16">About This Jam</h3>
+          <p class="mb-12">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
+          <p>Voting is open to all registered jammers. Play each game, rate it on five aspects, and leave constructive feedback. Judge scores account for 30% of the final score.</p>
+        </div>
+        <div class="card">
+          <h3 class="mb-20">Schedule</h3>
+          <div class="schedule-list">
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Jam Start</div>
+              <div class="schedule-item-date">Feb 7, 2026 &middot; 6:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Jam End</div>
+              <div class="schedule-item-date">Feb 10, 2026 &middot; 6:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Voting Opens <span class="text-green">&bull; Active</span></div>
+              <div class="schedule-item-date">Feb 11, 2026 &middot; 12:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Voting Closes</div>
+              <div class="schedule-item-date">Feb 18, 2026 &middot; 11:59 PM</div>
+            </div>
           </div>
         </div>
       </div>
