@@ -385,8 +385,8 @@ h3 {
 
 /* --- Page Header --- */
 .page-header {
-	margin-bottom: 2.5rem;
-	padding-bottom: 1.5rem;
+	margin-bottom: 3rem;
+	padding-bottom: 1.75rem;
 	border-bottom: var(--border-thick);
 }
 
@@ -1196,7 +1196,7 @@ h3 {
 .divider {
 	border: none;
 	border-top: var(--border-thick);
-	margin: 2.5rem 0;
+	margin: 3rem 0;
 }
 
 /* --- Theme Toggle --- */

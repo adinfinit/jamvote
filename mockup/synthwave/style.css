@@ -355,7 +355,7 @@ h3 {
 .container {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 2rem 1.5rem;
+	padding: 2.5rem 2rem;
 	flex: 1;
 }
 
@@ -668,7 +668,6 @@ h3 {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 1.5rem;
-	margin-bottom: 3rem;
 }
 
 @media (min-width: 768px) {
@@ -769,7 +768,7 @@ h3 {
 .team-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	gap: 1.25rem;
+	gap: 1.5rem;
 }
 
 .team-card-header {
@@ -1219,6 +1218,12 @@ input[type="range"]::-moz-range-thumb {
 .mb-4 {
 	margin-bottom: 2rem;
 }
+.mb-5 {
+	margin-bottom: 3rem;
+}
+.mb-6 {
+	margin-bottom: 4rem;
+}
 .mt-2 {
 	margin-top: 1rem;
 }
@@ -1418,9 +1423,15 @@ input[type="range"]::-moz-range-thumb {
 	text-shadow: 0 0 8px rgba(255, 113, 206, 0.2);
 }
 
-/* Info panel subtle top accent */
+/* Info panel — card-like containment for event detail blocks */
 .info-panel {
 	position: relative;
+	background: var(--bg-card);
+	border: var(--border-card);
+	border-radius: var(--radius-lg);
+	padding: 1.5rem;
+	box-shadow: var(--shadow-card);
+	backdrop-filter: blur(4px);
 }
 
 /* Member tag hover */
@@ -1461,6 +1472,10 @@ input[type="range"]::-moz-range-thumb {
 
 	.nav-hamburger {
 		display: block;
+	}
+
+	.container {
+		padding: 2rem 1.25rem;
 	}
 
 	h1 {
@@ -1519,7 +1534,7 @@ input[type="range"]::-moz-range-thumb {
 .finished-list {
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: 0.75rem;
+	gap: 1rem;
 }
 
 @media (min-width: 768px) {

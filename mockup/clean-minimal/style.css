@@ -820,6 +820,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 .mb-20 { margin-bottom: 20px; }
 .mb-24 { margin-bottom: 24px; }
 .mb-32 { margin-bottom: 32px; }
+.mb-48 { margin-bottom: 48px; }
 .gap-8 { gap: 8px; }
 .gap-12 { gap: 12px; }
 .gap-16 { gap: 16px; }
@@ -845,7 +846,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 .divider {
   height: 1px;
   background: var(--gray-100);
-  margin: 40px 0;
+  margin: 48px 0;
 }
 
 /* --- Footer --- */
