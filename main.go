@@ -100,7 +100,8 @@ func main() {
 	}
 	profiles.Register(router)
 
-	http.Handle("/", router)
+	redirectFrom := os.Getenv("REDIRECT_FROM")
+	http.Handle("/", domainRedirect(redirectFrom, domain, router))
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -162,6 +163,21 @@ func getSecretData(logger *slog.Logger, name string) []byte {
 	}
 
 	return result.Payload.Data
+}
+
+// domainRedirect redirects requests from redirectFrom host to the canonical domain.
+func domainRedirect(redirectFrom, domain string, next http.Handler) http.Handler {
+	if redirectFrom == "" || domain == "" {
+		return next
+	}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Host == redirectFrom {
+			target := domain + r.URL.RequestURI()
+			http.Redirect(w, r, target, http.StatusMovedPermanently)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func newCookieSessionStore(logger *slog.Logger, secretString string) sessions.Store {

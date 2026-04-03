@@ -1,6 +1,7 @@
 runtime: go125
 env_variables:
   DOMAIN: "https://jamvote.ee"
+  REDIRECT_FROM: "vote.aptgg.ee"
 
 automatic_scaling:
   max_instances: 1
