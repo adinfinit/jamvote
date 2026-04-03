@@ -58,6 +58,7 @@ html {
 
 body {
   font-family: var(--font);
+  font-weight: 500;
   background: var(--bg);
   color: var(--gray-800);
   line-height: 1.6;
@@ -503,7 +504,7 @@ thead th {
 tbody td {
   padding: 14px 20px;
   border-bottom: 1px solid var(--gray-50);
-  color: var(--gray-700);
+  color: var(--gray-800);
   font-variant-numeric: tabular-nums;
 }
 
