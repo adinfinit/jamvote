@@ -10,20 +10,21 @@
       background: var(--white);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
-      padding: 36px;
+      padding: 40px;
       max-width: 640px;
       margin: 0 auto;
+      transition: background-color 200ms ease;
     }
 
     .game-header {
       text-align: center;
-      padding-bottom: 28px;
+      padding-bottom: 32px;
       border-bottom: 1px solid var(--gray-100);
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
 
     .game-header h1 {
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .game-header .team-name {
@@ -35,7 +36,7 @@
       display: flex;
       justify-content: center;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 20px;
     }
 
     .slider-track-bg {
@@ -70,6 +71,12 @@
       color: var(--blue);
     }
 
+    .comment-toggle:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
     .comment-area {
       display: none;
       margin-top: 8px;
@@ -91,6 +98,7 @@
     .progress-dots {
       display: flex;
       gap: 8px;
+      align-items: center;
     }
 
     .progress-dots .dot {
@@ -98,14 +106,57 @@
       height: 8px;
       border-radius: 50%;
       background: var(--gray-200);
+      transition: background-color var(--transition);
     }
 
     .progress-dots .dot.active {
       background: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     .progress-dots .dot.done {
       background: var(--gray-400);
+    }
+
+    .bonus-section {
+      background: var(--amber-light);
+      margin: 0 -40px;
+      padding: 28px 40px;
+      border-radius: var(--radius);
+    }
+
+    .bonus-section .slider-value {
+      color: var(--amber-hover);
+    }
+
+    .overall-preview {
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .overall-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--blue);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .overall-formula {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .vote-card {
+        padding: 24px;
+      }
+
+      .bonus-section {
+        margin: 0 -24px;
+        padding: 20px 24px;
+      }
     }
   </style>
 </head>
@@ -144,12 +195,12 @@
     <div class="container">
 
       <!-- Breadcrumb -->
-      <div class="mb-24" style="font-size:0.8125rem;">
-        <a href="event.html" style="color:var(--gray-400);">Ludum Dare 57</a>
-        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
-        <a href="voting.html" style="color:var(--gray-400);">Voting</a>
-        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
-        <span style="color:var(--gray-600);">Pocket Universe</span>
+      <div class="breadcrumb mb-24">
+        <a href="event.html">Ludum Dare 57</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <a href="voting.html">Voting</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <span class="breadcrumb-current">Pocket Universe</span>
       </div>
 
       <!-- Vote Card -->
@@ -159,10 +210,10 @@
           <h1>Pocket Universe</h1>
           <div class="team-name">by Pixel Pioneers</div>
           <div class="game-links">
-            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:6px 14px;">
+            <a href="#" class="btn btn-outline btn-sm">
               &#8599; Play Game
             </a>
-            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:6px 14px;">
+            <a href="#" class="btn btn-outline btn-sm">
               &#8615; Download
             </a>
           </div>
@@ -244,15 +295,15 @@
           </div>
 
           <!-- Bonus -->
-          <div class="slider-group" style="background:var(--amber-light); margin:0 -36px; padding:24px 36px; border-radius:var(--radius);">
+          <div class="slider-group bonus-section">
             <div class="slider-header">
               <label class="slider-label" for="bonus">
-                Bonus <span style="font-weight:400; color:var(--gray-400); font-size:0.8125rem;">0 &ndash; 2.5</span>
+                Bonus <span class="text-muted text-small" style="font-weight:400;">0 &ndash; 2.5</span>
               </label>
-              <span class="slider-value" id="bonus-val" style="color:var(--amber-hover);">0.0</span>
+              <span class="slider-value" id="bonus-val">0.0</span>
             </div>
             <div class="slider-track-bg">
-              <input type="range" id="bonus" min="0" max="2.5" step="0.5" value="0" style="--thumb-color:var(--amber);">
+              <input type="range" id="bonus" min="0" max="2.5" step="0.5" value="0">
             </div>
             <div class="slider-ticks">
               <span>0</span><span>0.5</span><span>1</span><span>1.5</span><span>2</span><span>2.5</span>
@@ -264,15 +315,15 @@
           </div>
 
           <!-- Overall Score Preview -->
-          <div class="mt-24 mb-24" style="text-align:center;">
+          <div class="overall-preview mt-24 mb-24">
             <div class="text-small text-muted mb-8">Overall Score</div>
-            <div style="font-size:2.5rem; font-weight:700; color:var(--blue); font-family:var(--font-mono);" id="overall-val">2.67</div>
-            <div class="text-small text-muted">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+            <div class="overall-number" id="overall-val">2.67</div>
+            <div class="overall-formula">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
           </div>
 
           <!-- Submit -->
           <div class="vote-footer">
-            <div class="progress-dots">
+            <div class="progress-dots" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="3" aria-label="Voting progress">
               <span class="dot done"></span>
               <span class="dot active"></span>
               <span class="dot"></span>
@@ -302,6 +353,9 @@
     const sliders = ['theme', 'enjoyment', 'aesthetics', 'innovation', 'bonus'];
 
     function updateSliders() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const trackColor = isDark ? '#374151' : '#e5e7eb';
+
       sliders.forEach(name => {
         const slider = document.getElementById(name);
         const display = document.getElementById(name + '-val');
@@ -311,8 +365,8 @@
         const min = parseFloat(slider.min);
         const max = parseFloat(slider.max);
         const pct = ((slider.value - min) / (max - min)) * 100;
-        const color = name === 'bonus' ? '#f59e0b' : '#2563eb';
-        slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${pct}%, #e5e7eb ${pct}%, #e5e7eb 100%)`;
+        const color = name === 'bonus' ? '#f59e0b' : (isDark ? '#3b82f6' : '#2563eb');
+        slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${pct}%, ${trackColor} ${pct}%, ${trackColor} 100%)`;
       });
 
       // Calculate overall
@@ -333,6 +387,10 @@
 
     // Initial update
     updateSliders();
+
+    // Re-update on theme change to fix track colors
+    const observer = new MutationObserver(updateSliders);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // Comment toggle
     function toggleComment(btn) {

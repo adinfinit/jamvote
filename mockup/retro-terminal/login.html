@@ -28,13 +28,9 @@
 
     <h1 class="cursor">System Authentication</h1>
 
-    <div class="output mb-2">
-        <div class="line text-dim">┌──────────────────────────────────────────────────┐</div>
-        <div class="line text-dim">│                                                  │</div>
-        <div class="line text-dim">│  <span class="text-amber">WARNING: Authentication required to continue.</span>  │</div>
-        <div class="line text-dim">│  <span class="text-amber">Unauthorized access is prohibited.</span>              │</div>
-        <div class="line text-dim">│                                                  │</div>
-        <div class="line text-dim">└──────────────────────────────────────────────────┘</div>
+    <div class="warning-box">
+        <div class="warning-text">WARNING: Authentication required to continue.</div>
+        <div class="warning-text">Unauthorized access is prohibited.</div>
     </div>
 
     <div class="divider">────────────────────────────────────────────────────────────────</div>
@@ -83,22 +79,19 @@
         <div class="line text-dim">&gt; Protocol: OAuth2 / OpenID Connect</div>
     </div>
 
-    <div class="output mt-2">
-        <div class="line text-dim">
-            <pre style="color: var(--green-dark); font-size: 0.75rem; line-height: 1.2;">
-     ██╗ █████╗ ███╗   ███╗██╗   ██╗ ██████╗ ████████╗███████╗
+    <div class="text-center mt-3">
+        <pre class="ascii-art">     ██╗ █████╗ ███╗   ███╗██╗   ██╗ ██████╗ ████████╗███████╗
      ██║██╔══██╗████╗ ████║██║   ██║██╔═══██╗╚══██╔══╝██╔════╝
      ██║███████║██╔████╔██║██║   ██║██║   ██║   ██║   █████╗
 ██   ██║██╔══██║██║╚██╔╝██║╚██╗ ██╔╝██║   ██║   ██║   ██╔══╝
 ╚█████╔╝██║  ██║██║ ╚═╝ ██║ ╚████╔╝ ╚██████╔╝   ██║   ███████╗
  ╚════╝ ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═══╝   ╚═════╝    ╚═╝   ╚══════╝</pre>
-        </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div>JamVote v2.4.1 | <a href="index.html">Home</a> | <a href="#">About</a></div>
-        <div class="mt-1">Awaiting authentication...</div>
+        <div class="mt-1">Awaiting authentication... TTY: /dev/pts/0</div>
     </footer>
 
 </div>

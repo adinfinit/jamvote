@@ -9,7 +9,7 @@
   <style>
     .vote-header {
       text-align: center;
-      padding: 2rem 0 1.5rem;
+      padding: 2.5rem 0 1.5rem;
     }
     .vote-header h1 {
       color: var(--cyan);
@@ -31,6 +31,11 @@
     .aspect-card:hover {
       border-color: rgba(0, 240, 255, 0.2);
     }
+    .aspect-card[data-aspect="theme"]:hover { border-color: rgba(0, 240, 255, 0.3); }
+    .aspect-card[data-aspect="enjoyment"]:hover { border-color: rgba(255, 0, 170, 0.3); }
+    .aspect-card[data-aspect="aesthetics"]:hover { border-color: rgba(139, 92, 246, 0.3); }
+    .aspect-card[data-aspect="innovation"]:hover { border-color: rgba(57, 255, 20, 0.3); }
+    .aspect-card[data-aspect="bonus"]:hover { border-color: rgba(255, 215, 0, 0.3); }
     .aspect-header {
       display: flex;
       align-items: center;
@@ -76,15 +81,28 @@
       background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(255, 0, 170, 0.06));
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
+      padding: 1.75rem;
       text-align: center;
       margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .overall-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(255, 215, 0, 0.15));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
     }
     .overall-score {
       font-family: var(--font-heading);
       font-size: 3rem;
       color: var(--gold);
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.15);
       line-height: 1;
     }
     .overall-label {
@@ -98,8 +116,14 @@
       display: flex;
       gap: 0.75rem;
       justify-content: center;
-      margin-top: 0.75rem;
+      margin-top: 1rem;
       flex-wrap: wrap;
+    }
+    .vote-saved {
+      background: var(--lime) !important;
+      border-color: var(--lime) !important;
+      color: var(--bg-primary) !important;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5) !important;
     }
   </style>
 </head>
@@ -109,7 +133,7 @@
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
-      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
       <ul class="navbar-links">
         <li><a href="index.html">Events</a></li>
         <li><a href="#">About</a></li>
@@ -132,7 +156,7 @@
 
   <!-- Page Content -->
   <div class="page-content">
-    <div class="container" style="max-width: 700px;">
+    <div class="container narrow-container">
 
       <!-- Vote Header -->
       <div class="vote-header">
@@ -155,6 +179,7 @@
         <div class="slider-container">
           <input type="range" min="1" max="5" step="0.5" value="3"
                  class="neon-slider" id="slider-theme"
+                 aria-label="Theme score"
                  oninput="updateSlider('theme', this.value)">
           <div class="aspect-range">
             <span>1 - Off Theme</span>
@@ -162,7 +187,7 @@
           </div>
         </div>
         <div class="aspect-comment">
-          <textarea placeholder="Optional comment about theme adherence..."></textarea>
+          <textarea placeholder="Optional comment about theme adherence..." aria-label="Theme comment"></textarea>
         </div>
       </div>
 
@@ -175,6 +200,7 @@
         <div class="slider-container">
           <input type="range" min="1" max="5" step="0.5" value="3"
                  class="neon-slider magenta" id="slider-enjoyment"
+                 aria-label="Enjoyment score"
                  oninput="updateSlider('enjoyment', this.value)">
           <div class="aspect-range">
             <span>1 - Not Fun</span>
@@ -182,7 +208,7 @@
           </div>
         </div>
         <div class="aspect-comment">
-          <textarea placeholder="Optional comment about fun factor..."></textarea>
+          <textarea placeholder="Optional comment about fun factor..." aria-label="Enjoyment comment"></textarea>
         </div>
       </div>
 
@@ -195,6 +221,7 @@
         <div class="slider-container">
           <input type="range" min="1" max="5" step="0.5" value="3"
                  class="neon-slider purple" id="slider-aesthetics"
+                 aria-label="Aesthetics score"
                  oninput="updateSlider('aesthetics', this.value)">
           <div class="aspect-range">
             <span>1 - Rough</span>
@@ -202,7 +229,7 @@
           </div>
         </div>
         <div class="aspect-comment">
-          <textarea placeholder="Optional comment about art, sound, and polish..."></textarea>
+          <textarea placeholder="Optional comment about art, sound, and polish..." aria-label="Aesthetics comment"></textarea>
         </div>
       </div>
 
@@ -215,6 +242,7 @@
         <div class="slider-container">
           <input type="range" min="1" max="5" step="0.5" value="3"
                  class="neon-slider lime" id="slider-innovation"
+                 aria-label="Innovation score"
                  oninput="updateSlider('innovation', this.value)">
           <div class="aspect-range">
             <span>1 - Standard</span>
@@ -222,7 +250,7 @@
           </div>
         </div>
         <div class="aspect-comment">
-          <textarea placeholder="Optional comment about originality..."></textarea>
+          <textarea placeholder="Optional comment about originality..." aria-label="Innovation comment"></textarea>
         </div>
       </div>
 
@@ -235,6 +263,7 @@
         <div class="slider-container">
           <input type="range" min="0" max="2.5" step="0.5" value="0"
                  class="neon-slider gold" id="slider-bonus"
+                 aria-label="Bonus score"
                  oninput="updateSlider('bonus', this.value)">
           <div class="aspect-range">
             <span>0 - No Bonus</span>
@@ -242,7 +271,7 @@
           </div>
         </div>
         <div class="aspect-comment">
-          <textarea placeholder="Optional comment about what stood out..."></textarea>
+          <textarea placeholder="Optional comment about what stood out..." aria-label="Bonus comment"></textarea>
         </div>
       </div>
 
@@ -252,13 +281,13 @@
       <div class="overall-preview">
         <div class="overall-label">Overall Score</div>
         <div class="overall-score" id="overall-score">2.67</div>
-        <div class="text-muted mt-1" style="font-size:0.75rem;">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+        <div class="text-muted mt-1 score-formula">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
       </div>
 
       <!-- Submit -->
       <div class="submit-section">
         <button class="btn btn-filled-magenta btn-lg" id="submit-btn" onclick="submitVote()">Submit Vote</button>
-        <p class="text-muted mt-2" style="font-size:0.8rem;">You can edit your vote until voting closes</p>
+        <p class="text-muted mt-2 vote-edit-hint">You can edit your vote until voting closes</p>
       </div>
 
     </div>
@@ -294,17 +323,13 @@
     function submitVote() {
       var btn = document.getElementById('submit-btn');
       btn.textContent = 'Vote Saved!';
-      btn.style.background = 'var(--lime)';
-      btn.style.borderColor = 'var(--lime)';
-      btn.style.color = 'var(--bg-primary)';
-      btn.style.boxShadow = '0 0 20px rgba(57, 255, 20, 0.5)';
+      btn.classList.add('vote-saved');
+      btn.style.animation = 'none';
 
       setTimeout(function() {
         btn.textContent = 'Submit Vote';
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-        btn.style.boxShadow = '';
+        btn.classList.remove('vote-saved');
+        btn.style.animation = '';
       }, 2000);
     }
 

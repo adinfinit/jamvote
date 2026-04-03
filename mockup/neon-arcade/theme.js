@@ -8,7 +8,14 @@
     return 'dark'; // default for neon arcade
   }
 
-  function applyTheme(theme) {
+  function applyTheme(theme, animate) {
+    if (animate) {
+      document.documentElement.style.transition = 'background-color 0.3s, color 0.3s';
+      setTimeout(function() {
+        document.documentElement.style.transition = '';
+      }, 350);
+    }
+
     if (theme === 'light') {
       document.documentElement.setAttribute('data-theme', 'light');
     } else {
@@ -29,11 +36,11 @@
     var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     var next = current === 'light' ? 'dark' : 'light';
     localStorage.setItem(STORAGE_KEY, next);
-    applyTheme(next);
+    applyTheme(next, true);
   }
 
   // Apply saved theme immediately (before DOM ready) to prevent flash
-  applyTheme(getPreferred());
+  applyTheme(getPreferred(), false);
 
   // Once DOM is ready, wire up the button
   document.addEventListener('DOMContentLoaded', function() {

@@ -20,9 +20,16 @@
         var btns = document.querySelectorAll('.theme-toggle');
         for (var i = 0; i < btns.length; i++) {
             btns[i].textContent = theme === 'light' ? '[CRT]' : '[PAPER]';
-            btns[i].title = theme === 'light'
-                ? 'Switch to CRT mode'
-                : 'Switch to paper printout mode';
+            btns[i].setAttribute('title',
+                theme === 'light'
+                    ? 'Switch to CRT mode'
+                    : 'Switch to paper printout mode'
+            );
+            btns[i].setAttribute('aria-label',
+                theme === 'light'
+                    ? 'Switch to CRT terminal mode'
+                    : 'Switch to paper printout mode'
+            );
         }
     }
 
@@ -33,7 +40,7 @@
         apply(next);
     }
 
-    // Apply saved theme immediately
+    // Apply saved theme immediately (before DOM ready to prevent flash)
     apply(getPreferred());
 
     // Expose toggle for onclick

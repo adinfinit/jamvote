@@ -36,13 +36,13 @@
         <div class="page-header">
             <span class="theme-tag">Theme: Tiny Worlds</span>
             <h1>Ludum Dare 57</h1>
-            <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--gray-mid);">
+            <p class="meta">
                 Organized by Alice Chen &middot; 12 Teams &middot; 38 Jammers
             </p>
         </div>
 
         <!-- Countdown -->
-        <section style="margin-bottom: 3rem;">
+        <section class="section">
             <div class="label">Voting Closes In</div>
             <div class="countdown-grid" id="countdown">
                 <div class="countdown-unit">
@@ -69,9 +69,9 @@
         <hr class="divider">
 
         <!-- Info -->
-        <section style="margin-bottom: 3rem;">
+        <section class="section">
             <h2>About This Jam</h2>
-            <p style="max-width: 700px; line-height: 1.7;">
+            <p class="prose">
                 Create a game around the theme "Tiny Worlds". You have 48 hours to build something from scratch.
                 All engines and tools are allowed. Teams of up to 4 people. After the jam, all participants
                 vote on each other's games across five categories.
@@ -84,32 +84,32 @@
         <section>
             <h2>Teams</h2>
             <div class="team-grid">
-                <a href="team.html" class="team-card" style="text-decoration: none;">
+                <a href="team.html" class="team-card">
                     <h3>Pixel Pioneers</h3>
                     <div class="game-name">Pocket Universe</div>
                     <div class="members">Alice, Bob, Charlie</div>
                 </a>
-                <a href="#" class="team-card" style="text-decoration: none;">
+                <a href="#" class="team-card">
                     <h3>Byte Busters</h3>
                     <div class="game-name">Micro Cosmos</div>
                     <div class="members">Dana, Eli</div>
                 </a>
-                <a href="#" class="team-card" style="text-decoration: none;">
+                <a href="#" class="team-card">
                     <h3>Code Wizards</h3>
                     <div class="game-name">Ant Farm Simulator</div>
                     <div class="members">Fay, Greg, Hana, Ivan</div>
                 </a>
-                <a href="#" class="team-card" style="text-decoration: none;">
+                <a href="#" class="team-card">
                     <h3>Neon Dreamers</h3>
                     <div class="game-name">Terrarium</div>
                     <div class="members">Jill, Kyle</div>
                 </a>
-                <a href="#" class="team-card" style="text-decoration: none;">
+                <a href="#" class="team-card">
                     <h3>Debug Squad</h3>
                     <div class="game-name">Lilliput Wars</div>
                     <div class="members">Lena, Max, Nina</div>
                 </a>
-                <a href="#" class="team-card" style="text-decoration: none;">
+                <a href="#" class="team-card">
                     <h3>Sprite Club</h3>
                     <div class="game-name">Snow Globe</div>
                     <div class="members">Omar, Pat</div>
@@ -128,7 +128,6 @@
     <script>
         // Countdown timer
         (function () {
-            // Set target to ~2 days, 14 hours, 37 minutes from now
             const now = new Date();
             const target = new Date(now.getTime() + (2 * 24 + 14) * 3600000 + 37 * 60000 + 52 * 1000);
 

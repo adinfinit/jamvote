@@ -9,63 +9,92 @@
   <style>
     .results-header {
       text-align: center;
-      padding: 2rem 0 1.5rem;
+      padding: 2.5rem 0 1.5rem;
     }
     .results-header h1 {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
     }
     .podium {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 1rem;
-      margin: 2rem 0;
+      gap: 1.25rem;
+      margin: 2.5rem 0;
       flex-wrap: wrap;
     }
     .podium-entry {
       text-align: center;
-      padding: 1.5rem 1.25rem;
+      padding: 1.75rem 1.5rem;
       border-radius: var(--radius-lg);
-      min-width: 180px;
-      transition: transform 0.2s;
+      min-width: 190px;
+      transition: transform 0.2s, box-shadow 0.3s;
     }
     .podium-entry:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
     }
     .podium-1 {
       background: linear-gradient(180deg, rgba(255, 215, 0, 0.12), rgba(255, 215, 0, 0.03));
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.35);
       order: 2;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1), 0 0 40px rgba(255, 215, 0, 0.05);
+      padding-bottom: 2.25rem;
+    }
+    .podium-1:hover {
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2), 0 0 60px rgba(255, 215, 0, 0.08);
     }
     .podium-2 {
       background: linear-gradient(180deg, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.02));
       border: 1px solid rgba(192, 192, 192, 0.25);
       order: 1;
     }
+    .podium-2:hover {
+      box-shadow: 0 0 20px rgba(192, 192, 192, 0.1);
+    }
     .podium-3 {
       background: linear-gradient(180deg, rgba(205, 127, 50, 0.1), rgba(205, 127, 50, 0.02));
       border: 1px solid rgba(205, 127, 50, 0.25);
       order: 3;
     }
+    .podium-3:hover {
+      box-shadow: 0 0 20px rgba(205, 127, 50, 0.1);
+    }
     .podium-rank {
       font-family: var(--font-heading);
-      font-size: 2rem;
+      font-size: 2.2rem;
       line-height: 1;
       margin-bottom: 0.5rem;
+    }
+    .podium-rank-1 {
+      color: var(--gold);
+      text-shadow: 0 0 16px rgba(255, 215, 0, 0.5), 0 0 32px rgba(255, 215, 0, 0.25);
+    }
+    .podium-rank-2 {
+      color: #c0c0c0;
+      text-shadow: 0 0 8px rgba(192, 192, 192, 0.3);
+    }
+    .podium-rank-3 {
+      color: #cd7f32;
+      text-shadow: 0 0 8px rgba(205, 127, 50, 0.3);
     }
     .podium-game {
       font-family: var(--font-heading);
       font-size: 1rem;
       margin-bottom: 0.25rem;
+      letter-spacing: 0.04em;
     }
     .podium-team {
       font-size: 0.8rem;
       color: var(--text-secondary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
     .podium-score {
       font-family: var(--font-heading);
       font-size: 1.5rem;
+    }
+    .podium-1 .podium-score {
+      font-size: 1.8rem;
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
     }
     .score-cell {
       font-family: var(--font-heading);
@@ -92,7 +121,7 @@
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
-      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
       <ul class="navbar-links">
         <li><a href="index.html">Events</a></li>
         <li><a href="#">About</a></li>
@@ -125,19 +154,19 @@
       <!-- Podium -->
       <div class="podium">
         <div class="podium-entry podium-2">
-          <div class="podium-rank" style="color:#c0c0c0;">2</div>
+          <div class="podium-rank podium-rank-2">2</div>
           <div class="podium-game">Micro Galaxy</div>
           <div class="podium-team">Neon Nomads</div>
           <div class="podium-score text-cyan">4.12</div>
         </div>
         <div class="podium-entry podium-1">
-          <div class="podium-rank" style="color:var(--gold); text-shadow: 0 0 12px rgba(255,215,0,0.5);">1</div>
+          <div class="podium-rank podium-rank-1">1</div>
           <div class="podium-game">Pocket Universe</div>
           <div class="podium-team">Pixel Pioneers</div>
-          <div class="podium-score text-gold" style="font-size:1.8rem;">4.38</div>
+          <div class="podium-score">4.38</div>
         </div>
         <div class="podium-entry podium-3">
-          <div class="podium-rank" style="color:#cd7f32;">3</div>
+          <div class="podium-rank podium-rank-3">3</div>
           <div class="podium-game">Ant Farm Odyssey</div>
           <div class="podium-team">Ctrl+Alt+Defeat</div>
           <div class="podium-score text-cyan">3.96</div>

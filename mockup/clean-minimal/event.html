@@ -41,20 +41,20 @@
     <div class="container">
 
       <!-- Event Header -->
-      <div class="flex items-center gap-12 mb-8" style="flex-wrap:wrap;">
+      <div class="flex items-center gap-12 mb-8 flex-wrap">
         <span class="badge badge-green">Voting Open</span>
         <span class="text-small text-muted">Organized by Sarah Rivera</span>
       </div>
 
-      <h1 style="margin-bottom:8px;">Ludum Dare 57</h1>
-      <p style="font-size:1.125rem; margin-bottom:32px;">
-        Theme: <strong style="color:var(--amber); font-size:1.25rem;">Tiny Worlds</strong>
+      <h1 class="mb-4">Ludum Dare 57</h1>
+      <p class="mb-32" style="font-size:1.125rem;">
+        Theme: <strong class="theme-accent" style="font-size:1.25rem;">Tiny Worlds</strong>
       </p>
 
       <!-- Countdown & CTA -->
       <div class="grid-2 mb-32">
         <div class="card">
-          <h3 class="mb-16" style="color:var(--gray-500); font-weight:500; font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em;">Voting Ends In</h3>
+          <h3 class="section-label mb-16">Voting Ends In</h3>
           <div class="countdown" id="countdown">
             <div class="countdown-item">
               <div class="countdown-number" id="cd-days">02</div>
@@ -75,8 +75,8 @@
           </div>
         </div>
 
-        <div class="card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-          <p style="margin-bottom:16px; font-size:0.9375rem;">You have <strong style="color:var(--blue);">3 games</strong> left to vote on</p>
+        <div class="card cta-card">
+          <p>You have <strong class="text-blue">3 games</strong> left to vote on</p>
           <a href="voting.html" class="btn btn-primary btn-lg">
             &#9654; Start Voting
           </a>
@@ -86,32 +86,32 @@
       <!-- Event Info -->
       <div class="card mb-32">
         <h3 class="mb-16">About This Jam</h3>
-        <p style="margin-bottom:12px;">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
+        <p class="mb-12">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
         <p>Voting is open to all registered jammers. Play each game, rate it on five aspects, and leave constructive feedback. Judge scores account for 30% of the final score.</p>
       </div>
 
       <!-- Timeline -->
       <div class="card mb-32">
-        <h3 class="mb-16">Schedule</h3>
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:20px;">
+        <h3 class="mb-20">Schedule</h3>
+        <div class="schedule-grid">
           <div>
-            <div class="text-small text-muted mb-8">Jam Start</div>
-            <div style="font-weight:500;">Feb 7, 2026 &middot; 6:00 PM</div>
+            <div class="schedule-item-label">Jam Start</div>
+            <div class="schedule-item-date">Feb 7, 2026 &middot; 6:00 PM</div>
             <span class="badge badge-gray mt-8">Completed</span>
           </div>
           <div>
-            <div class="text-small text-muted mb-8">Jam End</div>
-            <div style="font-weight:500;">Feb 10, 2026 &middot; 6:00 PM</div>
+            <div class="schedule-item-label">Jam End</div>
+            <div class="schedule-item-date">Feb 10, 2026 &middot; 6:00 PM</div>
             <span class="badge badge-gray mt-8">Completed</span>
           </div>
           <div>
-            <div class="text-small text-muted mb-8">Voting Opens</div>
-            <div style="font-weight:500;">Feb 11, 2026 &middot; 12:00 PM</div>
+            <div class="schedule-item-label">Voting Opens</div>
+            <div class="schedule-item-date">Feb 11, 2026 &middot; 12:00 PM</div>
             <span class="badge badge-green mt-8">Active</span>
           </div>
           <div>
-            <div class="text-small text-muted mb-8">Voting Closes</div>
-            <div style="font-weight:500;">Feb 18, 2026 &middot; 11:59 PM</div>
+            <div class="schedule-item-label">Voting Closes</div>
+            <div class="schedule-item-date">Feb 18, 2026 &middot; 11:59 PM</div>
             <span class="badge badge-blue mt-8">Upcoming</span>
           </div>
         </div>
@@ -125,84 +125,84 @@
 
       <div class="grid-3">
 
-        <a href="team.html" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
+        <a href="team.html" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
             <span class="avatar">PP</span>
             <span class="badge badge-blue">4 members</span>
           </div>
-          <h3 style="margin-bottom:4px;">Pixel Pioneers</h3>
-          <p class="text-small" style="margin-bottom:12px;">Pocket Universe</p>
+          <h3 class="mb-4">Pixel Pioneers</h3>
+          <p class="text-small mb-12">Pocket Universe</p>
           <div class="avatar-group">
             <span class="avatar avatar-sm">AJ</span>
-            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">MK</span>
-            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">SR</span>
-            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">LW</span>
+            <span class="avatar avatar-sm avatar-amber">MK</span>
+            <span class="avatar avatar-sm avatar-green">SR</span>
+            <span class="avatar avatar-sm avatar-red">LW</span>
           </div>
         </a>
 
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
-            <span class="avatar" style="background:#fef3c7;color:#d97706;">NB</span>
+        <a href="#" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
+            <span class="avatar avatar-amber">NB</span>
             <span class="badge badge-blue">3 members</span>
           </div>
-          <h3 style="margin-bottom:4px;">Neon Bytes</h3>
-          <p class="text-small" style="margin-bottom:12px;">Circuit Bloom</p>
+          <h3 class="mb-4">Neon Bytes</h3>
+          <p class="text-small mb-12">Circuit Bloom</p>
           <div class="avatar-group">
-            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">JD</span>
+            <span class="avatar avatar-sm avatar-amber">JD</span>
             <span class="avatar avatar-sm">TW</span>
-            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">PL</span>
+            <span class="avatar avatar-sm avatar-green">PL</span>
           </div>
         </a>
 
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
-            <span class="avatar" style="background:#ecfdf5;color:#059669;">CC</span>
+        <a href="#" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
+            <span class="avatar avatar-green">CC</span>
             <span class="badge badge-blue">2 members</span>
           </div>
-          <h3 style="margin-bottom:4px;">Code Cats</h3>
-          <p class="text-small" style="margin-bottom:12px;">Ant Colony</p>
+          <h3 class="mb-4">Code Cats</h3>
+          <p class="text-small mb-12">Ant Colony</p>
           <div class="avatar-group">
-            <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">RB</span>
-            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">EM</span>
+            <span class="avatar avatar-sm avatar-green">RB</span>
+            <span class="avatar avatar-sm avatar-red">EM</span>
           </div>
         </a>
 
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
-            <span class="avatar" style="background:#fee2e2;color:#dc2626;">IG</span>
+        <a href="#" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
+            <span class="avatar avatar-red">IG</span>
             <span class="badge badge-blue">3 members</span>
           </div>
-          <h3 style="margin-bottom:4px;">Indie Gnomes</h3>
-          <p class="text-small" style="margin-bottom:12px;">Terrarium Tactics</p>
+          <h3 class="mb-4">Indie Gnomes</h3>
+          <p class="text-small mb-12">Terrarium Tactics</p>
           <div class="avatar-group">
-            <span class="avatar avatar-sm" style="background:#fee2e2;color:#dc2626;">NK</span>
+            <span class="avatar avatar-sm avatar-red">NK</span>
             <span class="avatar avatar-sm">OT</span>
-            <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">QS</span>
+            <span class="avatar avatar-sm avatar-amber">QS</span>
           </div>
         </a>
 
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
-            <span class="avatar" style="background:#ede9fe;color:#7c3aed;">GZ</span>
+        <a href="#" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
+            <span class="avatar avatar-purple">GZ</span>
             <span class="badge badge-blue">2 members</span>
           </div>
-          <h3 style="margin-bottom:4px;">Glitch Zone</h3>
-          <p class="text-small" style="margin-bottom:12px;">Microverse</p>
+          <h3 class="mb-4">Glitch Zone</h3>
+          <p class="text-small mb-12">Microverse</p>
           <div class="avatar-group">
-            <span class="avatar avatar-sm" style="background:#ede9fe;color:#7c3aed;">DM</span>
+            <span class="avatar avatar-sm avatar-purple">DM</span>
             <span class="avatar avatar-sm">HS</span>
           </div>
         </a>
 
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
-          <div class="flex items-center justify-between mb-8">
-            <span class="avatar" style="background:#fce7f3;color:#db2777;">SW</span>
+        <a href="#" class="card card-clickable">
+          <div class="flex items-center justify-between mb-12">
+            <span class="avatar avatar-pink">SW</span>
             <span class="badge badge-blue">1 member</span>
           </div>
-          <h3 style="margin-bottom:4px;">Solo Wolf</h3>
-          <p class="text-small" style="margin-bottom:12px;">Dust Mote</p>
+          <h3 class="mb-4">Solo Wolf</h3>
+          <p class="text-small mb-12">Dust Mote</p>
           <div class="avatar-group">
-            <span class="avatar avatar-sm" style="background:#fce7f3;color:#db2777;">KR</span>
+            <span class="avatar avatar-sm avatar-pink">KR</span>
           </div>
         </a>
 

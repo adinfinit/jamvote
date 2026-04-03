@@ -9,11 +9,25 @@
   <style>
     .theme-display {
       text-align: center;
-      padding: 2.5rem 1rem;
+      padding: 2.5rem 1.5rem;
       margin-bottom: 2rem;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(255, 0, 170, 0.05));
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(255, 0, 170, 0.04));
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-display::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 0, 170, 0.2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
     }
     .theme-display .theme-label {
       font-family: var(--font-heading);
@@ -21,7 +35,7 @@
       text-transform: uppercase;
       letter-spacing: 0.15em;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
     .theme-display .theme-name {
       font-family: var(--font-heading);
@@ -41,11 +55,12 @@
       text-align: center;
     }
     .timer-box .timer-label {
+      font-family: var(--font-heading);
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
     .team-game {
       font-size: 0.85rem;
@@ -57,8 +72,11 @@
     }
     .vote-cta {
       text-align: center;
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       margin-top: 2rem;
+      background: linear-gradient(135deg, rgba(255, 0, 170, 0.04), rgba(0, 240, 255, 0.03));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
     }
   </style>
 </head>
@@ -68,7 +86,7 @@
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
-      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
       <ul class="navbar-links">
         <li><a href="index.html">Events</a></li>
         <li><a href="#">About</a></li>
@@ -94,9 +112,9 @@
     <div class="container">
 
       <!-- Event Title -->
-      <div style="text-align:center; margin-bottom:1.5rem;">
+      <div class="event-title-wrap">
         <h1>Ludum Dare 57</h1>
-        <span class="badge badge-lime" style="margin-top:0.5rem;">Voting Open</span>
+        <span class="badge badge-lime event-badge">Voting Open</span>
       </div>
 
       <!-- Theme -->
@@ -137,37 +155,37 @@
       <div class="grid grid-2 mb-4">
 
         <a href="team.html" class="card card-cyan" style="text-decoration:none; color:inherit;">
-          <h3 style="margin-bottom:0.25rem;">Pixel Pioneers</h3>
+          <h3 class="team-card-title">Pixel Pioneers</h3>
           <div class="team-game">Pocket Universe</div>
           <div class="team-members mt-1">Alex Chen, Maya Torres, Riku Sato, Elena Volkov</div>
         </a>
 
         <div class="card card-magenta">
-          <h3 style="margin-bottom:0.25rem;">Neon Nomads</h3>
+          <h3 class="team-card-title">Neon Nomads</h3>
           <div class="team-game">Micro Galaxy</div>
           <div class="team-members mt-1">Jordan Blake, Sam Rivera, Kai Zhang</div>
         </div>
 
         <div class="card card-purple">
-          <h3 style="margin-bottom:0.25rem;">Ctrl+Alt+Defeat</h3>
+          <h3 class="team-card-title">Ctrl+Alt+Defeat</h3>
           <div class="team-game">Ant Farm Odyssey</div>
           <div class="team-members mt-1">Priya Patel, Leo Martinez, Yuki Tanaka, Chris O'Neill</div>
         </div>
 
         <div class="card card-lime">
-          <h3 style="margin-bottom:0.25rem;">Byte Me</h3>
+          <h3 class="team-card-title">Byte Me</h3>
           <div class="team-game">Snow Globe Siege</div>
           <div class="team-members mt-1">Freya Anderson, Dex Williams</div>
         </div>
 
         <div class="card card-cyan">
-          <h3 style="margin-bottom:0.25rem;">Glitch Collective</h3>
+          <h3 class="team-card-title">Glitch Collective</h3>
           <div class="team-game">Terrarium Tactics</div>
           <div class="team-members mt-1">Morgan Lee, Ava Kim, Nils Eriksen</div>
         </div>
 
         <div class="card card-magenta">
-          <h3 style="margin-bottom:0.25rem;">The Stack Overflow</h3>
+          <h3 class="team-card-title">The Stack Overflow</h3>
           <div class="team-game">Dollhouse Dungeon</div>
           <div class="team-members mt-1">Omar Hassan, Lily Chen, Ben Cooper, Zara Okafor, Tomas Novak</div>
         </div>
@@ -177,7 +195,7 @@
       <!-- Vote CTA -->
       <div class="vote-cta">
         <a href="voting.html" class="btn btn-filled-magenta btn-lg">&#9889; Start Voting</a>
-        <p class="text-muted mt-2" style="font-size:0.85rem;">You have 4 games left to vote on</p>
+        <p class="text-muted mt-2 cta-hint">You have 4 games left to vote on</p>
       </div>
 
     </div>

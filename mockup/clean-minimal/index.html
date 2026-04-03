@@ -19,7 +19,7 @@
       <ul class="nav-links">
         <li><a href="index.html" class="active">Events</a></li>
         <li><a href="#">About</a></li>
-        <li><a href="login.html" class="btn btn-primary" style="color:#fff;padding:6px 16px;">Log in</a></li>
+        <li><a href="login.html" class="btn btn-primary nav-login">Log in</a></li>
         <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
       </ul>
     </div>
@@ -30,7 +30,7 @@
     <div class="container">
 
       <!-- Header -->
-      <div class="section-header">
+      <div class="section-header mb-32">
         <div>
           <h1>Game Jams</h1>
           <p class="section-subtitle">Vote on games, celebrate creativity</p>
@@ -38,44 +38,44 @@
       </div>
 
       <!-- Active Events -->
-      <h2 class="mb-16" style="font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--gray-400); font-weight:600;">Active Events</h2>
+      <h2 class="section-label mb-20">Active Events</h2>
 
       <div class="grid-2 mb-32">
 
         <!-- Event Card 1 -->
-        <a href="event.html" class="card card-clickable" style="text-decoration:none;">
+        <a href="event.html" class="card card-clickable">
           <div class="flex items-center justify-between mb-16">
             <span class="badge badge-green">Voting Open</span>
             <span class="text-small text-muted">12 teams</span>
           </div>
-          <h2 style="margin-bottom:8px;">Ludum Dare 57</h2>
-          <p style="font-size:0.9375rem; margin-bottom:16px;">Theme: <strong style="color:var(--amber);">Tiny Worlds</strong></p>
+          <h2 class="event-card-title">Ludum Dare 57</h2>
+          <p class="event-card-theme">Theme: <strong class="theme-accent">Tiny Worlds</strong></p>
           <div class="flex items-center gap-12">
             <div class="avatar-group">
               <span class="avatar avatar-sm">AL</span>
-              <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">MK</span>
-              <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">SR</span>
+              <span class="avatar avatar-sm avatar-amber">MK</span>
+              <span class="avatar avatar-sm avatar-green">SR</span>
               <span class="avatar avatar-sm">+9</span>
             </div>
-            <span class="text-small text-muted">Voting ends in 2 days</span>
+            <span class="event-card-meta">Voting ends in 2 days</span>
           </div>
         </a>
 
         <!-- Event Card 2 -->
-        <a href="#" class="card card-clickable" style="text-decoration:none;">
+        <a href="#" class="card card-clickable">
           <div class="flex items-center justify-between mb-16">
             <span class="badge badge-blue">Registration Open</span>
             <span class="text-small text-muted">4 teams</span>
           </div>
-          <h2 style="margin-bottom:8px;">Mini Jam 189</h2>
-          <p style="font-size:0.9375rem; margin-bottom:16px;">Theme: <strong style="color:var(--amber);">One Button</strong></p>
+          <h2 class="event-card-title">Mini Jam 189</h2>
+          <p class="event-card-theme">Theme: <strong class="theme-accent">One Button</strong></p>
           <div class="flex items-center gap-12">
             <div class="avatar-group">
-              <span class="avatar avatar-sm" style="background:#fef3c7;color:#d97706;">JD</span>
-              <span class="avatar avatar-sm" style="background:#ecfdf5;color:#059669;">TW</span>
+              <span class="avatar avatar-sm avatar-amber">JD</span>
+              <span class="avatar avatar-sm avatar-green">TW</span>
               <span class="avatar avatar-sm">KL</span>
             </div>
-            <span class="text-small text-muted">Starts Mar 8, 2026</span>
+            <span class="event-card-meta">Starts Mar 8, 2026</span>
           </div>
         </a>
 
@@ -84,11 +84,11 @@
       <!-- Past Events -->
       <div class="divider"></div>
 
-      <h2 class="mb-24" style="font-size:0.8125rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--gray-400); font-weight:600;">Past Events</h2>
+      <h2 class="section-label mb-24">Past Events</h2>
 
       <!-- 2025 -->
-      <h3 class="mb-16" style="color:var(--gray-500); font-weight:500;">2025</h3>
-      <div class="table-wrap mb-24">
+      <h3 class="year-heading mb-16">2025</h3>
+      <div class="table-wrap mb-32">
         <table>
           <thead>
             <tr>
@@ -102,11 +102,11 @@
           <tbody>
             <tr>
               <td><strong>Ludum Dare 56</strong></td>
-              <td style="color:var(--gray-500);">Shapeshifter</td>
+              <td class="text-muted">Shapeshifter</td>
               <td>18</td>
               <td>
                 <span class="flex items-center gap-12">
-                  <span style="color:var(--amber);">&#9733;</span>
+                  <span class="winner-star">&#9733;</span>
                   <span>Morphic Dreams</span>
                 </span>
               </td>
@@ -114,11 +114,11 @@
             </tr>
             <tr>
               <td><strong>Mini Jam 185</strong></td>
-              <td style="color:var(--gray-500);">Underwater</td>
+              <td class="text-muted">Underwater</td>
               <td>9</td>
               <td>
                 <span class="flex items-center gap-12">
-                  <span style="color:var(--amber);">&#9733;</span>
+                  <span class="winner-star">&#9733;</span>
                   <span>Deep Blue</span>
                 </span>
               </td>
@@ -129,7 +129,7 @@
       </div>
 
       <!-- 2024 -->
-      <h3 class="mb-16" style="color:var(--gray-500); font-weight:500;">2024</h3>
+      <h3 class="year-heading mb-16">2024</h3>
       <div class="table-wrap">
         <table>
           <thead>
@@ -144,11 +144,11 @@
           <tbody>
             <tr>
               <td><strong>Ludum Dare 55</strong></td>
-              <td style="color:var(--gray-500);">Summoning</td>
+              <td class="text-muted">Summoning</td>
               <td>15</td>
               <td>
                 <span class="flex items-center gap-12">
-                  <span style="color:var(--amber);">&#9733;</span>
+                  <span class="winner-star">&#9733;</span>
                   <span>Ritual Craft</span>
                 </span>
               </td>

@@ -32,22 +32,22 @@
         </div>
     </div>
 
-    <div class="container" style="max-width: 800px;">
+    <div class="container-mid">
         <div class="page-header">
             <div class="label">Ludum Dare 57 &mdash; Voting</div>
             <h1>Pocket Universe</h1>
-            <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--gray-mid);">
+            <p class="meta">
                 by Pixel Pioneers &middot; <a href="team.html">View Team</a>
             </p>
         </div>
 
         <!-- Download link -->
-        <div class="block" style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+        <div class="play-block">
             <div>
                 <div class="label">Play the game first</div>
-                <a href="#" style="font-weight: 900; font-size: 1.1rem;">Download Pocket Universe</a>
+                <a href="#" class="download-link">Download Pocket Universe</a>
             </div>
-            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-mid);">Game 3 of 8</span>
+            <span class="meta-sm">Game 3 of 8</span>
         </div>
 
         <!-- Voting Form -->
@@ -61,9 +61,10 @@
                         <span class="vote-aspect-score" id="score-theme">3.0</span>
                     </div>
                     <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           aria-label="Theme score"
                            data-score="score-theme" oninput="updateScore(this)">
                     <div class="vote-comment">
-                        <textarea placeholder="Comment on theme interpretation..." rows="2"></textarea>
+                        <textarea placeholder="Comment on theme interpretation..." rows="2" aria-label="Theme comment"></textarea>
                     </div>
                 </div>
 
@@ -74,9 +75,10 @@
                         <span class="vote-aspect-score" id="score-enjoyment">3.0</span>
                     </div>
                     <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           aria-label="Enjoyment score"
                            data-score="score-enjoyment" oninput="updateScore(this)">
                     <div class="vote-comment">
-                        <textarea placeholder="How fun was it to play?" rows="2"></textarea>
+                        <textarea placeholder="How fun was it to play?" rows="2" aria-label="Enjoyment comment"></textarea>
                     </div>
                 </div>
 
@@ -87,9 +89,10 @@
                         <span class="vote-aspect-score" id="score-aesthetics">3.0</span>
                     </div>
                     <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           aria-label="Aesthetics score"
                            data-score="score-aesthetics" oninput="updateScore(this)">
                     <div class="vote-comment">
-                        <textarea placeholder="Art, sound, visual polish..." rows="2"></textarea>
+                        <textarea placeholder="Art, sound, visual polish..." rows="2" aria-label="Aesthetics comment"></textarea>
                     </div>
                 </div>
 
@@ -100,9 +103,10 @@
                         <span class="vote-aspect-score" id="score-innovation">3.0</span>
                     </div>
                     <input type="range" class="slider-track" min="1" max="5" step="0.5" value="3"
+                           aria-label="Innovation score"
                            data-score="score-innovation" oninput="updateScore(this)">
                     <div class="vote-comment">
-                        <textarea placeholder="Originality and creative ideas..." rows="2"></textarea>
+                        <textarea placeholder="Originality and creative ideas..." rows="2" aria-label="Innovation comment"></textarea>
                     </div>
                 </div>
 
@@ -113,29 +117,30 @@
                         <span class="vote-aspect-score" id="score-bonus">0.0</span>
                     </div>
                     <input type="range" class="slider-track" min="0" max="2.5" step="0.5" value="0"
+                           aria-label="Bonus score"
                            data-score="score-bonus" oninput="updateScore(this)">
-                    <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--gray-mid); margin-top: 0.25rem;">
+                    <div class="vote-hint">
                         0 &ndash; 2.5 range &middot; Extra credit for going above and beyond
                     </div>
                     <div class="vote-comment">
-                        <textarea placeholder="What earned the bonus?" rows="2"></textarea>
+                        <textarea placeholder="What earned the bonus?" rows="2" aria-label="Bonus comment"></textarea>
                     </div>
                 </div>
 
             </div>
 
             <!-- Overall Score -->
-            <div class="block" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-width: 4px;">
+            <div class="score-overall">
                 <div>
                     <div class="label">Calculated Overall</div>
-                    <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gray-mid);">
+                    <div class="meta-sm">
                         (Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5
                     </div>
                 </div>
-                <span style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 900;" id="score-overall">2.67</span>
+                <span class="score-overall-value" id="score-overall">2.67</span>
             </div>
 
-            <button type="button" class="btn btn-accent btn-large" style="width: 100%; text-align: center;" onclick="submitVote()">
+            <button type="button" class="btn btn-accent btn-large btn-full" onclick="submitVote()">
                 Submit Vote
             </button>
         </form>
@@ -171,12 +176,12 @@
         function submitVote() {
             const btn = document.querySelector('#vote-form .btn');
             btn.textContent = 'VOTE SUBMITTED';
-            btn.style.background = '#000';
-            btn.style.borderColor = '#000';
-            setTimeout(() => {
+            btn.classList.add('btn-submitted');
+            btn.classList.remove('btn-accent');
+            setTimeout(function() {
                 btn.textContent = 'SUBMIT VOTE';
-                btn.style.background = '';
-                btn.style.borderColor = '';
+                btn.classList.remove('btn-submitted');
+                btn.classList.add('btn-accent');
             }, 2000);
         }
 

@@ -39,30 +39,30 @@
     </div>
   </div>
 
-  <div class="container" style="max-width: 750px;">
+  <div class="container container-narrow">
 
     <!-- Voting Header -->
     <div class="mb-3">
-      <p style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">Ludum Dare 57 &mdash; Vote</p>
+      <p class="page-breadcrumb">Ludum Dare 57 &mdash; Vote</p>
       <h1 class="text-gradient">Pocket Universe</h1>
-      <p style="color: var(--text-secondary);">by <a href="team.html">Pixel Pioneers</a></p>
+      <p class="text-secondary">by <a href="team.html">Pixel Pioneers</a></p>
     </div>
 
     <!-- Game info -->
     <div class="info-panel mb-3">
-      <p style="color: var(--text-secondary); line-height: 1.6;">
+      <p class="info-text">
         Explore a universe that fits in your pocket! Navigate tiny galaxies, terraform miniature planets, and discover life forms smaller than atoms.
         A relaxing exploration game with procedural generation and a chill synthwave soundtrack.
       </p>
       <div class="flex gap-2 mt-2">
-        <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Play Game</a>
-        <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Jam Page</a>
+        <a href="#" class="btn btn-secondary btn-sm">Play Game</a>
+        <a href="#" class="btn btn-secondary btn-sm">Jam Page</a>
       </div>
     </div>
 
     <!-- Overall Score Display -->
-    <div class="info-panel mb-3" style="text-align: center;">
-      <div style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Overall Score</div>
+    <div class="info-panel mb-3 score-display-center">
+      <div class="score-display-label">Overall Score</div>
       <div class="overall-score" id="overall-score">3.33</div>
     </div>
 
@@ -131,7 +131,7 @@
 
       <!-- Submit -->
       <div class="flex justify-between items-center mt-3">
-        <a href="event.html" style="color: var(--text-muted); font-size: 0.9rem;">Back to queue</a>
+        <a href="event.html" class="back-link">Back to queue</a>
         <button type="button" class="btn btn-primary" onclick="alert('Vote submitted!')">Submit Vote</button>
       </div>
 
@@ -151,13 +151,13 @@
         <tbody>
           <tr>
             <td><a href="#">Microverse</a></td>
-            <td style="color: var(--text-secondary);">Neon Dreamers</td>
-            <td style="color: var(--neon-pink); font-weight: 600;">4.11</td>
+            <td class="text-muted-cell">Neon Dreamers</td>
+            <td class="vote-completed-score">4.11</td>
           </tr>
           <tr>
             <td><a href="#">Ant Colony</a></td>
-            <td style="color: var(--text-secondary);">Bug Fixers</td>
-            <td style="color: var(--neon-pink); font-weight: 600;">3.56</td>
+            <td class="text-muted-cell">Bug Fixers</td>
+            <td class="vote-completed-score">3.56</td>
           </tr>
         </tbody>
       </table>
@@ -167,7 +167,9 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="grid-perspective"></div>
+    <div class="grid-perspective">
+      <div class="grid-horizon"></div>
+    </div>
     <div class="footer-content">
       <div class="synthwave-sun mb-2"></div>
       <div class="footer-links">

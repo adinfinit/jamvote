@@ -21,14 +21,15 @@
       font-family: var(--font-heading);
       font-size: 1rem;
       color: var(--magenta);
+      text-shadow: 0 0 8px rgba(255, 0, 170, 0.25);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       margin-bottom: 1rem;
     }
     .team-hero .game-desc {
       color: var(--text-secondary);
       max-width: 600px;
-      margin: 0 auto 1.25rem;
+      margin: 0 auto 1.5rem;
       font-size: 0.95rem;
       line-height: 1.7;
     }
@@ -50,11 +51,19 @@
       list-style: none;
     }
     .members-list li {
-      padding: 0.65rem 0;
+      padding: 0.75rem 0;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      transition: background 0.15s;
+    }
+    .members-list li:hover {
+      background: rgba(0, 240, 255, 0.03);
+      margin: 0 -0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      border-radius: var(--radius);
     }
     .members-list li:last-child {
       border-bottom: none;
@@ -92,9 +101,13 @@
     .comment-item {
       background: var(--bg-input);
       border-radius: var(--radius);
-      padding: 0.85rem 1rem;
+      padding: 1rem 1.25rem;
       margin-bottom: 0.75rem;
       border-left: 3px solid var(--purple);
+      transition: border-left-color 0.2s, transform 0.15s;
+    }
+    .comment-item:hover {
+      transform: translateX(2px);
     }
     .comment-item .comment-aspect {
       font-family: var(--font-heading);
@@ -102,26 +115,39 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
     }
     .comment-item .comment-text {
       font-size: 0.9rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
     }
     .overall-big {
       text-align: center;
-      padding: 1.5rem;
+      padding: 1.75rem;
       background: linear-gradient(135deg, rgba(255, 215, 0, 0.06), rgba(255, 0, 170, 0.04));
       border-radius: var(--radius-lg);
       border: 1px solid rgba(255, 215, 0, 0.2);
       margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .overall-big::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 0, 170, 0.15));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
     }
     .overall-big .score-value {
       font-family: var(--font-heading);
       font-size: 3.5rem;
       color: var(--gold);
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.15);
       line-height: 1;
     }
     .overall-big .score-label {
@@ -136,7 +162,13 @@
       font-size: 1.1rem;
       color: var(--gold);
       margin-top: 0.5rem;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
     }
+    .comment-border-cyan { border-left-color: var(--cyan); }
+    .comment-border-magenta { border-left-color: var(--magenta); }
+    .comment-border-purple { border-left-color: var(--purple); }
+    .comment-border-lime { border-left-color: var(--lime); }
+    .comment-border-gold { border-left-color: var(--gold); }
   </style>
 </head>
 <body>
@@ -145,7 +177,7 @@
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="navbar-brand flicker">Jam<span>Vote</span></a>
-      <button class="navbar-toggle" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
+      <button class="navbar-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">&#9776;</button>
       <ul class="navbar-links">
         <li><a href="index.html">Events</a></li>
         <li><a href="#">About</a></li>
@@ -168,7 +200,7 @@
 
   <!-- Page Content -->
   <div class="page-content">
-    <div class="container" style="max-width: 800px;">
+    <div class="container medium-container">
 
       <!-- Team Hero -->
       <div class="team-hero">
@@ -193,7 +225,7 @@
 
         <!-- Members -->
         <div class="card">
-          <h3 class="mb-2" style="font-size:1rem;">
+          <h3 class="mb-2 info-card-title">
             <span class="text-cyan">&#9654;</span> Team Members
           </h3>
           <ul class="members-list">
@@ -230,7 +262,7 @@
 
         <!-- Scores -->
         <div class="card">
-          <h3 class="mb-2" style="font-size:1rem;">
+          <h3 class="mb-2 info-card-title">
             <span class="text-gold">&#9654;</span> Voting Results
           </h3>
 
@@ -298,27 +330,27 @@
       <h2 class="section-title"><span class="text-purple">&#9654;</span> Voter Comments</h2>
 
       <div class="comments-section">
-        <div class="comment-item" style="border-left-color: var(--cyan);">
+        <div class="comment-item comment-border-cyan">
           <div class="comment-aspect">Theme</div>
           <div class="comment-text">Perfect interpretation of "Tiny Worlds" -- the procedural generation creates genuinely unique micro-ecosystems every time.</div>
         </div>
-        <div class="comment-item" style="border-left-color: var(--magenta);">
+        <div class="comment-item comment-border-magenta">
           <div class="comment-aspect">Enjoyment</div>
           <div class="comment-text">I lost track of time playing this. The discovery loop is incredibly satisfying and the progression feels great.</div>
         </div>
-        <div class="comment-item" style="border-left-color: var(--purple);">
+        <div class="comment-item comment-border-purple">
           <div class="comment-aspect">Aesthetics</div>
           <div class="comment-text">Beautiful pixel art with great attention to detail. The soundtrack is chill and fits the vibe perfectly.</div>
         </div>
-        <div class="comment-item" style="border-left-color: var(--lime);">
+        <div class="comment-item comment-border-lime">
           <div class="comment-aspect">Innovation</div>
           <div class="comment-text">The pocket ecosystem mechanic is fresh. Haven't seen this approach to the genre before.</div>
         </div>
-        <div class="comment-item" style="border-left-color: var(--magenta);">
+        <div class="comment-item comment-border-magenta">
           <div class="comment-aspect">Enjoyment</div>
           <div class="comment-text">Really fun gameplay. Would love to see this expanded into a full release!</div>
         </div>
-        <div class="comment-item" style="border-left-color: var(--gold);">
+        <div class="comment-item comment-border-gold">
           <div class="comment-aspect">Bonus</div>
           <div class="comment-text">The fact that this was built in 48 hours is impressive. Polish level is way above average for a jam game.</div>
         </div>

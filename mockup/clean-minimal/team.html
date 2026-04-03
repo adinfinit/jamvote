@@ -23,11 +23,17 @@
       flex-shrink: 0;
     }
 
+    .team-game-title {
+      font-size: 1.125rem;
+      color: var(--gray-500);
+      margin-bottom: 24px;
+    }
+
     .member-card {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 0;
+      gap: 14px;
+      padding: 14px 0;
     }
 
     .member-card + .member-card {
@@ -37,11 +43,13 @@
     .member-name {
       font-weight: 500;
       color: var(--gray-800);
+      font-size: 0.9375rem;
     }
 
     .member-handle {
       font-size: 0.8125rem;
       color: var(--gray-400);
+      margin-top: 2px;
     }
 
     .score-row {
@@ -73,7 +81,12 @@
     .score-row-fill {
       height: 100%;
       border-radius: 4px;
+      background: var(--blue);
       transition: width 800ms ease;
+    }
+
+    .score-row-fill-amber {
+      background: var(--amber);
     }
 
     .score-row-num {
@@ -85,12 +98,17 @@
       color: var(--gray-800);
     }
 
+    .score-row-num-amber {
+      color: var(--amber-hover);
+    }
+
     .overall-display {
       text-align: center;
       padding: 24px;
       background: var(--blue-light);
       border-radius: var(--radius);
-      margin-top: 16px;
+      margin-top: 20px;
+      transition: background-color 200ms ease;
     }
 
     .overall-display .number {
@@ -104,8 +122,15 @@
     .overall-display .label {
       font-size: 0.8125rem;
       color: var(--blue);
-      margin-top: 4px;
+      margin-top: 6px;
       font-weight: 500;
+    }
+
+    .vote-count {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      text-align: center;
+      margin-top: 16px;
     }
 
     .link-list {
@@ -116,7 +141,11 @@
     }
 
     .comment-card {
-      padding: 16px 0;
+      padding: 20px 0;
+    }
+
+    .comment-card:first-child {
+      padding-top: 0;
     }
 
     .comment-card + .comment-card {
@@ -126,13 +155,13 @@
     .comment-author {
       font-size: 0.8125rem;
       color: var(--gray-400);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .comment-text {
       font-size: 0.9375rem;
       color: var(--gray-700);
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     @media (max-width: 768px) {
@@ -177,28 +206,28 @@
     <div class="container">
 
       <!-- Breadcrumb -->
-      <div class="mb-24" style="font-size:0.8125rem;">
-        <a href="event.html" style="color:var(--gray-400);">Ludum Dare 57</a>
-        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
-        <a href="#" style="color:var(--gray-400);">Teams</a>
-        <span style="color:var(--gray-300); margin:0 8px;">&#8250;</span>
-        <span style="color:var(--gray-600);">Pixel Pioneers</span>
+      <div class="breadcrumb mb-24">
+        <a href="event.html">Ludum Dare 57</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <a href="#">Teams</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <span class="breadcrumb-current">Pixel Pioneers</span>
       </div>
 
       <!-- Team Header -->
       <div class="team-hero mb-32">
 
         <div class="team-info">
-          <div class="flex items-center gap-12 mb-8">
+          <div class="flex items-center gap-12 mb-12">
             <span class="badge badge-amber">&#9733; 1st Place</span>
           </div>
 
-          <h1 style="margin-bottom:4px;">Pixel Pioneers</h1>
-          <p style="font-size:1.125rem; color:var(--gray-500); margin-bottom:20px;">Pocket Universe</p>
+          <h1 class="mb-4">Pixel Pioneers</h1>
+          <p class="team-game-title">Pocket Universe</p>
 
-          <div class="card" style="margin-bottom:20px;">
-            <h3 class="mb-8" style="font-size:0.9375rem;">About the Game</h3>
-            <p style="font-size:0.9375rem; margin-bottom:8px;">
+          <div class="card mb-20">
+            <h3 class="mb-12">About the Game</h3>
+            <p class="mb-8" style="font-size:0.9375rem;">
               Explore a universe that fits in your pocket. Shrink down to discover entire civilizations living on grains of sand. Navigate through microscopic landscapes, solve environmental puzzles, and help tiny creatures thrive in their minuscule habitats.
             </p>
             <p style="font-size:0.9375rem;">
@@ -208,14 +237,14 @@
 
           <!-- Links -->
           <div class="link-list">
-            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#8599; Jam Page</a>
-            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#8615; Download</a>
-            <a href="#" class="btn btn-outline" style="font-size:0.8125rem; padding:8px 14px;">&#9825; Facebook</a>
+            <a href="#" class="btn btn-outline btn-sm">&#8599; Jam Page</a>
+            <a href="#" class="btn btn-outline btn-sm">&#8615; Download</a>
+            <a href="#" class="btn btn-outline btn-sm">&#9825; Facebook</a>
           </div>
 
           <!-- Members -->
           <div class="mt-32">
-            <h3 class="mb-8">Members</h3>
+            <h3 class="mb-12">Members</h3>
             <div class="card">
               <div class="member-card">
                 <span class="avatar">AJ</span>
@@ -225,21 +254,21 @@
                 </div>
               </div>
               <div class="member-card">
-                <span class="avatar" style="background:#fef3c7;color:#d97706;">MK</span>
+                <span class="avatar avatar-amber">MK</span>
                 <div>
                   <div class="member-name">Maya Kim</div>
                   <div class="member-handle">Art, Animation</div>
                 </div>
               </div>
               <div class="member-card">
-                <span class="avatar" style="background:#ecfdf5;color:#059669;">SR</span>
+                <span class="avatar avatar-green">SR</span>
                 <div>
                   <div class="member-name">Sarah Rivera</div>
                   <div class="member-handle">Music, Sound Design</div>
                 </div>
               </div>
               <div class="member-card">
-                <span class="avatar" style="background:#fee2e2;color:#dc2626;">LW</span>
+                <span class="avatar avatar-red">LW</span>
                 <div>
                   <div class="member-name">Liam Walsh</div>
                   <div class="member-handle">Level Design, QA</div>
@@ -257,7 +286,7 @@
             <div class="score-row">
               <span class="score-row-label">Theme</span>
               <div class="score-row-bar">
-                <div class="score-row-fill" style="width:92%; background:var(--blue);"></div>
+                <div class="score-row-fill" style="width:92%;"></div>
               </div>
               <span class="score-row-num">4.6</span>
             </div>
@@ -265,7 +294,7 @@
             <div class="score-row">
               <span class="score-row-label">Enjoyment</span>
               <div class="score-row-bar">
-                <div class="score-row-fill" style="width:86%; background:var(--blue);"></div>
+                <div class="score-row-fill" style="width:86%;"></div>
               </div>
               <span class="score-row-num">4.3</span>
             </div>
@@ -273,7 +302,7 @@
             <div class="score-row">
               <span class="score-row-label">Aesthetics</span>
               <div class="score-row-bar">
-                <div class="score-row-fill" style="width:90%; background:var(--blue);"></div>
+                <div class="score-row-fill" style="width:90%;"></div>
               </div>
               <span class="score-row-num">4.5</span>
             </div>
@@ -281,7 +310,7 @@
             <div class="score-row">
               <span class="score-row-label">Innovation</span>
               <div class="score-row-bar">
-                <div class="score-row-fill" style="width:82%; background:var(--blue);"></div>
+                <div class="score-row-fill" style="width:82%;"></div>
               </div>
               <span class="score-row-num">4.1</span>
             </div>
@@ -289,9 +318,9 @@
             <div class="score-row">
               <span class="score-row-label">Bonus</span>
               <div class="score-row-bar">
-                <div class="score-row-fill" style="width:80%; background:var(--amber);"></div>
+                <div class="score-row-fill score-row-fill-amber" style="width:80%;"></div>
               </div>
-              <span class="score-row-num" style="color:var(--amber-hover);">2.0</span>
+              <span class="score-row-num score-row-num-amber">2.0</span>
             </div>
 
             <div class="overall-display">
@@ -299,8 +328,7 @@
               <div class="label">Overall Score</div>
             </div>
 
-            <!-- Vote count -->
-            <div class="mt-16 text-center" style="font-size:0.8125rem; color:var(--gray-400);">
+            <div class="vote-count">
               Based on 9 votes (7 jammers, 2 judges)
             </div>
           </div>

@@ -43,15 +43,15 @@
 
     <!-- Team Header -->
     <div class="team-header mb-3">
-      <p style="opacity: 0.8; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em;">Ludum Dare 57</p>
+      <p class="team-header-event">Ludum Dare 57</p>
       <h1>Pixel Pioneers</h1>
       <div class="team-game-name">Pocket Universe</div>
     </div>
 
     <!-- Members & Links -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="team-detail-grid">
       <div class="info-panel">
-        <h3 class="mb-2" style="color: var(--text-secondary);">Members</h3>
+        <h3 class="mb-2 info-heading">Members</h3>
         <div class="flex flex-wrap gap-1">
           <span class="member-tag">Alice Chen</span>
           <span class="member-tag">Bob Martinez</span>
@@ -59,19 +59,19 @@
         </div>
       </div>
       <div class="info-panel">
-        <h3 class="mb-2" style="color: var(--text-secondary);">Links</h3>
+        <h3 class="mb-2 info-heading">Links</h3>
         <div class="flex flex-wrap gap-2">
-          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Play Game</a>
-          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Jam Page</a>
-          <a href="#" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">Facebook</a>
+          <a href="#" class="btn btn-secondary btn-sm">Play Game</a>
+          <a href="#" class="btn btn-secondary btn-sm">Jam Page</a>
+          <a href="#" class="btn btn-secondary btn-sm">Facebook</a>
         </div>
       </div>
     </div>
 
     <!-- Game Description -->
     <div class="info-panel mb-3">
-      <h3 class="mb-2" style="color: var(--text-secondary);">About the Game</h3>
-      <p style="color: var(--text-secondary); line-height: 1.7;">
+      <h3 class="mb-2 info-heading">About the Game</h3>
+      <p class="info-text">
         Explore a universe that fits in your pocket! Navigate tiny galaxies, terraform miniature planets, and discover life forms smaller than atoms.
         A relaxing exploration game with procedural generation and a chill synthwave soundtrack. Built in 48 hours with Godot Engine.
       </p>
@@ -82,10 +82,10 @@
       <h2>Scores</h2>
     </div>
 
-    <div class="info-panel mb-3" style="text-align: center;">
-      <div style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">Overall Score</div>
+    <div class="info-panel mb-3 score-display-center">
+      <div class="score-display-label">Overall Score</div>
       <div class="overall-score">4.52</div>
-      <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Rank #1 of 8</div>
+      <div class="score-display-rank">Rank #1 of 8</div>
     </div>
 
     <div class="team-scores mb-3">
@@ -93,7 +93,7 @@
         <div class="score-row mb-2">
           <span class="score-row-label">Theme</span>
           <div class="score-row-bar">
-            <div class="score-bar-bg" style="max-width:none;">
+            <div class="score-bar-bg-full">
               <div class="score-bar-fill" style="width:86%"></div>
             </div>
           </div>
@@ -102,7 +102,7 @@
         <div class="score-row mb-2">
           <span class="score-row-label">Enjoyment</span>
           <div class="score-row-bar">
-            <div class="score-bar-bg" style="max-width:none;">
+            <div class="score-bar-bg-full">
               <div class="score-bar-fill" style="width:94%"></div>
             </div>
           </div>
@@ -111,7 +111,7 @@
         <div class="score-row mb-2">
           <span class="score-row-label">Aesthetics</span>
           <div class="score-row-bar">
-            <div class="score-bar-bg" style="max-width:none;">
+            <div class="score-bar-bg-full">
               <div class="score-bar-fill" style="width:90%"></div>
             </div>
           </div>
@@ -120,7 +120,7 @@
         <div class="score-row mb-2">
           <span class="score-row-label">Innovation</span>
           <div class="score-row-bar">
-            <div class="score-bar-bg" style="max-width:none;">
+            <div class="score-bar-bg-full">
               <div class="score-bar-fill" style="width:96%"></div>
             </div>
           </div>
@@ -129,7 +129,7 @@
         <div class="score-row">
           <span class="score-row-label">Bonus</span>
           <div class="score-row-bar">
-            <div class="score-bar-bg" style="max-width:none;">
+            <div class="score-bar-bg-full">
               <div class="score-bar-fill" style="width:84%"></div>
             </div>
           </div>
@@ -142,41 +142,41 @@
     <div class="section-title">
       <h2>Comments</h2>
     </div>
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <div class="comments-list">
 
       <div class="card">
         <div class="flex justify-between items-center mb-1">
-          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
-          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.78</span>
+          <span class="comment-author">Anonymous Voter</span>
+          <span class="comment-score">4.78</span>
         </div>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
-          <strong style="color: var(--text-primary);">Theme:</strong> Perfect interpretation! The tiny worlds concept is everywhere in this game.
+        <p class="comment-text">
+          <strong class="comment-category">Theme:</strong> Perfect interpretation! The tiny worlds concept is everywhere in this game.
         </p>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
-          <strong style="color: var(--text-primary);">Enjoyment:</strong> I played this for way longer than I expected. The exploration loop is addictive.
+        <p class="comment-text">
+          <strong class="comment-category">Enjoyment:</strong> I played this for way longer than I expected. The exploration loop is addictive.
         </p>
       </div>
 
       <div class="card">
         <div class="flex justify-between items-center mb-1">
-          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
-          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.33</span>
+          <span class="comment-author">Anonymous Voter</span>
+          <span class="comment-score">4.33</span>
         </div>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
-          <strong style="color: var(--text-primary);">Aesthetics:</strong> The synthwave art style is gorgeous. Great shader work on the planets.
+        <p class="comment-text">
+          <strong class="comment-category">Aesthetics:</strong> The synthwave art style is gorgeous. Great shader work on the planets.
         </p>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
-          <strong style="color: var(--text-primary);">Innovation:</strong> Procedural generation at this scale in a jam game is impressive.
+        <p class="comment-text">
+          <strong class="comment-category">Innovation:</strong> Procedural generation at this scale in a jam game is impressive.
         </p>
       </div>
 
       <div class="card">
         <div class="flex justify-between items-center mb-1">
-          <span style="color: var(--neon-cyan); font-weight: 600;">Anonymous Voter</span>
-          <span style="color: var(--neon-pink); font-family: var(--font-heading); font-size: 1.1rem;">4.00</span>
+          <span class="comment-author">Anonymous Voter</span>
+          <span class="comment-score">4.00</span>
         </div>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
-          <strong style="color: var(--text-primary);">Enjoyment:</strong> Fun concept, controls felt a bit floaty though. Would love to see this expanded!
+        <p class="comment-text">
+          <strong class="comment-category">Enjoyment:</strong> Fun concept, controls felt a bit floaty though. Would love to see this expanded!
         </p>
       </div>
 
@@ -186,7 +186,9 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="grid-perspective"></div>
+    <div class="grid-perspective">
+      <div class="grid-horizon"></div>
+    </div>
     <div class="footer-content">
       <div class="synthwave-sun mb-2"></div>
       <div class="footer-links">

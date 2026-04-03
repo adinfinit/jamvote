@@ -15,6 +15,7 @@
       justify-content: center;
       font-size: 0.75rem;
       font-weight: 700;
+      flex-shrink: 0;
     }
 
     .rank-1-badge {
@@ -37,15 +38,6 @@
       color: var(--gray-400);
     }
 
-    .mini-bar {
-      display: inline-block;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--blue);
-      vertical-align: middle;
-      transition: width 600ms ease;
-    }
-
     .mini-bar-wrap {
       display: inline-flex;
       align-items: center;
@@ -60,6 +52,19 @@
       border-radius: 3px;
       overflow: hidden;
       display: inline-block;
+    }
+
+    .mini-bar {
+      display: inline-block;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--blue);
+      vertical-align: middle;
+      transition: width 600ms ease;
+    }
+
+    .mini-bar-amber {
+      background: var(--amber);
     }
 
     .score-num {
@@ -85,6 +90,7 @@
       border-radius: var(--radius);
       padding: 3px;
       width: fit-content;
+      transition: background-color 200ms ease;
     }
 
     .tab-group button {
@@ -108,6 +114,18 @@
 
     .tab-group button:hover:not(.active) {
       color: var(--gray-700);
+    }
+
+    .tab-group button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+      border-radius: var(--radius-sm);
+    }
+
+    .results-legend {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      line-height: 1.7;
     }
   </style>
 </head>
@@ -145,7 +163,7 @@
   <main class="page">
     <div class="container">
 
-      <div class="section-header">
+      <div class="section-header mb-32">
         <div>
           <h1>Results</h1>
           <p class="section-subtitle">Ludum Dare 57 &middot; Tiny Worlds &middot; 8 teams</p>
@@ -154,10 +172,10 @@
       </div>
 
       <!-- Result Type Tabs -->
-      <div class="tab-group">
-        <button class="active">Overall</button>
-        <button>Jammer Avg</button>
-        <button>Judge Avg</button>
+      <div class="tab-group" role="tablist" aria-label="Score type">
+        <button class="active" role="tab" aria-selected="true">Overall</button>
+        <button role="tab" aria-selected="false">Jammer Avg</button>
+        <button role="tab" aria-selected="false">Judge Avg</button>
       </div>
 
       <!-- Results Table -->
@@ -208,7 +226,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">2.0</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:80%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:80%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">4.33</span></td>
@@ -244,7 +262,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">1.5</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:60%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:60%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">4.09</span></td>
@@ -280,7 +298,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">1.5</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:60%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:60%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">3.84</span></td>
@@ -316,7 +334,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">1.0</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:40%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:40%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">3.53</span></td>
@@ -352,7 +370,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">1.0</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:40%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:40%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">3.44</span></td>
@@ -388,7 +406,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">0.5</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:20%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:20%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">3.11</span></td>
@@ -424,7 +442,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">0.5</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:20%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:20%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">2.89</span></td>
@@ -460,7 +478,7 @@
               <td>
                 <div class="mini-bar-wrap">
                   <span class="score-num">0.0</span>
-                  <span class="mini-bar-track"><span class="mini-bar" style="width:0%; background:var(--amber);"></span></span>
+                  <span class="mini-bar-track"><span class="mini-bar mini-bar-amber" style="width:0%;"></span></span>
                 </div>
               </td>
               <td><span class="overall-score">2.40</span></td>
@@ -470,7 +488,7 @@
       </div>
 
       <!-- Legend -->
-      <div class="mt-24" style="font-size:0.8125rem; color:var(--gray-400);">
+      <div class="mt-24 results-legend">
         Scores are blended: 70% jammer average + 30% judge average. Overall = (Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5, clamped 1&ndash;5.
       </div>
 
@@ -488,8 +506,11 @@
     // Tab switching (visual only)
     document.querySelectorAll('.tab-group button').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelector('.tab-group button.active').classList.remove('active');
+        const active = document.querySelector('.tab-group button.active');
+        active.classList.remove('active');
+        active.setAttribute('aria-selected', 'false');
         btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
       });
     });
   </script>
