@@ -104,10 +104,11 @@ body {
 	font-family: var(--font-body);
 	background-color: var(--bg-deep);
 	color: var(--text-primary);
-	line-height: 1.6;
+	line-height: 1.65;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	font-kerning: normal;
 	transition:
 		background-color 0.3s,
 		color 0.3s;
@@ -746,6 +747,7 @@ h3 {
 	font-family: var(--font-heading);
 	font-size: 2.5rem;
 	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 	background: var(--gradient-sunset);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -756,7 +758,7 @@ h3 {
 }
 
 .countdown-label {
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 	color: var(--text-muted);
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
@@ -819,6 +821,7 @@ h3 {
 	font-family: var(--font-heading);
 	font-size: 1.6rem;
 	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 	background: var(--gradient-sunset);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -929,6 +932,7 @@ input[type="range"]::-moz-range-thumb {
 	padding: 0.75rem 1rem;
 	border-bottom: 1px solid rgba(123, 47, 247, 0.1);
 	vertical-align: middle;
+	font-variant-numeric: tabular-nums;
 }
 
 .results-table tbody tr {
@@ -980,6 +984,7 @@ input[type="range"]::-moz-range-thumb {
 	font-family: var(--font-heading);
 	font-size: 1.1rem;
 	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 	color: var(--neon-pink);
 	min-width: 40px;
 }
@@ -1501,6 +1506,7 @@ input[type="range"]::-moz-range-thumb {
 	font-family: var(--font-heading);
 	font-size: 3.5rem;
 	font-weight: 700;
+	font-variant-numeric: tabular-nums;
 	background: var(--gradient-sunset);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
