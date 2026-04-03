@@ -35,6 +35,8 @@
   --gray-700: #334155;
   --gray-800: #1e293b;
   --gray-900: #0f172a;
+  --border: #94afdb;
+  --border-high: #7297d3;
   --white: #ffffff;
   --bg: #f8fafc;
   --radius: 8px;
@@ -58,7 +60,6 @@ html {
 
 body {
   font-family: var(--font);
-  font-weight: 500;
   background: var(--bg);
   color: var(--gray-800);
   line-height: 1.6;
@@ -124,7 +125,7 @@ p {
 /* --- Navigation --- */
 .nav {
   background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -211,7 +212,7 @@ p {
 /* --- Sub-navigation (event tabs) --- */
 .subnav {
   background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--border);
   transition: background-color 200ms ease, border-color 200ms ease;
 }
 
@@ -253,7 +254,7 @@ p {
 /* --- Cards --- */
 .card {
   background: var(--white);
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   padding: 28px;
@@ -262,7 +263,7 @@ p {
 
 .card:hover {
   box-shadow: var(--shadow-md);
-  border-color: var(--gray-300);
+  border-color: var(--border-high);
 }
 
 .card-clickable {
@@ -454,6 +455,7 @@ p {
   color: var(--gray-300);
   margin: 0 8px;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .breadcrumb-current {
@@ -479,7 +481,7 @@ p {
   overflow-x: auto;
   border-radius: var(--radius-lg);
   background: var(--white);
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--border);
   transition: background-color 200ms ease, border-color 200ms ease;
 }
 
@@ -487,6 +489,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 thead th {
@@ -497,7 +500,7 @@ thead th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 14px 20px;
-  border-bottom: 2px solid var(--gray-200);
+  border-bottom: 2px solid var(--border);
   white-space: nowrap;
 }
 
@@ -724,6 +727,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 .countdown-label {
   font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--gray-600);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -783,7 +787,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 .schedule-list-item {
   padding: 10px 0;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--border);
 }
 
 .schedule-list-item:last-child {
@@ -843,6 +847,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 .schedule-item-label {
   font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--gray-600);
   margin-bottom: 8px;
 }
@@ -871,12 +876,14 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   width: 26px;
   height: 26px;
   font-size: 0.6875rem;
+  font-weight: 500;
 }
 
 .avatar-lg {
   width: 40px;
   height: 40px;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 /* Avatar color variants */
@@ -930,7 +937,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 /* --- Utilities --- */
 .text-muted { color: var(--gray-600); }
-.text-small { font-size: 0.8125rem; }
+.text-small { font-size: 0.8125rem; font-weight: 500; }
 .text-center { text-align: center; }
 .text-blue { color: var(--blue); }
 .text-amber { color: var(--amber); }
@@ -1071,7 +1078,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 /* --- Theme Toggle Button --- */
 .theme-toggle {
   background: none;
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   width: 34px;
   height: 34px;
@@ -1143,9 +1150,11 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   --gray-700: #e2e8f0;
   --gray-800: #f1f5f9;
   --gray-900: #f8fafc;
+  --border: #2d4977;
+  --border-high: #30548d;
   --blue: #3b82f6;
   --blue-hover: #60a5fa;
-  --blue-light: #1e3a5f;
+  --blue-light: #204069;
   --blue-50: #1e3a5f;
   --amber: #f59e0b;
   --amber-hover: #fbbf24;
