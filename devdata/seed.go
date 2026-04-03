@@ -65,6 +65,7 @@ type eventDef struct {
 	ID           string
 	Name         string
 	Theme        string
+	Info         string
 	Registration bool
 	Voting       bool
 	Closed       bool
@@ -76,24 +77,72 @@ type eventDef struct {
 
 var eventDefs = []eventDef{
 	// Registration stage (upcoming jams, end dates in the future)
-	{"neon-nights-2024", "Neon Nights 2024", "Glow in the Dark", true, false, false, false, -21},
-	{"pixel-odyssey", "Pixel Odyssey", "Retro Revival", true, false, false, false, -14},
-	{"clockwork-dreams", "Clockwork Dreams", "Time Manipulation", true, false, false, false, -7},
+	{
+		"neon-nights-2024", "Neon Nights 2024", "Glow in the Dark",
+		"Create a game where light and glow are central mechanics or aesthetics. Think bioluminescence, neon signs, blacklight effects, or glowing creatures. Make the darkness beautiful!",
+		true, false, false, false, -21,
+	},
+	{
+		"pixel-odyssey", "Pixel Odyssey", "Retro Revival",
+		"Revisit the golden age of gaming! Build something that captures the spirit of classic 8-bit and 16-bit games. Pixel art encouraged but not required — it's the feel that counts.",
+		true, false, false, false, -14,
+	},
+	{
+		"clockwork-dreams", "Clockwork Dreams", "Time Manipulation",
+		"Time is your toy. Rewind, fast-forward, slow-mo, parallel timelines — explore what happens when the player can bend time. Bonus points for creative time-loop puzzles.",
+		true, false, false, false, -7,
+	},
 
 	// Voting open (recently ended jams, voting in progress)
-	{"cosmic-clash", "Cosmic Clash", "Space Battles", false, true, false, false, 3},
-	{"shadow-realm", "Shadow Realm", "Light and Darkness", false, true, false, false, 10},
+	{
+		"cosmic-clash", "Cosmic Clash", "Space Battles",
+		"Take the fight to the stars! Whether it's fleet command, dogfights, or orbital bombardment, your game should make players feel the vastness and danger of space combat.",
+		false, true, false, false, 3,
+	},
+	{
+		"shadow-realm", "Shadow Realm", "Light and Darkness",
+		"Play with the boundary between light and shadow. Shadows can hide, reveal, protect, or threaten. Use contrast as a core design element in gameplay or narrative.",
+		false, true, false, false, 10,
+	},
 
 	// Voting closed (voting just finished, results pending)
-	{"wild-cards", "Wild Cards", "Randomness", false, true, true, false, 20},
+	{
+		"wild-cards", "Wild Cards", "Randomness",
+		"Embrace chaos! Procedural generation, dice rolls, shuffled decks, random mutations — let unpredictability drive the fun. The best entries make randomness feel fair yet surprising.",
+		false, true, true, false, 20,
+	},
 
 	// Completed/revealed (past jams with results)
-	{"ocean-depths", "Ocean Depths", "Underwater Adventure", false, true, true, true, 35},
-	{"robot-uprising", "Robot Uprising", "AI Gone Wrong", false, true, true, true, 60},
-	{"mystic-forest", "Mystic Forest", "Nature Magic", false, true, true, true, 90},
-	{"fire-and-ice", "Fire and Ice", "Elemental Forces", false, true, true, true, 120},
-	{"tiny-worlds", "Tiny Worlds", "Microscopic", false, true, true, true, 180},
-	{"last-stand", "Last Stand", "Survival", false, true, true, true, 365},
+	{
+		"ocean-depths", "Ocean Depths", "Underwater Adventure",
+		"Dive beneath the waves and explore the mysterious deep. Pressure, oxygen, currents, and strange sea life — the ocean is an alien world right here on Earth.",
+		false, true, true, true, 35,
+	},
+	{
+		"robot-uprising", "Robot Uprising", "AI Gone Wrong",
+		"The machines have turned. Build a game exploring rogue AI, rebellious robots, or the moment technology slips out of human control. Comedy or horror — your call.",
+		false, true, true, true, 60,
+	},
+	{
+		"mystic-forest", "Mystic Forest", "Nature Magic",
+		"An ancient forest hums with magic. Craft a game where nature itself is powerful — enchanted groves, talking animals, druidic spells, or ecosystems with a mind of their own.",
+		false, true, true, true, 90,
+	},
+	{
+		"fire-and-ice", "Fire and Ice", "Elemental Forces",
+		"Harness the raw power of the elements. Fire melts ice, ice freezes water, steam rises — build a game where elemental interactions are at the heart of every challenge.",
+		false, true, true, true, 120,
+	},
+	{
+		"tiny-worlds", "Tiny Worlds", "Microscopic",
+		"Shrink down and explore worlds invisible to the naked eye. Cells, atoms, insects, dust particles — find the epic in the minuscule.",
+		false, true, true, true, 180,
+	},
+	{
+		"last-stand", "Last Stand", "Survival",
+		"Everything is against you. Limited resources, relentless enemies, a ticking clock. Make a game about holding on just a little bit longer when all hope seems lost.",
+		false, true, true, true, 365,
+	},
 }
 
 var gameNames = []string{
@@ -177,6 +226,7 @@ func Seed(log *slog.Logger, db *datastoredb.DB) {
 			ID:           event.EventID(def.ID),
 			Name:         def.Name,
 			Theme:        def.Theme,
+			Info:         def.Info,
 			Created:      time.Now().AddDate(0, 0, -def.EndDaysAgo-7),
 			StartTime:    time.Now().AddDate(0, 0, -def.EndDaysAgo-2),
 			EndTime:      time.Now().AddDate(0, 0, -def.EndDaysAgo),
