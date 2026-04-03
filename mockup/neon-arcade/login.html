@@ -23,7 +23,8 @@
       width: 100%;
       text-align: center;
       position: relative;
-      box-shadow: 0 0 40px rgba(0, 240, 255, 0.06), 0 0 80px rgba(255, 0, 170, 0.04);
+      box-shadow: 0 0 48px rgba(0, 240, 255, 0.08), 0 0 96px rgba(255, 0, 170, 0.05);
+      animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
     .login-card::before {
       content: '';
@@ -31,7 +32,7 @@
       inset: 0;
       border-radius: var(--radius-lg);
       padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 0, 170, 0.15), rgba(139, 92, 246, 0.1));
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(255, 0, 170, 0.2), rgba(139, 92, 246, 0.15));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;

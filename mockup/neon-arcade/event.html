@@ -9,13 +9,14 @@
   <style>
     .theme-display {
       text-align: center;
-      padding: 2.5rem 1.5rem;
+      padding: 3rem 1.5rem;
       margin-bottom: 2rem;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(255, 0, 170, 0.04));
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(255, 0, 170, 0.05));
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 0 40px rgba(0, 240, 255, 0.06), 0 0 80px rgba(255, 0, 170, 0.03);
     }
     .theme-display::before {
       content: '';
@@ -23,7 +24,7 @@
       inset: 0;
       border-radius: var(--radius-lg);
       padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 0, 170, 0.2));
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(255, 0, 170, 0.25));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -39,9 +40,9 @@
     }
     .theme-display .theme-name {
       font-family: var(--font-heading);
-      font-size: var(--text-3xl);
+      font-size: 3rem;
       color: var(--cyan);
-      text-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 50px rgba(0, 240, 255, 0.25), 0 0 80px rgba(0, 240, 255, 0.1);
       letter-spacing: var(--ls-normal);
     }
     .timer-section {
@@ -72,11 +73,12 @@
     }
     .vote-cta {
       text-align: center;
-      padding: 2.5rem 2rem;
+      padding: 3rem 2rem;
       margin-top: 2rem;
-      background: linear-gradient(135deg, rgba(255, 0, 170, 0.04), rgba(0, 240, 255, 0.03));
-      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, rgba(255, 0, 170, 0.06), rgba(0, 240, 255, 0.04));
+      border: 1px solid rgba(255, 0, 170, 0.2);
       border-radius: var(--radius-lg);
+      box-shadow: 0 0 32px rgba(255, 0, 170, 0.05);
     }
   </style>
 </head>

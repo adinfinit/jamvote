@@ -79,13 +79,14 @@
       padding: 2rem 0;
     }
     .overall-preview {
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.06), rgba(255, 0, 170, 0.06));
-      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(255, 0, 170, 0.08));
+      border: 1px solid rgba(255, 215, 0, 0.15);
       border-radius: var(--radius-lg);
-      padding: 1.75rem;
+      padding: 2rem;
       text-align: center;
       margin-bottom: 1.5rem;
       position: relative;
+      box-shadow: 0 0 32px rgba(255, 215, 0, 0.04);
     }
     .overall-preview::before {
       content: '';
@@ -93,7 +94,7 @@
       inset: 0;
       border-radius: var(--radius-lg);
       padding: 1px;
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(255, 215, 0, 0.15));
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 215, 0, 0.2));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -101,10 +102,10 @@
     }
     .overall-score {
       font-family: var(--font-heading);
-      font-size: 3rem;
+      font-size: 3.5rem;
       font-variant-numeric: tabular-nums;
       color: var(--gold);
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.15);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 48px rgba(255, 215, 0, 0.2);
       line-height: 1;
     }
     .overall-label {
