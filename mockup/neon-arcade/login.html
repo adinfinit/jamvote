@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - JamVote</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .login-page {
       display: flex;
@@ -38,16 +38,16 @@
       pointer-events: none;
     }
     .login-card h1 {
-      font-size: 1.8rem;
+      font-size: var(--text-2xl);
       margin-bottom: 0.5rem;
       text-shadow: var(--glow-cyan);
     }
     .login-card .subtitle {
       color: var(--text-secondary);
       margin-bottom: 2rem;
-      font-size: 0.9rem;
+      font-size: var(--text-sm);
       font-family: var(--font-heading);
-      letter-spacing: 0.06em;
+      letter-spacing: var(--ls-normal);
     }
     .login-divider {
       display: flex;
@@ -55,10 +55,10 @@
       gap: 1rem;
       margin: 2rem 0;
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
       font-family: var(--font-heading);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: var(--ls-wide);
     }
     .login-divider::before,
     .login-divider::after {
@@ -83,10 +83,10 @@
       border: 1px solid rgba(255, 107, 53, 0.3);
       border-radius: 999px;
       color: var(--orange);
-      font-size: 0.65rem;
+      font-size: var(--text-xs);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: var(--ls-normal);
       margin-bottom: 1rem;
     }
     .google-icon {

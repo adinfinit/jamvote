@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pixel Pioneers - Pocket Universe - JamVote</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .team-hero {
       text-align: center;
@@ -15,22 +15,22 @@
       color: var(--cyan);
       text-shadow: var(--glow-cyan);
       margin-bottom: 0.25rem;
-      font-size: 2.2rem;
+      font-size: var(--text-2xl);
     }
     .team-hero .team-name {
       font-family: var(--font-heading);
-      font-size: 1rem;
+      font-size: var(--text-base);
       color: var(--magenta);
       text-shadow: 0 0 8px rgba(255, 0, 170, 0.25);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: var(--ls-wide);
       margin-bottom: 1rem;
     }
     .team-hero .game-desc {
       color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto 1.5rem;
-      font-size: 0.95rem;
+      font-size: var(--text-base);
       line-height: 1.7;
     }
     .team-links {
@@ -80,9 +80,9 @@
     }
     .score-aspect-name {
       font-family: var(--font-heading);
-      font-size: 0.85rem;
+      font-size: var(--text-sm);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: var(--ls-normal);
       min-width: 100px;
     }
     .score-bar-container {
@@ -91,7 +91,8 @@
     }
     .score-number {
       font-family: var(--font-heading);
-      font-size: 1rem;
+      font-size: var(--text-base);
+      font-variant-numeric: tabular-nums;
       min-width: 40px;
       text-align: right;
     }
@@ -111,16 +112,16 @@
     }
     .comment-item .comment-aspect {
       font-family: var(--font-heading);
-      font-size: 0.7rem;
+      font-size: var(--text-xs);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: var(--ls-normal);
       color: var(--text-muted);
       margin-bottom: 0.35rem;
     }
     .comment-item .comment-text {
-      font-size: 0.9rem;
+      font-size: var(--text-sm);
       color: var(--text-secondary);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .overall-big {
       text-align: center;
@@ -146,20 +147,21 @@
     .overall-big .score-value {
       font-family: var(--font-heading);
       font-size: 3.5rem;
+      font-variant-numeric: tabular-nums;
       color: var(--gold);
       text-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.15);
       line-height: 1;
     }
     .overall-big .score-label {
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: var(--ls-wide);
       color: var(--text-muted);
       margin-top: 0.25rem;
     }
     .overall-big .rank-info {
       font-family: var(--font-heading);
-      font-size: 1.1rem;
+      font-size: var(--text-lg);
       color: var(--gold);
       margin-top: 0.5rem;
       text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);

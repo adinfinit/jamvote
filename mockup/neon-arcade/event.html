@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ludum Dare 57 - JamVote</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .theme-display {
       text-align: center;
@@ -31,18 +31,18 @@
     }
     .theme-display .theme-label {
       font-family: var(--font-heading);
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: var(--ls-wide);
       color: var(--text-muted);
       margin-bottom: 0.75rem;
     }
     .theme-display .theme-name {
       font-family: var(--font-heading);
-      font-size: 2.5rem;
+      font-size: var(--text-3xl);
       color: var(--cyan);
       text-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
-      letter-spacing: 0.08em;
+      letter-spacing: var(--ls-normal);
     }
     .timer-section {
       display: flex;
@@ -56,18 +56,18 @@
     }
     .timer-box .timer-label {
       font-family: var(--font-heading);
-      font-size: 0.7rem;
+      font-size: var(--text-xs);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: var(--ls-wide);
       color: var(--text-muted);
       margin-bottom: 0.75rem;
     }
     .team-game {
-      font-size: 0.85rem;
+      font-size: var(--text-sm);
       color: var(--text-secondary);
     }
     .team-members {
-      font-size: 0.8rem;
+      font-size: var(--text-xs);
       color: var(--text-muted);
     }
     .vote-cta {
