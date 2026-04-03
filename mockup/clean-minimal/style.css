@@ -729,12 +729,21 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   margin-top: 6px;
 }
 
-/* --- Event Action Bar (button + countdown inline) --- */
+/* --- Event Header Row (title left, actions bottom-right) --- */
+.event-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* --- Event Action Bar (countdown + button) --- */
 .event-action-bar {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 
