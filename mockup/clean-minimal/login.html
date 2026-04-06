@@ -32,17 +32,7 @@
     }
 
     .login-header .logo-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--blue);
-      border-radius: var(--radius);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 20px;
+      display: inline-block;
     }
 
     .login-header h1 {
@@ -141,7 +131,7 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <span class="logo-icon">J</span>
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="var(--blue)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="var(--blue)"/></svg>
         JamVote
       </a>
       <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
@@ -159,7 +149,7 @@
     <div class="login-card">
 
       <div class="login-header">
-        <div class="logo-icon">J</div>
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:48px;height:48px;margin-bottom:20px"><rect width="32" height="32" rx="8" fill="var(--blue)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="var(--blue)"/></svg>
         <h1>Welcome back</h1>
         <p>Sign in to vote on game jam entries</p>
       </div>

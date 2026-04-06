@@ -159,14 +159,7 @@ p {
 .nav-logo .logo-icon {
   width: 32px;
   height: 32px;
-  background: var(--blue);
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -753,24 +746,17 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 
 .event-countdown-inline {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-500);
+  font-variant-numeric: tabular-nums;
 }
 
-.countdown-inline-value {
+.event-countdown-inline span {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 1rem;
   font-variant-numeric: tabular-nums;
   color: var(--gray-900);
-}
-
-.countdown-inline-sep {
-  font-size: 0.8125rem;
-  color: var(--gray-400);
-  margin-right: 4px;
 }
 
 /* --- Event Info Grid (about + schedule side by side) --- */
