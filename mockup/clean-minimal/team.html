@@ -169,8 +169,22 @@
     }
 
     @media (max-width: 768px) {
+      .team-hero {
+        flex-direction: column;
+      }
+
       .team-scores {
         width: 100%;
+      }
+
+      .member-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .member-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>

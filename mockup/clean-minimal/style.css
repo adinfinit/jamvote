@@ -220,6 +220,7 @@ p {
   align-items: center;
   gap: 4px;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .subnav a {
@@ -788,17 +789,6 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   color: var(--green);
 }
 
-@media (max-width: 768px) {
-  .event-countdown-inline {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .event-info-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* --- Event card specifics --- */
 .event-card-title {
   margin-bottom: 8px;
@@ -1003,14 +993,25 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   outline-offset: 2px;
 }
 
-/* --- Responsive --- */
+/* --- Responsive: Tablet (769px – 1024px) --- */
+@media (max-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+
+  .event-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Responsive: Mobile (≤768px) --- */
 @media (max-width: 768px) {
   .container { padding: 0 16px; }
   .page { padding: 32px 0 60px; }
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.375rem; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
   .card { padding: 20px; }
+
   .nav {
     position: static;
   }
@@ -1038,24 +1039,67 @@ input[type="range"]:focus-visible::-moz-range-thumb {
     font-size: 0.8125rem;
   }
 
-  .countdown-number {
-    font-size: 1.5rem;
+  .subnav-inner {
+    padding: 0 16px;
+    gap: 0;
   }
 
-  table {
+  .subnav a {
+    padding: 10px 12px;
     font-size: 0.8125rem;
   }
 
-  thead th, tbody td {
-    padding: 10px 12px;
+  /* Event header stacks vertically */
+  .event-header-row {
+    flex-direction: column;
+    align-items: flex-start;
   }
+
+  .event-action-bar {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .event-action-bar .btn-lg {
+    text-align: center;
+  }
+
+  /* Tables */
+  table { font-size: 0.8125rem; }
+  thead th, tbody td { padding: 10px 12px; }
+
+  /* Touch-friendly sliders */
+  input[type="range"]::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Touch-friendly buttons */
+  .btn { min-height: 44px; }
+  .btn-sm { min-height: 36px; }
 
   .schedule-grid {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
+
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+
+  .divider {
+    margin: 32px 0;
+  }
 }
 
+/* --- Responsive: Small mobile (≤480px) --- */
 @media (max-width: 480px) {
   .section-header {
     flex-direction: column;
