@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Ludum Dare 57 - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .rank-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .rank-1-badge {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .rank-2-badge {
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    .rank-3-badge {
+      background: #ffedd5;
+      color: #ea580c;
+    }
+
+    .rank-default-badge {
+      background: transparent;
+      color: var(--gray-400);
+    }
+
+    .mini-bar-wrap {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .mini-bar-track {
+      width: 60px;
+      height: 6px;
+      background: var(--gray-100);
+      border-radius: 3px;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .mini-bar {
+      display: inline-block;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--blue);
+      vertical-align: middle;
+      transition: width 600ms ease;
+    }
+
+    .mini-bar-amber {
+      background: var(--amber);
+    }
+
+    .score-num {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      min-width: 28px;
+      display: inline-block;
+    }
+
+    .overall-score {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .tab-group {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: var(--gray-100);
+      border-radius: var(--radius);
+      padding: 3px;
+      width: fit-content;
+      transition: background-color 200ms ease;
+    }
+
+    .tab-group button {
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .tab-group button.active {
+      background: var(--white);
+      color: var(--gray-800);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-group button:hover:not(.active) {
+      color: var(--gray-700);
+    }
+
+    .tab-group button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+      border-radius: var(--radius-sm);
+    }
+
+    .results-legend {
+      font-size: 0.8125rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .tab-group {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .tab-group button {
+        padding: 8px 12px;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6B4FD6"/><stop offset="100%" stop-color="#3D1F96"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="#5B35CA"/></svg>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html" class="active">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <div class="section-header mb-32">
+        <div>
+          <h1>Results</h1>
+          <p class="section-subtitle">Ludum Dare 57 &middot; Tiny Worlds &middot; 8 teams</p>
+        </div>
+      </div>
+
+      <!-- Results Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:50px;">#</th>
+              <th>Team</th>
+              <th>Game</th>
+              <th>Theme</th>
+              <th>Enjoy</th>
+              <th>Aesth</th>
+              <th>Innov</th>
+              <th>Bonus</th>
+              <th style="width:90px;">Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="rank-1">
+              <td><span class="rank-badge rank-1-badge">1</span></td>
+              <td><strong><a href="team.html">Pixel Pioneers</a></strong></td>
+              <td>Pocket Universe</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.6</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.3</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.1</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">2.0</span>
+                </div>
+              </td>
+              <td><span class="overall-score">4.33</span></td>
+            </tr>
+            <tr class="rank-2">
+              <td><span class="rank-badge rank-2-badge">2</span></td>
+              <td><strong><a href="#">Neon Bytes</a></strong></td>
+              <td>Circuit Bloom</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.4</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">1.5</span>
+                </div>
+              </td>
+              <td><span class="overall-score">4.09</span></td>
+            </tr>
+            <tr class="rank-3">
+              <td><span class="rank-badge rank-3-badge">3</span></td>
+              <td><strong><a href="#">Code Cats</a></strong></td>
+              <td>Ant Colony</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.9</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.7</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">1.5</span>
+                </div>
+              </td>
+              <td><span class="overall-score">3.84</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-default-badge">4</span></td>
+              <td><strong><a href="#">Indie Gnomes</a></strong></td>
+              <td>Terrarium Tactics</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.6</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">1.0</span>
+                </div>
+              </td>
+              <td><span class="overall-score">3.53</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-default-badge">5</span></td>
+              <td><strong><a href="#">Glitch Zone</a></strong></td>
+              <td>Microverse</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">4.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">1.0</span>
+                </div>
+              </td>
+              <td><span class="overall-score">3.44</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-default-badge">6</span></td>
+              <td><strong><a href="#">Solo Wolf</a></strong></td>
+              <td>Dust Mote</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">0.5</span>
+                </div>
+              </td>
+              <td><span class="overall-score">3.11</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-default-badge">7</span></td>
+              <td><strong><a href="#">Byte Busters</a></strong></td>
+              <td>Grain World</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.2</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">2.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">0.5</span>
+                </div>
+              </td>
+              <td><span class="overall-score">2.89</span></td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-default-badge">8</span></td>
+              <td><strong><a href="#">Jam Droppers</a></strong></td>
+              <td>Snowglobe</td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">2.8</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">2.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">3.0</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">2.5</span>
+                </div>
+              </td>
+              <td>
+                <div class="mini-bar-wrap">
+                  <span class="score-num">0.0</span>
+                </div>
+              </td>
+              <td><span class="overall-score">2.40</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legend -->
+      <div class="mt-24 results-legend">
+        Scores are blended: 70% jammer average + 30% judge average. Overall = (Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5, clamped 1&ndash;5.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Tab switching (visual only)
+    document.querySelectorAll('.tab-group button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const active = document.querySelector('.tab-group button.active');
+        active.classList.remove('active');
+        active.setAttribute('aria-selected', 'false');
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      });
+    });
+  </script>
+
+</body>
+</html>

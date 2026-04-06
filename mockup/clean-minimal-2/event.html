@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludum Dare 57 - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8B3A52"/><stop offset="100%" stop-color="#4A1A28"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="#7A3045"/></svg>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html" class="active">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Event Header -->
+      <div class="event-header-row mb-32">
+        <div>
+          <div class="flex items-center gap-12 mb-8 flex-wrap">
+            <span class="badge badge-green">Voting Open</span>
+            <span class="text-small text-muted">Organized by Sarah Rivera</span>
+          </div>
+          <h1 class="mb-4">Ludum Dare 57</h1>
+          <p style="font-size:1.25rem;">
+            Theme: <strong class="theme-accent" style="font-size:1.5rem;">Tiny Worlds</strong>
+          </p>
+        </div>
+        <div class="event-action-bar">
+          <span class="event-countdown-inline" id="countdown">Voting ends in <span id="cd-days">02</span>d <span id="cd-hours">14</span>h <span id="cd-mins">37</span>m <span id="cd-secs">52</span>s</span>
+          <a href="voting.html" class="btn btn-primary btn-lg">
+            &#9654; Start Voting
+          </a>
+        </div>
+      </div>
+
+      <!-- About & Schedule -->
+      <div class="event-info-grid mb-48">
+        <div>
+          <h3 class="mb-16">About This Jam</h3>
+          <p class="mb-12">Welcome to Ludum Dare 57! This is a 72-hour game jam where you create a game from scratch based on the theme. All skill levels are welcome.</p>
+          <p>Voting is open to all registered jammers. Play each game, rate it on five aspects, and leave constructive feedback. Judge scores account for 30% of the final score.</p>
+        </div>
+        <div>
+          <h3 class="mb-20">Schedule</h3>
+          <div class="schedule-list">
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Jam Start</div>
+              <div class="schedule-item-date">Feb 7, 2026 &middot; 6:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Jam End</div>
+              <div class="schedule-item-date">Feb 10, 2026 &middot; 6:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Voting Opens <span class="text-green">&bull; Active</span></div>
+              <div class="schedule-item-date">Feb 11, 2026 &middot; 12:00 PM</div>
+            </div>
+            <div class="schedule-list-item">
+              <div class="schedule-item-label">Voting Closes</div>
+              <div class="schedule-item-date">Feb 18, 2026 &middot; 11:59 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin:32px 0 48px;"></div>
+
+      <!-- Teams -->
+      <div class="section-header">
+        <h2>Teams</h2>
+        <span class="text-small text-muted">6 teams registered</span>
+      </div>
+
+      <div class="grid-3">
+
+        <a href="team.html" class="card card-clickable">
+          <h3 class="mb-4">Pixel Pioneers</h3>
+          <p class="text-small mb-12">Pocket Universe</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm">AJ</span>
+            <span class="avatar avatar-sm avatar-amber">MK</span>
+            <span class="avatar avatar-sm avatar-green">SR</span>
+            <span class="avatar avatar-sm avatar-red">LW</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable">
+          <h3 class="mb-4">Neon Bytes</h3>
+          <p class="text-small mb-12">Circuit Bloom</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm avatar-amber">JD</span>
+            <span class="avatar avatar-sm">TW</span>
+            <span class="avatar avatar-sm avatar-green">PL</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable">
+          <h3 class="mb-4">Code Cats</h3>
+          <p class="text-small mb-12">Ant Colony</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm avatar-green">RB</span>
+            <span class="avatar avatar-sm avatar-red">EM</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable">
+          <h3 class="mb-4">Indie Gnomes</h3>
+          <p class="text-small mb-12">Terrarium Tactics</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm avatar-red">NK</span>
+            <span class="avatar avatar-sm">OT</span>
+            <span class="avatar avatar-sm avatar-amber">QS</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable">
+          <h3 class="mb-4">Glitch Zone</h3>
+          <p class="text-small mb-12">Microverse</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm avatar-purple">DM</span>
+            <span class="avatar avatar-sm">HS</span>
+          </div>
+        </a>
+
+        <a href="#" class="card card-clickable">
+          <h3 class="mb-4">Solo Wolf</h3>
+          <p class="text-small mb-12">Dust Mote</p>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm avatar-pink">KR</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Countdown Timer
+    (function() {
+      const target = new Date();
+      target.setDate(target.getDate() + 2);
+      target.setHours(target.getHours() + 14);
+      target.setMinutes(target.getMinutes() + 37);
+
+      function update() {
+        const now = new Date();
+        let diff = Math.max(0, Math.floor((target - now) / 1000));
+
+        const days = Math.floor(diff / 86400); diff %= 86400;
+        const hours = Math.floor(diff / 3600); diff %= 3600;
+        const mins = Math.floor(diff / 60);
+        const secs = diff % 60;
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+
+</body>
+</html>

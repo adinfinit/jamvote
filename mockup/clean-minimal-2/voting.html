@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote: Pocket Universe - JamVote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .vote-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      transition: background-color 200ms ease;
+    }
+
+    .game-header {
+      text-align: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--gray-100);
+      margin-bottom: 36px;
+    }
+
+    .game-header h1 {
+      margin-bottom: 6px;
+    }
+
+    .game-header .team-name {
+      font-size: 1rem;
+      color: var(--gray-500);
+    }
+
+    .game-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .slider-track-bg {
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2px;
+    }
+
+    .slider-ticks span {
+      font-size: 0.6875rem;
+      color: var(--gray-300);
+      font-family: var(--font-mono);
+    }
+
+    .comment-toggle {
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color var(--transition);
+    }
+
+    .comment-toggle:hover {
+      color: var(--blue);
+    }
+
+    .comment-toggle:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .comment-area {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .comment-area.open {
+      display: block;
+    }
+
+    .vote-footer {
+      padding-top: 28px;
+      border-top: 1px solid var(--gray-100);
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .progress-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      transition: background-color var(--transition);
+    }
+
+    .progress-dots .dot.active {
+      background: var(--blue);
+      box-shadow: 0 0 0 3px rgba(122, 48, 69, 0.15);
+    }
+
+    .progress-dots .dot.done {
+      background: var(--gray-400);
+    }
+
+    .bonus-section {
+      background: var(--amber-light);
+      margin: 0 -40px;
+      padding: 28px 40px;
+      border-radius: var(--radius);
+    }
+
+    .bonus-section .slider-value {
+      color: var(--amber-hover);
+    }
+
+    .overall-preview {
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .overall-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--blue);
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+    }
+
+    .overall-formula {
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .vote-card {
+        padding: 24px;
+      }
+
+      .bonus-section {
+        margin: 0 -24px;
+        padding: 20px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8B3A52"/><stop offset="100%" stop-color="#4A1A28"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="#7A3045"/></svg>
+        JamVote
+      </a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Events</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" class="flex items-center gap-12"><span class="avatar avatar-sm">AJ</span><span>Alex</span></a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Sub-navigation -->
+  <div class="subnav">
+    <div class="subnav-inner">
+      <a href="event.html">Dashboard</a>
+      <a href="#">Teams</a>
+      <a href="voting.html" class="active">Voting</a>
+      <a href="#">Progress</a>
+      <a href="results.html">Results</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <main class="page">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb mb-24">
+        <a href="event.html">Ludum Dare 57</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <a href="voting.html">Voting</a>
+        <span class="breadcrumb-sep">&#8250;</span>
+        <span class="breadcrumb-current">Pocket Universe</span>
+      </div>
+
+      <!-- Vote Card -->
+      <div class="vote-card">
+
+        <div class="game-header">
+          <h1>Pocket Universe</h1>
+          <div class="team-name">by Pixel Pioneers</div>
+          <div class="game-links">
+            <a href="#" class="btn btn-outline btn-sm">
+              &#8599; Play Game
+            </a>
+            <a href="#" class="btn btn-outline btn-sm">
+              &#8615; Download
+            </a>
+          </div>
+        </div>
+
+        <!-- Sliders -->
+        <form id="vote-form">
+
+          <!-- Theme -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="theme">Theme</label>
+              <span class="slider-value" id="theme-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="theme" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="How well does it fit the theme?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Enjoyment -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="enjoyment">Enjoyment</label>
+              <span class="slider-value" id="enjoyment-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="enjoyment" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="How fun was it to play?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Aesthetics -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="aesthetics">Aesthetics</label>
+              <span class="slider-value" id="aesthetics-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="aesthetics" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Art, sound, and overall polish?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Innovation -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <label class="slider-label" for="innovation">Innovation</label>
+              <span class="slider-value" id="innovation-val">3.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="innovation" min="1" max="5" step="0.5" value="3">
+            </div>
+            <div class="slider-ticks">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Anything creative or original?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Bonus -->
+          <div class="slider-group bonus-section">
+            <div class="slider-header">
+              <label class="slider-label" for="bonus">
+                Bonus <span class="text-muted text-small" style="font-weight:400;">0 &ndash; 2.5</span>
+              </label>
+              <span class="slider-value" id="bonus-val">0.0</span>
+            </div>
+            <div class="slider-track-bg">
+              <input type="range" id="bonus" min="0" max="2.5" step="0.5" value="0">
+            </div>
+            <div class="slider-ticks">
+              <span>0</span><span>0.5</span><span>1</span><span>1.5</span><span>2</span><span>2.5</span>
+            </div>
+            <button type="button" class="comment-toggle" onclick="toggleComment(this)">+ Add comment</button>
+            <div class="comment-area">
+              <textarea class="form-input" placeholder="Extra credit for going above and beyond?" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Overall Score Preview -->
+          <div class="overall-preview mt-24 mb-24">
+            <div class="text-small text-muted mb-8">Overall Score</div>
+            <div class="overall-number" id="overall-val">2.67</div>
+            <div class="overall-formula">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="vote-footer">
+            <div class="progress-dots" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="3" aria-label="Voting progress">
+              <span class="dot done"></span>
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="flex gap-12">
+              <a href="voting.html" class="btn btn-secondary">Skip</a>
+              <button type="submit" class="btn btn-primary btn-lg">Submit Vote</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      JamVote &middot; Built for game jammers, by game jammers
+    </div>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script>
+    // Slider interactions
+    const sliders = ['theme', 'enjoyment', 'aesthetics', 'innovation', 'bonus'];
+
+    function updateSliders() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const trackColor = isDark ? '#374151' : '#e5e7eb';
+
+      sliders.forEach(name => {
+        const slider = document.getElementById(name);
+        const display = document.getElementById(name + '-val');
+        display.textContent = parseFloat(slider.value).toFixed(1);
+
+        // Update slider background gradient
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const pct = ((slider.value - min) / (max - min)) * 100;
+        const color = name === 'bonus' ? '#3B9B68' : (isDark ? '#C26B85' : '#7A3045');
+        slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${pct}%, ${trackColor} ${pct}%, ${trackColor} 100%)`;
+      });
+
+      // Calculate overall
+      const theme = parseFloat(document.getElementById('theme').value);
+      const enjoyment = parseFloat(document.getElementById('enjoyment').value);
+      const aesthetics = parseFloat(document.getElementById('aesthetics').value);
+      const innovation = parseFloat(document.getElementById('innovation').value);
+      const bonus = parseFloat(document.getElementById('bonus').value);
+      let overall = (theme + enjoyment + aesthetics + innovation + bonus) / 4.5;
+      overall = Math.min(5, Math.max(1, overall));
+      document.getElementById('overall-val').textContent = overall.toFixed(2);
+    }
+
+    sliders.forEach(name => {
+      const slider = document.getElementById(name);
+      slider.addEventListener('input', updateSliders);
+    });
+
+    // Initial update
+    updateSliders();
+
+    // Re-update on theme change to fix track colors
+    const observer = new MutationObserver(updateSliders);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Comment toggle
+    function toggleComment(btn) {
+      const area = btn.nextElementSibling;
+      area.classList.toggle('open');
+      btn.textContent = area.classList.contains('open') ? '- Hide comment' : '+ Add comment';
+    }
+
+    // Form submit
+    document.getElementById('vote-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('[type="submit"]');
+      btn.textContent = 'Saved!';
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-secondary');
+      btn.style.pointerEvents = 'none';
+      setTimeout(() => {
+        btn.textContent = 'Submit Vote';
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-secondary');
+        btn.style.pointerEvents = '';
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>
