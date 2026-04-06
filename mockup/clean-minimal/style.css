@@ -219,8 +219,7 @@ p {
   display: flex;
   align-items: center;
   gap: 4px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  flex-wrap: wrap;
 }
 
 .subnav a {
@@ -231,7 +230,6 @@ p {
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color var(--transition), border-color var(--transition);
-  white-space: nowrap;
 }
 
 .subnav a:hover {
@@ -289,7 +287,6 @@ p {
 
 /* --- Buttons --- */
 .btn {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
