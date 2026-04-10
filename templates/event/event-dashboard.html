@@ -47,13 +47,7 @@
 			{{ range .YourTeams }}
 			<a class="card card-clickable" href="{{$event.Path "team" .ID "edit"}}">
 				<div class="flex items-center justify-between mb-12">
-					{{ if .Game.Noncompeting }}
-					<span class="badge badge-amber">Noncompeting</span>
-					{{ else if .HasSubmitted }}
-					<span class="badge badge-green">Submitted</span>
-					{{ else }}
-					<span class="badge badge-red">Missing game or links</span>
-					{{ end }}
+					{{ template "team-status-badge" . }}
 				</div>
 				<h2 class="event-card-title">{{ if .Game.Name }}{{ .Game.Name }}{{ else }}(no game name){{ end }}</h2>
 				<p class="event-card-theme">by <strong>{{ .Name }}</strong></p>

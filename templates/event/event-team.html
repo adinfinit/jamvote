@@ -3,17 +3,12 @@
 <section>
 	<div class="team-hero mb-32">
 		<div class="team-info">
+			<div class="mb-12">{{ template "team-status-badge" .Team }}</div>
 			{{ if .Team.Game.Name }}
 			<h1 class="mb-12">{{.Team.Game.Name}}</h1>
 			<p class="team-name-label">by {{.Team.Name}}</p>
 			{{ else }}
 			<h1 class="mb-20">{{.Team.Name}}</h1>
-			{{ end }}
-
-			{{ if .Team.Game.Noncompeting }}
-			<div class="flashes mb-16">
-				<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
-			</div>
 			{{ end }}
 
 			{{ with .Team.Game.Info }}

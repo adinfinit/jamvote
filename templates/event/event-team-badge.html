@@ -1,0 +1,9 @@
+{{ define "team-status-badge" }}
+{{ if .Game.Noncompeting }}
+<span class="badge badge-amber">Noncompeting</span>
+{{ else if .HasSubmitted }}
+<span class="badge badge-green">Submitted</span>
+{{ else }}
+<span class="badge badge-red">Missing game or links</span>
+{{ end }}
+{{ end }}

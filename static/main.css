@@ -685,7 +685,6 @@ input[type="submit"] {
 .badge-green {
   background: var(--green-light);
   color: var(--green);
-  animation: badge-pulse-green 3s ease-in-out infinite;
 }
 
 .badge-pulse-amber {
