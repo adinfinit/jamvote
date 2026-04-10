@@ -218,6 +218,15 @@ li {
   margin-bottom: 0.25rem;
 }
 
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--gray-100);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--gray-800);
+}
+
 /* --- Layout --- */
 .center, .container {
   max-width: 1080px;
@@ -246,7 +255,37 @@ li {
 .centered-text {
   max-width: 40rem;
   margin: 0 auto;
-  margin-bottom: 30vh;
+
+  & h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  & h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  & h3 {
+    margin-top: 2rem;
+  }
+
+  & p {
+    color: var(--gray-700);
+  }
+
+  & p:last-child:has(a.button) {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  & a.button {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
 }
 
 /* --- Navigation --- */
