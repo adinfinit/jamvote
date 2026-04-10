@@ -2,14 +2,14 @@
 {{ if .Revealed }}
 <span class="badge badge-gray">Completed</span>
 {{ else if .Closed }}
-<span class="badge badge-gray">Waiting for Results</span>
+<span class="badge badge-amber badge-pulse-amber">Waiting for Results</span>
 {{ else if .Voting }}
 <span class="badge badge-green">Voting Open</span>
 {{ else if .Registration }}
 <span class="badge badge-blue">Registration Open</span>
 {{ else }}
 {{ if  gt (len .Jammers) 0 }}
-<span class="badge badge-green">In Progress</span>
+<span class="badge badge-blue badge-pulse-blue">In Progress</span>
 {{ else }}
 <span class="badge badge-gray">Upcoming</span>
 {{ end }}

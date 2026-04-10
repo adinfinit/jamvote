@@ -85,7 +85,7 @@ func (server *Server) List(context *Context) {
 	byStage.All = events
 
 	for _, event := range events {
-		if !event.Closed {
+		if !event.Revealed {
 			byStage.Started = append(byStage.Started, event)
 		} else {
 			year := event.startTime().Year()
