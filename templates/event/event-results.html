@@ -2,116 +2,122 @@
 
 {{ $event := .Event }}
 <section>
-	<div class="titlemenu">
+	<div class="section-header">
 		<h1>Voting Results</h1>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th style="width:2rem;" title="Place"></th>
-				<th>Team</th>
-				<th>Game</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ range $index, $result := .Results }}
-			<tr>
-				<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-				<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-				<td class="important">{{.Game.Name}}</td>
-
-				<td>{{printf "%.3f" .Average.Theme.Score}}</td>
-				<td>{{printf "%.3f" .Average.Enjoyment.Score}}</td>
-				<td>{{printf "%.3f" .Average.Aesthetics.Score}}</td>
-				<td>{{printf "%.3f" .Average.Innovation.Score}}</td>
-				<td>{{printf "%.3f" .Average.Bonus.Score}}</td>
-				<td class="important">{{printf "%.3f" .Average.Overall.Score}}</td>
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
+	<div class="table-wrap mb-32">
+		<table>
+			<thead>
+				<tr>
+					<th style="width:3rem;" title="Place">#</th>
+					<th>Team</th>
+					<th>Game</th>
+					<th style="width:5%;" title="Theme">The</th>
+					<th style="width:5%;" title="Enjoyment">Enj</th>
+					<th style="width:5%;" title="Aesthetics">Aes</th>
+					<th style="width:5%;" title="Innovation">Inn</th>
+					<th style="width:5%;" title="Bonus">Bon</th>
+					<th style="width:5%;" title="Overall">Ove</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range $index, $result := .Results }}
+				<tr>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
+					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+					<td><strong>{{.Game.Name}}</strong></td>
+					<td>{{printf "%.3f" .Average.Theme.Score}}</td>
+					<td>{{printf "%.3f" .Average.Enjoyment.Score}}</td>
+					<td>{{printf "%.3f" .Average.Aesthetics.Score}}</td>
+					<td>{{printf "%.3f" .Average.Innovation.Score}}</td>
+					<td>{{printf "%.3f" .Average.Bonus.Score}}</td>
+					<td><strong>{{printf "%.3f" .Average.Overall.Score}}</strong></td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+	</div>
 
 	{{ if .Event.JudgesExist }}
-	<div class="titlemenu">
-		<h1>Jammers Voting Results</h1>
+	<div class="divider"></div>
+
+	<div class="section-header">
+		<h2>Jammers Voting Results</h2>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th style="width:2rem;" title="Place"></th>
-				<th>Team</th>
-				<th>Game</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ range $index, $result := .Results }}
-			<tr>
-				<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-				<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-				<td class="important">{{.Game.Name}}</td>
-
-				<td>{{printf "%.3f" .JammerAverage.Theme.Score}}</td>
-				<td>{{printf "%.3f" .JammerAverage.Enjoyment.Score}}</td>
-				<td>{{printf "%.3f" .JammerAverage.Aesthetics.Score}}</td>
-				<td>{{printf "%.3f" .JammerAverage.Innovation.Score}}</td>
-				<td>{{printf "%.3f" .JammerAverage.Bonus.Score}}</td>
-				<td class="important">{{printf "%.3f" .JammerAverage.Overall.Score}}</td>
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
-
-	<div class="titlemenu">
-		<h1>Judge Voting Results</h1>
+	<div class="table-wrap mb-32">
+		<table>
+			<thead>
+				<tr>
+					<th style="width:3rem;" title="Place">#</th>
+					<th>Team</th>
+					<th>Game</th>
+					<th style="width:5%;" title="Theme">The</th>
+					<th style="width:5%;" title="Enjoyment">Enj</th>
+					<th style="width:5%;" title="Aesthetics">Aes</th>
+					<th style="width:5%;" title="Innovation">Inn</th>
+					<th style="width:5%;" title="Bonus">Bon</th>
+					<th style="width:5%;" title="Overall">Ove</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range $index, $result := .Results }}
+				<tr>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
+					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+					<td><strong>{{.Game.Name}}</strong></td>
+					<td>{{printf "%.3f" .JammerAverage.Theme.Score}}</td>
+					<td>{{printf "%.3f" .JammerAverage.Enjoyment.Score}}</td>
+					<td>{{printf "%.3f" .JammerAverage.Aesthetics.Score}}</td>
+					<td>{{printf "%.3f" .JammerAverage.Innovation.Score}}</td>
+					<td>{{printf "%.3f" .JammerAverage.Bonus.Score}}</td>
+					<td><strong>{{printf "%.3f" .JammerAverage.Overall.Score}}</strong></td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th style="width:2rem;" title="Place"></th>
-				<th>Team</th>
-				<th>Game</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
-				<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ range $index, $result := .Results }}
-			<tr>
-				<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-				<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-				<td class="important">{{.Game.Name}}</td>
+	<div class="divider"></div>
 
-				<td>{{printf "%.3f" .JudgeAverage.Theme.Score}}</td>
-				<td>{{printf "%.3f" .JudgeAverage.Enjoyment.Score}}</td>
-				<td>{{printf "%.3f" .JudgeAverage.Aesthetics.Score}}</td>
-				<td>{{printf "%.3f" .JudgeAverage.Innovation.Score}}</td>
-				<td>{{printf "%.3f" .JudgeAverage.Bonus.Score}}</td>
-				<td class="important">{{printf "%.3f" .JudgeAverage.Overall.Score}}</td>
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
+	<div class="section-header">
+		<h2>Judge Voting Results</h2>
+	</div>
+
+	<div class="table-wrap mb-32">
+		<table>
+			<thead>
+				<tr>
+					<th style="width:3rem;" title="Place">#</th>
+					<th>Team</th>
+					<th>Game</th>
+					<th style="width:5%;" title="Theme">The</th>
+					<th style="width:5%;" title="Enjoyment">Enj</th>
+					<th style="width:5%;" title="Aesthetics">Aes</th>
+					<th style="width:5%;" title="Innovation">Inn</th>
+					<th style="width:5%;" title="Bonus">Bon</th>
+					<th style="width:5%;" title="Overall">Ove</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ range $index, $result := .Results }}
+				<tr>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
+					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+					<td><strong>{{.Game.Name}}</strong></td>
+					<td>{{printf "%.3f" .JudgeAverage.Theme.Score}}</td>
+					<td>{{printf "%.3f" .JudgeAverage.Enjoyment.Score}}</td>
+					<td>{{printf "%.3f" .JudgeAverage.Aesthetics.Score}}</td>
+					<td>{{printf "%.3f" .JudgeAverage.Innovation.Score}}</td>
+					<td>{{printf "%.3f" .JudgeAverage.Bonus.Score}}</td>
+					<td><strong>{{printf "%.3f" .JudgeAverage.Overall.Score}}</strong></td>
+				</tr>
+				{{ end }}
+			</tbody>
+		</table>
+	</div>
 	{{ end }}
 </section>
-
 
 {{ template "foot" . }}

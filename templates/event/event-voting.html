@@ -3,74 +3,80 @@
 {{ $event := .Event }}
 <section>
 	{{ if .Event.Closed }}
-	<div class="flashes">
+	<div class="flashes mb-24">
 		<div class="flash">Voting is closed.</div>
 	</div>
 	{{ else }}
-	<section>
-		<h1>Queue</h1>
+	<section class="mb-32">
+		<div class="section-header">
+			<h1>Queue</h1>
+		</div>
 
 		{{ range .Queue }}
-		<a class="button" href="{{ $event.Path "vote" .Team.ID }}">{{.Team.Game.Name}}</a>
+		<a class="card card-clickable mb-8" href="{{ $event.Path "vote" .Team.ID }}">{{.Team.Game.Name}}</a>
 		{{ end }}
 
 		{{ if not .Queue }}
-		<a class="button special" href="{{.Event.Path "fill-queue"}}">Click Here for Next Game</a>
+		<a class="btn btn-primary btn-lg btn-block" href="{{.Event.Path "fill-queue"}}">Click Here for Next Game</a>
 		{{ end }}
 	</section>
 
-	<section>
+	<section class="mb-32">
 		{{ if .VotingOpens }}
-		<div>
-			<h2>Voting Opens: </h2>
+		<div class="mb-16">
+			<div class="text-small text-muted mb-4">Voting Opens</div>
 			{{ template "countdown" .VotingOpens }}
 		</div>
 		{{ end }}
 		{{ if .VotingCloses }}
-		<div>
-			<h2>Voting Closes: </h2>
+		<div class="mb-16">
+			<div class="text-small text-muted mb-4">Voting Closes</div>
 			{{ template "countdown" .VotingCloses }}
 		</div>
 		{{ end }}
 	</section>
 	{{ end }}
 
-	<section style="margin-top: 6rem;">
-		<h1>Votes</h1>
-		<table>
-			<thead>
-				<tr>
-					<th style="width: 2.5rem;"></th>
-					<th>Team</th>
-					<th>Game</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Theme">The</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Enjoyment">Enj</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Aesthetics">Aes</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Innovation">Inn</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Bonus">Bon</th>
-					<th style="width:5%; font-size: 0.7rem;" title="Overall">Ove</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{ range .Completed }}
-				<tr>
-					{{ if Data.Event.Closed }}
-					<td><a class="edit" href="{{ $event.Path "vote" .Team.ID }}">view</a></td>
-					{{ else }}
-					<td><a class="edit" href="{{ $event.Path "vote" .Team.ID }}">edit</a></td>
+	<section>
+		<div class="section-header">
+			<h2>Votes</h2>
+		</div>
+		<div class="table-wrap">
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 3rem;"></th>
+						<th>Team</th>
+						<th>Game</th>
+						<th style="width:5%;" title="Theme">The</th>
+						<th style="width:5%;" title="Enjoyment">Enj</th>
+						<th style="width:5%;" title="Aesthetics">Aes</th>
+						<th style="width:5%;" title="Innovation">Inn</th>
+						<th style="width:5%;" title="Bonus">Bon</th>
+						<th style="width:5%;" title="Overall">Ove</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{ range .Completed }}
+					<tr>
+						{{ if Data.Event.Closed }}
+						<td><a class="btn btn-outline btn-sm" href="{{ $event.Path "vote" .Team.ID }}">view</a></td>
+						{{ else }}
+						<td><a class="btn btn-outline btn-sm" href="{{ $event.Path "vote" .Team.ID }}">edit</a></td>
+						{{ end }}
+						<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
+						<td>{{.Game.Name}}</td>
+						<td title="{{.Ballot.Theme.Comment}}">{{.Ballot.Theme}}</td>
+						<td title="{{.Ballot.Enjoyment.Comment}}">{{.Ballot.Enjoyment}}</td>
+						<td title="{{.Ballot.Aesthetics.Comment}}">{{.Ballot.Aesthetics}}</td>
+						<td title="{{.Ballot.Innovation.Comment}}">{{.Ballot.Innovation}}</td>
+						<td title="{{.Ballot.Bonus.Comment}}">{{.Ballot.Bonus}}</td>
+						<td><strong title="{{.Ballot.Overall.Comment}}">{{.Ballot.Overall}}</strong></td>
+					</tr>
 					{{ end }}
-					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-					<td>{{.Game.Name}}</td>
-					<td title="{{.Ballot.Theme.Comment}}">{{.Ballot.Theme}}</td>
-					<td title="{{.Ballot.Enjoyment.Comment}}">{{.Ballot.Enjoyment}}</td>
-					<td title="{{.Ballot.Aesthetics.Comment}}">{{.Ballot.Aesthetics}}</td>
-					<td title="{{.Ballot.Innovation.Comment}}">{{.Ballot.Innovation}}</td>
-					<td title="{{.Ballot.Bonus.Comment}}">{{.Ballot.Bonus}}</td>
-					<td class="important" title="{{.Ballot.Overall.Comment}}">{{.Ballot.Overall}}</td>
-				</tr>
-				{{ end }}
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</section>
 </section>
 

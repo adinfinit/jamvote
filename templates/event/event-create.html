@@ -1,49 +1,54 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Create Event</h1>
-	<form method="post">
-		<div class="field">
-			<label for="name">Name [cannot be changed later]</label>
-			<input type="text" id="name" name="name" value="{{with .NewEvent}}{{.Name}}{{end}}">
-		</div>
+	<div class="section-header">
+		<h1>Create Event</h1>
+	</div>
 
-		<div class="field">
-			<label for="slug">Slug [cannot be changed later]</label>
-			<input type="text" id="slug" name="slug" value="{{with .NewEvent}}{{.ID}}{{end}}">
-		</div>
-
-		<div class="field">
-			<label for="theme">Theme</label>
-			<input type="text" id="theme" name="theme" value="{{.Event.Theme}}">
-		</div>
-
-		<div class="field">
-			<label for="judgePercentage">Percentage of judge votes (leave 0 for no judges)</label>
-			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
-		</div>
-
-		<div class="field">
-			<label for="info">Info</label>
-			<textarea type="text" id="info" name="info" rows=4>{{with .NewEvent}}{{.Info}}{{end}}</textarea>
-		</div>
-
-		<fieldset>
-			<legend>Dates</legend>
-
+	<div class="card">
+		<form method="post">
 			<div class="field">
-				<label for="StartTime">Start Time</label>
-				<input type="datetime-local" id="StartTime" name="StartTime">
+				<label for="name">Name <span class="text-small text-muted">(cannot be changed later)</span></label>
+				<input type="text" id="name" name="name" class="form-input" value="{{with .NewEvent}}{{.Name}}{{end}}">
 			</div>
 
 			<div class="field">
-				<label for="EndTime">End Time</label>
-				<input type="datetime-local" id="EndTime" name="EndTime">
+				<label for="slug">Slug <span class="text-small text-muted">(cannot be changed later)</span></label>
+				<input type="text" id="slug" name="slug" class="form-input" value="{{with .NewEvent}}{{.ID}}{{end}}">
 			</div>
-		</fieldset>
 
-		<input type="submit" value="Create">
-	</form>
+			<div class="field">
+				<label for="theme">Theme</label>
+				<input type="text" id="theme" name="theme" class="form-input" value="{{.Event.Theme}}">
+			</div>
+
+			<div class="field">
+				<label for="judgePercentage">Percentage of judge votes <span class="text-small text-muted">(leave 0 for no judges)</span></label>
+				<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" class="form-input" value="0" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
+			</div>
+
+			<div class="field">
+				<label for="info">Info</label>
+				<textarea id="info" name="info" class="form-input" rows=4>{{with .NewEvent}}{{.Info}}{{end}}</textarea>
+			</div>
+
+			<fieldset>
+				<legend>Dates</legend>
+
+				<div class="field">
+					<label for="StartTime">Start Time</label>
+					<input type="datetime-local" id="StartTime" name="StartTime" class="form-input">
+				</div>
+
+				<div class="field">
+					<label for="EndTime">End Time</label>
+					<input type="datetime-local" id="EndTime" name="EndTime" class="form-input">
+				</div>
+			</fieldset>
+
+			<input type="submit" value="Create">
+		</form>
+	</div>
 </section>
 
 {{ template "foot" . }}

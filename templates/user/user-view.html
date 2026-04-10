@@ -1,61 +1,63 @@
 {{ template "head" . }}
 <section>
-	<div class="titlemenu">
-		<h1>User: {{ or .User.Name }}</h1>	
+	<div class="titlemenu mb-16">
+		<h1>{{ or .User.Name "User" }}</h1>
 		{{ if .User.HasEditor .CurrentUser }}
-		<a class="button" href="/user/{{.User.ID}}/edit">Edit</a>
+		<a class="btn btn-outline btn-sm" href="/user/{{.User.ID}}/edit">Edit</a>
 		{{ end }}
 	</div>
 
-	<div>
+	<div class="card mb-32">
 		<div class="field">
-			<label for="name">Name</label>
-			<div class="input" name="name">{{.User.Name}}</div>
+			<label>Name</label>
+			<div class="text-muted">{{.User.Name}}</div>
 		</div>
 
 		{{ if .CurrentUser.IsAdmin }}
 		<div class="field">
-			<label for="email">Email</label>
-			<div class="input" name="email">{{.User.Email}}</div>
+			<label>Email</label>
+			<div class="text-muted">{{.User.Email}}</div>
 		</div>
 		{{ end }}
 
 		{{ if .User.Facebook }}
 		<div class="field">
-			<label for="facebook">Facebook</label>
-			<a class="button" target="_blank" href="{{.User.Facebook}}" name="facebook">{{.User.Facebook}}</a>
+			<label>Facebook</label>
+			<a class="no-link" href="{{.User.Facebook}}">{{.User.Facebook}}</a>
 		</div>
 		{{ end }}
 
 		{{ if .User.Github }}
 		<div class="field">
-			<label for="github">Github</label>
-			<a class="button" target="_blank" href="{{.User.Github}}" name="github">{{.User.Github}}</a>
+			<label>Github</label>
+			<a class="no-link" href="{{.User.Github}}">{{.User.Github}}</a>
 		</div>
 		{{ end }}
 	</div>
 
 	<section>
-		<h2>Teams</h2>
+		<h2 class="section-label-line section-label mb-16">Teams</h2>
 
-		<table>
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Team</th>
-					<th>Game</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{ range .Teams }}
-				<tr>
-					<td><a href="{{.Event.Path}}" title="{{.Event.Name}}">{{ .Event.Name }}</a></td>
-					<td><a href="{{.Event.Path "team" .Team.ID }}" title="{{.Name}}">{{ .Name }}</a></td>
-					<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
-				</tr>
-				{{ end }}
-			</tbody>
-		</table>
+		<div class="table-wrap">
+			<table>
+				<thead>
+					<tr>
+						<th>Event</th>
+						<th>Team</th>
+						<th>Game</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{ range .Teams }}
+					<tr>
+						<td><a href="{{.Event.Path}}" title="{{.Event.Name}}">{{ .Event.Name }}</a></td>
+						<td><a href="{{.Event.Path "team" .Team.ID }}" title="{{.Name}}">{{ .Name }}</a></td>
+						<td><strong title="{{.Game.Name}}">{{ .Game.Name }}</strong></td>
+					</tr>
+					{{ end }}
+				</tbody>
+			</table>
+		</div>
 	</section>
 </section>
 {{ template "foot" . }}

@@ -1,48 +1,50 @@
 {{ template "head" . }}
 
 <section>
-	<div class="titlemenu">
+	<div class="section-header">
 		<h1>Voting Progress</h1>
 	</div>
 
-	<div class="progress">
+	<div class="progress mb-24">
 		<div class="pending" style="width: {{ mul 100 (div .AveragePending Data.VoteTarget) }}%"></div>
 		<div class="complete" style="width: {{ mul 100 (div .AverageComplete Data.VoteTarget) }}%"></div>
-		<div class="info" style="padding-top: 0.4em;">Total Votes {{ .TotalComplete }}</div>
+		<div class="info">Total Votes {{ .TotalComplete }}</div>
 	</div>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Team</th>
-				<th>Game</th>
-				<th>Progress</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{ $event := .Event }}
-			{{ range .Progress }}
-			{{ if .HasSubmitted }}
-			<tr>
-				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
-				<td class="progress">
-					<div class="pending" style="width: {{ mul 100 (div .Pending Data.VoteMax) }}%"></div>
-					<div class="complete" style="width: {{ mul 100 (div .Complete Data.VoteMax) }}%"></div>
-					<div class="target" style="left: {{ mul 100 (div Data.VoteTarget Data.VoteMax) }}%"></div>
-					<div class="info">Votes {{ .Complete }}</div>
-				</td>
-			</tr>
-			{{ else }}
-			<tr class="not-submitted">
-				<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
-				<td class="boxed">Not submitted</td>
-			</tr>
-			{{ end }}
-			{{ end }}
-		</tbody>
-	</table>
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Team</th>
+					<th>Game</th>
+					<th>Progress</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ $event := .Event }}
+				{{ range .Progress }}
+				{{ if .HasSubmitted }}
+				<tr>
+					<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+					<td><strong title="{{.Game.Name}}">{{ .Game.Name }}</strong></td>
+					<td class="progress">
+						<div class="pending" style="width: {{ mul 100 (div .Pending Data.VoteMax) }}%"></div>
+						<div class="complete" style="width: {{ mul 100 (div .Complete Data.VoteMax) }}%"></div>
+						<div class="target" style="left: {{ mul 100 (div Data.VoteTarget Data.VoteMax) }}%"></div>
+						<div class="info">Votes {{ .Complete }}</div>
+					</td>
+				</tr>
+				{{ else }}
+				<tr class="not-submitted">
+					<td><a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+					<td><strong title="{{.Game.Name}}">{{ .Game.Name }}</strong></td>
+					<td>Not submitted</td>
+				</tr>
+				{{ end }}
+				{{ end }}
+			</tbody>
+		</table>
+	</div>
 </section>
 
 {{ template "foot" . }}

@@ -1,35 +1,40 @@
 {{ template "head" . }}
 <section>
-	<h1>Edit: {{ .User.Name }}</h1>
-	<form method="post">
-		<div class="field">
-			<label for="name">Full Name</label>
-			<input type="text" id="name" name="name" value="{{ .User.Name }}">
-		</div>
+	<div class="section-header">
+		<h1>Edit: {{ .User.Name }}</h1>
+	</div>
 
-		<div class="field">
-			<label for="email">Email</label>
-			<input type="text" id="email" name="email" value="{{ .User.Email }}">
-		</div>
+	<div class="card">
+		<form method="post">
+			<div class="field">
+				<label for="name">Full Name</label>
+				<input type="text" id="name" name="name" class="form-input" value="{{ .User.Name }}">
+			</div>
 
-		<div class="field">
-			<label for="facebook">Facebook</label>
-			<input type="text" id="facebook" name="facebook" value="{{ .User.Facebook }}">
-		</div>
+			<div class="field">
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" class="form-input" value="{{ .User.Email }}">
+			</div>
 
-		<div class="field">
-			<label for="github">Github</label>
-			<input type="text" id="github" name="github" value="{{ .User.Github }}">
-		</div>
+			<div class="field">
+				<label for="facebook">Facebook</label>
+				<input type="text" id="facebook" name="facebook" class="form-input" value="{{ .User.Facebook }}">
+			</div>
 
-		{{ if .CurrentUser.IsAdmin }}
-		<div class="field">
-			<input type="checkbox" id="admin" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
-			<label for="admin">Admin</label>
-		</div>
-		{{ end }}
+			<div class="field">
+				<label for="github">Github</label>
+				<input type="text" id="github" name="github" class="form-input" value="{{ .User.Github }}">
+			</div>
 
-		<input type="submit" value="Save">
-	</form>
+			{{ if .CurrentUser.IsAdmin }}
+			<div class="field">
+				<input type="checkbox" id="admin" name="admin" value="true" {{ if .User.Admin }}checked{{end}}>
+				<label for="admin">Admin</label>
+			</div>
+			{{ end }}
+
+			<input type="submit" value="Save">
+		</form>
+	</div>
 </section>
 {{ template "foot" . }}

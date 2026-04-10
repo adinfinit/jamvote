@@ -2,31 +2,46 @@
 
 {{ define "event-links" }}
 {{ range . }}
-<a class="button" href="{{ .Path }}"><div class="title">{{.Name}} {{ with .Theme }}- <span class="theme">{{.}}</span>{{end}}</div></a>
+<a class="card card-clickable" href="{{ .Path }}">
+	<div class="event-card-title">{{.Name}}</div>
+	{{ with .Theme }}<div class="event-card-theme"><span class="theme-accent">{{.}}</span></div>{{end}}
+</a>
 {{ end }}
 {{ end }}
 
 <section>
-	<div class="titlemenu">
+	<div class="section-header">
 		<h1>Events</h1>
 		{{ if .CurrentUser.IsAdmin }}
-		<a class="button" href="/event/create">Create Event</a>
+		<a class="btn btn-primary" href="/event/create">Create Event</a>
 		{{ end }}
 	</div>
 
 	{{ with $events := .Events.Started }}
-	<div>
-		<h2>Started</h2>
-		{{ template "event-links" $events }}
+	<div class="mb-32">
+		<h2 class="section-label-line section-label mb-16">Active</h2>
+		<div class="grid-2">
+			{{ template "event-links" $events }}
+		</div>
 	</div>
 	{{ end }}
 
-	<h2>Finished</h2>
+	<h2 class="section-label-line section-label mb-16">Finished</h2>
 
 	{{ range .Events.Finished }}
-	<div>
-		<h3>{{ .Year }}</h3>
-		{{ template "event-links" .Events }}
+	<div class="mb-24">
+		<h3 class="year-heading mb-12">{{ .Year }}</h3>
+		<div class="table-wrap">
+			<table>
+				<tbody>
+				{{ range .Events }}
+				<tr>
+					<td><a href="{{ .Path }}">{{.Name}}{{ with .Theme }} — <span class="text-amber">{{.}}</span>{{end}}</a></td>
+				</tr>
+				{{ end }}
+				</tbody>
+			</table>
+		</div>
 	</div>
 	{{ end }}
 </section>

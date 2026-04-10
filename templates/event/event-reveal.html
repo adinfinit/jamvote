@@ -2,10 +2,11 @@
 
 {{ $event := .Event }}
 <section>
+	<div class="section-header">
+		<h1>Reveal</h1>
+	</div>
+
 	<div class="reveal">
-<style>
-	
-</style>
 		{{ range $index, $result := .Results }}
 		<div class="place-container place-container-{{$index}}">
 			<div class="place-number">#{{add 1 $index}}</div>

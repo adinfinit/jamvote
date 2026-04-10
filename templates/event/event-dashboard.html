@@ -2,39 +2,44 @@
 
 {{ $event := .Event }}
 <section>
-	<section style="float:right; margin: 1rem;">
-		{{ if .VotingOpens }}
+	<div class="event-header-row mb-24">
 		<div>
-			<h2>Voting Opens: </h2>
-			{{ template "countdown" .VotingOpens }}
+			<h1>{{.Event.Name}}</h1>
+			{{ with .Event.Theme }}<div class="theme-accent">{{.}}</div>{{ end }}
 		</div>
-		{{ end }}
-		{{ if .VotingCloses }}
-		<div>
-			<h2>Voting Closes: </h2>
-			{{ template "countdown" .VotingCloses }}
+		<div class="event-action-bar">
+			{{ if .VotingOpens }}
+			<div>
+				<div class="text-small text-muted mb-4">Voting Opens</div>
+				{{ template "countdown" .VotingOpens }}
+			</div>
+			{{ end }}
+			{{ if .VotingCloses }}
+			<div>
+				<div class="text-small text-muted mb-4">Voting Closes</div>
+				{{ template "countdown" .VotingCloses }}
+			</div>
+			{{ end }}
 		</div>
-		{{ end }}
-	</section>
-
-	<h1 style="color: #333; font-size: 1.6rem;">{{.Event.Name}}</h1>
-	<h2 style="color: #333; font-size: 1.4rem;">{{.Event.Theme}}</h2>
-
-	<div>
-		{{ range (paragraphs .Event.Info) }}<p>{{.}}</p>{{ end }}
 	</div>
 
+	{{ with .Event.Info }}
+	<div class="card mb-24">
+		{{ range (paragraphs .) }}<p>{{.}}</p>{{ end }}
+	</div>
+	{{ end }}
+
 	{{ if .NotSubmittedTeams }}
-	<div class="flashes">
+	<div class="flashes mb-24">
 		<div class="flash">Your team has not submitted a game.</div>
 		{{ range .NotSubmittedTeams }}
-		<a class="flash button" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
+		<a class="btn btn-outline btn-sm mt-8" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
 		{{ end }}
 	</div>
 	{{ end }}
 
 	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
-	<div class="flashes">
+	<div class="flashes mb-24">
 		{{if (not .Event.Voting)}}
 		<div class="flash">Voting has not yet started.</div>
 		{{ else if .Event.Closed }}
@@ -47,10 +52,9 @@
 		<div class="flash">You have not been approved for this event.</div>
 		{{ end }}
 	</div>
-	<br>
-	<a class="button big disabled" href="#">Start Voting</a>
+	<a class="btn btn-lg btn-secondary disabled" href="#">Start Voting</a>
 	{{ else }}
-	<a class="button big" href="{{.Event.Path "fill-queue"}}">Start Voting</a>
+	<a class="btn btn-lg btn-primary" href="{{.Event.Path "fill-queue"}}">Start Voting</a>
 	{{ end }}
 </section>
 

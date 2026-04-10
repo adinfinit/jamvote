@@ -1,17 +1,22 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Create Team</h1>
-	<form method="POST">
-		<datalist id="Users">
-			{{ range .Users }}
-			<option value="{{.Name}}">{{.ID}}</option>
-			{{ end }}
-		</datalist>
+	<div class="section-header">
+		<h1>Create Team</h1>
+	</div>
 
-		{{ template "team-fields" . }}
-		<input type="submit" value="Save">
-	</form>
+	<div class="card">
+		<form method="POST">
+			<datalist id="Users">
+				{{ range .Users }}
+				<option value="{{.Name}}">{{.ID}}</option>
+				{{ end }}
+			</datalist>
+
+			{{ template "team-fields" . }}
+			<input type="submit" value="Save">
+		</form>
+	</div>
 </section>
 
 {{ template "foot" . }}

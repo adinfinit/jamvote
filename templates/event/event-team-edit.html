@@ -8,9 +8,9 @@
 	<div>
 		<div class="field">
 			<label for="Team.Name">Team Name</label>
-			<div class="side-by-side">
-				<input type="text" id="Team.Name" name="Team.Name" value="{{.Name}}">
-				<button id="Team.Name.Randomizer" class="randomizer"><span>🎲</span></button>
+			<div class="flex gap-8">
+				<input type="text" id="Team.Name" name="Team.Name" class="form-input" value="{{.Name}}">
+				<button id="Team.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
 			</div>
 			<script>
 				document.getElementById("Team.Name.Randomizer").addEventListener("click", function(event){
@@ -27,16 +27,16 @@
 			<label>Members</label>
 
 			{{ range $i, $member := .MembersForEdit $isAdmin }}
-			<input type="text" class="tight" name="Team.Member[{{$i}}]" list="Users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
+			<input type="text" class="form-input tight" name="Team.Member[{{$i}}]" list="Users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
 			{{ end }}
 		</div>
 	</div>
 	<div>
 		<div class="field">
 			<label for="Team.Game.Name">Game Name</label>
-			<div class="side-by-side">
-				<input type="text" id="Team.Game.Name" name="Team.Game.Name" value="{{.Game.Name}}">
-				<button id="Team.Game.Name.Randomizer" class="randomizer"><span>🎲</span></button>
+			<div class="flex gap-8">
+				<input type="text" id="Team.Game.Name" name="Team.Game.Name" class="form-input" value="{{.Game.Name}}">
+				<button id="Team.Game.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
 			</div>
 			<script>
 				document.getElementById("Team.Game.Name.Randomizer").addEventListener("click", function(event){
@@ -51,27 +51,27 @@
 
 		<div class="field">
 			<label for="Team.Game.Info">Info</label>
-			<textarea type="text" id="Team.Game.Info" name="Team.Game.Info" rows=4>{{.Game.Info}}</textarea>
+			<textarea id="Team.Game.Info" name="Team.Game.Info" class="form-input" rows=4>{{.Game.Info}}</textarea>
 		</div>
 
 		<div class="field">
-			<input type="checkbox" id="Team.Game.Noncompeting" name="Team.Game.Noncompeting" value="true" {{ if .Game.Noncompeting }}checked{{end}}></input>
+			<input type="checkbox" id="Team.Game.Noncompeting" name="Team.Game.Noncompeting" value="true" {{ if .Game.Noncompeting }}checked{{end}}>
 			<label for="Team.Game.Noncompeting">Noncompeting</label>
 		</div>
 
 		<div class="field">
 			<label for="Team.Game.Link.Jam">Jam Page</label>
-			<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" value="{{.Game.Link.Jam}}">
+			<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" class="form-input" value="{{.Game.Link.Jam}}">
 		</div>
 
 		<div class="field">
 			<label for="Team.Game.Link.Download">Download Link</label>
-			<input type="text" id="Team.Game.Link.Download" name="Team.Game.Link.Download" value="{{.Game.Link.Download}}">
+			<input type="text" id="Team.Game.Link.Download" name="Team.Game.Link.Download" class="form-input" value="{{.Game.Link.Download}}">
 		</div>
 
 		<div class="field">
 			<label for="Team.Game.Link.Facebook">Facebook Post</label>
-			<input type="text" id="Team.Game.Link.Facebook" name="Team.Game.Link.Facebook" value="{{.Game.Link.Facebook}}">
+			<input type="text" id="Team.Game.Link.Facebook" name="Team.Game.Link.Facebook" class="form-input" value="{{.Game.Link.Facebook}}">
 		</div>
 	</div>
 </div>
@@ -80,23 +80,25 @@
 
 <section>
 	{{ if .CanDeleteTeam }}
-	<div class="titlemenu">
+	<div class="titlemenu mb-16">
 		<div></div>
-		<a class="button" href="{{.Event.Path "team" .Team.ID "delete"}}" onclick="return confirm('Are you sure?\nThis cannot be reversed.')">Delete</a>
+		<a class="btn btn-danger btn-sm" href="{{.Event.Path "team" .Team.ID "delete"}}" onclick="return confirm('Are you sure?\nThis cannot be reversed.')">Delete</a>
 	</div>
 	{{ end }}
 
 	<h1>Team: {{.Team.Name}}</h1>
-	<form method="POST">
-		<datalist id="Users">
-			{{ range .Users }}
-			<option value="{{.Name}}">{{.ID}}</option>
-			{{ end }}
-		</datalist>
+	<div class="card">
+		<form method="POST">
+			<datalist id="Users">
+				{{ range .Users }}
+				<option value="{{.Name}}">{{.ID}}</option>
+				{{ end }}
+			</datalist>
 
-		{{ template "team-fields" . }}
-		<input type="submit" value="Save">
-	</form>
+			{{ template "team-fields" . }}
+			<input type="submit" value="Save">
+		</form>
+	</div>
 </section>
 
 {{ template "foot" . }}

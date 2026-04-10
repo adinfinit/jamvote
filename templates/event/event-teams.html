@@ -2,59 +2,63 @@
 
 {{ define "teams-list" }}
 {{ $event := .Event }}
-<section>
-	<div class="titlemenu">
-		<h1>{{if .YourTeams}}Your Team{{ if (gt (len .YourTeams) 1) }}s{{end}}{{end}}</h1>	
+<section class="mb-32">
+	<div class="section-header">
+		<h1>{{if .YourTeams}}Your Team{{ if (gt (len .YourTeams) 1) }}s{{end}}{{end}}</h1>
 		{{ if $event.CanRegister Data.CurrentUser }}
-		<a class="button {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
+		<a class="btn btn-primary {{if .Event.Closed}}disabled{{end}}" href="{{.Event.Path "team" "create"}}">Create Team</a>
 		{{ end }}
 	</div>
 
-	<div>
+	<div class="grid-3 mb-24">
 		{{ range .YourTeams }}
-		<a class="button" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
+		<a class="card card-clickable" href="{{$event.Path "team" .ID}}" title="{{.Name}}">
+			<div class="event-card-title">{{ .Name }}</div>
+		</a>
 		{{ end }}
 	</div>
 </section>
 
 <section>
-	<div class="titlemenu">
-		<h1>All Teams</h1>
+	<div class="section-header">
+		<h2>All Teams</h2>
 	</div>
 
-	<table style="table-layout: auto;">
-		{{ $isAdmin := .CurrentUser.IsAdmin }}
-		<thead>
-			<tr>
-				{{ if $isAdmin }}<th style="width: 2.5rem;"></th>{{ end }}
-				<th>Team</th>
-				<th>Game</th>
-				<th style="width:2rem;"></th>
-				<th style="width:2rem;"></th>
-				{{ range $val := sequence1 .MaxMemberCount }}
-				<th style="width:8%; max-width:8rem;">{{ $val }}</th>
-				{{ end }}
-			</tr>
-		</thead>
-		<tbody>
-			{{ range .Teams }}
-			<tr>
-				{{ if $isAdmin }}
-				<td><a class="edit" href="{{$event.Path "team" .ID "edit"}}">edit</a></td>
-				{{ end }}
-				<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="boxed-indicator">NC</span>{{end}}<a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
-				<td><span class="important" title="{{.Game.Name}}">{{ .Game.Name }}</span></td>
+	<div class="table-wrap">
+		<table style="table-layout: auto;">
+			{{ $isAdmin := .CurrentUser.IsAdmin }}
+			<thead>
+				<tr>
+					{{ if $isAdmin }}<th style="width: 3rem;"></th>{{ end }}
+					<th>Team</th>
+					<th>Game</th>
+					<th style="width:2rem;"></th>
+					<th style="width:2rem;"></th>
+					{{ range $val := sequence1 .MaxMemberCount }}
+					<th style="width:8%; max-width:8rem;">{{ $val }}</th>
+					{{ end }}
+				</tr>
+			</thead>
+			<tbody>
+				{{ range .Teams }}
+				<tr>
+					{{ if $isAdmin }}
+					<td><a class="btn btn-outline btn-sm" href="{{$event.Path "team" .ID "edit"}}">edit</a></td>
+					{{ end }}
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="boxed-indicator">NC</span>{{end}}<a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
+					<td><strong title="{{.Game.Name}}">{{ .Game.Name }}</strong></td>
 
-				<td>{{ if .Game.Link.Download}}<a class="no-clip" href="{{.Game.Link.Download}}" title="Download">DL</a>{{end}}</td>
-				<td>{{ if .Game.Link.Jam}}<a class="no-clip" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
+					<td>{{ if .Game.Link.Download}}<a class="no-link" href="{{.Game.Link.Download}}" title="Download">DL</a>{{end}}</td>
+					<td>{{ if .Game.Link.Jam}}<a class="no-link" href="{{.Game.Link.Jam}}" title="Jam">Jam</a>{{end}}</td>
 
-				{{ range .Members }}
-				{{ if .Name }}<td class="member boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
+					{{ range .Members }}
+					{{ if .Name }}<td class="member boxed {{ if not .ID }}unregistered{{ end }}" title="{{.Name}}">{{ .Name }}</td>{{ else }}<td class="boxed empty"></td>{{ end }}
+					{{ end }}
+				</tr>
 				{{ end }}
-			</tr>
-			{{ end }}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 </section>
 {{ end }}
 

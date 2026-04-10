@@ -1,69 +1,74 @@
 {{ template "head" . }}
 
 <section>
-	<h1>Edit Event</h1>
-	<form method="post">
-		<div class="field">
-			<label for="theme">Theme</label>
-			<input type="text" id="theme" name="theme" value="{{.Event.Theme}}">
-		</div>
+	<div class="section-header">
+		<h1>Edit Event</h1>
+	</div>
 
-		<div class="field">
-			<label for="judgePercentage">Percentage of judge votes</label>
-			<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" value="{{.Event.JudgePercentage}}" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
-		</div>
-
-		<div class="field">
-			<input type="checkbox" id="registration" name="registration" value="true" {{ if .Event.Registration }}checked{{end}}>
-			<label for="registration">Registration</label>
-		</div>
-
-		<div class="field">
-			<input type="checkbox" id="voting" name="voting" value="true" {{ if .Event.Voting }}checked{{end}}>
-			<label for="voting">Voting Open</label>
-		</div>
-
-		<div class="field">
-			<input type="checkbox" id="closed" name="closed" value="true" {{ if .Event.Closed }}checked{{end}}>
-			<label for="closed">Voting Closed</label>
-		</div>
-
-		<div class="field">
-			<input type="checkbox" id="revealed" name="revealed" value="true" {{ if .Event.Revealed }}checked{{end}}>
-			<label for="revealed">Votes Revealed</label>
-		</div>
-
-		<div class="field">
-			<label for="info">Info</label>
-			<textarea type="text" id="info" name="info" rows=15>{{.Event.Info}}</textarea>
-		</div>
-
-		<fieldset>
-			<legend>Dates</legend>
-
+	<div class="card">
+		<form method="post">
 			<div class="field">
-				<label for="StartTime">Start Time</label>
-				<input type="datetime-local" id="StartTime" name="StartTime" {{ if isValidTime .Event.StartTime}}value="{{.Event.StartTime.Format "2006-01-02T15:04"}}"{{end}}>
+				<label for="theme">Theme</label>
+				<input type="text" id="theme" name="theme" class="form-input" value="{{.Event.Theme}}">
 			</div>
 
 			<div class="field">
-				<label for="EndTime">End Time</label>
-				<input type="datetime-local" id="EndTime" name="EndTime" {{ if isValidTime .Event.EndTime}}value="{{.Event.EndTime.Format "2006-01-02T15:04"}}"{{end}}>
+				<label for="judgePercentage">Percentage of judge votes</label>
+				<input type="number" min="0" max="100" step="1" id="judgePercentage" name="judgePercentage" class="form-input" value="{{.Event.JudgePercentage}}" oninput="(()=>{document.getElementById('judgePercentageInfoText').innerText = `Current percentage: ${document.getElementById('judgePercentage').value}%`})()">
 			</div>
 
 			<div class="field">
-				<label for="VotingOpens">Voting Opens</label>
-				<input type="datetime-local" id="VotingOpens" name="VotingOpens" {{ if isValidTime .Event.VotingOpens}}value="{{.Event.VotingOpens.Format "2006-01-02T15:04"}}"{{end}}>
+				<input type="checkbox" id="registration" name="registration" value="true" {{ if .Event.Registration }}checked{{end}}>
+				<label for="registration">Registration</label>
 			</div>
 
 			<div class="field">
-				<label for="VotingCloses">Voting Closes</label>
-				<input type="datetime-local" id="VotingCloses" name="VotingCloses" {{ if isValidTime .Event.VotingCloses}}value="{{.Event.VotingCloses.Format "2006-01-02T15:04"}}"{{end}}>
+				<input type="checkbox" id="voting" name="voting" value="true" {{ if .Event.Voting }}checked{{end}}>
+				<label for="voting">Voting Open</label>
 			</div>
-		</fieldset>
 
-		<input type="submit" value="Save">
-	</form>
+			<div class="field">
+				<input type="checkbox" id="closed" name="closed" value="true" {{ if .Event.Closed }}checked{{end}}>
+				<label for="closed">Voting Closed</label>
+			</div>
+
+			<div class="field">
+				<input type="checkbox" id="revealed" name="revealed" value="true" {{ if .Event.Revealed }}checked{{end}}>
+				<label for="revealed">Votes Revealed</label>
+			</div>
+
+			<div class="field">
+				<label for="info">Info</label>
+				<textarea id="info" name="info" class="form-input" rows=15>{{.Event.Info}}</textarea>
+			</div>
+
+			<fieldset>
+				<legend>Dates</legend>
+
+				<div class="field">
+					<label for="StartTime">Start Time</label>
+					<input type="datetime-local" id="StartTime" name="StartTime" class="form-input" {{ if isValidTime .Event.StartTime}}value="{{.Event.StartTime.Format "2006-01-02T15:04"}}"{{end}}>
+				</div>
+
+				<div class="field">
+					<label for="EndTime">End Time</label>
+					<input type="datetime-local" id="EndTime" name="EndTime" class="form-input" {{ if isValidTime .Event.EndTime}}value="{{.Event.EndTime.Format "2006-01-02T15:04"}}"{{end}}>
+				</div>
+
+				<div class="field">
+					<label for="VotingOpens">Voting Opens</label>
+					<input type="datetime-local" id="VotingOpens" name="VotingOpens" class="form-input" {{ if isValidTime .Event.VotingOpens}}value="{{.Event.VotingOpens.Format "2006-01-02T15:04"}}"{{end}}>
+				</div>
+
+				<div class="field">
+					<label for="VotingCloses">Voting Closes</label>
+					<input type="datetime-local" id="VotingCloses" name="VotingCloses" class="form-input" {{ if isValidTime .Event.VotingCloses}}value="{{.Event.VotingCloses.Format "2006-01-02T15:04"}}"{{end}}>
+				</div>
+			</fieldset>
+
+			<input type="submit" value="Save">
+		</form>
+	</div>
 </section>
 
 {{ template "foot" . }}
