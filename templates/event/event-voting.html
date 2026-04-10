@@ -60,9 +60,9 @@
 					{{ range .Completed }}
 					<tr>
 						{{ if Data.Event.Closed }}
-						<td><a class="btn btn-outline btn-sm" href="{{ $event.Path "vote" .Team.ID }}">view</a></td>
+						<td><a class="btn btn-outline btn-xs" href="{{ $event.Path "vote" .Team.ID }}">view</a></td>
 						{{ else }}
-						<td><a class="btn btn-outline btn-sm" href="{{ $event.Path "vote" .Team.ID }}">edit</a></td>
+						<td><a class="btn btn-outline btn-xs" href="{{ $event.Path "vote" .Team.ID }}">edit</a></td>
 						{{ end }}
 						<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
 						<td>{{.Game.Name}}</td>

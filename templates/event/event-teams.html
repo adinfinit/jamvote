@@ -43,7 +43,7 @@
 				{{ range .Teams }}
 				<tr>
 					{{ if $isAdmin }}
-					<td><a class="btn btn-outline btn-sm" href="{{$event.Path "team" .ID "edit"}}">edit</a></td>
+					<td><a class="btn btn-outline btn-xs" href="{{$event.Path "team" .ID "edit"}}">edit</a></td>
 					{{ end }}
 					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="boxed-indicator">NC</span>{{end}}<a href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a></td>
 					<td><strong title="{{.Game.Name}}">{{ .Game.Name }}</strong></td>

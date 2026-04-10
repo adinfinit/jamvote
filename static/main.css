@@ -554,6 +554,7 @@ li {
   }
 }
 
+.btn-xs { padding: 2px 8px; font-size: 0.75rem; }
 .btn-sm { padding: 6px 14px; font-size: 0.8125rem; }
 .btn-lg { padding: 14px 32px; font-size: 1rem; font-weight: 700; border-radius: var(--radius); }
 .btn-block { width: 100%; }
@@ -798,16 +799,20 @@ thead th {
   color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 14px 20px;
+  padding: 8px 12px;
   border-bottom: 2px solid var(--border);
   white-space: nowrap;
 }
 
 tbody td {
-  padding: 14px 20px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--gray-100);
   color: var(--gray-800);
   font-variant-numeric: tabular-nums;
+
+  &:has(.btn) {
+    padding: 4px 8px;
+  }
 }
 
 tbody tr:last-child td {
@@ -2284,7 +2289,7 @@ dt {
   }
 
   table { font-size: 0.8125rem; }
-  thead th, tbody td { padding: 10px 12px; }
+  thead th, tbody td { padding: 6px 8px; }
 
   input[type="range"] {
     &::-webkit-slider-thumb { width: 28px; height: 28px; }
