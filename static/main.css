@@ -2023,8 +2023,8 @@ dt {
 }
 
 .team-scores {
-  width: 340px;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 280px;
 }
 
 .team-name-label {
@@ -2224,6 +2224,10 @@ dt {
       margin-bottom: 1rem;
     }
   }
+
+  .team-hero { flex-direction: column; }
+  .team-scores { width: 100%; }
+  .team-scores .grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* --- Responsive: Mobile (≤768px) --- */
@@ -2311,9 +2315,8 @@ dt {
   .place-info { margin-left: 3.5rem; }
   .place-info .game { font-size: 1.4em; }
 
-  .team-hero { flex-direction: column; }
-  .team-scores { width: 100%; }
   .member-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-scores .grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* --- Responsive: Small Mobile (≤480px) --- */
@@ -2331,6 +2334,7 @@ dt {
   .vote-card { padding: 24px; }
   .bonus-section { margin: 0 -24px; padding: 20px 24px; }
   .member-grid { grid-template-columns: 1fr; }
+  .team-scores .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* --- Reduced Motion --- */

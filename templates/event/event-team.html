@@ -51,36 +51,13 @@
 
 		{{ if .Event.Revealed }}
 		<div class="team-scores">
-			<div>
-				<h3 class="mb-16">Score Breakdown</h3>
-
+			<h3 class="mb-16">Scores</h3>
+			<div class="grid-3">
 				{{ range $aspect := .Aspects }}
 				{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
-				{{ with $info.Scores }}
-				{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
-				<div class="score-row">
-					<span class="score-row-label">{{ $aspect.Name }}</span>
-					<div class="score-row-bar">
-						<div class="score-row-fill" style="width:{{ mul 20 (averageViolinScore $aspect.Min $aspect.Max .) }}%;"></div>
-					</div>
-				</div>
-				{{ end }}
-				{{ end }}
-			</div>
-		</div>
-		{{ end }}
-	</div>
-
-	{{ if .Event.Revealed }}
-	<section class="mb-32">
-		<details>
-			<summary><h3>Violin Plots</h3></summary>
-			<div class="side-by-side mt-16">
-			{{ range $aspect := .Aspects }}
-				{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
 				<div>
-					<div class="fw-600 mb-4">{{ $aspect.Name }}</div>
-					<svg width="100%" style="max-width: 10rem;" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin" >
+					<div class="fw-600 mb-4 text-small">{{ $aspect.Name }}</div>
+					<svg width="100%" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin">
 						<rect x="0%" y="0%" width="100%" height="100%" style="fill:var(--gray-100);" />
 
 						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,0   100,0" />
@@ -92,7 +69,7 @@
 						{{ with $info.Scores }}
 						{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
 						<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
-						<polyline stroke="var(--gray-700)"  points="0,{{$average}} 50,{{$average}}" />
+						<polyline stroke="var(--gray-700)" points="0,{{$average}} 50,{{$average}}" />
 
 						<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
 						<polyline stroke="var(--gray-700)" points="50,{{$average}} 100,{{$average}}" />
@@ -109,11 +86,13 @@
 						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 1" stroke-width="1px" vector-effect="non-scaling-stroke" points="50,0 50,100" />
 					</svg>
 				</div>
-			{{ end }}
+				{{ end }}
 			</div>
-		</details>
-	</section>
+		</div>
+		{{ end }}
+	</div>
 
+	{{ if .Event.Revealed }}
 	<div class="divider"></div>
 
 	<div class="section-header">
