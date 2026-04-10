@@ -121,14 +121,18 @@ func (server *Server) Dashboard(context *Context) {
 	})
 
 	if context.CurrentUser != nil {
-		nonsubmitted := []*Team{}
+		var nonsubmitted []*Team
+		var yourteams []*Team
 		for _, team := range teams {
-			if team.HasMember(context.CurrentUser) &&
-				!team.IsCompeting() {
-				nonsubmitted = append(nonsubmitted, team)
+			if team.HasMember(context.CurrentUser) {
+				yourteams = append(yourteams, team)
+				if !team.IsCompeting() {
+					nonsubmitted = append(nonsubmitted, team)
+				}
 			}
 		}
 		context.Data["NotSubmittedTeams"] = nonsubmitted
+		context.Data["YourTeams"] = yourteams
 	}
 
 	context.Render("event-dashboard")

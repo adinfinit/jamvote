@@ -39,6 +39,27 @@
 	</div>
 	{{ end }}
 
+	{{ if .CurrentUser }}
+	{{ if .YourTeams }}
+	<div class="mb-24">
+		<h3 class="mb-12">Your Teams</h3>
+		<div class="grid-2">
+			{{ range .YourTeams }}
+			<a class="card card-clickable" href="{{$event.Path "team" .ID}}">
+				<h2 class="event-card-title">{{ .Game.Name }}</h2>
+				<p class="event-card-theme">by <strong>{{ .Name }}</strong></p>
+			</a>
+			{{ end }}
+		</div>
+	</div>
+	{{ else if $event.Registration }}
+	<div class="card mb-24" style="text-align:center;">
+		<p class="text-muted mb-12">You haven't joined a team yet.</p>
+		<a class="btn btn-primary" href="{{$event.Path "team" "create"}}">Create Team</a>
+	</div>
+	{{ end }}
+	{{ end }}
+
 	{{ if .NotSubmittedTeams }}
 	<div class="flashes mb-24">
 		<div class="flash">Your team has not submitted a game.</div>
