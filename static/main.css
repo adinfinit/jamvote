@@ -1437,6 +1437,7 @@ div.progress {
 }
 
 .event-card-title {
+  margin-top: 0;
   margin-bottom: 8px;
   font-weight: 800;
   font-size: 1.375rem;
