@@ -277,12 +277,13 @@ func Seed(log *slog.Logger, db *datastoredb.DB) {
 			gName := gameNames[teamIdx%len(gameNames)]
 			teamIdx++
 
+			grng := teamRNG(tName, gName)
 			team := &event.Team{
 				Name:    tName,
 				Members: members,
 				Game: event.Game{
 					Name: gName,
-					Info: fmt.Sprintf("A game created for %s by team %s.", def.Name, tName),
+					Info: generateGameInfo(grng),
 				},
 			}
 			team.Game.Link.Download = fmt.Sprintf("https://example.com/games/%s", strings.ReplaceAll(strings.ToLower(gName), " ", "-"))
@@ -392,6 +393,74 @@ var commentsByAspect = map[string][]string{
 		"The credits sequence made me smile.",
 		"Goes above and beyond.",
 	},
+}
+
+var gamePremises = []string{
+	"You play as a tiny robot trying to escape a crumbling factory before it collapses.",
+	"A mysterious signal draws your submarine deeper into an uncharted trench.",
+	"Take control of a street cat navigating rooftops to reunite with its owner.",
+	"You're a courier in a cyberpunk city — deliver packages while dodging drones and rival gangs.",
+	"Guide a spark of light through a dark cavern, illuminating forgotten murals along the way.",
+	"A wizard's apprentice accidentally unleashes chaos and must fix each room of the tower.",
+	"Play as a chef in a haunted restaurant where the ingredients fight back.",
+	"You wake up on a space station with no memory. The AI says everything is fine. It isn't.",
+	"Control a paper airplane through a child's imagination — the classroom is your world.",
+	"An old lighthouse keeper must keep the flame burning through one final, impossible storm.",
+	"Pilot a seed pod through the wind, searching for the perfect place to take root.",
+	"A shapeshifting blob must mimic objects in a museum to avoid the security guards.",
+	"Defend your anthill against invading beetles by coordinating worker, soldier, and scout ants.",
+	"You're a ghost trying to scare enough people out of your house before it gets demolished.",
+	"Run a potion shop by day, explore the enchanted forest for ingredients by night.",
+}
+
+var gameMadeWith = []string{
+	"Made with Godot in 72 hours.",
+	"Built using Unity. First jam for two of our members!",
+	"Made with Godot 4.3. All assets created during the jam.",
+	"Created with PICO-8.",
+	"Built in Unreal Engine 5. We bit off more than we could chew but we're happy with the result.",
+	"Made from scratch in C++ and SDL2.",
+	"Built with Godot. Music composed in LMMS.",
+	"Made with Love2D. Art done in Aseprite.",
+	"Created in Game Maker. This was a solo project.",
+	"Built with Bevy (Rust). Our first game jam using an ECS framework.",
+}
+
+var gameControls = []string{
+	"WASD to move, Space to jump, Mouse to aim.",
+	"Arrow keys to move, Z to interact, X to dash.",
+	"Mouse only — click to move, drag to interact.",
+	"WASD for movement, E to interact, Q to use ability. Gamepad supported.",
+	"Arrow keys or WASD. Space to confirm, Escape to pause.",
+	"Point and click. Right-click to examine objects.",
+	"WASD + Mouse. Left click to shoot, right click for shield.",
+}
+
+var gameExtras = []string{
+	"",
+	"Art and music made by our team during the jam. SFX from freesound.org.",
+	"There's a secret ending if you collect all the hidden stars.",
+	"Sound warning: the final level has loud effects.",
+	"Tip: you can wall-jump by pressing jump while sliding against a wall.",
+	"We ran out of time for a tutorial, so: the glowing things are good, the spiky things are bad.",
+	"The game saves automatically between levels.",
+	"Best played with headphones for the full audio experience.",
+	"Known bug: the pause menu sometimes doesn't unpause. Press Escape twice if that happens.",
+	"",
+	"",
+}
+
+func generateGameInfo(rng *rand.Rand) string {
+	premise := gamePremises[rng.IntN(len(gamePremises))]
+	madeWith := gameMadeWith[rng.IntN(len(gameMadeWith))]
+	controls := gameControls[rng.IntN(len(gameControls))]
+	extra := gameExtras[rng.IntN(len(gameExtras))]
+
+	info := premise + "\n\n" + madeWith + "\n\nControls:\n" + controls
+	if extra != "" {
+		info += "\n\n" + extra
+	}
+	return info
 }
 
 func pickComment(rng *rand.Rand, aspect string) string {
