@@ -878,7 +878,7 @@ select, input, textarea {
   }
 
   &:focus-visible { outline: none; }
-  &::placeholder { color: var(--gray-600); }
+  &::placeholder { color: var(--gray-400); }
 }
 
 textarea.form-input {
@@ -2298,7 +2298,7 @@ dt {
     border-color: var(--gray-200);
     color: var(--gray-800);
 
-    &::placeholder { color: var(--gray-600); }
+    &::placeholder { color: var(--gray-400); }
   }
 
   & .google-btn {
