@@ -35,15 +35,13 @@
 
 			<div class="mt-32">
 				<h3 class="mb-12">Members</h3>
-				<div class="member-grid">
+				<div class="flex flex-wrap gap-8">
 					{{ range .Team.Members }}
-					<div class="member-card">
-						{{ if .ID }}
-						<a class="member-name" href="/user/{{.ID}}">{{ .Name }}</a>
-						{{ else }}
-						<span class="member-name text-muted">{{ .Name }}</span>
-						{{ end }}
-					</div>
+					{{ if .ID }}
+					<a class="btn btn-outline" href="/user/{{.ID}}">{{ .Name }}</a>
+					{{ else }}
+					<span class="btn btn-outline disabled">{{ .Name }}</span>
+					{{ end }}
 					{{ end }}
 				</div>
 			</div>
