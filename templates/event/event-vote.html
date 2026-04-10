@@ -2,47 +2,48 @@
 
 {{ define "vote-fields" }}
 <section>
-	<div class="titlemenu mb-16">
-		<h1>{{.Game.Name}}</h1>
-		<span class="text-muted">By: {{.Name}}</span>
-	</div>
-
-	{{ if .HasMember Data.CurrentUser }}
-	<div class="flashes mb-16">
-		<div class="flash">Votes for your own team won't be counted in the totals.</div>
-	</div>
-	{{ end }}
-
-	{{ if .Team.Game.Noncompeting }}
-	<div class="flashes mb-16">
-		<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
-	</div>
-	{{ end }}
-
-	<div class="flex flex-wrap gap-8 mb-24">
-		{{if .Game.Link.Facebook}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Facebook}}">Facebook</a>{{end}}
-		{{if .Game.Link.Jam}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Jam}}">Jam Page</a>{{end}}
-		{{if .Game.Link.Download}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Download}}">Download</a>{{end}}
-	</div>
-
-	{{if .Game.Info}}<div class="card mb-24">{{range paragraphs .Game.Info}}<p>{{.}}</p>{{end}}</div>{{end}}
-
-	{{ $ballot := . }}
-	<form id="{{$ballot.Team.ID}}" disabled method="POST">
-		{{ if Data.Event.Closed }}<fieldset disabled>{{ end }}
-		{{ range $aspect := Data.Aspects }}
-		<div class="aspect field">
-			<div>
-				<label for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="tiny">{{$aspect.Description}}</span></label>
-				<input class="{{$aspect.Name}}" name="{{$aspect.Name}}.Score" type="range"min="{{$aspect.Min}}" max="{{$aspect.Max}}" step="{{$aspect.Step}}" value="{{$ballot.Score $aspect.Name}}">
-				<div class="aspect-text">Change the score.</div>
+	<div class="vote-card">
+		<div class="game-header">
+			<h1>{{.Game.Name}}</h1>
+			<div class="team-name">by {{.Name}}</div>
+			<div class="game-links">
+				{{if .Game.Link.Jam}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Jam}}">&#8599; Jam Page</a>{{end}}
+				{{if .Game.Link.Download}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Download}}">&#8615; Download</a>{{end}}
+				{{if .Game.Link.Facebook}}<a class="btn btn-outline btn-sm" href="{{.Game.Link.Facebook}}">Facebook</a>{{end}}
 			</div>
-			<textarea name="{{$aspect.Name}}.Comment" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
+		</div>
+
+		{{ if .HasMember Data.CurrentUser }}
+		<div class="flashes mb-16">
+			<div class="flash">Votes for your own team won't be counted in the totals.</div>
 		</div>
 		{{ end }}
-		{{ if Data.Event.Closed }}</fieldset>{{ end }}
-		{{ if not Data.Event.Closed}}<input id="submit" class="submit" type="submit" value="Vote">{{ end }}
-	</form>
+
+		{{ if .Team.Game.Noncompeting }}
+		<div class="flashes mb-16">
+			<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
+		</div>
+		{{ end }}
+
+		{{if .Game.Info}}<div class="card mb-24">{{range paragraphs .Game.Info}}<p>{{.}}</p>{{end}}</div>{{end}}
+
+		{{ $ballot := . }}
+		<form id="{{$ballot.Team.ID}}" disabled method="POST">
+			{{ if Data.Event.Closed }}<fieldset disabled>{{ end }}
+			{{ range $aspect := Data.Aspects }}
+			<div class="slider-group">
+				<div class="slider-header">
+					<label class="slider-label" for="{{$aspect.Name}}.Comment">{{$aspect.Name}}: <span class="text-small text-muted" style="font-weight:400;">{{$aspect.Description}}</span></label>
+				</div>
+				<input class="{{$aspect.Name}}" name="{{$aspect.Name}}.Score" type="range" min="{{$aspect.Min}}" max="{{$aspect.Max}}" step="{{$aspect.Step}}" value="{{$ballot.Score $aspect.Name}}">
+				<div class="aspect-text">Change the score.</div>
+				<textarea name="{{$aspect.Name}}.Comment" class="form-input mt-8" rows="2" placeholder="Comments">{{$ballot.Comment $aspect.Name}}</textarea>
+			</div>
+			{{ end }}
+			{{ if Data.Event.Closed }}</fieldset>{{ end }}
+			{{ if not Data.Event.Closed}}<input id="submit" class="submit" type="submit" value="Vote">{{ end }}
+		</form>
+	</div>
 
 	<script>
 		(function(){

@@ -2,10 +2,23 @@
 
 {{ $event := .Event }}
 <section>
-	<div class="event-header-row mb-24">
+	<div class="event-header-row mb-32">
 		<div>
-			<h1>{{.Event.Name}}</h1>
-			{{ with .Event.Theme }}<div class="theme-accent">{{.}}</div>{{ end }}
+			{{ if .Event.Voting }}
+			<div class="flex items-center gap-12 mb-8 flex-wrap">
+				{{ if .Event.Closed }}
+				<span class="badge badge-gray">Voting Closed</span>
+				{{ else }}
+				<span class="badge badge-green">Voting Open</span>
+				{{ end }}
+			</div>
+			{{ end }}
+			<h1 class="mb-4">{{.Event.Name}}</h1>
+			{{ with .Event.Theme }}
+			<p style="font-size:1.25rem;">
+				Theme: <strong class="theme-accent" style="font-size:1.5rem;">{{.}}</strong>
+			</p>
+			{{ end }}
 		</div>
 		<div class="event-action-bar">
 			{{ if .VotingOpens }}
@@ -20,11 +33,14 @@
 				{{ template "countdown" .VotingCloses }}
 			</div>
 			{{ end }}
+			{{ if (and .Event.CanVote (.Event.HasJammer .CurrentUser)) }}
+			<a href="{{.Event.Path "fill-queue"}}" class="btn btn-primary btn-lg">&#9654; Start Voting</a>
+			{{ end }}
 		</div>
 	</div>
 
 	{{ with .Event.Info }}
-	<div class="card mb-24">
+	<div class="card mb-32">
 		{{ range (paragraphs .) }}<p>{{.}}</p>{{ end }}
 	</div>
 	{{ end }}
@@ -53,8 +69,6 @@
 		{{ end }}
 	</div>
 	<a class="btn btn-lg btn-secondary disabled" href="#">Start Voting</a>
-	{{ else }}
-	<a class="btn btn-lg btn-primary" href="{{.Event.Path "fill-queue"}}">Start Voting</a>
 	{{ end }}
 </section>
 

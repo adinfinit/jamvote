@@ -1,10 +1,11 @@
 {{ template "head" . }}
 
 <div class="login-page">
-	<div class="login-card card">
+	<div class="login-card">
 		<div class="login-header">
-			<h1>Sign in</h1>
-			<p class="text-muted">Sign in to vote and participate in game jams.</p>
+			<svg class="logo-icon" viewBox="0 0 32 32" fill="none" style="width:48px;height:48px;margin-bottom:20px"><rect width="32" height="32" rx="8" fill="var(--blue)"/><rect x="4" y="6.5" width="15" height="19" rx="2.5" fill="#fff" opacity=".35" transform="rotate(-8 11.5 16)"/><rect x="13" y="6.5" width="15" height="19" rx="2.5" fill="#fff"/><path d="M20.5 12.5l1.2 2.4 2.7.4-2 1.9.5 2.7-2.4-1.3-2.4 1.3.5-2.7-2-1.9 2.7-.4z" fill="var(--blue)"/></svg>
+			<h1 style="font-size:1.5rem;">Welcome back</h1>
+			<p class="text-muted">Sign in to vote on game jam entries</p>
 		</div>
 
 		<div class="logins">
@@ -14,18 +15,22 @@
 		</div>
 
 		{{ if .Development }}
-		<div class="divider-text mt-24">or</div>
-		<div class="dev-section mt-24">
-			<div class="mb-12"><span class="dev-badge">Development</span></div>
+		<div class="divider-text">or</div>
+		<div class="dev-section">
+			<span class="dev-badge">&#9888; Dev Mode</span>
 			<form action="/auth/development-login" method="POST">
-				<div class="field">
-					<label for="name">User</label>
-					<input type="text" id="name" name="name" value="Admin" class="form-input">
+				<div class="form-group mb-12">
+					<label class="form-label" for="name">Username</label>
+					<input type="text" id="name" name="name" value="Admin" class="form-input" autocomplete="off">
 				</div>
-				<input type="submit" value="Login">
+				<button type="submit" class="btn btn-secondary btn-block">Sign in as dev user</button>
 			</form>
 		</div>
 		{{ end }}
+
+		<div class="login-footer">
+			By signing in, you agree to the JamVote terms of service.
+		</div>
 	</div>
 </div>
 

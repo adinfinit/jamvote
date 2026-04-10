@@ -2,15 +2,18 @@
 
 {{ $event := .Event }}
 <section>
-	<div class="section-header">
-		<h1>Voting Results</h1>
+	<div class="section-header mb-32">
+		<div>
+			<h1>Results</h1>
+			<p class="section-subtitle">{{ .Event.Name }}{{ with .Event.Theme }} &middot; {{ . }}{{ end }}</p>
+		</div>
 	</div>
 
 	<div class="table-wrap mb-32">
 		<table>
 			<thead>
 				<tr>
-					<th style="width:3rem;" title="Place">#</th>
+					<th style="width:50px;">#</th>
 					<th>Team</th>
 					<th>Game</th>
 					<th style="width:5%;" title="Theme">The</th>
@@ -18,21 +21,21 @@
 					<th style="width:5%;" title="Aesthetics">Aes</th>
 					<th style="width:5%;" title="Innovation">Inn</th>
 					<th style="width:5%;" title="Bonus">Bon</th>
-					<th style="width:5%;" title="Overall">Ove</th>
+					<th style="width:90px;" title="Overall">Overall</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{ range $index, $result := .Results }}
-				<tr>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-					<td><strong>{{.Game.Name}}</strong></td>
-					<td>{{printf "%.3f" .Average.Theme.Score}}</td>
-					<td>{{printf "%.3f" .Average.Enjoyment.Score}}</td>
-					<td>{{printf "%.3f" .Average.Aesthetics.Score}}</td>
-					<td>{{printf "%.3f" .Average.Innovation.Score}}</td>
-					<td>{{printf "%.3f" .Average.Bonus.Score}}</td>
-					<td><strong>{{printf "%.3f" .Average.Overall.Score}}</strong></td>
+				<tr{{if and (not .Game.Noncompeting) (lt $index 3)}} class="rank-{{add 1 $index}}"{{end}}>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge {{if eq $index 0}}rank-1-badge{{else if eq $index 1}}rank-2-badge{{else if eq $index 2}}rank-3-badge{{else}}rank-default-badge{{end}}">{{add 1 $index}}</span>{{end}}</td>
+					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
+					<td>{{.Game.Name}}</td>
+					<td><span class="score-num">{{printf "%.3f" .Average.Theme.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .Average.Enjoyment.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .Average.Aesthetics.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .Average.Innovation.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .Average.Bonus.Score}}</span></td>
+					<td><span class="overall-score">{{printf "%.3f" .Average.Overall.Score}}</span></td>
 				</tr>
 				{{ end }}
 			</tbody>
@@ -42,7 +45,7 @@
 	{{ if .Event.JudgesExist }}
 	<div class="divider"></div>
 
-	<div class="section-header">
+	<div class="section-header mb-24">
 		<h2>Jammers Voting Results</h2>
 	</div>
 
@@ -50,7 +53,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th style="width:3rem;" title="Place">#</th>
+					<th style="width:50px;">#</th>
 					<th>Team</th>
 					<th>Game</th>
 					<th style="width:5%;" title="Theme">The</th>
@@ -58,21 +61,21 @@
 					<th style="width:5%;" title="Aesthetics">Aes</th>
 					<th style="width:5%;" title="Innovation">Inn</th>
 					<th style="width:5%;" title="Bonus">Bon</th>
-					<th style="width:5%;" title="Overall">Ove</th>
+					<th style="width:90px;" title="Overall">Overall</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{ range $index, $result := .Results }}
 				<tr>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-					<td><strong>{{.Game.Name}}</strong></td>
-					<td>{{printf "%.3f" .JammerAverage.Theme.Score}}</td>
-					<td>{{printf "%.3f" .JammerAverage.Enjoyment.Score}}</td>
-					<td>{{printf "%.3f" .JammerAverage.Aesthetics.Score}}</td>
-					<td>{{printf "%.3f" .JammerAverage.Innovation.Score}}</td>
-					<td>{{printf "%.3f" .JammerAverage.Bonus.Score}}</td>
-					<td><strong>{{printf "%.3f" .JammerAverage.Overall.Score}}</strong></td>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
+					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
+					<td>{{.Game.Name}}</td>
+					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Theme.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Enjoyment.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Aesthetics.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Innovation.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Bonus.Score}}</span></td>
+					<td><span class="overall-score">{{printf "%.3f" .JammerAverage.Overall.Score}}</span></td>
 				</tr>
 				{{ end }}
 			</tbody>
@@ -81,7 +84,7 @@
 
 	<div class="divider"></div>
 
-	<div class="section-header">
+	<div class="section-header mb-24">
 		<h2>Judge Voting Results</h2>
 	</div>
 
@@ -89,7 +92,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th style="width:3rem;" title="Place">#</th>
+					<th style="width:50px;">#</th>
 					<th>Team</th>
 					<th>Game</th>
 					<th style="width:5%;" title="Theme">The</th>
@@ -97,21 +100,21 @@
 					<th style="width:5%;" title="Aesthetics">Aes</th>
 					<th style="width:5%;" title="Innovation">Inn</th>
 					<th style="width:5%;" title="Bonus">Bon</th>
-					<th style="width:5%;" title="Overall">Ove</th>
+					<th style="width:90px;" title="Overall">Overall</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{ range $index, $result := .Results }}
 				<tr>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting">NC</span>{{else}}#{{add 1 $index}}{{end}}</td>
-					<td><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></td>
-					<td><strong>{{.Game.Name}}</strong></td>
-					<td>{{printf "%.3f" .JudgeAverage.Theme.Score}}</td>
-					<td>{{printf "%.3f" .JudgeAverage.Enjoyment.Score}}</td>
-					<td>{{printf "%.3f" .JudgeAverage.Aesthetics.Score}}</td>
-					<td>{{printf "%.3f" .JudgeAverage.Innovation.Score}}</td>
-					<td>{{printf "%.3f" .JudgeAverage.Bonus.Score}}</td>
-					<td><strong>{{printf "%.3f" .JudgeAverage.Overall.Score}}</strong></td>
+					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
+					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
+					<td>{{.Game.Name}}</td>
+					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Theme.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Enjoyment.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Aesthetics.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Innovation.Score}}</span></td>
+					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Bonus.Score}}</span></td>
+					<td><span class="overall-score">{{printf "%.3f" .JudgeAverage.Overall.Score}}</span></td>
 				</tr>
 				{{ end }}
 			</tbody>

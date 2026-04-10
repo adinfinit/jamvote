@@ -3,40 +3,44 @@
 {{ define "event-links" }}
 {{ range . }}
 <a class="card card-clickable" href="{{ .Path }}">
-	<div class="event-card-title">{{.Name}}</div>
-	{{ with .Theme }}<div class="event-card-theme"><span class="theme-accent">{{.}}</span></div>{{end}}
+	<h2 class="event-card-title">{{.Name}}</h2>
+	{{ with .Theme }}<p class="event-card-theme">Theme: <strong class="theme-accent">{{.}}</strong></p>{{end}}
 </a>
 {{ end }}
 {{ end }}
 
 <section>
-	<div class="section-header">
-		<h1>Events</h1>
+	<div class="section-header mb-32">
+		<div>
+			<h1>Events</h1>
+		</div>
 		{{ if .CurrentUser.IsAdmin }}
 		<a class="btn btn-primary" href="/event/create">Create Event</a>
 		{{ end }}
 	</div>
 
 	{{ with $events := .Events.Started }}
-	<div class="mb-32">
-		<h2 class="section-label-line section-label mb-16">Active</h2>
+	<div class="mb-48">
+		<h2 class="section-label mb-20">Active Events</h2>
 		<div class="grid-2">
 			{{ template "event-links" $events }}
 		</div>
 	</div>
 	{{ end }}
 
-	<h2 class="section-label-line section-label mb-16">Finished</h2>
+	<div class="section-label-line mb-24">
+		<h2 class="section-label">Past Events</h2>
+	</div>
 
 	{{ range .Events.Finished }}
-	<div class="mb-24">
-		<h3 class="year-heading mb-12">{{ .Year }}</h3>
+	<div class="mb-32">
+		<h3 class="year-heading mb-16">{{ .Year }}</h3>
 		<div class="table-wrap">
 			<table>
 				<tbody>
 				{{ range .Events }}
 				<tr>
-					<td><a href="{{ .Path }}">{{.Name}}{{ with .Theme }} — <span class="text-amber">{{.}}</span>{{end}}</a></td>
+					<td><a href="{{ .Path }}"><strong>{{.Name}}</strong>{{ with .Theme }} — <span class="text-muted">{{.}}</span>{{end}}</a></td>
 				</tr>
 				{{ end }}
 				</tbody>

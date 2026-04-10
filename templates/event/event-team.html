@@ -1,125 +1,138 @@
 {{ template "head" . }}
 
 <section>
-	<div class="titlemenu mb-16">
-		{{ if .Team.Game.Name }}
-		<div><h1>{{.Team.Game.Name}}</h1>
-		<span class="text-muted">By: {{.Team.Name}}</span></div>
-		{{ else }}
-		<div><h1>{{.Team.Name}}</h1></div>
-		{{ end }}
-		<div class="flex gap-8">
-			{{ if .CanEditTeam }}
-			<a class="btn btn-outline btn-sm" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
+	<div class="team-hero mb-32">
+		<div class="team-info">
+			{{ if .Team.Game.Name }}
+			<p class="team-name-label">{{.Team.Name}}</p>
+			<h1 class="mb-20">{{.Team.Game.Name}}</h1>
+			{{ else }}
+			<h1 class="mb-20">{{.Team.Name}}</h1>
 			{{ end }}
-			{{ if .Event.CanVote }}<a class="btn btn-primary btn-sm" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
-		</div>
-	</div>
 
-	{{ if .Team.Game.Noncompeting }}
-	<div class="flashes mb-16">
-		<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
+			{{ if .Team.Game.Noncompeting }}
+			<div class="flashes mb-16">
+				<div class="flash" title="This game does not participate in the final results.">Noncompeting entry.</div>
+			</div>
+			{{ end }}
+
+			{{ with .Team.Game.Info }}
+			<div class="mb-20">
+				<h3 class="mb-12">About the Game</h3>
+				{{range paragraphs .}}<p class="mb-8">{{.}}</p>{{end}}
+			</div>
+			{{ end }}
+
+			<div class="link-list">
+				{{ if .CanEditTeam }}
+				<a class="btn btn-outline btn-sm" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
+				{{ end }}
+				{{ if .Event.CanVote }}<a class="btn btn-primary btn-sm" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
+				{{ if .Team.Game.Link.Jam}}<a class="btn btn-outline btn-sm" href="{{.Team.Game.Link.Jam}}">&#8599; Jam Page</a>{{ end }}
+				{{ if .Team.Game.Link.Download}}<a class="btn btn-outline btn-sm" href="{{.Team.Game.Link.Download}}">&#8615; Download</a>{{ end }}
+				{{ if .Team.Game.Link.Facebook}}<a class="btn btn-outline btn-sm" href="{{.Team.Game.Link.Facebook}}">Facebook</a>{{ end }}
+			</div>
+
+			<div class="mt-32">
+				<h3 class="mb-12">Members</h3>
+				<div class="member-grid">
+					{{ range .Team.Members }}
+					<div class="member-card">
+						{{ if .ID }}
+						<a class="member-name" href="/user/{{.ID}}">{{ .Name }}</a>
+						{{ else }}
+						<span class="member-name text-muted">{{ .Name }}</span>
+						{{ end }}
+					</div>
+					{{ end }}
+				</div>
+			</div>
+		</div>
+
+		{{ if .Event.Revealed }}
+		<div class="team-scores">
+			<div>
+				<h3 class="mb-16">Score Breakdown</h3>
+
+				{{ range $aspect := .Aspects }}
+				{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
+				{{ with $info.Scores }}
+				{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
+				<div class="score-row">
+					<span class="score-row-label">{{ $aspect.Name }}</span>
+					<div class="score-row-bar">
+						<div class="score-row-fill" style="width:{{ mul 20 (averageViolinScore $aspect.Min $aspect.Max .) }}%;"></div>
+					</div>
+				</div>
+				{{ end }}
+				{{ end }}
+			</div>
+		</div>
+		{{ end }}
 	</div>
-	{{ end }}
 
 	{{ if .Event.Revealed }}
 	<section class="mb-32">
-		<div class="side-by-side">
-		{{ range $aspect := .Aspects }}
-			{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
-			<div>
-				<div class="fw-600 mb-4">{{ $aspect.Name }}</div>
-				<svg width="100%" style="max-width: 10rem;" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin" >
-					<rect x="0%" y="0%" width="100%" height="100%" style="fill:var(--gray-100);" />
+		<details>
+			<summary><h3>Violin Plots</h3></summary>
+			<div class="side-by-side mt-16">
+			{{ range $aspect := .Aspects }}
+				{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
+				<div>
+					<div class="fw-600 mb-4">{{ $aspect.Name }}</div>
+					<svg width="100%" style="max-width: 10rem;" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin" >
+						<rect x="0%" y="0%" width="100%" height="100%" style="fill:var(--gray-100);" />
 
-					<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,0   100,0" />
-					<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,25  100,25" />
-					<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,50  100,50" />
-					<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,75  100,75" />
-					<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,100 100,100" />
+						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,0   100,0" />
+						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,25  100,25" />
+						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,50  100,50" />
+						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,75  100,75" />
+						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,100 100,100" />
 
-					{{ with $info.Scores }}
-					{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
-					<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
-					<polyline stroke="var(--gray-700)"  points="0,{{$average}} 50,{{$average}}" />
+						{{ with $info.Scores }}
+						{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
+						<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
+						<polyline stroke="var(--gray-700)"  points="0,{{$average}} 50,{{$average}}" />
 
-					<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
-					<polyline stroke="var(--gray-700)" points="50,{{$average}} 100,{{$average}}" />
-					<text fill="var(--gray-700)" x=52 y={{$average}} font-size="12">voters</text>
-					{{ end }}
+						<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
+						<polyline stroke="var(--gray-700)" points="50,{{$average}} 100,{{$average}}" />
+						<text fill="var(--gray-700)" x=52 y={{$average}} font-size="12">voters</text>
+						{{ end }}
 
-					{{if Data.CurrentUserBallot}}
-					{{ with $userscore := Data.CurrentUserBallot.Score $aspect.Name }}
-					{{ $userpoint := (averageViolinScore $aspect.Min $aspect.Max $userscore) }}
-					<polyline stroke="var(--gray-600)" points="0,{{$userpoint}} 100,{{$userpoint}}" />
-					<text fill="var(--gray-600)" x=2 y={{$userpoint}} font-size="12">you</text>
-					{{ end }}{{ end }}
+						{{if Data.CurrentUserBallot}}
+						{{ with $userscore := Data.CurrentUserBallot.Score $aspect.Name }}
+						{{ $userpoint := (averageViolinScore $aspect.Min $aspect.Max $userscore) }}
+						<polyline stroke="var(--gray-600)" points="0,{{$userpoint}} 100,{{$userpoint}}" />
+						<text fill="var(--gray-600)" x=2 y={{$userpoint}} font-size="12">you</text>
+						{{ end }}{{ end }}
 
-					<polyline stroke="var(--gray-400)" stroke-dasharray="1, 1" stroke-width="1px" vector-effect="non-scaling-stroke" points="50,0 50,100" />
-				</svg>
+						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 1" stroke-width="1px" vector-effect="non-scaling-stroke" points="50,0 50,100" />
+					</svg>
+				</div>
+			{{ end }}
 			</div>
-		{{ end }}
-		</div>
+		</details>
 	</section>
-	{{ end }}
 
-	<div class="side-by-side">
-		<div>
-			<div class="field">
-				<label>Members</label>
-				{{ range .Team.Members }}
-				<div class="mb-4"><a {{if .ID}}class="btn btn-outline btn-sm btn-block" href="/user/{{.ID}}"{{else}}class="btn btn-outline btn-sm btn-block disabled"{{end}}>{{ .Name }}</a></div>
-				{{ end }}
-			</div>
-		</div>
-		<div>
-			{{ with .Team.Game.Info }}
-			<div class="field">
-				<label>Info</label>
-				<div class="card">{{range paragraphs .}}<p>{{.}}</p>{{end}}</div>
-			</div>
-			{{ end }}
+	<div class="divider"></div>
 
-			{{ if .Team.Game.Link.Jam}}
-			<div class="field">
-				<label>Jam Page</label>
-				<a class="btn btn-outline btn-sm btn-block" href="{{.Team.Game.Link.Jam}}">{{.Team.Game.Link.Jam}}</a>
-			</div>
-			{{ end }}
-
-			{{ if .Team.Game.Link.Download}}
-			<div class="field">
-				<label>Download Link</label>
-				<a class="btn btn-outline btn-sm btn-block" href="{{.Team.Game.Link.Download}}">{{.Team.Game.Link.Download}}</a>
-			</div>
-			{{ end }}
-
-			{{ if .Team.Game.Link.Facebook }}
-			<div class="field">
-				<label>Facebook Post</label>
-				<a class="btn btn-outline btn-sm btn-block" href="{{.Team.Game.Link.Facebook}}">{{.Team.Game.Link.Facebook}}</a>
-			</div>
-			{{ end }}
-		</div>
+	<div class="section-header">
+		<h2>Voter Comments</h2>
 	</div>
 
-	{{ if .Event.Revealed }}
-	<section class="mt-32">
-		<h2 class="section-label-line section-label mb-16">Comments</h2>
-		<div class="grid-3">
-		{{ range $aspect := .Aspects }}
-			{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
-			{{ if $info.Comments }}
-			<div class="comments">
-				<h3>{{ $aspect.Name }}</h3>
-				{{ range $info.Comments }}
-				<p class="comment">{{.}}</p>
-				{{ end }}
+	{{ range $aspect := .Aspects }}
+		{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
+		{{ if $info.Comments }}
+		<div class="section-label section-label-line mb-16">{{ $aspect.Name }}</div>
+		<div class="grid-3 mb-32">
+			{{ range $info.Comments }}
+			<div class="card">
+				<div class="comment-text">{{.}}</div>
 			</div>
 			{{ end }}
-		{{ end }}
 		</div>
-	</section>
+		{{ end }}
+	{{ end }}
 	{{ end }}
 </section>
 
