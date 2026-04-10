@@ -41,6 +41,13 @@
 			</div>
 			{{ end }}
 			{{ if Data.Event.Closed }}</fieldset>{{ end }}
+
+			<div class="overall-preview mt-24 mb-24">
+				<div class="text-small text-muted mb-8">Overall Score</div>
+				<div class="overall-number" id="overall-val">—</div>
+				<div class="overall-formula">(Theme + Enjoyment + Aesthetics + Innovation + Bonus) / 4.5 &middot; <a href="/about/scoring">How scores work</a></div>
+			</div>
+
 			{{ if not Data.Event.Closed}}<input id="submit" class="submit" type="submit" value="Vote">{{ end }}
 		</form>
 	</div>
@@ -52,9 +59,10 @@
 			var completed = {{$ballot.Completed}};
 			var aspects = {{ Data.Aspects }};
 
-
 			var formel = document.getElementById(formid);
 			var submitel = formel.getElementsByClassName("submit")[0];
+			var overallEl = document.getElementById("overall-val");
+
 			if(!completed && submitel){
 				submitel.className = "disabled";
 				submitel.disabled = true;
@@ -70,6 +78,16 @@
 					submitel.className = "";
 					submitel.disabled = false;
 				}
+			}
+
+			function updateOverall(){
+				var sum = 0;
+				for(var i = 0; i < aspects.length; i++){
+					var range = formel.getElementsByClassName(aspects[i].Name)[0];
+					if(range){ sum += parseFloat(range.value); }
+				}
+				var overall = Math.min(5, Math.max(1, sum / 4.5));
+				overallEl.innerText = overall.toFixed(2);
 			}
 
 			for(var i = 0; i < aspects.length; i++){
@@ -89,6 +107,7 @@
 						text.className = "aspect-text";
 
 						markCompleted(range);
+						updateOverall();
 					}
 
 					range.addEventListener("input", updateText);
@@ -101,6 +120,8 @@
 					}
 				})(aspects[i]);
 			}
+
+			if(completed){ updateOverall(); }
 		})();
 	</script>
 </section>
