@@ -4,89 +4,89 @@
 {{ $isAdmin := .CurrentUser.IsAdmin }}
 
 {{ with .Team }}
-<div class="side-by-side">
-	<div>
-		<div class="field">
-			<label for="Team.Name">Team Name</label>
-			<div class="flex gap-8">
-				<input type="text" id="Team.Name" name="Team.Name" class="form-input" value="{{.Name}}">
-				<button id="Team.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
-			</div>
-			<script>
-				document.getElementById("Team.Name.Randomizer").addEventListener("click", function(event){
-					event.preventDefault();
-					event.stopPropagation();
+<fieldset>
+	<legend>Team</legend>
 
-					var el = document.getElementById("Team.Name");
-					el.value = GenerateTeamName();
-				});
-			</script>
+	<div class="field">
+		<label for="Team.Name">Team Name</label>
+		<div class="flex gap-8">
+			<input type="text" id="Team.Name" name="Team.Name" class="form-input" value="{{.Name}}">
+			<button id="Team.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
 		</div>
+		<script>
+			document.getElementById("Team.Name.Randomizer").addEventListener("click", function(event){
+				event.preventDefault();
+				event.stopPropagation();
+				var el = document.getElementById("Team.Name");
+				el.value = GenerateTeamName();
+			});
+		</script>
+	</div>
 
-		<div class="field">
-			<label>Members</label>
-
+	<div class="field">
+		<label>Members</label>
+		<div class="grid-2">
 			{{ range $i, $member := .MembersForEdit $isAdmin }}
 			<input type="text" class="form-input tight" name="Team.Member[{{$i}}]" list="Users" placeholder="Member {{ $i }}" value="{{$member.Name}}">
 			{{ end }}
 		</div>
 	</div>
-	<div>
-		<div class="field">
-			<label for="Team.Game.Name">Game Name</label>
-			<div class="flex gap-8">
-				<input type="text" id="Team.Game.Name" name="Team.Game.Name" class="form-input" value="{{.Game.Name}}">
-				<button id="Team.Game.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
-			</div>
-			<script>
-				document.getElementById("Team.Game.Name.Randomizer").addEventListener("click", function(event){
-					event.preventDefault();
-					event.stopPropagation();
+</fieldset>
 
-					var el = document.getElementById("Team.Game.Name");
-					el.value = GenerateGameName();
-				});
-			</script>
-		</div>
+<fieldset>
+	<legend>Game</legend>
 
-		<div class="field">
-			<label for="Team.Game.Info">Info</label>
-			<textarea id="Team.Game.Info" name="Team.Game.Info" class="form-input" rows=4>{{.Game.Info}}</textarea>
+	<div class="field">
+		<label for="Team.Game.Name">Game Name</label>
+		<div class="flex gap-8">
+			<input type="text" id="Team.Game.Name" name="Team.Game.Name" class="form-input" value="{{.Game.Name}}">
+			<button id="Team.Game.Name.Randomizer" class="randomizer"><span>&#x1F3B2;</span></button>
 		</div>
-
-		<div class="field">
-			<input type="checkbox" id="Team.Game.Noncompeting" name="Team.Game.Noncompeting" value="true" {{ if .Game.Noncompeting }}checked{{end}}>
-			<label for="Team.Game.Noncompeting">Noncompeting</label>
-		</div>
-
-		<div class="field">
-			<label for="Team.Game.Link.Jam">Jam Page</label>
-			<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" class="form-input" value="{{.Game.Link.Jam}}">
-		</div>
-
-		<div class="field">
-			<label for="Team.Game.Link.Download">Download Link</label>
-			<input type="text" id="Team.Game.Link.Download" name="Team.Game.Link.Download" class="form-input" value="{{.Game.Link.Download}}">
-		</div>
-
-		<div class="field">
-			<label for="Team.Game.Link.Facebook">Facebook Post</label>
-			<input type="text" id="Team.Game.Link.Facebook" name="Team.Game.Link.Facebook" class="form-input" value="{{.Game.Link.Facebook}}">
-		</div>
+		<script>
+			document.getElementById("Team.Game.Name.Randomizer").addEventListener("click", function(event){
+				event.preventDefault();
+				event.stopPropagation();
+				var el = document.getElementById("Team.Game.Name");
+				el.value = GenerateGameName();
+			});
+		</script>
 	</div>
-</div>
+
+	<div class="field">
+		<label for="Team.Game.Info">Description</label>
+		<textarea id="Team.Game.Info" name="Team.Game.Info" class="form-input" rows=10>{{.Game.Info}}</textarea>
+	</div>
+
+	<div class="field">
+		<label for="Team.Game.Link.Jam">Jam Page</label>
+		<input type="text" id="Team.Game.Link.Jam" name="Team.Game.Link.Jam" class="form-input" value="{{.Game.Link.Jam}}" placeholder="https://...">
+	</div>
+
+	<div class="field">
+		<label for="Team.Game.Link.Download">Download Link</label>
+		<input type="text" id="Team.Game.Link.Download" name="Team.Game.Link.Download" class="form-input" value="{{.Game.Link.Download}}" placeholder="https://...">
+	</div>
+
+	<div class="field">
+		<label for="Team.Game.Link.Facebook">Facebook Post</label>
+		<input type="text" id="Team.Game.Link.Facebook" name="Team.Game.Link.Facebook" class="form-input" value="{{.Game.Link.Facebook}}" placeholder="https://...">
+	</div>
+
+	<div class="field">
+		<label><input type="checkbox" id="Team.Game.Noncompeting" name="Team.Game.Noncompeting" value="true" {{ if .Game.Noncompeting }}checked{{end}}> Noncompeting — <span class="text-small text-muted" style="font-weight:400;">still receives votes and feedback, but won't appear in the final rankings.</span></label>
+	</div>
+</fieldset>
 {{ end }}
 {{ end }}
 
-<section>
-	{{ if .CanDeleteTeam }}
+<div class="centered-text">
 	<div class="titlemenu mb-16">
-		<div></div>
+		<h1>Team: {{.Team.Name}}</h1>
+		{{ if .CanDeleteTeam }}
 		<a class="btn btn-danger btn-sm" href="{{.Event.Path "team" .Team.ID "delete"}}" onclick="return confirm('Are you sure?\nThis cannot be reversed.')">Delete</a>
+		{{ end }}
 	</div>
-	{{ end }}
 
-	<h1>Team: {{.Team.Name}}</h1>
 	<div class="card">
 		<form method="POST">
 			<datalist id="Users">
@@ -99,6 +99,6 @@
 			<input type="submit" value="Save">
 		</form>
 	</div>
-</section>
+</div>
 
 {{ template "foot" . }}
