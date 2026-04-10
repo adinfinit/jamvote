@@ -45,8 +45,17 @@
 		<h3 class="mb-12">Your Teams</h3>
 		<div class="grid-2">
 			{{ range .YourTeams }}
-			<a class="card card-clickable" href="{{$event.Path "team" .ID}}">
-				<h2 class="event-card-title">{{ .Game.Name }}</h2>
+			<a class="card card-clickable" href="{{$event.Path "team" .ID "edit"}}">
+				<div class="flex items-center justify-between mb-12">
+					{{ if .Game.Noncompeting }}
+					<span class="badge badge-amber">Noncompeting</span>
+					{{ else if .HasSubmitted }}
+					<span class="badge badge-green">Submitted</span>
+					{{ else }}
+					<span class="badge badge-red">Missing game or links</span>
+					{{ end }}
+				</div>
+				<h2 class="event-card-title">{{ if .Game.Name }}{{ .Game.Name }}{{ else }}(no game name){{ end }}</h2>
 				<p class="event-card-theme">by <strong>{{ .Name }}</strong></p>
 			</a>
 			{{ end }}
@@ -58,15 +67,6 @@
 		<a class="btn btn-primary" href="{{$event.Path "team" "create"}}">Create Team</a>
 	</div>
 	{{ end }}
-	{{ end }}
-
-	{{ if .NotSubmittedTeams }}
-	<div class="flashes mb-24">
-		<div class="flash">Your team has not submitted a game.</div>
-		{{ range .NotSubmittedTeams }}
-		<a class="btn btn-outline btn-sm mt-8" href="{{$event.Path "team" .ID}}" title="{{.Name}}">{{ .Name }}</a>
-		{{ end }}
-	</div>
 	{{ end }}
 
 	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}

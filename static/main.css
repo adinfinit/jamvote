@@ -680,6 +680,7 @@ input[type="submit"] {
 .badge-blue { background: var(--blue-light); color: var(--blue); }
 .badge-amber { background: var(--amber-light); color: var(--amber-hover); }
 .badge-gray { background: var(--gray-100); color: var(--gray-500); }
+.badge-red { background: var(--red-light); color: var(--red); }
 
 .badge-green {
   background: var(--green-light);
