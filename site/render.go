@@ -86,7 +86,11 @@ func (server *Server) parseTemplates(glob string) (*template.Template, error) {
 
 			return -100
 		},
-
+		"cat": func(xs ...any) string {
+			var s strings.Builder
+			fmt.Fprint(&s, xs...)
+			return s.String()
+		},
 		"add": func(a, b any) float64 {
 			return toFloat(a) + toFloat(b)
 		},
