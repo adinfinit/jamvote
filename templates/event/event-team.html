@@ -54,34 +54,41 @@
 				{{ range $aspect := .Aspects }}
 				{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
 				<div>
-					<div class="fw-600 mb-4 text-small">{{ $aspect.Name }}</div>
+					<div class="fw-600 mb-4 text-small{{ if eq $aspect.Name "Overall" }} text-green{{ end }}{{ if eq $aspect.Name "Bonus" }} text-amber{{ end }}">{{ $aspect.Name }}</div>
 					<svg width="100%" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin">
-						<rect x="0%" y="0%" width="100%" height="100%" style="fill:var(--gray-100);" />
+						<rect x="0%" y="0%" width="100%" height="100%" fill="var(--blue-light)" />
 
-						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,0   100,0" />
-						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,25  100,25" />
-						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,50  100,50" />
-						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 5" points="0,75  100,75" />
-						<polyline stroke="var(--gray-400)" stroke-dasharray="2, 5" points="0,100 100,100" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="2, 5" points="0,0   100,0" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="1, 5" points="0,25  100,25" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="2, 5" points="0,50  100,50" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="1, 5" points="0,75  100,75" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="2, 5" points="0,100 100,100" />
 
 						{{ with $info.Scores }}
 						{{ $average := averageViolinScore $aspect.Min $aspect.Max . }}
-						<polyline fill="hsl(210, 60%, 80%)" stroke="hsl(210, 60%, 70%)" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
-						<polyline stroke="var(--gray-700)" points="0,{{$average}} 50,{{$average}}" />
-
-						<polyline fill="hsl(210, 60%, 60%)" stroke="hsl(210, 60%, 40%)" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
-						<polyline stroke="var(--gray-700)" points="50,{{$average}} 100,{{$average}}" />
-						<text fill="var(--gray-700)" x=52 y={{$average}} font-size="12">voters</text>
+						{{ if eq $aspect.Name "Overall" }}
+						<polyline fill="#34D399" fill-opacity="0.35" stroke="#059669" stroke-opacity="0.5" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
+						<polyline fill="#059669" fill-opacity="0.5" stroke="#047857" stroke-opacity="0.7" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
+						{{ else if eq $aspect.Name "Bonus" }}
+						<polyline fill="#FBBF24" fill-opacity="0.35" stroke="#D97706" stroke-opacity="0.5" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
+						<polyline fill="#D97706" fill-opacity="0.5" stroke="#B45309" stroke-opacity="0.7" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
+						{{ else }}
+						<polyline fill="#9B8CF8" fill-opacity="0.35" stroke="#6B4FD6" stroke-opacity="0.5" points="{{ violinLeft  $aspect.Min $aspect.Max . }}" />
+						<polyline fill="#6B4FD6" fill-opacity="0.5" stroke="#4825A8" stroke-opacity="0.7" points="{{ violinRight $aspect.Min $aspect.Max . }}" />
+						{{ end }}
+						<polyline stroke="var(--gray-600)" stroke-width="0.5" points="0,{{$average}} 50,{{$average}}" />
+						<polyline stroke="var(--gray-600)" stroke-width="0.5" points="50,{{$average}} 100,{{$average}}" />
+						<text fill="var(--gray-600)" x=52 y={{$average}} font-size="10">avg</text>
 						{{ end }}
 
 						{{if Data.CurrentUserBallot}}
 						{{ with $userscore := Data.CurrentUserBallot.Score $aspect.Name }}
 						{{ $userpoint := (averageViolinScore $aspect.Min $aspect.Max $userscore) }}
-						<polyline stroke="var(--gray-600)" points="0,{{$userpoint}} 100,{{$userpoint}}" />
-						<text fill="var(--gray-600)" x=2 y={{$userpoint}} font-size="12">you</text>
+						<polyline stroke="var(--gray-800)" stroke-dasharray="2,2" stroke-width="0.5" points="0,{{$userpoint}} 100,{{$userpoint}}" />
+						<text fill="var(--gray-800)" x=2 y={{$userpoint}} font-size="10">you</text>
 						{{ end }}{{ end }}
 
-						<polyline stroke="var(--gray-400)" stroke-dasharray="1, 1" stroke-width="1px" vector-effect="non-scaling-stroke" points="50,0 50,100" />
+						<polyline stroke="var(--gray-300)" stroke-dasharray="1, 1" stroke-width="0.5" vector-effect="non-scaling-stroke" points="50,0 50,100" />
 					</svg>
 				</div>
 				{{ end }}
