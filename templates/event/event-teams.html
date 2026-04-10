@@ -13,7 +13,8 @@
 	<div class="grid-3 mb-24">
 		{{ range .YourTeams }}
 		<a class="card card-clickable" href="{{$event.Path "team" .ID}}" title="{{.Name}}">
-			<div class="event-card-title">{{ .Name }}</div>
+			<h2 class="event-card-title">{{.Game.Name}}</h2>
+			<p class="event-card-theme">by: {{.Name}}</p>
 		</a>
 		{{ end }}
 	</div>
