@@ -456,6 +456,24 @@ li {
   transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition), background-color 200ms ease;
 }
 
+.card-clickable-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-clickable-body {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  flex: 1;
+}
+
+.event-card-footer {
+  border-top: 1px solid var(--gray-200);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
 .card-clickable {
   text-decoration: none;
   display: block;

@@ -2,14 +2,21 @@
 
 {{ define "event-links" }}
 {{ range . }}
-<a class="card card-clickable" href="{{ .Path }}">
-	<div class="flex items-center justify-between mb-12">
-		{{ template "event-status-badge" . }}
-		{{ with .Jammers }}<span class="text-small text-muted">{{ len . }} jammers</span>{{ end }}
+<div class="card card-clickable-wrap">
+	<a class="card-clickable-body" href="{{ .Path }}">
+		<div class="flex items-center justify-between mb-12">
+			{{ template "event-status-badge" . }}
+			{{ with .Jammers }}<span class="text-small text-muted">{{ len . }} jammers</span>{{ end }}
+		</div>
+		<h2 class="event-card-title">{{.Name}}</h2>
+		{{ with .Theme }}<p class="event-card-theme">Theme: <strong class="theme-accent">{{.}}</strong></p>{{end}}
+	</a>
+	{{ if .Revealed }}
+	<div class="event-card-footer">
+		<a href="{{ .Path "results" }}" class="text-small text-blue">Results &#8594;</a>
 	</div>
-	<h2 class="event-card-title">{{.Name}}</h2>
-	{{ with .Theme }}<p class="event-card-theme">Theme: <strong class="theme-accent">{{.}}</strong></p>{{end}}
-</a>
+	{{ end }}
+</div>
 {{ end }}
 {{ end }}
 
@@ -32,6 +39,15 @@
 	</div>
 	{{ end }}
 
+	{{ with $events := .Events.Recent }}
+	<div class="mb-48">
+		<h2 class="section-label mb-20">Recent Events</h2>
+		<div class="grid-2">
+			{{ template "event-links" $events }}
+		</div>
+	</div>
+	{{ end }}
+
 	<div class="section-label-line mb-24">
 		<h2 class="section-label">Past Events</h2>
 	</div>
@@ -45,6 +61,7 @@
 				{{ range .Events }}
 				<tr>
 					<td><a href="{{ .Path }}"><strong>{{.Name}}</strong>{{ with .Theme }} — <span class="text-muted">{{.}}</span>{{end}}</a></td>
+					<td style="width:5rem; text-align:right;">{{ if .Revealed }}<a href="{{ .Path "results" }}" class="text-small text-blue">Results &#8594;</a>{{ end }}</td>
 				</tr>
 				{{ end }}
 				</tbody>

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 	"sort"
+	"time"
 
 	"github.com/adinfinit/jamvote/site"
 	"github.com/adinfinit/jamvote/user"
@@ -80,14 +81,20 @@ func (server *Server) List(context *Context) {
 	byStage := struct {
 		All      []*Event
 		Started  []*Event
+		Recent   []*Event
 		Finished []YearEvents
 	}{}
 	byStage.All = events
+
+	recentCutoff := time.Now().AddDate(0, -3, 0)
 
 	for _, event := range events {
 		if !event.Revealed {
 			byStage.Started = append(byStage.Started, event)
 		} else {
+			if event.startTime().After(recentCutoff) {
+				byStage.Recent = append(byStage.Recent, event)
+			}
 			year := event.startTime().Year()
 			if n := len(byStage.Finished); n > 0 && byStage.Finished[n-1].Year == year {
 				byStage.Finished[n-1].Events = append(byStage.Finished[n-1].Events, event)
