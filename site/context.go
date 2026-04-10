@@ -77,6 +77,7 @@ func (server *Server) Context(w http.ResponseWriter, r *http.Request) *Context {
 		data["Flashes"] = flashes
 	}
 	data["Development"] = server.Development
+	data["RequestPath"] = r.URL.Path
 
 	return &Context{
 		Site: server,

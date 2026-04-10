@@ -106,7 +106,8 @@ func (server *Server) parseTemplates(glob string) (*template.Template, error) {
 			}
 			return xs
 		},
-		"markdown": renderMarkdown,
+		"hasPrefix": strings.HasPrefix,
+		"markdown":  renderMarkdown,
 		"markdownFile": func(name string) (template.HTML, error) {
 			data, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {

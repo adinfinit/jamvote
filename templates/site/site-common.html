@@ -28,11 +28,11 @@
 				</a>
 				<button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
 				<ul class="nav-links">
-					<li><a href="/">Events</a></li>
-					<li><a href="/about">About</a></li>
+					<li><a href="/"{{ if or (eq .RequestPath "/") (hasPrefix .RequestPath "/event") }} class="active"{{ end }}>Events</a></li>
+					<li><a href="/about"{{ if hasPrefix .RequestPath "/about" }} class="active"{{ end }}>About</a></li>
 					{{ if .CurrentUser }}
-					<li><a href="/users">Users</a></li>
-					<li><a href="/user">{{or .CurrentUser.Name "Profile"}}</a></li>
+					<li><a href="/users"{{ if hasPrefix .RequestPath "/users" }} class="active"{{ end }}>Users</a></li>
+					<li><a href="/user"{{ if hasPrefix .RequestPath "/user/" }} class="active"{{ end }}>{{or .CurrentUser.Name "Profile"}}</a></li>
 					<li><a href="/user/logout">Sign out</a></li>
 					{{ else }}
 					<li><a href="/user/login" class="btn btn-primary nav-login">Sign in</a></li>
