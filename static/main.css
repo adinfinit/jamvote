@@ -125,6 +125,8 @@ body {
   min-height: 100vh;
   font-kerning: normal;
   transition: background-color 200ms ease, color 200ms ease;
+  display: flex;
+  flex-direction: column;
 }
 
 img {
@@ -242,6 +244,7 @@ code {
 
 .page {
   padding: 32px 0 96px;
+  flex: 1;
 }
 
 .content {
