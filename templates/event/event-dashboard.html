@@ -4,15 +4,9 @@
 <section>
 	<div class="event-header-row mb-32">
 		<div>
-			{{ if .Event.Voting }}
 			<div class="flex items-center gap-12 mb-8 flex-wrap">
-				{{ if .Event.Closed }}
-				<span class="badge badge-gray">Voting Closed</span>
-				{{ else }}
-				<span class="badge badge-green">Voting Open</span>
-				{{ end }}
+				{{ template "event-status-badge" .Event }}
 			</div>
-			{{ end }}
 			<h1 class="mb-4">{{.Event.Name}}</h1>
 			{{ with .Event.Theme }}
 			<p style="font-size:1.25rem;">

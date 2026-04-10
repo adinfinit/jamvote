@@ -3,6 +3,10 @@
 {{ define "event-links" }}
 {{ range . }}
 <a class="card card-clickable" href="{{ .Path }}">
+	<div class="flex items-center justify-between mb-12">
+		{{ template "event-status-badge" . }}
+		{{ with .Jammers }}<span class="text-small text-muted">{{ len . }} jammers</span>{{ end }}
+	</div>
 	<h2 class="event-card-title">{{.Name}}</h2>
 	{{ with .Theme }}<p class="event-card-theme">Theme: <strong class="theme-accent">{{.}}</strong></p>{{end}}
 </a>
