@@ -329,6 +329,7 @@ li {
 
   &:hover {
     color: #ffffff !important;
+    background: linear-gradient(135deg, #5B35CA, #3D1F96) !important;
   }
 }
 
@@ -577,15 +578,6 @@ a.button {
     border-color: var(--gray-600);
     color: var(--gray-800);
   }
-}
-
-a.big.button {
-  font-size: 1.5rem;
-  line-height: 2rem;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  font-weight: bold;
-  width: 100%;
 }
 
 input[type="submit"] {
@@ -851,16 +843,21 @@ tbody tr.rank-3 { background: #FDF5EE; }
 }
 
 /* --- Forms --- */
-.form-group {
-  margin-bottom: 20px;
+.field {
+  margin-bottom: 1.5rem;
+
+  & label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: var(--gray-700);
+  }
 }
 
-.form-label {
-  display: block;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--gray-700);
-  margin-bottom: 6px;
+select, input, textarea {
+  font-family: var(--font);
+  font-size: 1rem;
 }
 
 .form-input {
@@ -885,58 +882,9 @@ tbody tr.rank-3 { background: #FDF5EE; }
 }
 
 textarea.form-input {
+  font-family: var(--font-mono);
   resize: vertical;
   min-height: 80px;
-}
-
-/* Legacy form styles */
-.field {
-  margin-bottom: 1.5rem;
-
-  & label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 0.8125rem;
-    color: var(--gray-700);
-  }
-}
-
-.input {
-  display: block;
-  width: 100%;
-  font-family: var(--font);
-  font-size: 1rem;
-  padding: 10px 14px;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius);
-  background: var(--white);
-  color: var(--gray-800);
-  transition: border-color 0.2s, box-shadow 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(91, 53, 202, 0.1);
-  }
-}
-
-select, input, textarea {
-  width: 100%;
-  font-family: var(--font);
-  font-size: 1rem;
-  padding: 10px 14px;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius);
-  background: var(--white);
-  color: var(--gray-800);
-  transition: border-color 0.2s, box-shadow 0.2s;
-
-  &:focus {
-    outline: none;
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(91, 53, 202, 0.1);
-  }
 }
 
 input[type="checkbox"] {
@@ -947,12 +895,6 @@ input[type="checkbox"] {
   & ~ label {
     display: inline-block;
   }
-}
-
-textarea {
-  font-family: var(--font-mono);
-  resize: vertical;
-  min-height: 80px;
 }
 
 .tight {
@@ -1587,20 +1529,6 @@ div.progress {
   }
 }
 
-/* --- CTA Card --- */
-.cta-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  & p {
-    margin-bottom: 20px;
-    font-size: 1rem;
-  }
-}
-
 /* --- Schedule --- */
 .schedule-grid {
   display: grid;
@@ -1638,21 +1566,9 @@ div.progress {
   pointer-events: none;
 }
 
-.disabled-minimal {
-  opacity: 0.6;
-}
-
 .not-submitted {
   background: var(--red-light) !important;
   font-style: italic;
-}
-
-.special {
-  background: var(--amber-light) !important;
-  font-weight: bold;
-  padding: 2rem 0.6rem !important;
-  border: 1px solid var(--amber);
-  border-radius: var(--radius);
 }
 
 .unregistered {
@@ -1678,10 +1594,6 @@ div.progress {
   background: var(--blue-light);
 }
 
-.important {
-  font-weight: bold;
-}
-
 .highlight {
   outline: var(--blue) 3px solid;
   animation: highlight-animation 1s infinite alternate;
@@ -1690,12 +1602,6 @@ div.progress {
 @keyframes highlight-animation {
   from { outline: rgba(91, 53, 202, 0) 3px solid; }
   to { outline: rgba(91, 53, 202, 0.5) 3px solid; }
-}
-
-.edit {
-  text-align: center;
-
-  &:hover { background: var(--red-light); }
 }
 
 /* --- Randomizer --- */
@@ -2387,11 +2293,7 @@ dt {
   & .nav { border-bottom-color: var(--gray-200); }
   & .subnav { border-bottom-color: var(--gray-200); }
 
-  & .form-input,
-  & .input,
-  & select,
-  & input,
-  & textarea {
+  & .form-input {
     background: var(--gray-50);
     border-color: var(--gray-200);
     color: var(--gray-800);
