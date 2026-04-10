@@ -1993,7 +1993,7 @@ dt {
 .team-hero {
   display: flex;
   gap: 32px;
-  align-items: flex-start;
+  align-items: flex-end;
   flex-wrap: wrap;
 }
 
