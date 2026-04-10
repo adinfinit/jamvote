@@ -335,6 +335,73 @@ func voterRNG(eventID string, voterID user.UserID, teamName string) *rand.Rand {
 	return rand.New(rand.NewPCG(h.Sum64(), 0))
 }
 
+var commentsByAspect = map[string][]string{
+	"Theme": {
+		"Great interpretation of the theme!",
+		"The theme connection felt a bit loose.",
+		"Really creative take on the theme — wasn't expecting this angle at all.",
+		"Theme is present but doesn't really drive the gameplay.",
+		"Loved how the theme was woven into every mechanic.",
+		"Solid theme usage.",
+		"The theme felt like an afterthought unfortunately.",
+		"One of the best theme interpretations I've seen this jam. The way you tied it into the narrative was chef's kiss.",
+		"Theme is there.",
+		"Could have leaned into the theme more, but what's there works.",
+	},
+	"Enjoyment": {
+		"Had a blast playing this!",
+		"Fun but a bit short.",
+		"I played through it twice — that's rare for a jam game. The core loop is really satisfying.",
+		"Controls feel nice and responsive.",
+		"Got stuck on level 3 and couldn't figure out what to do.",
+		"Enjoyable!",
+		"Not my genre but I can see the appeal.",
+		"The difficulty curve is perfect. Started easy, ramped up gradually, and the final challenge felt earned.",
+		"A bit repetitive after the first few minutes.",
+		"Really fun concept, would love to see this expanded post-jam.",
+	},
+	"Aesthetics": {
+		"Love the art style!",
+		"Visuals are clean and cohesive.",
+		"The art direction is stunning. The color palette alone tells a story. Sound design complements it perfectly.",
+		"Could use some polish on the UI.",
+		"The music is a banger.",
+		"Nice aesthetic.",
+		"Placeholder art but the game underneath is solid.",
+		"Sound effects are satisfying, especially the jump sound. Small detail but it makes a big difference.",
+		"The particle effects are gorgeous.",
+		"Visually it works, nothing groundbreaking but competent.",
+	},
+	"Innovation": {
+		"Never seen a mechanic like this before!",
+		"Interesting twist on a classic formula.",
+		"This is genuinely original. I've played hundreds of jam games and this mechanic is new to me. Patent it.",
+		"Pretty standard gameplay loop.",
+		"The combination of mechanics is clever.",
+		"Fresh idea!",
+		"Feels very similar to [other game] but that's not necessarily bad.",
+		"The core innovation is the way the two systems interact — separately they're simple, together they're deep.",
+		"Not particularly innovative but executed well.",
+		"I like the experimental approach even if it doesn't fully land.",
+	},
+	"Bonus": {
+		"Extra polish for a jam game!",
+		"The tutorial was really well done.",
+		"Incredible amount of content for 72 hours. Four levels, a boss fight, AND a story? How.",
+		"Nice attention to detail.",
+		"The credits sequence made me smile.",
+		"Goes above and beyond.",
+	},
+}
+
+func pickComment(rng *rand.Rand, aspect string) string {
+	comments := commentsByAspect[aspect]
+	if len(comments) == 0 {
+		return ""
+	}
+	return comments[rng.IntN(len(comments))]
+}
+
 // normalScore generates a normally distributed score clamped to [min, max].
 func normalScore(rng *rand.Rand, mean, stddev, min, max float64) float64 {
 	v := rng.NormFloat64()*stddev + mean
@@ -376,6 +443,23 @@ func seedBallots(events event.Repo, ev *event.Event, teams []*event.Team, voters
 				Bonus:      event.Aspect{Score: normalScore(vrng, bonusMean, 0.5, 0, 2.5)},
 			}
 			aspects.Overall = event.Aspect{Score: aspects.Total()}
+
+			// ~40% chance of commenting on each aspect.
+			if vrng.Float64() < 0.4 {
+				aspects.Theme.Comment = pickComment(vrng, "Theme")
+			}
+			if vrng.Float64() < 0.4 {
+				aspects.Enjoyment.Comment = pickComment(vrng, "Enjoyment")
+			}
+			if vrng.Float64() < 0.4 {
+				aspects.Aesthetics.Comment = pickComment(vrng, "Aesthetics")
+			}
+			if vrng.Float64() < 0.4 {
+				aspects.Innovation.Comment = pickComment(vrng, "Innovation")
+			}
+			if vrng.Float64() < 0.2 {
+				aspects.Bonus.Comment = pickComment(vrng, "Bonus")
+			}
 
 			ballot := &event.Ballot{
 				Voter:     voterID,
