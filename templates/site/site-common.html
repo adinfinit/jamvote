@@ -28,7 +28,7 @@
 				</a>
 				<button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
 				<ul class="nav-links">
-					<li><a href="/"{{ if or (eq .RequestPath "/") (hasPrefix .RequestPath "/event") }} class="active"{{ end }}>Events</a></li>
+					<li><a href="/"{{ if eq .RequestPath "/" }} class="active"{{ end }}>Events</a></li>
 					<li><a href="/about"{{ if hasPrefix .RequestPath "/about" }} class="active"{{ end }}>About</a></li>
 					{{ if .CurrentUser }}
 					<li><a href="/users"{{ if hasPrefix .RequestPath "/users" }} class="active"{{ end }}>Users</a></li>
@@ -45,19 +45,19 @@
 		<div class="subnav">
 			<div class="subnav-inner center">
 				<span class="event-title"><a href="{{ .Event.Path }}">{{ .Event.Name }}{{with .Event.Theme}} — <span class="theme">{{ . }}</span>{{ end }}</a></span>
-				<a href="{{ .Event.Path "teams" }}">Teams</a>
-				<a {{if (not .Event.CanVote)}}class="disabled"{{end}} href="{{ .Event.Path "voting" }}">Voting</a>
-				<a {{if (not .Event.Voting)}}class="disabled"{{end}} href="{{ .Event.Path "progress" }}">Progress</a>
-				<a {{if (not .Event.Revealed)}}class="disabled"{{end}} href="{{ .Event.Path "results" }}">Results</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "team") }} class="active"{{ end }} href="{{ .Event.Path "teams" }}">Teams</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "vot") }} class="active"{{ else if not .Event.CanVote}} class="disabled"{{ end }} href="{{ .Event.Path "voting" }}">Voting</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "progress") }} class="active"{{ else if not .Event.Voting}} class="disabled"{{ end }} href="{{ .Event.Path "progress" }}">Progress</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "results") }} class="active"{{ else if not .Event.Revealed}} class="disabled"{{ end }} href="{{ .Event.Path "results" }}">Results</a>
 			</div>
 		</div>
 		{{ if .CurrentUser.IsAdmin}}
 		<div class="admin-bar">
 			<div class="admin-bar-inner center">
-				<a href="{{ .Event.Path "edit" }}">Edit Event</a>
-				<a href="{{ .Event.Path "linking" }}">Linking</a>
-				<a href="{{ .Event.Path "jammers" }}">Jammers</a>
-				<a href="{{ .Event.Path "reveal" }}">Reveal</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "edit") }} class="active"{{ end }} href="{{ .Event.Path "edit" }}">Edit Event</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "linking") }} class="active"{{ end }} href="{{ .Event.Path "linking" }}">Linking</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "jammers") }} class="active"{{ end }} href="{{ .Event.Path "jammers" }}">Jammers</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "reveal") }} class="active"{{ end }} href="{{ .Event.Path "reveal" }}">Reveal</a>
 			</div>
 		</div>
 		{{ end }}

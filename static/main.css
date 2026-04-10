@@ -437,6 +437,12 @@ li {
     color: var(--gray-800);
     background: var(--gray-200);
   }
+
+  &.active {
+    color: var(--blue);
+    background: var(--blue-light);
+    font-weight: 600;
+  }
 }
 
 /* --- Cards --- */
