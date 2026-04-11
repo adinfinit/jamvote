@@ -54,7 +54,7 @@
 		<div class="admin-bar">
 			<div class="admin-bar-inner center">
 				<a{{ if hasPrefix .RequestPath (.Event.Path "edit") }} class="active"{{ end }} href="{{ .Event.Path "edit" }}">Edit Event</a>
-				<a{{ if hasPrefix .RequestPath (.Event.Path "linking") }} class="active"{{ end }} href="{{ .Event.Path "linking" }}">Linking</a>
+				<a{{ if hasPrefix .RequestPath (.Event.Path "linking") }} class="active"{{ end }} href="{{ .Event.Path "linking" }}">Member Linking</a>
 				<a{{ if hasPrefix .RequestPath (.Event.Path "jammers") }} class="active"{{ end }} href="{{ .Event.Path "jammers" }}">Jammers</a>
 				<a{{ if hasPrefix .RequestPath (.Event.Path "reveal") }} class="active"{{ end }} href="{{ .Event.Path "reveal" }}">Reveal</a>
 			</div>

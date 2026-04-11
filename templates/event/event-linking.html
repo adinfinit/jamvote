@@ -3,14 +3,16 @@
 {{ $event := .Event }}
 <section>
 	<div class="section-header">
-		<h1>Linking</h1>
+		<h1>Member Linking</h1>
 		<a href="{{$event.Path "linking-approve-all"}}" class="btn btn-primary">Approve All</a>
 	</div>
+
+	<p class="text-muted mb-24">Teams can add members before those members have signed in, which means their accounts may not be linked to their team yet. Members also need to be approved for the event before they can vote.</p>
 
 	{{ if .Linking }}
 	{{ range .Linking }}
 	<div class="card mb-16">
-		<h2 class="mb-12">{{.Team.Name}}: {{.Team.Game.Name}}</h2>
+		<h2 class="mb-12"><a href="{{$event.Path "team" .Team.ID}}">{{.Team.Name}}: {{.Team.Game.Name}}</a></h2>
 
 		{{ if .Unlinked }}
 		<h3 class="text-amber mb-8">Unlinked</h3>
