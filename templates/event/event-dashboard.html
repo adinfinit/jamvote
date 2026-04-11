@@ -72,7 +72,7 @@
 			{{ end }}
 		</div>
 	</div>
-	{{ else if $event.Registration }}
+	{{ else if and $event.Registration (not $event.Closed) }}
 	<div class="card mb-24" style="text-align:center;">
 		<p class="text-muted mb-12">You haven't joined a team yet.</p>
 		<a class="btn btn-primary" href="{{$event.Path "team" "create"}}">Create Team</a>

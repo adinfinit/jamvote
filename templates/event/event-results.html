@@ -26,16 +26,20 @@
 			</thead>
 			<tbody>
 				{{ range $index, $result := .Results }}
-				<tr{{if and (not .Game.Noncompeting) (lt $index 3)}} class="rank-{{add 1 $index}}"{{end}}>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge {{if eq $index 0}}rank-1-badge{{else if eq $index 1}}rank-2-badge{{else if eq $index 2}}rank-3-badge{{else}}rank-default-badge{{end}}">{{add 1 $index}}</span>{{end}}</td>
+				<tr{{if and (.IsCompeting) (lt $index 3)}} class="rank-{{add 1 $index}}"{{end}}>
+					<td>{{if not .IsCompeting}}<span title="{{if .Game.Noncompeting}}Noncompeting{{else}}Not submitted{{end}}" class="rank-badge rank-default-badge">{{if .Game.Noncompeting}}NC{{else}}&mdash;{{end}}</span>{{else}}<span class="rank-badge {{if eq $index 0}}rank-1-badge{{else if eq $index 1}}rank-2-badge{{else if eq $index 2}}rank-3-badge{{else}}rank-default-badge{{end}}">{{add 1 $index}}</span>{{end}}</td>
 					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
 					<td>{{.Game.Name}}</td>
+					{{ if .Ballots }}
 					<td><span class="score-num">{{printf "%.3f" .Average.Theme.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .Average.Enjoyment.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .Average.Aesthetics.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .Average.Innovation.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .Average.Bonus.Score}}</span></td>
 					<td><span class="overall-score">{{printf "%.3f" .Average.Overall.Score}}</span></td>
+					{{ else }}
+					<td colspan="6" class="text-muted">No votes</td>
+					{{ end }}
 				</tr>
 				{{ end }}
 			</tbody>
@@ -67,15 +71,19 @@
 			<tbody>
 				{{ range $index, $result := .Results }}
 				<tr>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
+					<td>{{if not .IsCompeting}}<span class="rank-badge rank-default-badge">{{if .Game.Noncompeting}}NC{{else}}&mdash;{{end}}</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
 					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
 					<td>{{.Game.Name}}</td>
+					{{ if .Ballots }}
 					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Theme.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Enjoyment.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Aesthetics.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Innovation.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JammerAverage.Bonus.Score}}</span></td>
 					<td><span class="overall-score">{{printf "%.3f" .JammerAverage.Overall.Score}}</span></td>
+					{{ else }}
+					<td colspan="6" class="text-muted">No votes</td>
+					{{ end }}
 				</tr>
 				{{ end }}
 			</tbody>
@@ -106,15 +114,19 @@
 			<tbody>
 				{{ range $index, $result := .Results }}
 				<tr>
-					<td>{{if .Game.Noncompeting}}<span title="Noncompeting" class="rank-badge rank-default-badge">NC</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
+					<td>{{if not .IsCompeting}}<span class="rank-badge rank-default-badge">{{if .Game.Noncompeting}}NC{{else}}&mdash;{{end}}</span>{{else}}<span class="rank-badge rank-default-badge">{{add 1 $index}}</span>{{end}}</td>
 					<td><strong><a href="{{ $event.Path "team" .Team.ID }}">{{.Name}}</a></strong></td>
 					<td>{{.Game.Name}}</td>
+					{{ if .Ballots }}
 					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Theme.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Enjoyment.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Aesthetics.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Innovation.Score}}</span></td>
 					<td><span class="score-num">{{printf "%.3f" .JudgeAverage.Bonus.Score}}</span></td>
 					<td><span class="overall-score">{{printf "%.3f" .JudgeAverage.Overall.Score}}</span></td>
+					{{ else }}
+					<td colspan="6" class="text-muted">No votes</td>
+					{{ end }}
 				</tr>
 				{{ end }}
 			</tbody>
