@@ -175,16 +175,5 @@
 			updateToggleIcon(getPreferred());
 		}
 
-		var navToggle = document.querySelector('.nav-toggle');
-		if (navToggle) {
-			navToggle.addEventListener('click', function() {
-				var links = document.querySelector('.nav-links');
-				if (links) {
-					links.classList.toggle('open');
-					var isOpen = links.classList.contains('open');
-					navToggle.setAttribute('aria-expanded', isOpen);
-				}
-			});
-		}
 	});
 })();

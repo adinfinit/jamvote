@@ -375,20 +375,6 @@ code {
   }
 }
 
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  color: var(--gray-600);
-  font-size: 1.25rem;
-
-  &:focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 2px;
-  }
-}
 
 /* --- Sub-navigation (event tabs) --- */
 .subnav {
