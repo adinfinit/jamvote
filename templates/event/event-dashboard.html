@@ -39,13 +39,13 @@
 	</div>
 	{{ end }}
 
-	{{ if .Event.Closed }}
+	{{ if and .Event.Closed (not .Event.Revealed) }}
 	<div class="card mb-24" style="padding: 2rem;">
 		<p class="mb-8"><strong>Voting has closed.</strong></p>
 		<p class="text-muted">Results will be available once the organizer reveals them.</p>
 	</div>
-	{{ else if .CurrentUser }}
-	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
+	{{ else if and .CurrentUser (not .Event.Closed) }}
+	{{ if and (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser)) }}
 	<div class="card mb-24" style="padding: 2rem;">
 		{{ if (not (.Event.HasJammer .CurrentUser))}}
 		<p class="mb-8"><strong>You're not approved for this event yet.</strong></p>
