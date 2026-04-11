@@ -39,6 +39,25 @@
 	</div>
 	{{ end }}
 
+	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
+	<div class="card mb-24" style="padding: 2rem;">
+		{{ if not .CurrentUser }}
+		<p class="mb-8"><strong>Sign in to participate.</strong></p>
+		<p class="text-muted mb-16">You need to sign in and be approved for this event before you can vote.</p>
+		<a class="btn btn-primary" href="/user/login">Sign in</a>
+		{{ else if (not (.Event.HasJammer .CurrentUser))}}
+		<p class="mb-8"><strong>You're not approved for this event yet.</strong></p>
+		<p class="text-muted">Make sure you've joined a team. An event organizer will need to approve your participation before you can vote.</p>
+		{{ else if (not .Event.Voting)}}
+		<p class="mb-8"><strong>Voting hasn't started yet.</strong></p>
+		<p class="text-muted">Check back once the organizer opens voting. In the meantime, you can browse the teams and make sure your submission is ready.</p>
+		{{ else if .Event.Closed }}
+		<p class="mb-8"><strong>Voting has closed.</strong></p>
+		<p class="text-muted">Results will be available once the organizer reveals them.</p>
+		{{ end }}
+	</div>
+	{{ end }}
+
 	{{ if .CurrentUser }}
 	{{ if .YourTeams }}
 	<div class="mb-24">
@@ -63,21 +82,24 @@
 	{{ end }}
 	{{ end }}
 
-	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
-	<div class="flashes mb-24">
-		{{if (not .Event.Voting)}}
-		<div class="flash">Voting has not yet started.</div>
-		{{ else if .Event.Closed }}
-		<div class="flash">Voting has closed.</div>
-		{{ end }}
-
-		{{ if not .CurrentUser }}
-		<div class="flash">You are not signed in.</div>
-		{{ else if (not (.Event.HasJammer .CurrentUser))}}
-		<div class="flash">You have not been approved for this event.</div>
-		{{ end }}
+	{{ with .Teams }}
+	<div class="mb-32">
+		<div class="flex items-center justify-between mb-12">
+			<h3>Teams</h3>
+			<a class="text-small text-blue" href="{{$event.Path "teams"}}">View all &#8594;</a>
+		</div>
+		<div class="grid-2">
+			{{ range . }}
+			<div class="card card-clickable">
+				<a class="card-clickable-body" href="{{$event.Path "team" .ID}}">
+					<h2 class="event-card-title">{{ if .Game.Name }}{{ .Game.Name }}{{ else }}{{ .Name }}{{ end }}</h2>
+					{{ if .Game.Name }}<p class="event-card-theme">by <strong>{{ .Name }}</strong></p>{{ end }}
+				</a>
+				<p class="text-small text-muted mt-8">{{ range $i, $m := .Members }}{{ if $i }}, {{ end }}{{ if $m.ID }}<a class="text-blue" href="/user/{{$m.ID}}">{{ $m.Name }}</a>{{ else }}{{ $m.Name }}{{ end }}{{ end }}</p>
+			</div>
+			{{ end }}
+		</div>
 	</div>
-	<a class="btn btn-lg btn-secondary disabled" href="#">Start Voting</a>
 	{{ end }}
 </section>
 

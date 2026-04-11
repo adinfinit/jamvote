@@ -135,5 +135,6 @@ func (server *Server) Dashboard(context *Context) {
 		context.Data["YourTeams"] = yourteams
 	}
 
+	context.Data["Teams"] = teams
 	context.Render("event-dashboard")
 }
