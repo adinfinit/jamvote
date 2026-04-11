@@ -1317,10 +1317,8 @@ div.progress {
 
 /* --- Timer / Countdown --- */
 .timer {
-  display: inline-block;
-  width: auto;
+  display: inline-flex;
   background: var(--gray-100);
-  line-height: 2em;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-mono);
@@ -1330,32 +1328,33 @@ div.progress {
     border-color: var(--red);
   }
 
-  & td, & th {
-    font-size: 2em;
-    font-weight: 500;
-    line-height: inherit;
-    width: 0.5em;
-    text-align: center;
+  & .timer-col {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 0.5rem;
   }
 
-  & thead tr {
-    border-bottom: 1px solid var(--border);
+  & .timer-col + .timer-col {
+    border-left: 1px solid var(--gray-200);
   }
 
-  & th {
+  & .timer-label {
     font-weight: 700;
     font-size: 0.7em;
     line-height: 1em;
-    padding-bottom: 0.1rem;
+    padding-bottom: 0.25rem;
     color: var(--gray-500);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
-  & tbody td {
-    border-right: 1px solid var(--gray-200);
-    border-bottom: none;
+  & .timer-hours,
+  & .timer-minutes,
+  & .timer-seconds {
+    font-size: 2em;
+    font-weight: 500;
     color: var(--gray-900);
   }
 }

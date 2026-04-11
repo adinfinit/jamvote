@@ -17,13 +17,13 @@
 		<div class="event-action-bar">
 			{{ if .VotingOpens }}
 			<div>
-				<div class="text-small text-muted mb-4">Voting Opens</div>
+				<div class="text-small text-muted mb-4">Voting opens in:</div>
 				{{ template "countdown" .VotingOpens }}
 			</div>
 			{{ end }}
 			{{ if .VotingCloses }}
 			<div>
-				<div class="text-small text-muted mb-4">Voting Closes</div>
+				<div class="text-small text-muted mb-4">Voting closes in:</div>
 				{{ template "countdown" .VotingCloses }}
 			</div>
 			{{ end }}

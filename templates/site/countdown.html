@@ -1,21 +1,21 @@
 {{ define "countdown" }}
-<table id="{{.ID}}" class="timer">
-	<thead>
-		<tr>
-			<th>Hours</th>
-			<th>Minutes</th>
-			<th>Seconds</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td class="timer-hours">{{printf "%02d" .Hours}}</td>
-			<td class="timer-minutes">{{printf "%02d" .Minutes}}</td>
-			<td class="timer-seconds">{{printf "%02d" .Seconds}}</td>
-		</tr>
-	</tbody>
-</table>
+<div id="{{.ID}}" class="timer">
+	<div class="timer-col">
+		<span class="timer-label">Hours</span>
+		<span class="timer-hours">{{printf "%02d" .Hours}}</span>
+	</div>
+	<div class="timer-col">
+		<span class="timer-label">Minutes</span>
+		<span class="timer-minutes">{{printf "%02d" .Minutes}}</span>
+	</div>
+	<div class="timer-col">
+		<span class="timer-label">Seconds</span>
+		<span class="timer-seconds">{{printf "%02d" .Seconds}}</span>
+	</div>
+</div>
 <script>
-	StartCountdown("{{.ID}}", "{{formatRFC .Time}}");
+	document.addEventListener("DOMContentLoaded", function() {
+		StartCountdown("{{.ID}}", "{{formatRFC .Time}}");
+	});
 </script>
 {{ end }}
