@@ -318,8 +318,8 @@ code {
   font-size: 1.25rem;
   color: var(--gray-900);
   display: flex;
+  gap: 4px;
   align-items: center;
-  gap: 10px;
   letter-spacing: -0.02em;
 
   &:hover {
@@ -327,8 +327,8 @@ code {
   }
 
   & .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     flex-shrink: 0;
   }
 }
