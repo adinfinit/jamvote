@@ -92,10 +92,10 @@ func (server *Server) List(context *Context) {
 		if !event.Revealed {
 			byStage.Started = append(byStage.Started, event)
 		} else {
-			if event.startTime().After(recentCutoff) {
+			if event.StartOrCreatedTime().After(recentCutoff) {
 				byStage.Recent = append(byStage.Recent, event)
 			}
-			year := event.startTime().Year()
+			year := event.StartOrCreatedTime().Year()
 			if n := len(byStage.Finished); n > 0 && byStage.Finished[n-1].Year == year {
 				byStage.Finished[n-1].Events = append(byStage.Finished[n-1].Events, event)
 			} else {

@@ -156,13 +156,16 @@ func (event *Event) AddRemoveJudges(added, removed []user.UserID) {
 
 // Less compares events based on start time.
 func (event *Event) Less(other *Event) bool {
-	return event.startTime().After(other.startTime())
+	return event.StartOrCreatedTime().After(other.StartOrCreatedTime())
 }
 
-// startTime returns event start time.
-func (event *Event) startTime() time.Time {
+// StartOrCreatedTime returns event start time, falling back to end time or created time.
+func (event *Event) StartOrCreatedTime() time.Time {
 	if !event.StartTime.IsZero() {
 		return event.StartTime
+	}
+	if !event.EndTime.IsZero() {
+		return event.EndTime
 	}
 	return event.Created
 }

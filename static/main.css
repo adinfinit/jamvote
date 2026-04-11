@@ -1981,16 +1981,18 @@ dt {
 .team-hero {
   display: flex;
   gap: 32px;
-  align-items: flex-end;
   flex-wrap: wrap;
 }
 
 .team-info {
   flex: 1;
   min-width: 20rem;
+  align-self: flex-start;
 }
 
 .team-scores {
+  align-self: flex-end;
+
 	& .grid-3 {
 	  display: grid;
 	  grid-template-columns: repeat(3, min(10rem, calc((100vw - 2*24px - 2*16px)/3)));

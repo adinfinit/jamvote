@@ -39,7 +39,12 @@
 	</div>
 	{{ end }}
 
-	{{ if .CurrentUser }}
+	{{ if .Event.Closed }}
+	<div class="card mb-24" style="padding: 2rem;">
+		<p class="mb-8"><strong>Voting has closed.</strong></p>
+		<p class="text-muted">Results will be available once the organizer reveals them.</p>
+	</div>
+	{{ else if .CurrentUser }}
 	{{ if (or (not .Event.CanVote) (not (.Event.HasJammer .CurrentUser))) }}
 	<div class="card mb-24" style="padding: 2rem;">
 		{{ if (not (.Event.HasJammer .CurrentUser))}}
@@ -48,9 +53,6 @@
 		{{ else if (not .Event.Voting)}}
 		<p class="mb-8"><strong>Voting hasn't started yet.</strong></p>
 		<p class="text-muted">Check back once the organizer opens voting. In the meantime, you can browse the teams and make sure your submission is ready.</p>
-		{{ else if .Event.Closed }}
-		<p class="mb-8"><strong>Voting has closed.</strong></p>
-		<p class="text-muted">Results will be available once the organizer reveals them.</p>
 		{{ end }}
 	</div>
 	{{ end }}

@@ -6,7 +6,7 @@
 	<a class="card-clickable-body" href="{{ .Path }}">
 		<div class="flex items-center justify-between mb-12">
 			{{ template "event-status-badge" . }}
-			{{ with .Jammers }}<span class="text-small text-muted">{{ len . }} jammers</span>{{ end }}
+			<span class="text-small text-muted">{{ formatDate .StartOrCreatedTime }}{{ with .Jammers }} &middot; {{ len . }} jammers{{ end }}</span>
 		</div>
 		<h2 class="event-card-title">{{.Name}}</h2>
 		{{ with .Theme }}<p class="event-card-theme">Theme: <strong class="theme-accent">{{.}}</strong></p>{{end}}
@@ -55,7 +55,7 @@
 
 	{{ range .Events.Finished }}
 	<div class="mb-32">
-		<h3 class="year-heading mb-16">{{ .Year }}</h3>
+		<h3 class="year-heading mb-16">{{ if gt .Year 1 }}{{ .Year }}{{ else }}Older{{ end }}</h3>
 		<div class="table-wrap">
 			<table>
 				<tbody>

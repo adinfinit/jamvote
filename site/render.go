@@ -55,6 +55,9 @@ func (server *Server) parseTemplates(glob string) (*template.Template, error) {
 		"formatRFC": func(t time.Time) string {
 			return t.In(APTLocation).Format(time.RFC3339)
 		},
+		"formatDate": func(t time.Time) string {
+			return t.In(APTLocation).Format("Jan 2, 2006")
+		},
 		"paragraphs": func(s string) []string {
 			s = strings.Replace(s, "\r", "", -1)
 			return strings.Split(s, "\n\n")
