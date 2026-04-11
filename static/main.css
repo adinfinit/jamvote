@@ -1988,12 +1988,15 @@ dt {
 
 .team-info {
   flex: 1;
-  min-width: 280px;
+  min-width: 20rem;
 }
 
 .team-scores {
-  flex: 1;
-  min-width: 280px;
+	& .grid-3 {
+	  display: grid;
+	  grid-template-columns: repeat(3, min(10rem, calc((100vw - 2*24px - 2*16px)/3)));
+	  gap: 24px;
+	}
 }
 
 .team-name-label {
@@ -2193,10 +2196,6 @@ dt {
       margin-bottom: 1rem;
     }
   }
-
-  .team-hero { flex-direction: column; }
-  .team-scores { width: 100%; }
-  .team-scores .grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* --- Responsive: Mobile (≤768px) --- */
@@ -2256,7 +2255,6 @@ dt {
   .place-info .game { font-size: 1.4em; }
 
   .member-grid { grid-template-columns: repeat(2, 1fr); }
-  .team-scores .grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* --- Responsive: Small Mobile (≤480px) --- */
@@ -2274,7 +2272,6 @@ dt {
   .vote-card { padding: 24px; }
   .bonus-section { margin: 0 -24px; padding: 20px 24px; }
   .member-grid { grid-template-columns: 1fr; }
-  .team-scores .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* --- Reduced Motion --- */
