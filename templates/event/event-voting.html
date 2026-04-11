@@ -23,8 +23,11 @@
 			{{ end }}
 		</div>
 		{{ else }}
-		<p class="text-muted mb-16">You've reviewed all your assigned games. Click below to get more.</p>
-		<a class="btn btn-primary btn-lg btn-block" href="{{.Event.Path "fill-queue"}}">Get Next Game</a>
+		<div class="card" style="text-align:center; padding: 2rem;">
+			<p class="mb-8">You've reviewed all your assigned games!</p>
+			<p class="text-muted mb-16">Click below to get another game to review.</p>
+			<a class="btn btn-primary btn-lg" href="{{.Event.Path "fill-queue"}}">Get Next Game</a>
+		</div>
 		{{ end }}
 	</section>
 

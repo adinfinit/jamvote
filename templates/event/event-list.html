@@ -48,6 +48,7 @@
 	</div>
 	{{ end }}
 
+	{{ if .Events.Finished }}
 	<div class="section-label-line mb-24">
 		<h2 class="section-label">Past Events</h2>
 	</div>
@@ -67,6 +68,16 @@
 				</tbody>
 			</table>
 		</div>
+	</div>
+	{{ end }}
+	{{ end }}
+
+	{{ if not (or .Events.Started .Events.Recent .Events.Finished) }}
+	<div class="card" style="text-align:center; padding: 3rem;">
+		<p class="text-muted mb-12">No events yet.</p>
+		{{ if .CurrentUser.IsAdmin }}
+		<a class="btn btn-primary" href="/event/create">Create your first event</a>
+		{{ end }}
 	</div>
 	{{ end }}
 </section>
