@@ -305,11 +305,12 @@ code {
 .nav-inner {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .nav-logo {
@@ -335,6 +336,7 @@ code {
 .nav-links {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 4px;
   list-style: none;
   margin: 0;
@@ -2208,32 +2210,6 @@ dt {
   .grid-3 { grid-template-columns: 1fr; }
   .card { padding: 16px; }
 
-  .nav {
-    position: static;
-  }
-
-  .nav-inner {
-    padding: 0 16px;
-    flex-wrap: wrap;
-    height: auto;
-    gap: 4px;
-    padding-bottom: 8px;
-  }
-
-  .nav-logo {
-    padding-top: 12px;
-  }
-
-  .nav-links {
-    gap: 2px;
-    width: 100%;
-    flex-wrap: wrap;
-
-    & a {
-      padding: 6px 10px;
-      font-size: 0.8125rem;
-    }
-  }
 
   .subnav-inner {
     padding: 0 16px;
@@ -2266,9 +2242,6 @@ dt {
     &::-webkit-slider-thumb { width: 28px; height: 28px; }
     &::-moz-range-thumb { width: 28px; height: 28px; }
   }
-
-  .btn { min-height: 44px; }
-  .btn-sm { min-height: 36px; }
 
   .schedule-grid {
     grid-template-columns: 1fr 1fr;
