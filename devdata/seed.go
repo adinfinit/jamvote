@@ -18,16 +18,16 @@ import (
 )
 
 var userNames = []string{
-	"Admin", "Alice", "Bob", "Charlie", "Diana",
-	"Eve", "Frank", "Grace", "Hank", "Ivy",
-	"Jack", "Karen", "Leo", "Mona", "Nate",
-	"Olivia", "Pete", "Quinn", "Ruby", "Sam",
-	"Tina", "Ulysses", "Vera", "Walt", "Xena",
-	"Yuri", "Zara", "Amber", "Blake", "Cleo",
-	"Derek", "Elsa", "Felix", "Gina", "Hugo",
-	"Iris", "Jasper", "Kira", "Liam", "Maya",
-	"Noah", "Opal", "Piper", "Reed", "Sage",
-	"Troy", "Uma", "Vince", "Wren", "Zelda",
+	"Admin", "Alice Martin", "Bob Chen", "Charlie Davis", "Diana Ross",
+	"Eve Taylor", "Frank Miller", "Grace Kim", "Hank Wilson", "Ivy Zhang",
+	"Jack Brown", "Karen Lee", "Leo Garcia", "Mona Patel", "Nate Johnson",
+	"Olivia Moore", "Pete Wright", "Quinn Hayes", "Ruby Singh", "Sam Walker",
+	"Tina Nakamura", "Ulysses Grant", "Vera Costa", "Walt Fischer", "Xena Park",
+	"Yuri Volkov", "Zara Ahmed", "Amber Stone", "Blake Turner", "Cleo Duval",
+	"Derek Olsen", "Elsa Lindgren", "Felix Moreau", "Gina Russo", "Hugo Brandt",
+	"Iris Tanaka", "Jasper Holm", "Kira Okafor", "Liam Murphy", "Maya Herrera",
+	"Noah Berg", "Opal Reeves", "Piper Quinn", "Reed Lawson", "Sage Delgado",
+	"Troy Vasquez", "Uma Sharma", "Vince Romano", "Wren Calloway", "Zelda Engström",
 }
 
 var teamNames = []string{
