@@ -3,7 +3,12 @@
 <section>
 	<div class="team-hero mb-32">
 		<div class="team-info">
-			<div class="mb-12">{{ template "team-status-badge" .Team }}</div>
+			{{ if .CanEditTeam }}
+			<div class="flex items-center justify-between mb-12">
+				{{ template "team-status-badge" .Team }}
+				<a class="btn btn-outline" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
+			</div>
+			{{ end }}
 			{{ if .Team.Game.Name }}
 			<h1 class="mb-12">{{.Team.Game.Name}}</h1>
 			<p class="team-name-label">by {{.Team.Name}}</p>
@@ -19,9 +24,6 @@
 			{{ end }}
 
 			<div class="link-list">
-				{{ if .CanEditTeam }}
-				<a class="btn btn-outline" href="{{.Event.Path "team" .Team.ID "edit"}}">Edit</a>
-				{{ end }}
 				{{ if .Event.CanVote }}<a class="btn btn-primary" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
 				{{ if .Team.Game.Link.Jam}}<a class="btn btn-outline" href="{{.Team.Game.Link.Jam}}">&#8599; Jam Page</a>{{ end }}
 				{{ if .Team.Game.Link.Download}}<a class="btn btn-outline" href="{{.Team.Game.Link.Download}}">&#8615; Download</a>{{ end }}
