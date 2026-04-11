@@ -2374,3 +2374,10 @@ dt {
     &:hover { background: var(--gray-200); }
   }
 }
+
+/* ============================================
+   Dynamic Font Sizes
+   ============================================ */
+
+h1 { font-size: calc(clamp(1.8rem, 5vw, 3rem)); }
+h2 { font-size: calc(clamp(1.5rem, 8vw, 2rem)); }
