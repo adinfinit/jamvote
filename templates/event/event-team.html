@@ -94,12 +94,11 @@
 		{{ end }}
 	</div>
 
-	{{ if .Event.Revealed }}
-	<div class="divider"></div>
-
 	<div class="section-header">
-		<h2>Voter Comments</h2>
+		<h3>Voter Comments</h3>
 	</div>
+
+	{{ if .Event.Revealed }}
 
 	{{ range $aspect := .Aspects }}
 		{{ $info := (Data.AspectsInfo.Item $aspect.Name) }}
@@ -114,6 +113,10 @@
 		</div>
 		{{ end }}
 	{{ end }}
+	{{ else }}
+	<div>
+		<p>Comments have not been revealed yet.</p>
+	</div>
 	{{ end }}
 </section>
 
