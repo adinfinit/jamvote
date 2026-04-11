@@ -23,7 +23,7 @@
 			</div>
 			{{ end }}
 
-			<div class="link-list">
+			<div class="link-list mt-16">
 				{{ if .Event.CanVote }}<a class="btn btn-primary" href="{{.Event.Path "vote" .Team.ID}}">Vote</a>{{ end }}
 				{{ if .Team.Game.Link.Jam}}<a class="btn btn-outline" href="{{.Team.Game.Link.Jam}}">&#8599; Jam Page</a>{{ end }}
 				{{ if .Team.Game.Link.Download}}<a class="btn btn-outline" href="{{.Team.Game.Link.Download}}">&#8615; Download</a>{{ end }}
