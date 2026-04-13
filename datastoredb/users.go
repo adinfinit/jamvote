@@ -3,6 +3,7 @@ package datastoredb
 import (
 	"context"
 	"sort"
+	"strings"
 
 	"cloud.google.com/go/datastore"
 
@@ -122,7 +123,7 @@ func (repo *Users) FindCredentialByEmail(email string) (user.UserID, error) {
 	}
 
 	for _, m := range mappings {
-		if m.Email == email {
+		if strings.EqualFold(m.Email, email) {
 			return user.UserID(m.UserKey.ID), nil
 		}
 	}
